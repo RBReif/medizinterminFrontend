@@ -1,7 +1,10 @@
+import SEBAList from "./components/SEBAList";
+
 function App() {
   return (
-    <div className="App">
-    medizintermin 
+    <div>
+      <h1>medizintermin</h1>
+    <SEBAList> </SEBAList> 
     </div>
   );
 }
