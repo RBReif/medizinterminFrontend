@@ -1,31 +1,22 @@
+
+
+
 image: node:14.17.1
 
 stages:
   - build
-  - deploy
+  - test
 
-cache:
-  paths:
-    - node_modules/
-
-build-pages:
+build:
   stage: build
-  script: 
-    - rm -rf build
-    - CI=false npm install
-    - CI=false npm run build
-    - rm -rf public
-    - cp build/index.html build/404.html
-    - mv build public
-  
-artifacts:
-  paths:
-    - public
-
-pages:
-  stage: deploy
   script:
-    - ls 
-  artifacts:
-    paths: 
-      - public
+    - echo "Building"
+    - mkdir build
+    - touch build/info.txt
+
+test: 
+  stage: test
+  script:
+    - echo "Testing"
+    - test -f "build/info.txt"
+
