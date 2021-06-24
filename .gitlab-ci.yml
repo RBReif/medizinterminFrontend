@@ -8,10 +8,14 @@ build:
     - echo "Building"
     - mkdir build
     - touch build/info.txt
+  artifacts:
+    paths:
+      - build/
 
 test: 
   stage: test
   script:
     - echo "Testing"
     - test -f "build/info.txt"
+
 
