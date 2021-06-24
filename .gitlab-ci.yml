@@ -1,6 +1,3 @@
-
-
-
 image: node:14.17.1
 
 stages:
