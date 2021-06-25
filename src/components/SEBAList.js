@@ -5,7 +5,7 @@ function SEBAList() {
 
     return (
     <div> 
-        <h2>This is the SEBA List component</h2>
+        <h2>This is the medizintermin List component</h2>
         {todo.map((todoitem) => {
             return <Todo title={todoitem.title} />;
         })}
