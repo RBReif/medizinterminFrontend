@@ -2,8 +2,8 @@ import Card from "../../components/components-chris/UI/Card";
 import MultiSelect from "../../components/components-chris/forms/MultiSelect";
 
 const FindADoctor = (props) => {
-  const doctorlist = ["Something", "Another"];
-  const languages = [{ title: "German" }, { title: "English" }];
+  const doctorlist = [{id: "1", displayname: "Something"}, {id: "2", displayname: "Another"}];
+  const languages = [{ displayname: "German" }, { displayname: "English" }];
 
   return (
     <div>
@@ -17,7 +17,8 @@ const FindADoctor = (props) => {
       </div>
       <div>
         <Card>
-          <MultiSelect label="Choose Language"></MultiSelect>
+          <MultiSelect label="Choose Language" items={languages}>
+          </MultiSelect>
         </Card>
       </div>
     </div>

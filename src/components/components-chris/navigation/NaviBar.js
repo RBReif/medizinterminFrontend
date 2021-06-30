@@ -19,7 +19,7 @@ const NaviBar = (props) => {
   return (
     <header>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">medizintermin</Navbar.Brand>
+      <Link to="/" className="navbar-brand">medizintermin</Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
