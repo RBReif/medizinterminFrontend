@@ -1,21 +1,26 @@
 import SEBAList from "./components/SEBAList";
 import ListManagement from "./views/ListManagement";
+import TestButton from "./components/components-chris/TestButton";
 import { Switch, Route } from "react-router-dom";
-import NavigationBar from "./components/NavigationBar";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NaviBar from "./components/components-chris/navigation/NaviBar";
+import FindADoctor from "./views/views-chris/FindADoctor";
 
-function App() {
+function App(props) {
   return (
     <div>
-        <NavigationBar></NavigationBar>
-        <h1>medizintermin</h1>
-        <Switch>
+        <div>
+          <NaviBar/>
+          <Switch>
           < Route path = "/" exact>
+            <FindADoctor/>
             <SEBAList/> 
           </Route>
-          <Route path = "/list-management">
-            <ListManagement />
+          <Route path = "/medics">
+          <TestButton></TestButton>
           </Route>
         </Switch>
+        </div>
     </div>
   );
 }

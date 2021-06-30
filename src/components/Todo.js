@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button } from "react-bootstrap";
 
 function Todo(props) {
 
@@ -12,7 +13,7 @@ function Todo(props) {
     <div>
         <h3>{props.title}</h3>
         <p>Status: {String(done)}</p>
-        <button onClick={handleClick}>{done ? "Undo" : "Done"}</button>
+        <Button onClick={handleClick}>{done ? "Undo" : "Done"}</Button>
     </div>
     );
 }

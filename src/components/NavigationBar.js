@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const routes = [{path: "/", displayname: "Home"}, {path: "/medics", displayname: "For Medical Professionals"}];
+const routes = [{path: "/", displayname: "Home"}, {path: "/medics", displayname: "For Medical Professionals"}, {path: "patients", displayname: "For Patients"}];
 
 function NavigationBar() {
     return (
