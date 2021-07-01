@@ -1,8 +1,9 @@
+import React, { useState } from "react";
 import DynamicDropdown from "../../components/components-chris/forms/DynamicDropdown";
 import DynamicSwitch from "../../components/components-chris/forms/DynamicSwitch";
-import { Form, Container, Row, Col } from "react-bootstrap";
-import LocationSetter from "../../components/components-chris/forms/LocationSetter";
-
+import { Form, Container, Row, Col, Button } from "react-bootstrap";
+import NewTimeSlot from "../../components/components-chris/NewTimeSlot/NewTimeSlot";
+import TimeSlots from "../../components/components-chris/TimeSlots/TimeSlots";
 const FindADoctorView = (props) => {
   const healthinsurancelist = [
     { displayname: "Public" },
@@ -16,6 +17,20 @@ const FindADoctorView = (props) => {
     { id: "2", displayname: "More" },
   ];
 
+  const DUMMY_DATE = [
+    {
+      id: "1",
+      date: new Date(2021, 2, 28)}
+  ];
+
+  const[timeslots, setTimeSlots] = useState(DUMMY_DATE);
+
+  const addTimeSlotHandler = (timeslot) => {
+    setTimeSlots(prevTimeSlots => {
+      return [timeslot, ...prevTimeSlots];
+    });
+  };
+
   return (
     <Container>
       <Row>
@@ -26,18 +41,18 @@ const FindADoctorView = (props) => {
         <Col>
           <Form>
             <DynamicDropdown
-              label="What Doctor Do You Need?"
+              label="Please choose the type of doctor you need"
               items={doctorlist}
             ></DynamicDropdown>
           </Form>
         </Col>
         <Col>
           <DynamicDropdown
-            label="What Language Should The Doctor Speak?"
+            label="Please choose your preferred language"
             items={languagelist}
           ></DynamicDropdown>
           <DynamicDropdown
-            label="Please Choose Your Health Insurance"
+            label="Please choose your health insurance"
             items={healthinsurancelist}
           ></DynamicDropdown>
           <div>
@@ -48,7 +63,17 @@ const FindADoctorView = (props) => {
           </div>
           {/* <LocationSetter/> */}
         </Col>
-        <Col>When are you usually free?</Col>
+        <Col>
+        <div>When are you usually free?</div>
+        {/* <div><AppointmentDateList/></div> */}
+        <div><NewTimeSlot onAddTimeSlot={addTimeSlotHandler}/></div>
+        {/* <div><TimeSlots/></div> */}
+        </Col>
+      </Row>
+      <Row>
+        <Col>Lorem</Col>
+        <Col>Ipsum</Col>
+        <Col></Col>
       </Row>
     </Container>
   );
