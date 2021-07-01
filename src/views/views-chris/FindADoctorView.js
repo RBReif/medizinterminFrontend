@@ -1,5 +1,5 @@
 import DynamicDropdown from "../../components/components-chris/forms/DynamicDropdown";
-import DisabilitySwitches from "../../components/components-chris/forms/DisabilitySwitches";
+import DynamicSwitch from "../../components/components-chris/forms/DynamicSwitch";
 import { Form, Container, Row, Col } from "react-bootstrap";
 import LocationSetter from "../../components/components-chris/forms/LocationSetter";
 
@@ -40,7 +40,12 @@ const FindADoctorView = (props) => {
             label="Please Choose Your Health Insurance"
             items={healthinsurancelist}
           ></DynamicDropdown>
-          <DisabilitySwitches />
+          <div>
+            <DynamicSwitch id="custom-switch-1" label="Wheel chair availability needed"/>
+            <DynamicSwitch id="custom-switch-2" label="Elevator needed" />
+            <DynamicSwitch id="custom-switch-3" label="Car parking nearby" />
+            <DynamicSwitch id="custom-switch-4" label="Public transport station nearby"/>
+          </div>
           {/* <LocationSetter/> */}
         </Col>
         <Col>When are you usually free?</Col>
