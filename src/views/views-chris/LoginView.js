@@ -1,4 +1,4 @@
-import { Form, Button, FormControl, FormText, FormGroup, FormLabel, Container, Row, Col} from "react-bootstrap";
+import { Form, Button, FormControl, FormText, FormGroup, FormLabel, Container, Col} from "react-bootstrap";
 
 const Login = () => {
 return(

@@ -13,18 +13,6 @@ const LogIn = (props) => {
       // href="/login"
     >
       <Link to="/login">Login</Link>
-      {/* <Dropdown.Item>
-        <Form.Group controlId="formGroupEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
-        </Form.Group>
-      </Dropdown.Item>
-      <Dropdown.Item>
-        <Form.Group controlId="formGroupPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
-        </Form.Group>
-      </Dropdown.Item> */}
     </Button>
   );
 };
