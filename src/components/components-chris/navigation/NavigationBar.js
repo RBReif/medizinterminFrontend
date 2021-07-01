@@ -2,17 +2,16 @@ import {
   Navbar,
   Nav,
 } from "react-bootstrap";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LogInButton from "./LogInButton";
-import TestButton from "../TestButton";
 
 const routes = [
   { path: "/", displayname: "Home" },
   { path: "/medics", displayname: "Are You a Doctor?" },
 ];
 
-const NaviBar = (props) => {
+const NavigationBar = (props) => {
   return (
     <header>
       <Navbar bg="light" expand="lg">
@@ -37,4 +36,4 @@ const NaviBar = (props) => {
   );
 };
 
-export default NaviBar;
+export default NavigationBar;

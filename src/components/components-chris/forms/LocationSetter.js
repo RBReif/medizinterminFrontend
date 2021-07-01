@@ -1,4 +1,4 @@
-import { Form, FormLabel, Range } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 const LocationSetter = (props) => {
   return (

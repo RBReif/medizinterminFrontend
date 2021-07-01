@@ -1,5 +1,4 @@
-import { Form, FormCheck } from "react-bootstrap";
-import Card from "../UI/Card";
+import { Form } from "react-bootstrap";
 
 const DynamicSwitch = (props) => {
   return (
