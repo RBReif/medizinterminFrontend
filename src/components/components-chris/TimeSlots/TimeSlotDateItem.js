@@ -1,5 +1,6 @@
 import React from "react";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
+import TimeSlotDate from "./TimeSlotDate";
 import Card from "../UI/Card";
 
 const TimeSlotDateItem = (props) => {
@@ -14,7 +15,8 @@ const TimeSlotDateItem = (props) => {
     <ListGroup.Item>
         {/* <TimeSlotDate date={props.date.toString()} /> */}
         <div>
-          {props.date.toString()}
+          <TimeSlotDate date={props.date}/>
+          {/* {props.date.toString()} */}
         </div>
     </ListGroup.Item>
   );
