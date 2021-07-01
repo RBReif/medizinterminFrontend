@@ -1,5 +1,7 @@
 import { Button, Dropdown, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
+
 
 const LogIn = (props) => {
   return (
@@ -8,7 +10,9 @@ const LogIn = (props) => {
       menuAlign="right"
       title="Log-In"
       id="dropdown-menu-align-right"
-    >Log-In
+      // href="/login"
+    >
+      <Link to="/login">Login</Link>
       {/* <Dropdown.Item>
         <Form.Group controlId="formGroupEmail">
           <Form.Label>Email address</Form.Label>

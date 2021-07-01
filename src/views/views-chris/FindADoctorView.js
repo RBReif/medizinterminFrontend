@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DynamicDropdown from "../../components/components-chris/forms/DynamicDropdown";
 import DynamicSwitch from "../../components/components-chris/forms/DynamicSwitch";
-import { Form, Container, Row, Col, Button } from "react-bootstrap";
+import { Form, Container, Row, Col, Image} from "react-bootstrap";
 import NewTimeSlot from "../../components/components-chris/NewTimeSlot/NewTimeSlot";
 import TimeSlots from "../../components/components-chris/TimeSlots/TimeSlots";
 
@@ -29,19 +29,17 @@ const FindADoctorView = () => {
 
   console.log("Findadoctorview: " + timeslots);
 
-
   const addTimeSlotHandler = (timeslot) => {
-    setTimeSlots(prevTimeSlots => {
+    setTimeSlots((prevTimeSlots) => {
       return [timeslot, ...prevTimeSlots];
     });
   };
 
-
   return (
     <Container>
       <Row>
-        <Col>Lorem Ipsum</Col>
-        <Col>2 of 2</Col>
+        <Col xs={6} md={3}>
+        <Image src="https://cdn.wallpapersafari.com/50/89/0v7Nyc.jpg/" responsive /></Col>
       </Row>
       <Row>
         <Col>
@@ -76,12 +74,12 @@ const FindADoctorView = () => {
           {/* <LocationSetter/> */}
         </Col>
         <Col>
-          <div>When are you usually free?</div>
-          <div>
+          <Col>When are you usually free?</Col>
+          <Col>
             <NewTimeSlot onAddTimeSlot={addTimeSlotHandler} />
             {console.log(timeslots)}
-            <TimeSlots items={timeslots}/>
-          </div>
+            <TimeSlots items={timeslots} />
+          </Col>
         </Col>
       </Row>
       <Row>
