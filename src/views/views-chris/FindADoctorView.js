@@ -1,10 +1,21 @@
-import FindADoctorForm from "../../components/components-chris/forms/FindADoctorForm";
-import LanguageForm from "../../components/components-chris/forms/LanguageForm";
-import HealthInsuranceForm from "../../components/components-chris/forms/HealthInsuranceForm";
+import DynamicDropdown from "../../components/components-chris/forms/DynamicDropdown";
 import DisabilitySwitches from "../../components/components-chris/forms/DisabilitySwitches";
 import { Form, Container, Row, Col } from "react-bootstrap";
+import LocationSetter from "../../components/components-chris/forms/LocationSetter";
 
 const FindADoctorView = (props) => {
+  const healthinsurancelist = [
+    { displayname: "Public" },
+    { displayname: "Private" },
+  ];
+  const languagelist = [{ displayname: "German" }, { displayname: "English" }];
+  const doctorlist = [
+    { id: "1", displayname: "Dentist" },
+    { id: "2", displayname: "Cardiologist" },
+    { id: "2", displayname: "Something" },
+    { id: "2", displayname: "More" },
+  ];
+
   return (
     <Container>
       <Row>
@@ -14,16 +25,25 @@ const FindADoctorView = (props) => {
       <Row>
         <Col>
           <Form>
-            <div>
-              <FindADoctorForm />
-            </div>
+            <DynamicDropdown
+              label="What Doctor Do You Need?"
+              items={doctorlist}
+            ></DynamicDropdown>
           </Form>
         </Col>
         <Col>
-            <LanguageForm />
-            <HealthInsuranceForm/>
-            <DisabilitySwitches/>
+          <DynamicDropdown
+            label="What Language Should The Doctor Speak?"
+            items={languagelist}
+          ></DynamicDropdown>
+          <DynamicDropdown
+            label="Please Choose Your Health Insurance"
+            items={healthinsurancelist}
+          ></DynamicDropdown>
+          <DisabilitySwitches />
+          {/* <LocationSetter/> */}
         </Col>
+        <Col>When are you usually free?</Col>
       </Row>
     </Container>
   );
