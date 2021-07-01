@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 const DynamicDropdown = (props) => {
   return (
     <Form>
-      <Form.Group controlId="1">
+      <Form.Group controlId={props.id}>
         <Form.Label>
           <p>{props.label}</p>
         </Form.Label>

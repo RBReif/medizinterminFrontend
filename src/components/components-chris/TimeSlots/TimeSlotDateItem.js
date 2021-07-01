@@ -1,11 +1,19 @@
 import React from "react";
 import TimeSlotDate from "./TimeSlotDate";
+import Card from "../UI/Card";
 
 const TimeSlotDateItem = (props) => {
+  // const deleteHandler = () => {
+  //   props.onDelete(props.id);
+  // }; 
+
   return (
-    <li>
-        <TimeSlotDate date={props.date} />
-    </li>
+    <Card>
+        <TimeSlotDate date={props.id} />
+        <div>
+          <p>{props.date}</p>
+        </div>
+        </Card>
   );
 };
 

@@ -6,6 +6,9 @@ const TimeSlotDateList = (props) => {
     return <h2>Found no timeslots.</h2>;
   }
 
+  console.log("Timeslotlist: " + props.items);
+
+
   return (
     <ul>
       {props.items.map((timeslotdate) => (

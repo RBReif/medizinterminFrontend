@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AddTimeSlotForm from "./AddTimeSlotForm";
+import TimeSlotForm from "./TimeSlotForm";
 import { Button } from "react-bootstrap";
 
 const NewTimeSlot = (props) => {
@@ -10,6 +10,7 @@ const NewTimeSlot = (props) => {
       ...enteredTimeSlotData,
       id: Math.random().toString(),
     };
+    
     props.onAddTimeSlot(timeSlotData);
     setIsEditing(false);
   };
@@ -28,7 +29,7 @@ const NewTimeSlot = (props) => {
         <Button onClick={startEditingHandler}>Add Time Slot</Button>
       )}
       {isEditing && (
-        <AddTimeSlotForm
+        <TimeSlotForm
           onSaveExpenseData={saveTimeSlotDataHandler}
           onCancel={stopEditingHandler}
         />
