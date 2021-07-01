@@ -1,19 +1,22 @@
 import React from "react";
-import TimeSlotDate from "./TimeSlotDate";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
 import Card from "../UI/Card";
 
 const TimeSlotDateItem = (props) => {
   // const deleteHandler = () => {
   //   props.onDelete(props.id);
-  // }; 
+  // };
+
+  console.log("NewLog", props.id);
+  console.log("NewLog date", props.date);
 
   return (
-    <Card>
-        <TimeSlotDate date={props.id} />
+    <ListGroup.Item>
+        {/* <TimeSlotDate date={props.date.toString()} /> */}
         <div>
-          <p>{props.date}</p>
+          {props.date.toString()}
         </div>
-        </Card>
+    </ListGroup.Item>
   );
 };
 

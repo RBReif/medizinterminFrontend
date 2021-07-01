@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import NewTimeSlot from "./NewTimeSlot";
-import { Button } from "react-bootstrap";
+import { Button, Container, Row, Col } from "react-bootstrap";
 
-const AddTimeSlotForm = (props) => {
+const TimeSlotForm = (props) => {
   const [enteredDate, setEnteredDate] = useState("");
 
   const dateChangeHandler = (event) => {
     setEnteredDate(event.target.value);
-    console.log(event.target.value);
   };
 
   const submitHandler = (event) => {
@@ -22,27 +20,39 @@ const AddTimeSlotForm = (props) => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <div>
-        <div>
-          <label>Date</label>
-          <input
-            type="date"
-            min="2019-01-01"
-            max="2022-12-31"
-            value={enteredDate}
-            onChange={dateChangeHandler}
-          />
-        </div>
-      </div>
-      <div>
-        <Button type="primary" onClick={props.onCancel}>
-          Cancel
-        </Button>
-        <button type="submit">Add Date</button>
-      </div>
-    </form>
+    <Container>
+      <Row>
+        <Col>
+          <form onSubmit={submitHandler}>
+            <div>
+              <div>
+                <label>Date</label>
+                <input
+                  type="date"
+                  min="2019-01-01"
+                  max="2022-12-31"
+                  value={enteredDate}
+                  onChange={dateChangeHandler}
+                />
+              </div>
+            </div>
+          </form>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Button type="primary" onClick={props.onCancel}>
+            Cancel
+          </Button>
+        </Col>
+        <Col>
+        <form onSubmit={submitHandler}>
+          <Button type="submit">Add Date</Button>
+          </form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
-export default AddTimeSlotForm;
+export default TimeSlotForm;

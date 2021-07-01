@@ -2,7 +2,11 @@ import TimeSlotDateItem from "./TimeSlotDateItem";
 
 
 const TimeSlotDateList = (props) => {
-  if (props.items.length === 0) {
+  console.log("TimeSLotDateList " , props.items);
+  const timeslotitems = props.items;
+  console.log("TimeSlotDateList timeslotitems: " , timeslotitems);
+
+  if (timeslotitems.length === 0) {
     return <h2>Found no timeslots.</h2>;
   }
 
@@ -11,10 +15,10 @@ const TimeSlotDateList = (props) => {
 
   return (
     <ul>
-      {props.items.map((timeslotdate) => (
+      {props.items.map((item) => (
         <TimeSlotDateItem
-          key={timeslotdate.id}
-          date={timeslotdate.date}
+          id={item.id}
+          date={item.date}
         />
       ))}
     </ul>

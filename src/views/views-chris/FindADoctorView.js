@@ -27,11 +27,15 @@ const DUMMY_DATE = [
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState(DUMMY_DATE);
 
+  console.log("Findadoctorview: " + timeslots);
+
+
   const addTimeSlotHandler = (timeslot) => {
     setTimeSlots(prevTimeSlots => {
       return [timeslot, ...prevTimeSlots];
     });
   };
+
 
   return (
     <Container>
@@ -75,7 +79,8 @@ const FindADoctorView = () => {
           <div>When are you usually free?</div>
           <div>
             <NewTimeSlot onAddTimeSlot={addTimeSlotHandler} />
-            {/* <TimeSlots items={timeslots}/> */}
+            {console.log(timeslots)}
+            <TimeSlots items={timeslots}/>
           </div>
         </Col>
       </Row>
