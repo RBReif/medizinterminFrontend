@@ -1,6 +1,5 @@
 import "date-fns";
 import React from "react";
-import { Button, Container, Row, Col } from "react-bootstrap";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
 import {
@@ -13,9 +12,6 @@ const DynamicDatePicker = (props) => {
    const dateChangeHandler = (date) => {
      props.changehandler(date);
    };
-
-   console.log(props.selected);
-
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
