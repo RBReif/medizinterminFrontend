@@ -1,5 +1,4 @@
 import { Form, Button, Container, Col} from "react-bootstrap";
-import LogInButton from "../components/Navigation/LogInButton";
 import RegisterButton from "../components/Navigation/RegisterButton";
 
 const Login = () => {

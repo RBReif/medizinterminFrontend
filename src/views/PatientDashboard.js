@@ -1,9 +1,7 @@
-import React, {useState} from "react";
-import {Form, Container, Row, Col, Image, ListGroup} from "react-bootstrap";
+import {Form, Container, Row, Col} from "react-bootstrap";
 import NewsList from "../components/NewsList";
 import CheckupList from "../components/CheckupList";
 import AppointmentCard from "../components/AppointmentCard";
-import App from "../App";
 
 const PatientDashboard = () => {
 

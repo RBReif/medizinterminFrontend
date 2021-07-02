@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DynamicDropdown from "../components/Forms/DynamicDropdown";
 import DynamicSwitch from "../components/Forms/DynamicSwitch";
-import { Form, Container, Row, Col, Image, ToggleButton} from "react-bootstrap";
+import { Form, Container, Row, Col, Image} from "react-bootstrap";
 import NewTimeSlot from "../components/NewTimeSlot/NewTimeSlot";
 import TimeSlots from "../components/TimeSlots//TimeSlots";
 import Button from "react-bootstrap/esm/Button";
@@ -20,13 +20,6 @@ const doctorlist = [
 ];
 
 const toggles = [{id: "1", displayname: "Wheelchair availability needed?"}, {id: "2", displayname: "Elevator needed"}, {id: "3", displayname: "Car parking nearby"}, {id: "4", displayname: "Public transportation station nearby"}];
-
-// const DUMMY_DATE = [
-//   {
-//     id: "1",
-//     date: new Date(2021, 2, 28),
-//   },
-// ];
 
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
@@ -82,7 +75,6 @@ const FindADoctorView = () => {
           <br/>
           <br/>
           <Button variant="outline-primary"><Link to="/results">Find an appointment</Link></Button>{''}
-
         </Col>
         <Col></Col>
       </Row>

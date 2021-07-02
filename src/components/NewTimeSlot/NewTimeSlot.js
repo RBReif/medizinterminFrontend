@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import TimeSlotForm from "./TimeSlotForm";
 import { Button } from "react-bootstrap";
+import TimeSlotFormTest from "./TimeSlotFormTest";
 
 const NewTimeSlot = (props) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -29,7 +29,7 @@ const NewTimeSlot = (props) => {
         <Button onClick={startEditingHandler}>Add Time Slot</Button>
       )}
       {isEditing && (
-        <TimeSlotForm
+        <TimeSlotFormTest
           onSaveExpenseData={saveTimeSlotDataHandler}
           onCancel={stopEditingHandler}
         />
