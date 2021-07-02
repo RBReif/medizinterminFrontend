@@ -70,23 +70,25 @@ const RegisterProfessionals = () => {
                     </Col>
                 </Row>
                 <Row>
+                    <br/>
                         <Col>
                         <DynamicSwitch
                             id="custom-switch-1"
-                            label="Wheel chair availability provided"
+                            displayname="Wheel chair availability provided"
                         />
-                        <DynamicSwitch id="custom-switch-2" label="Elevator available" />
+                        <DynamicSwitch id="custom-switch-2" displayname="Elevator available" />
                         </Col>
                         <Col>
-                        <DynamicSwitch id="custom-switch-3" label="Car parking nearby" />
+                        <DynamicSwitch id="custom-switch-3" displayname="Car parking nearby" />
                         <DynamicSwitch
                             id="custom-switch-4"
-                            label="Public transport station nearby"
+                            displayname="Public transport station nearby"
                         />
                             </Col>
                         <Col>
-                            <DynamicSwitch id="custom-switch-5" label="I speak English fluently" />
-                            <DynamicSwitch id="custom-switch-6" label="I speak German fluently" />
+                            <DynamicSwitch id="custom-switch-5" displayname="I speak English fluently" />
+
+                            <DynamicSwitch id="custom-switch-6" displayname="I speak German fluently" />
 
                         </Col>
                 </Row>
