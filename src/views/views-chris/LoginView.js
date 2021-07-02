@@ -1,4 +1,6 @@
 import { Form, Button, Container, Col} from "react-bootstrap";
+import LogInButton from "../../components/components-chris/navigation/LogInButton";
+import RegisterButton from "../../components/components-chris/navigation/RegisterButton";
 
 const Login = () => {
 return(
@@ -21,12 +23,24 @@ return(
   <Form.Group className="mb-3" controlId="formBasicCheckbox">
     <Form.Check type="checkbox" label="Check me out" />
   </Form.Group>
-  <Button variant="primary" type="submit">
-    Submit
-  </Button>
+
+      <Button variant="primary" type="submit" >
+        Submit
+      </Button>
+  <br/>
+  <Form.Text className="text-muted">
+  Not registered yet? Sign up now:
+  </Form.Text>
+      <RegisterButton></RegisterButton>
+
+
+
+
+
 </Form>
 </Col>
 <Col></Col>
+
 </Container>
 );
 };
