@@ -8,6 +8,8 @@ const DynamicSwitch = (props) => {
     setDone(!done);
 }
 
+console.log(done);
+
   return (
     <div>
     <Form>
