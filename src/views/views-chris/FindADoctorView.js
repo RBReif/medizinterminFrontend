@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DynamicDropdown from "../../components/components-chris/forms/DynamicDropdown";
 import DynamicSwitch from "../../components/components-chris/forms/DynamicSwitch";
-import { Form, Container, Row, Col, Image} from "react-bootstrap";
+import { Form, Container, Row, Col, Image, ToggleButton} from "react-bootstrap";
 import NewTimeSlot from "../../components/components-chris/NewTimeSlot/NewTimeSlot";
 import TimeSlots from "../../components/components-chris/TimeSlots/TimeSlots";
 
@@ -17,15 +17,17 @@ const doctorlist = [
   { id: "2", displayname: "More" },
 ];
 
-const DUMMY_DATE = [
-  {
-    id: "1",
-    date: new Date(2021, 2, 28),
-  },
-];
+const toggles = [{id: "1", displayname: "Wheelchair availability needed?"}, {id: "2", displayname: "Elevator needed"}, {id: "3", displayname: "Car parking nearby"}, {id: "4", displayname: "Public transportation station nearby"}];
+
+// const DUMMY_DATE = [
+//   {
+//     id: "1",
+//     date: new Date(2021, 2, 28),
+//   },
+// ];
 
 const FindADoctorView = () => {
-  const [timeslots, setTimeSlots] = useState(DUMMY_DATE);
+  const [timeslots, setTimeSlots] = useState("");
 
   const addTimeSlotHandler = (timeslot) => {
     setTimeSlots((prevTimeSlots) => {
@@ -58,16 +60,9 @@ const FindADoctorView = () => {
             items={healthinsurancelist}
           ></DynamicDropdown>
           <div>
-            <DynamicSwitch
-              id="custom-switch-1"
-              label="Wheel chair availability needed"
-            />
-            <DynamicSwitch id="custom-switch-2" label="Elevator needed" />
-            <DynamicSwitch id="custom-switch-3" label="Car parking nearby" />
-            <DynamicSwitch
-              id="custom-switch-4"
-              label="Public transport station nearby"
-            />
+          {toggles.map((toggle) => {
+            return <DynamicSwitch id={toggle.id} displayname={toggle.displayname}></DynamicSwitch>;
+          })}
           </div>
           {/* <LocationSetter/> */}
         </Col>
