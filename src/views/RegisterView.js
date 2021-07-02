@@ -13,6 +13,8 @@ const Register = () => {
         <Container>
             <h2>Sign-up for patients</h2>
             <Form>
+                <h4>Login information</h4>
+
                 <Row>
                     <Col>
                         <Form.Label> First name </Form.Label>
@@ -36,6 +38,8 @@ const Register = () => {
                     </Form.Group>
                 </Row>
 
+                <h4>Address information</h4>
+
                 <Row className="mb-3">
                     <Col>
                         <Form.Label>Address</Form.Label>
@@ -56,6 +60,7 @@ const Register = () => {
                         <Form.Control placeholder="85748"/>
                     </Col>
                 </Row>
+                <h4>Health related information</h4>
 
                 <Row>
                     <Col>
