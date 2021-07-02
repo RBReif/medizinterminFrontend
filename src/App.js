@@ -1,29 +1,33 @@
 import TestButton from "./components/components-chris/TestButton";
-import { Switch, Route } from "react-router-dom";
+import {Switch, Route} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from "./components/components-chris/navigation/NavigationBar";
 import FindADoctorView from "./views/views-chris/FindADoctorView";
 import LogInView from "./views/views-chris/LoginView";
+import PatientDashboard from "./views/views-max/PatientDashboard";
 
 function App(props) {
-  return (
-    <div>
+    return (
         <div>
-          <NavigationBar/>
-          <Switch>
-          < Route path = "/" exact>
-            <FindADoctorView/> 
-          </Route>
-          <Route path = "/medics">
-          <TestButton name="Test"></TestButton>
-          </Route>
-          <Route path = "/login">
-            <LogInView/>
-          </Route>
-        </Switch>
+            <div>
+                <NavigationBar/>
+                <Switch>
+                    < Route path="/" exact>
+                        <FindADoctorView/>
+                    </Route>
+                    <Route path="/medics">
+                        <TestButton name="Test"></TestButton>
+                    </Route>
+                    <Route path="/login">
+                        <LogInView/>
+                    </Route>
+                    <Route path="/dashboard">
+                        <PatientDashboard/>
+                    </Route>
+                </Switch>
+            </div>
         </div>
-    </div>
-  );
+    );
 }
 
 export default App;
