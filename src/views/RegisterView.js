@@ -1,5 +1,5 @@
 import {Form, Button, Container, Col, Row} from "react-bootstrap";
-import DynamicDropdown from "../../components/components-chris/forms/DynamicDropdown";
+import DynamicDropdown from "../components/Forms/DynamicDropdown";
 import React from "react";
 
 const healthinsurancelist = [

@@ -1,7 +1,7 @@
 import { Form, Button, Container, Col} from "react-bootstrap";
-import LogInButton from "../../components/components-chris/navigation/LogInButton";
-import RegisterButton from "../../components/components-chris/navigation/RegisterButton";
-import RegisterButtonProfessional from "../../components/components-chris/navigation/RegisterButtonProfessional";
+import LogInButton from "../components/Navigation/LogInButton";
+import RegisterButton from "../components/Navigation/RegisterButton";
+import RegisterButtonProfessional from "../components/Navigation/RegisterButtonProfessional";
 
 const LoginProf = () => {
     return(

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import DynamicDropdown from "../../components/components-chris/forms/DynamicDropdown";
-import DynamicSwitch from "../../components/components-chris/forms/DynamicSwitch";
+import DynamicDropdown from "../components/Forms/DynamicDropdown";
+import DynamicSwitch from "../components/Forms/DynamicSwitch";
 import { Form, Container, Row, Col, Image} from "react-bootstrap";
-import NewTimeSlot from "../../components/components-chris/NewTimeSlot/NewTimeSlot";
-import TimeSlots from "../../components/components-chris/TimeSlots/TimeSlots";
+import NewTimeSlot from "../components/NewTimeSlot/NewTimeSlot";
+import TimeSlots from "../components/TimeSlots/TimeSlots";
 
 const healthinsurancelist = [
   { displayname: "Public" },

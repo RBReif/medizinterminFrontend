@@ -1,7 +1,7 @@
 import {Form, Button, Container, Col, Row} from "react-bootstrap";
-import DynamicDropdown from "../../components/components-chris/forms/DynamicDropdown";
+import DynamicDropdown from "../components/Forms/DynamicDropdown";
 import React from "react";
-import DynamicSwitch from "../../components/components-chris/forms/DynamicSwitch";
+import DynamicSwitch from "../components/Forms/DynamicSwitch";
 
 const languagelist = [{displayname: "none"}, { displayname: "French" }, { displayname: "Turkish" }, {displayname: "Spanish"}];
 const doctorlist = [

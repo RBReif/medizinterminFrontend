@@ -1,12 +1,11 @@
-import TestButton from "./components/components-chris/TestButton";
 import {Switch, Route} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NavigationBar from "./components/components-chris/navigation/NavigationBar";
-import FindADoctorView from "./views/views-chris/FindADoctorView";
-import LogInView from "./views/views-chris/LoginView";
-import RegisterView from "./views/views-roland/RegisterView";
-import LogInProfessionalsView from "./views/views-roland/LogInProfessionalsView";
-import RegisterProfessionalsView from "./views/views-roland/RegisterProfessionalsView";
+import NavigationBar from "./components/Navigation/NavigationBar";
+import FindADoctorView from "./views/FindADoctorView";
+import LogInView from "./views/LoginView";
+import RegisterView from "./views/RegisterView";
+import LogInProfessionalsView from "./views/LogInProfessionalsView";
+import RegisterProfessionalsView from "./views/RegisterProfessionalsView";
 
 function App(props) {
     return (
