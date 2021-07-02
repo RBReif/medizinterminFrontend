@@ -6,6 +6,7 @@ const Login = () => {
 return(
 <Container>
 <Col></Col>
+  <h2>Login for patients</h2>
 <Col>
 <Form>
   <Form.Group className="mb-3" controlId="formBasicEmail">

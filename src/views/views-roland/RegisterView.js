@@ -11,6 +11,7 @@ const healthinsurancelist = [
 const Register = () => {
     return (
         <Container>
+            <h2>Sign-up for patients</h2>
             <Form>
                 <Row>
                     <Col>

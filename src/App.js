@@ -5,6 +5,8 @@ import NavigationBar from "./components/components-chris/navigation/NavigationBa
 import FindADoctorView from "./views/views-chris/FindADoctorView";
 import LogInView from "./views/views-chris/LoginView";
 import RegisterView from "./views/views-roland/RegisterView";
+import LogInProfessionalsView from "./views/views-roland/LogInProfessionalsView";
+import RegisterProfessionalsView from "./views/views-roland/RegisterProfessionalsView";
 
 function App(props) {
     return (
@@ -16,7 +18,10 @@ function App(props) {
                         <FindADoctorView/>
                     </Route>
                     <Route path="/medics">
-                        <TestButton name="Test"></TestButton>
+                        <LogInProfessionalsView/>
+                    </Route>
+                    <Route path="/registerProfessional">
+                        <RegisterProfessionalsView/>
                     </Route>
                     <Route path="/login">
                         <LogInView/>
