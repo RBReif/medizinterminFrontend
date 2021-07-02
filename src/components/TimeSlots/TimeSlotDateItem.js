@@ -11,7 +11,7 @@ const TimeSlotDateItem = (props) => {
     <ListGroup.Item>
         {/* <TimeSlotDate date={props.date.toString()} /> */}
         <div>
-          <TimeSlotDate date={props.date}/>
+          <TimeSlotDate startdate={props.startdate} enddate={props.enddate}/>
           {/* {props.date.toString()} */}
         </div>
     </ListGroup.Item>
