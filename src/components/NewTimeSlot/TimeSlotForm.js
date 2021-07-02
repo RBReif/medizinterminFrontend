@@ -49,6 +49,7 @@ const TimeSlotNew = (props) => {
             <Grid container justify="space-around">
               <KeyboardDatePicker
                 margin="normal"
+                variant="inline"
                 id="date-picker-startdate"
                 label="Please select start date"
                 format="dd/MM/yyyy"
@@ -60,8 +61,12 @@ const TimeSlotNew = (props) => {
               />
               <KeyboardTimePicker
                 margin="normal"
+                variant="inline"
                 id="time-picker-starttime"
+                todayLabel="now"
                 label="Please select start time"
+                minutesStep={10}
+                ampm={false}
                 value={selectedStartDate}
                 onChange={handleStartDateChange}
                 KeyboardButtonProps={{
@@ -70,6 +75,7 @@ const TimeSlotNew = (props) => {
               />
                <KeyboardDatePicker
                 margin="normal"
+                variant="inline"
                 id="date-picker-enddate"
                 label="Please select end date"
                 format="dd/MM/yyyy"
@@ -81,9 +87,14 @@ const TimeSlotNew = (props) => {
               />
               <KeyboardTimePicker
                 margin="normal"
+                variant="inline"
+                todayLabel="now"
                 id="time-picker-endtime"
+                ampm={false}
+                disableToolbar={false}
                 label="Please select end time"
                 value={selectedEndDate}
+                minutesStep={10}
                 onChange={handleEndDateChange}
                 KeyboardButtonProps={{
                   "aria-label": "change time",
