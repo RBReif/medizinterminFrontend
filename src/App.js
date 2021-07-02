@@ -1,9 +1,8 @@
-import TestButton from "./components/components-chris/TestButton";
 import { Switch, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NavigationBar from "./components/components-chris/navigation/NavigationBar";
-import FindADoctorView from "./views/views-chris/FindADoctorView";
-import LogInView from "./views/views-chris/LoginView";
+import NavigationBar from "./components/Navigation/NavigationBar";
+import FindADoctorView from "./views/FindADoctorView";
+import LogInView from "./views/LoginView";
 
 function App(props) {
   return (
@@ -15,7 +14,6 @@ function App(props) {
             <FindADoctorView/> 
           </Route>
           <Route path = "/medics">
-          <TestButton name="Test"></TestButton>
           </Route>
           <Route path = "/login">
             <LogInView/>
