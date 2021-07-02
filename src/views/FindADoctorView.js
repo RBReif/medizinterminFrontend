@@ -4,6 +4,8 @@ import DynamicSwitch from "../components/Forms/DynamicSwitch";
 import { Form, Container, Row, Col, Image, ToggleButton} from "react-bootstrap";
 import NewTimeSlot from "../components/NewTimeSlot/NewTimeSlot";
 import TimeSlots from "../components/TimeSlots//TimeSlots";
+import Button from "react-bootstrap/esm/Button";
+import {Link} from "react-router-dom";
 
 const healthinsurancelist = [
   { displayname: "Public" },
@@ -76,7 +78,12 @@ const FindADoctorView = () => {
       </Row>
       <Row>
         <Col>Lorem</Col>
-        <Col>Ipsum</Col>
+        <Col>
+          <br/>
+          <br/>
+          <Button variant="outline-primary"><Link to="/results">Find an appointment</Link></Button>{''}
+
+        </Col>
         <Col></Col>
       </Row>
     </Container>
