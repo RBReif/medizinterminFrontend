@@ -16,6 +16,7 @@ const RegisterProfessionals = () => {
         <Container>
             <h2>Sign-up for medical professionals</h2>
             <Form>
+                <h4>Login information</h4>
                 <Row>
                     <Col>
                         <Form.Label> First name </Form.Label>
@@ -38,7 +39,7 @@ const RegisterProfessionals = () => {
                         <Form.Control type="password" placeholder="Enter password"/>
                     </Form.Group>
                 </Row>
-
+                <h4>Address information</h4>
                 <Row className="mb-3">
                     <Col>
                         <Form.Label>Office address</Form.Label>
@@ -59,14 +60,29 @@ const RegisterProfessionals = () => {
                         <Form.Control placeholder="85748"/>
                     </Col>
                 </Row>
-                <br/>
-                <br/>
+
+                <h4>What do you offer your patients?</h4>
                 <Row>
                     <Col>
                         <DynamicDropdown
                             label="What is your area of expertise?"
                             items={doctorlist}
                         ></DynamicDropdown>
+                    </Col>
+                    <Col>
+
+                            <label htmlFor="img">Profile picture:</label>
+                            <br/>
+
+                        <Form.File
+                            id="img"
+                            label="Select your profile picture"
+                            accept="image/*"
+                            custom
+                        />
+                        <Form.Text className="text-muted">
+                            You can upload a profile picture to leave a good first impression
+                        </Form.Text>
                     </Col>
                 </Row>
                 <Row>
@@ -93,7 +109,6 @@ const RegisterProfessionals = () => {
                         </Col>
                 </Row>
                 <br/>
-                <br/>
                 <Row>
                     <Col>
                 <DynamicDropdown
@@ -107,7 +122,10 @@ const RegisterProfessionals = () => {
                             items={languagelist}
                         ></DynamicDropdown>
                     </Col>
+
+
                 </Row>
+                <br/>
                 <Form.Group className="mb-3" id="formGridCheckbox">
                     <Form.Check type="checkbox" label="Agree to terms and conditions"/>
                 </Form.Group>
