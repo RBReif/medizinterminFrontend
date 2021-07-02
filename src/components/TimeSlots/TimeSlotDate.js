@@ -10,8 +10,6 @@ const TimeSlotDate = (props) => {
   const endhour = props.enddate.getHours();
   const endminute = props.enddate.getMinutes();
 
-
-
   return (
     <div>
         <div>Start: {startday} {startmonth} {startyear}, {starthour}:{startminute}</div>

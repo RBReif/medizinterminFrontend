@@ -5,24 +5,24 @@ import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
 } from "@material-ui/pickers";
+import DynamicDatePicker from "../Forms/DynamicDatePicker";
+import DynamicTimePicker from "../Forms/DynamicTimePicker";
 
-const TimeSlotNew = (props) => {
-   // The first commit of Material-UI
-   const [selectedStartDate, setselectedStartDate] = React.useState(new Date());
-   const [selectedEndDate, setselectedEndDate] = React.useState(new Date());
+const TimeSlotForm = (props) => {
+  // The first commit of Material-UI
+  const [selectedStartDate, setselectedStartDate] = React.useState(new Date());
+  const [selectedEndDate, setselectedEndDate] = React.useState(new Date());
 
-   const handleStartDateChange = (date) => {
-     setselectedStartDate(date);
-   };
+  const handleStartDateChange = (date) => {
+    setselectedStartDate(date);
+  };
 
-   const handleEndDateChange = (date) => {
+  const handleEndDateChange = (date) => {
     setselectedEndDate(date);
   };
 
-   const submitHandler = (event) => {
+  const submitHandler = (event) => {
     event.preventDefault();
 
     const timeSlotData = {
@@ -36,69 +36,43 @@ const TimeSlotNew = (props) => {
   };
 
   const alertHandler = (event) => {
-      event.preventDefault();
-      console.log("Invalid input");
-      alert("Invalid input. Please choose a end date and end time greater than start date and start time");
-  }
+    event.preventDefault();
+    console.log("Invalid input");
+    alert(
+      "Invalid input. Please choose a end date and end time greater than start date and start time"
+    );
+  };
 
+  console.log("Form : ", selectedStartDate);
   return (
     <Container>
       <Row>
         <Col>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container justify="space-around">
-              <KeyboardDatePicker
-                margin="normal"
-                variant="inline"
-                id="date-picker-startdate"
-                label="Please select start date"
-                format="dd/MM/yyyy"
-                value={selectedStartDate}
-                onChange={handleStartDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date",
-                }}
-              />
-              <KeyboardTimePicker
-                margin="normal"
-                variant="inline"
-                id="time-picker-starttime"
-                todayLabel="now"
+              <DynamicDatePicker
+                selected={selectedStartDate}
+                changehandler={handleStartDateChange}
                 label="Please select start time"
-                minutesStep={10}
-                ampm={false}
-                value={selectedStartDate}
-                onChange={handleStartDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change time",
-                }}
+                id="date-picker-startdate"
               />
-               <KeyboardDatePicker
-                margin="normal"
-                variant="inline"
-                id="date-picker-enddate"
+              <DynamicTimePicker
+                selected={selectedStartDate}
+                changehandler={handleStartDateChange}
+                label="Please select start time"
+                id="date-picker-starttime"
+              />
+              <DynamicDatePicker
+                selected={selectedEndDate}
+                changehandler={handleEndDateChange}
                 label="Please select end date"
-                format="dd/MM/yyyy"
-                value={selectedEndDate}
-                onChange={handleEndDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date",
-                }}
+                id="date-picker-enddate"
               />
-              <KeyboardTimePicker
-                margin="normal"
-                variant="inline"
-                todayLabel="now"
-                id="time-picker-endtime"
-                ampm={false}
-                disableToolbar={false}
+              <DynamicTimePicker
+                selected={selectedEndDate}
+                changehandler={handleEndDateChange}
                 label="Please select end time"
-                value={selectedEndDate}
-                minutesStep={10}
-                onChange={handleEndDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change time",
-                }}
+                id="date-picker-endtime"
               />
             </Grid>
           </MuiPickersUtilsProvider>
@@ -111,13 +85,23 @@ const TimeSlotNew = (props) => {
           </Button>
         </Col>
         <Col>
-          <form onSubmit={selectedEndDate > selectedStartDate ? selectedStartDate > new Date() ? selectedEndDate > new Date() ? submitHandler : alertHandler : alertHandler: alertHandler}>
+          <form
+            onSubmit={
+              selectedEndDate > selectedStartDate
+                ? selectedStartDate > new Date()
+                  ? selectedEndDate > new Date()
+                    ? submitHandler
+                    : alertHandler
+                  : alertHandler
+                : alertHandler
+            }
+          >
             <Button type="submit">Add Date</Button>
           </form>
         </Col>
       </Row>
     </Container>
   );
-}
+};
 
-export default TimeSlotNew;
+export default TimeSlotForm;
