@@ -6,6 +6,7 @@ import NewTimeSlot from "../components/NewTimeSlot/NewTimeSlot";
 import TimeSlots from "../components/TimeSlots//TimeSlots";
 import Button from "react-bootstrap/esm/Button";
 import {Link} from "react-router-dom";
+import Page from "../components/Page";
 
 const healthinsurancelist = [
   { displayname: "Public" },
@@ -31,6 +32,7 @@ const FindADoctorView = () => {
   };
 
   return (
+    <Page>
     <Container>
       <Row>
         <Col xs={6} md={3}>
@@ -79,6 +81,7 @@ const FindADoctorView = () => {
         <Col></Col>
       </Row>
     </Container>
+    </Page>
   );
 };
 
