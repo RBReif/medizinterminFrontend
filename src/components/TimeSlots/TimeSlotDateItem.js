@@ -1,6 +1,7 @@
 import React from "react";
 import { ListGroup } from "react-bootstrap";
 import TimeSlotDate from "./TimeSlotDate";
+import DynamicCard from "../UI/DynamicCard";
 
 const TimeSlotDateItem = (props) => {
   // const deleteHandler = () => {
@@ -8,13 +9,7 @@ const TimeSlotDateItem = (props) => {
   // };
 
   return (
-    <ListGroup.Item>
-        {/* <TimeSlotDate date={props.date.toString()} /> */}
-        <div>
-          <TimeSlotDate startdate={props.startdate} enddate={props.enddate}/>
-          {/* {props.date.toString()} */}
-        </div>
-    </ListGroup.Item>
+    <DynamicCard variant="body2" content={<div><TimeSlotDate title="Start" date={props.startdate}/><br/><TimeSlotDate title="End" date={props.enddate}/></div>}/>
   );
 };
 

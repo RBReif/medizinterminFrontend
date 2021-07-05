@@ -1,20 +1,14 @@
 const TimeSlotDate = (props) => {
-  const startmonth = props.startdate.toLocaleString("en-US", { month: "long" });
-  const startday = props.startdate.toLocaleString("en-US", { day: "2-digit" });
-  const startyear = props.startdate.getFullYear();
-  const starthour = props.startdate.getHours();
-  const startminute = props.startdate.getMinutes();
-  const endmonth = props.enddate.toLocaleString("en-US", { month: "long" });
-  const endday = props.enddate.toLocaleString("en-US", { day: "2-digit" });
-  const endyear = props.enddate.getFullYear();
-  const endhour = props.enddate.getHours();
-  const endminute = props.enddate.getMinutes();
+  const month = props.date.toLocaleString("en-US", { month: "long" });
+  const day = props.date.toLocaleString("en-US", { day: "2-digit" });
+  const year = props.date.getFullYear();
+  const hour = props.date.getHours();
+  const minute = props.date.getMinutes();
 
   return (
-    <div>
-        <div>Start: {startday} {startmonth} {startyear}, {starthour}:{startminute}</div>
-        <div>End: {endday} {endmonth} {endyear}, {endhour}:{endminute}</div>
-    </div>
+        <div>
+          {props.title}: {day} {month} {year}, {hour}:{minute}
+        </div>
   );
 };
 

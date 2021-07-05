@@ -26,7 +26,7 @@ const TimeSlotDateList = (props) => {
   const timeslotitems = props.items;
 
   if (timeslotitems.length === 0) {
-    return <h2>Found no timeslots.</h2>;
+    return <h5>Found no timeslots.</h5>;
   }
 
   return (

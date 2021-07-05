@@ -42,7 +42,7 @@ export const Footer = Styled(PlainFooter)`
     bottom: 0;
     left: 0;
     right: 0;
-    position: absolute;
+    position: flexible;
     background: white;
     > p {
         text-align: center;
