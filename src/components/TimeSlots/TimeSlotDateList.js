@@ -29,6 +29,8 @@ const TimeSlotDateList = (props) => {
     return <h5>Found no timeslots.</h5>;
   }
 
+  console.log(timeslotitems);
+
   return (
     <ul>
       {props.items.map((item) => (
