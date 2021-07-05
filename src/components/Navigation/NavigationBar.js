@@ -5,7 +5,7 @@ import {
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LogInButton from "./LogInButton";
-import KebabMenu from "./KebabMenu";
+// import KebabMenu from "./KebabMenu";
 
 const routes = [
   { path: "/", displayname: "Home" },
