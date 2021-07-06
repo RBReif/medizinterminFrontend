@@ -51,17 +51,26 @@ const FindADoctorView = () => {
         <Row>
           <Col>
             <Form>
-              <DynamicCard variant="outlined"
+              <DynamicCard
+                variant="outlined"
                 content={
                   <div>
                     <h4>Area of Expertise</h4>
                     <DynamicCard
-                    variant="body2"
+                      variant="body2"
                       content={
                         <DynamicDropdown
                           label="Please choose the type of doctor you need"
                           items={doctorlist}
                         ></DynamicDropdown>
+                      }
+                    ></DynamicCard>
+                    <DynamicCard
+                    variant="body2"
+                      content={
+                        <div>
+                          <h4>Preferred Location</h4>
+                        </div>
                       }
                     ></DynamicCard>
                   </div>
@@ -70,11 +79,13 @@ const FindADoctorView = () => {
             </Form>
           </Col>
           <Col>
-            <DynamicCard variant="outlined"
+            <DynamicCard
+              variant="outlined"
               content={
                 <div>
                   <h4>Language, Location, and Disability Settings</h4>
-                  <DynamicCard variant="body2"
+                  <DynamicCard
+                    variant="body2"
                     content={
                       <DynamicDropdown
                         label="Please choose your preferred language"
@@ -82,7 +93,8 @@ const FindADoctorView = () => {
                       ></DynamicDropdown>
                     }
                   ></DynamicCard>
-                  <DynamicCard variant="body2"
+                  <DynamicCard
+                    variant="body2"
                     content={
                       <DynamicDropdown
                         label="Please choose your health insurance"
@@ -106,7 +118,8 @@ const FindADoctorView = () => {
             ></DynamicCard>
           </Col>
           <Col>
-            <DynamicCard variant="outlined"
+            <DynamicCard
+              variant="outlined"
               content={
                 <div>
                   <h4>When are you usually free?</h4>
