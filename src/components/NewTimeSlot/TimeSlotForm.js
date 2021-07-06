@@ -1,42 +1,81 @@
-import React, { useState } from "react";
+import "date-fns";
+import React from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
+import Grid from "@material-ui/core/Grid";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import DynamicDatePicker from "../Forms/DynamicDatePicker";
+import DynamicTimePicker from "../Forms/DynamicTimePicker";
 
 const TimeSlotForm = (props) => {
-  const [enteredDate, setEnteredDate] = useState("");
+  // The first commit of Material-UI
+  const [selectedStartDate, setselectedStartDate] = React.useState(new Date());
+  const [selectedEndDate, setselectedEndDate] = React.useState(new Date());
 
-  const dateChangeHandler = (event) => {
-    setEnteredDate(event.target.value);
+  const handleStartDateChange = (date) => {
+    setselectedStartDate(date);
+  };
+
+  const handleEndDateChange = (date) => {
+    setselectedEndDate(date);
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
 
     const timeSlotData = {
-      date: new Date(enteredDate),
+      startdate: new Date(selectedStartDate),
+      enddate: new Date(selectedEndDate),
     };
 
-    props.onSaveExpenseData(timeSlotData);
-    setEnteredDate("");
+    props.onSaveTimeSlotData(timeSlotData);
+    setselectedStartDate("");
+    setselectedEndDate("");
   };
 
+  const alertHandler = (event) => {
+    event.preventDefault();
+    console.log("Invalid input");
+    alert(
+      "Invalid input. Please choose a end date and end time greater than start date and start time"
+    );
+  };
+
+  console.log("Form : ", selectedStartDate);
   return (
     <Container>
       <Row>
         <Col>
-          <form onSubmit={submitHandler}>
-            <div>
-              <div>
-                <label>Date</label>
-                <input
-                  type="date"
-                  min="2019-01-01"
-                  max="2022-12-31"
-                  value={enteredDate}
-                  onChange={dateChangeHandler}
-                />
-              </div>
-            </div>
-          </form>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid container justify="space-around">
+              <DynamicDatePicker
+                selected={selectedStartDate}
+                changehandler={handleStartDateChange}
+                label="Please select start time"
+                id="date-picker-startdate"
+              />
+              <DynamicTimePicker
+                selected={selectedStartDate}
+                changehandler={handleStartDateChange}
+                label="Please select start time"
+                id="date-picker-starttime"
+              />
+              <DynamicDatePicker
+                selected={selectedEndDate}
+                changehandler={handleEndDateChange}
+                label="Please select end date"
+                id="date-picker-enddate"
+              />
+              <DynamicTimePicker
+                selected={selectedEndDate}
+                changehandler={handleEndDateChange}
+                label="Please select end time"
+                id="date-picker-endtime"
+              />
+            </Grid>
+          </MuiPickersUtilsProvider>
         </Col>
       </Row>
       <Row>
@@ -46,8 +85,18 @@ const TimeSlotForm = (props) => {
           </Button>
         </Col>
         <Col>
-        <form onSubmit={submitHandler}>
-          <Button type="submit">Add Date</Button>
+          <form
+            onSubmit={
+              selectedEndDate > selectedStartDate
+                ? selectedStartDate > new Date()
+                  ? selectedEndDate > new Date()
+                    ? submitHandler
+                    : alertHandler
+                  : alertHandler
+                : alertHandler
+            }
+          >
+            <Button type="submit">Add Date</Button>
           </form>
         </Col>
       </Row>

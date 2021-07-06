@@ -5,6 +5,7 @@ import {
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LogInButton from "./LogInButton";
+// import KebabMenu from "./KebabMenu";
 
 const routes = [
   { path: "/", displayname: "Home" },
@@ -29,6 +30,7 @@ const NavigationBar = (props) => {
           </Nav>
           <Nav>
             <LogInButton/>
+            {/* <KebabMenu/> */}
           </Nav>
         </Navbar.Collapse>
       </Navbar>

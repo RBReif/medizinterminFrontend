@@ -1,6 +1,5 @@
 import {Switch, Route} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NavigationBar from "./components/Navigation/NavigationBar";
 import FindADoctorView from "./views/FindADoctorView";
 import LogInView from "./views/LoginView";
 import RegisterView from "./views/RegisterView";
@@ -17,7 +16,7 @@ function App(props) {
     return (
         <div>
             <div>
-                <NavigationBar/>
+                {/* <NavigationBar/> */}
                 <Switch>
                     < Route path="/" exact>
                         <FindADoctorView/>
@@ -52,7 +51,6 @@ function App(props) {
                         <PatientDashboard/>
                     </Route>
                 </Switch>
-                <Footer/>
             </div>
         </div>
     );
