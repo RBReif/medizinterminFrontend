@@ -50,6 +50,7 @@ const TimeSlotForm = (props) => {
         <Col>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container justify="space-around">
+              <Col>
               <DynamicDatePicker
                 selected={selectedStartDate}
                 changehandler={handleStartDateChange}
@@ -62,6 +63,8 @@ const TimeSlotForm = (props) => {
                 label="Please select start time"
                 id="date-picker-starttime"
               />
+              </Col>
+              <Col>
               <DynamicDatePicker
                 selected={selectedEndDate}
                 changehandler={handleEndDateChange}
@@ -74,15 +77,16 @@ const TimeSlotForm = (props) => {
                 label="Please select end time"
                 id="date-picker-endtime"
               />
+              </Col>
             </Grid>
           </MuiPickersUtilsProvider>
         </Col>
       </Row>
       <Row>
         <Col>
-          <Button type="primary" onClick={props.onCancel}>
+          <center><Button type="primary" onClick={props.onCancel}>
             Cancel
-          </Button>
+          </Button></center>
         </Col>
         <Col>
           <form
@@ -96,7 +100,7 @@ const TimeSlotForm = (props) => {
                 : alertHandler
             }
           >
-            <Button type="submit">Add Date</Button>
+            <center><Button type="submit">Add Date</Button></center>
           </form>
         </Col>
       </Row>

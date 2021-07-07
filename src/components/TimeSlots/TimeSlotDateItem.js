@@ -9,6 +9,7 @@ const TimeSlotDateItem = (props) => {
   // };
 
   return (
+    <center>
     <DynamicCard
       id={props.id}
       variant="body2"
@@ -22,6 +23,7 @@ const TimeSlotDateItem = (props) => {
         </div>
       }
     />
+    </center>
   );
 };
 

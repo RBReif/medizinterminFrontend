@@ -17,8 +17,8 @@ const languagelist = [{ displayname: "German" }, { displayname: "English" }];
 const doctorlist = [
   { id: "1", displayname: "Dentist" },
   { id: "2", displayname: "Cardiologist" },
-  { id: "2", displayname: "Something" },
-  { id: "2", displayname: "More" },
+  { id: "3", displayname: "Something" },
+  { id: "4", displayname: "More" },
 ];
 
 const toggles = [
@@ -40,7 +40,7 @@ const FindADoctorView = () => {
   return (
     <Page>
       <Container>
-        <Row>
+        <Row xs={1} xl={3}>
           <Col xs={6} md={3}>
             <Image
               src="https://cdn.wallpapersafari.com/50/89/0v7Nyc.jpg/"

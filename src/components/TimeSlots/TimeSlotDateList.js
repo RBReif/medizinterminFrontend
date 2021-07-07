@@ -32,7 +32,7 @@ const TimeSlotDateList = (props) => {
   console.log(timeslotitems);
 
   return (
-    <ul>
+    <center>
       {props.items.map((item) => (
         <TimeSlotDateItem
           id={item.id}
@@ -40,7 +40,7 @@ const TimeSlotDateList = (props) => {
           enddate={item.enddate}
         />
       ))}
-    </ul>
+    </center>
   );
 };
 
