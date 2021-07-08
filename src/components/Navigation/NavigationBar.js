@@ -18,7 +18,7 @@ const NavigationBar = (props) => {
   return (
     <header>
       <ThemeProvider theme={Theme}>
-      <Navbar  collapseOnSelect bg="light" variant="light" expand="lg">
+      <Navbar collapseOnSelect bg="light" variant="light" expand="lg">
       <Link to="/" className="navbar-brand">medizintermin</Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
