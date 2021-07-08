@@ -8,6 +8,7 @@ import Button from "react-bootstrap/esm/Button";
 import { Link } from "react-router-dom";
 import Page from "../components/Page";
 import DynamicCard from "../components/UI/DynamicCard";
+import TimeSlotDateList from "../components/TimeSlots/TimeSlotDateList";
 
 const healthinsurancelist = [
   { displayname: "Public" },
@@ -35,6 +36,18 @@ const FindADoctorView = () => {
     setTimeSlots((prevTimeSlots) => {
       return [timeslot, ...prevTimeSlots];
     });
+  };
+  
+  const deleteTimeSlotHandler = (timeslot) => {
+    // setTimeSlots(prevTimeSlots => {  
+      // var index = timeslot.indexOf(timeslot.id);
+      console.log(timeslot);
+      // const updatedTimeSlots = prevTimeSlots.filter(slot => slot.id !== timeslot.id);
+      // console.log("updatedtimeslots: ", updatedTimeSlots);
+      // console.log("prevtimeslots: ", prevTimeSlots);
+      // console.log("timeslotId", timeslot.id);
+      // return updatedTimeSlots;
+    // )}
   };
 
   return (
@@ -124,7 +137,8 @@ const FindADoctorView = () => {
                 <div>
                   <h4>When are you usually free?</h4>
                   <br />
-                  <TimeSlots items={timeslots} />
+                  {/* <TimeSlots items={timeslots} /> */}
+                  <TimeSlotDateList items={timeslots} onDeleteTimeSlotHandler={deleteTimeSlotHandler}/>
                   <NewTimeSlot onAddTimeSlot={addTimeSlotHandler} />
                 </div>
               }

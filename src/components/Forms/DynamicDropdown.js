@@ -6,7 +6,7 @@ const DynamicDropdown = (props) => {
     <Form>
       <Form.Group controlId={props.id}>
         <Form.Label>
-          <p>{props.label}</p>
+          {props.label}
         </Form.Label>
         <Form.Control as="select">
           {props.items.map((item) => {

@@ -1,45 +1,41 @@
 import TimeSlotDateItem from "./TimeSlotDateItem";
+import { Link
+ } from "react-router-dom";
+ import React, {useState} from "react";
+ import DynamicCard from "../UI/DynamicCard";
 
 
-// const TimeSlotDateList = (props) => {
-//   const timeslotitems = props.items;
-
-//   if (timeslotitems.length === 0) {
-//     return <h2>Found no timeslots.</h2>;
-//   }
-
-//   return (
-//     <ul>
-//       {props.items.map((item) => (
-//         <TimeSlotDateItem
-//           id={item.id}
-//           date={item.date}
-//         />
-//       ))}
-//     </ul>
-//   );
-// };
-
-// export default TimeSlotDateList;
-
-const TimeSlotDateList = (props) => {
+ const TimeSlotDateList = (props) => {
   const timeslotitems = props.items;
 
   if (timeslotitems.length === 0) {
     return <h5>Found no timeslots.</h5>;
   }
 
-  console.log(timeslotitems);
+  const deleteHandler = () => {
+    console.log(); 
+  };
+
+  console.log("Timeslots: ", timeslotitems);
 
   return (
     <center>
-      {props.items.map((item) => (
-        <TimeSlotDateItem
-          id={item.id}
-          startdate={item.startdate}
-          enddate={item.enddate}
-        />
-      ))}
+      {timeslotitems.map((item) => (
+        <DynamicCard
+        id={item.id}
+        variant="body2"
+        content={
+          <div>
+          <TimeSlotDateItem
+            key={item.id}
+            id={item.id}
+            startdate={item.startdate}
+            enddate={item.enddate}
+          />
+          <Link id={item.id} onClick={props.onDeleteTimeSlotHandler}>Remove</Link>
+          </div>
+        }/>
+      ))}    
     </center>
   );
 };

@@ -7,6 +7,7 @@ import LogInProfessionalsView from "./views/LogInProfessionalsView";
 import RegisterProfessionalsView from "./views/RegisterProfessionalsView";
 import ResultsView from "./views/ResultsView";
 import PatientDashboard from "./views/PatientDashboard";
+import DoctorDashboard from "./views/DoctorDashboard";
 
 
 function App(props) {
@@ -39,6 +40,9 @@ function App(props) {
                     </Route>
                     <Route path="/dashboard">
                         <PatientDashboard/>
+                    </Route>
+                    <Route path="/doctordashboard">
+                        <DoctorDashboard/>
                     </Route>
                 </Switch>
             </div>
