@@ -3,8 +3,21 @@ import NewsList from "../components/NewsList";
 import CheckupList from "../components/CheckupList";
 import AppointmentCard from "../components/AppointmentCard";
 import Page from "../components/Page";
+import { connect, useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
+import UserService from "../services/UserService";
 
-const PatientDashboard = () => {
+
+function PatientDashboard (props) {
+
+  // this does not work
+  /*  const user = useSelector((state) => {
+    return state.user;
+  });*/
+
+  let user = UserService.getCurrentUser()
+  //let user = UserService.getUser()
+
   return (
       <Page>
     <Container>
@@ -17,7 +30,7 @@ const PatientDashboard = () => {
       <Row>
         <Col></Col>
         <Col>
-          <h2>Hello Max Mustermann</h2>
+          <h2>Hello {user.username}</h2>
         </Col>
         <Col></Col>
       </Row>
@@ -59,4 +72,4 @@ const PatientDashboard = () => {
     </Page>
   );
 };
-export default PatientDashboard;
+export default connect()(withRouter(PatientDashboard));
