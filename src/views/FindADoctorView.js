@@ -8,6 +8,11 @@ import Button from "react-bootstrap/esm/Button";
 import { Link } from "react-router-dom";
 import Page from "../components/Page";
 import DynamicCard from "../components/UI/DynamicCard";
+import TimeSlotDateList from "../components/TimeSlots/TimeSlotDateList";
+import LocationAutoComplete from "../components/Forms/Location/LocationAutoComplete";
+import LocationSlider from "../components/Forms/Location/LocationSlider";
+import { Box } from "@material-ui/core";
+
 
 const healthinsurancelist = [
   { displayname: "Public" },
@@ -37,9 +42,22 @@ const FindADoctorView = () => {
     });
   };
 
+  const deleteTimeSlotHandler = (timeslot) => {
+    // setTimeSlots(prevTimeSlots => {
+    // var index = timeslot.indexOf(timeslot.id);
+    console.log(timeslot);
+    // const updatedTimeSlots = prevTimeSlots.filter(slot => slot.id !== timeslot.id);
+    // console.log("updatedtimeslots: ", updatedTimeSlots);
+    // console.log("prevtimeslots: ", prevTimeSlots);
+    // console.log("timeslotId", timeslot.id);
+    // return updatedTimeSlots;
+    // )}
+  };
+
+
   return (
     <Page>
-      <Container>
+      <Container fluid>
         <Row xs={1} xl={3}>
           <Col xs={6} md={3}>
             <Image
@@ -66,10 +84,22 @@ const FindADoctorView = () => {
                       }
                     ></DynamicCard>
                     <DynamicCard
-                    variant="body2"
+                      variant="outlined"
                       content={
                         <div>
                           <h4>Preferred Location</h4>
+                          <DynamicCard
+                          variant="body2"
+                          content={
+                            <div>
+                          <Box p={2}>
+                          <LocationAutoComplete></LocationAutoComplete>
+                          </Box>
+                          <Box p={2}>
+                          <LocationSlider></LocationSlider>
+                          </Box>
+                          </div>
+                          }></DynamicCard>
                         </div>
                       }
                     ></DynamicCard>
@@ -124,7 +154,11 @@ const FindADoctorView = () => {
                 <div>
                   <h4>When are you usually free?</h4>
                   <br />
-                  <TimeSlots items={timeslots} />
+                  {/* <TimeSlots items={timeslots} /> */}
+                  <TimeSlotDateList
+                    items={timeslots}
+                    onDeleteTimeSlotHandler={deleteTimeSlotHandler}
+                  />
                   <NewTimeSlot onAddTimeSlot={addTimeSlotHandler} />
                 </div>
               }

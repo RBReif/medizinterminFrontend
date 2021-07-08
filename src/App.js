@@ -11,6 +11,7 @@ import TermsView from "./views/Terms";
 import ImpressumView from "./views/Impressum";
 import PatientDashboard from "./views/PatientDashboard";
 import EmergencyView from "./views/Emergency";
+import DoctorDashboard from "./views/DoctorDashboard";
 
 
 function App(props) {
@@ -49,6 +50,9 @@ function App(props) {
                         </Route>
                     <Route path="/dashboard">
                         <PatientDashboard/>
+                    </Route>
+                    <Route path="/doctordashboard">
+                        <DoctorDashboard/>
                     </Route>
                 </Switch>
             </div>

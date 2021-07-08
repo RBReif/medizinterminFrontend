@@ -22,7 +22,7 @@ const DynamicTimePicker = (props) => {
                 id={props.id}
                 todayLabel="now"
                 label={props.label}
-                minutesStep={10}
+                minutesStep={30}
                 ampm={false}
                 value={props.selected}
                 onChange={dateChangeHandler}
