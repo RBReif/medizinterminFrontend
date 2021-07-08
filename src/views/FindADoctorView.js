@@ -52,7 +52,7 @@ const FindADoctorView = () => {
 
   return (
     <Page>
-      <Container>
+      <Container fluid>
         <Row xs={1} xl={3}>
           <Col xs={6} md={3}>
             <Image
