@@ -26,7 +26,7 @@ const NewTimeSlot = (props) => {
   return (
     <div>
       {!isEditing && (
-        <Button onClick={startEditingHandler}>Add Time Slot</Button>
+        <center><Button onClick={startEditingHandler}>Add Time Slot</Button></center>
       )}
       {isEditing && (
         <TimeSlotForm
