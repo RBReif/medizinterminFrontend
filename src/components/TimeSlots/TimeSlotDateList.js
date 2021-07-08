@@ -12,10 +12,6 @@ import { Link
     return <h5>Found no timeslots.</h5>;
   }
 
-  const deleteHandler = () => {
-    console.log(); 
-  };
-
   console.log("Timeslots: ", timeslotitems);
 
   return (

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     paddingTop: '10.25%', // 16:9
-    paddingBottom: '10%'
+    paddingBottom: '5%'
   },
 }));
 
@@ -90,6 +90,7 @@ const FindADoctorView = () => {
                   image={image}
                 />
               </Card>
+              <p></p>
             </Col>
           </Row>
           <Row>
