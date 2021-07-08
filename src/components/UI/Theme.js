@@ -34,7 +34,7 @@ export const Theme = createMuiTheme ({
         MuiTextField: {
             variant: "outlined",
             InputLabelProbs: {
-                shrink: true
+                shrink: false
             }
         }
     }

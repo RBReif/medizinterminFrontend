@@ -2,6 +2,8 @@ import { Form, Button, Container, Col, Row } from "react-bootstrap";
 import DynamicDropdown from "../components/Forms/DynamicDropdown";
 import React from "react";
 import Page from "../components/Page";
+import { Theme } from "../components/UI/Theme";
+import { ThemeProvider } from "@material-ui/styles";
 
 const healthinsurancelist = [
   { displayname: "Public" },
@@ -10,6 +12,7 @@ const healthinsurancelist = [
 
 const Register = () => {
   return (
+    <ThemeProvider theme={Theme}>
     <Page>
       <Container>
         <h2>Sign-up for patients</h2>
@@ -87,6 +90,7 @@ const Register = () => {
         </Form>
       </Container>
     </Page>
+    </ThemeProvider>
   );
 };
 

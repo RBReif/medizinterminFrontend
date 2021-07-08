@@ -99,8 +99,9 @@ class UserLogin extends React.Component {
       <ThemeProvider theme={Theme}>
         <Page>
           <Container>
+              <center>
             <Col></Col>
-            <h2>Login for patients</h2>
+            <p><h3>Login for patients</h3></p>
             <Col></Col>
             <Col>
               <Card style={style} className="md-block-centered">
@@ -173,6 +174,7 @@ class UserLogin extends React.Component {
               </Card>
             </Col>
             <Col></Col>
+            </center>
           </Container>
         </Page>
       </ThemeProvider>
