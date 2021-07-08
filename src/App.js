@@ -10,6 +10,7 @@ import Footer from "./components/Footer/Footer";
 import TermsView from "./views/Terms";
 import ImpressumView from "./views/Impressum";
 import PatientDashboard from "./views/PatientDashboard";
+import EmergencyView from "./views/Emergency";
 
 
 function App(props) {
@@ -44,9 +45,8 @@ function App(props) {
                     </Route>
 
                     <Route path="/emergency">
-                       <h1> In case of an emergency call 112! </h1>
-                        Further information can be found <a href=" https://www.malteser.de/aware/hilfreich/notrufnummern-in-deutschland-das-musst-du-wissen.html" target="_blank">here</a>.
-                    </Route>
+                        <EmergencyView/>
+                        </Route>
                     <Route path="/dashboard">
                         <PatientDashboard/>
                     </Route>
