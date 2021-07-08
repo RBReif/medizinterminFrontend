@@ -3,7 +3,6 @@ import DynamicDropdown from "../components/Forms/DynamicDropdown";
 import DynamicSwitch from "../components/Forms/DynamicSwitch";
 import { Form, Container, Row, Col, Image } from "react-bootstrap";
 import NewTimeSlot from "../components/NewTimeSlot/NewTimeSlot";
-import TimeSlots from "../components/TimeSlots//TimeSlots";
 import Button from "react-bootstrap/esm/Button";
 import { Link } from "react-router-dom";
 import Page from "../components/Page";
@@ -12,7 +11,8 @@ import TimeSlotDateList from "../components/TimeSlots/TimeSlotDateList";
 import LocationAutoComplete from "../components/Forms/Location/LocationAutoComplete";
 import LocationSlider from "../components/Forms/Location/LocationSlider";
 import { Box } from "@material-ui/core";
-
+import { Theme } from "../components/UI/Theme";
+import { ThemeProvider } from "@material-ui/styles";
 
 const healthinsurancelist = [
   { displayname: "Public" },
@@ -27,14 +27,15 @@ const doctorlist = [
 ];
 
 const toggles = [
-  { id: "1", displayname: "Wheelchair availability needed?" },
-  { id: "2", displayname: "Elevator needed" },
-  { id: "3", displayname: "Car parking nearby" },
-  { id: "4", displayname: "Public transportation station nearby" },
+  { id: "1", displayname: "Wheelchair availability needed?", isActive: false },
+  { id: "2", displayname: "Elevator needed", isActive: false },
+  { id: "3", displayname: "Car parking nearby", isActive: false },
+  { id: "4", displayname: "Public transportation station nearby", isActive: false },
 ];
 
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
+  const [toggle, setToggle] = useState(toggles.isActive);
 
   const addTimeSlotHandler = (timeslot) => {
     setTimeSlots((prevTimeSlots) => {
@@ -54,8 +55,8 @@ const FindADoctorView = () => {
     // )}
   };
 
-
   return (
+    <ThemeProvider theme={Theme}>
     <Page>
       <Container fluid>
         <Row xs={1} xl={3}>
@@ -89,17 +90,18 @@ const FindADoctorView = () => {
                         <div>
                           <h4>Preferred Location</h4>
                           <DynamicCard
-                          variant="body2"
-                          content={
-                            <div>
-                          <Box p={2}>
-                          <LocationAutoComplete></LocationAutoComplete>
-                          </Box>
-                          <Box p={2}>
-                          <LocationSlider></LocationSlider>
-                          </Box>
-                          </div>
-                          }></DynamicCard>
+                            variant="body2"
+                            content={
+                              <div>
+                                <Box p={2}>
+                                  <LocationAutoComplete></LocationAutoComplete>
+                                </Box>
+                                <Box p={2}>
+                                  <LocationSlider></LocationSlider>
+                                </Box>
+                              </div>
+                            }
+                          ></DynamicCard>
                         </div>
                       }
                     ></DynamicCard>
@@ -179,6 +181,7 @@ const FindADoctorView = () => {
         </Row>
       </Container>
     </Page>
+    </ThemeProvider>
   );
 };
 

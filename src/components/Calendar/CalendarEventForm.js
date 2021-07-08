@@ -1,6 +1,6 @@
 import "date-fns";
 import React from "react";
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -11,6 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import DynamicDropdown from "../Forms/DynamicDropdown";
 import DynamicCard from "../UI/DynamicCard";
 import { Box } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
 const appointmenttype = [
   { id: "1", displayname: "Out of Office" },
@@ -171,13 +172,13 @@ const CalendarEventForm = (props) => {
             </Row>
             <Row>
               <Col>
-                <Button type="primary" onClick={props.onCancel}>
+                <Button onClick={props.onCancel}>
                   Cancel
                 </Button>
               </Col>
               <Col>
                 <form onSubmit={submitHandler}>
-                  <Button type="submit">Add Date</Button>
+                  <Button color="primary" type="submit">Add Date</Button>
                 </form>
               </Col>
             </Row>

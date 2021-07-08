@@ -4,6 +4,8 @@ import PlacesAutocomplete, {
   getLatLng,
 } from "react-places-autocomplete";
 import { Input } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
+import { Theme } from '../../UI/Theme';
 
 export default function LocationAutoComplete() {
   const [address, setAddress] = React.useState("");
@@ -19,7 +21,10 @@ export default function LocationAutoComplete() {
     setCoordinates(latLng);
   };
 
+  console.log(coordinates);
+
   return (
+    <ThemeProvider theme={Theme}>
     <div>
       <PlacesAutocomplete
         value={address}
@@ -28,7 +33,11 @@ export default function LocationAutoComplete() {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
-            <Input {...getInputProps({ placeholder: "Type address" })} />
+            <Input
+              fullWidth="true"
+              id="outlined"
+              {...getInputProps({ placeholder: "Type address" })}
+            />
 
             <div>
               {loading ? <div>...loading</div> : null}
@@ -49,5 +58,6 @@ export default function LocationAutoComplete() {
         )}
       </PlacesAutocomplete>
     </div>
+    </ThemeProvider>
   );
 }

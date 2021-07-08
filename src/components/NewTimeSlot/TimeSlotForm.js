@@ -1,6 +1,6 @@
 import "date-fns";
 import React from "react";
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
 import {
@@ -8,6 +8,7 @@ import {
 } from "@material-ui/pickers";
 import DynamicDatePicker from "../Forms/DynamicDatePicker";
 import DynamicTimePicker from "../Forms/DynamicTimePicker";
+import { Button } from "@material-ui/core";
 
 const TimeSlotForm = (props) => {
   // The first commit of Material-UI
@@ -84,7 +85,8 @@ const TimeSlotForm = (props) => {
       </Row>
       <Row>
         <Col>
-          <center><Button type="primary" onClick={props.onCancel}>
+          <center><Button variant="contained"
+      menuAlign="right" onClick={props.onCancel}>
             Cancel
           </Button></center>
         </Col>
@@ -100,7 +102,9 @@ const TimeSlotForm = (props) => {
                 : alertHandler
             }
           >
-            <center><Button type="submit">Add Date</Button></center>
+            <center><Button variant="contained"
+      color="primary"
+      menuAlign="right" type="submit">Add Date</Button></center>
           </form>
         </Col>
       </Row>

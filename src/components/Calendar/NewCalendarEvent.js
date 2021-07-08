@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button } from "@material-ui/core";
 import CalendarEventForm from "./CalendarEventForm";
 
 const NewCalendarEvent = (props) => {
@@ -26,7 +26,7 @@ const NewCalendarEvent = (props) => {
   return (
     <div>
       {!isEditing && (
-        <center><Button onClick={startEditingHandler}>Add Time Slot</Button></center>
+        <center><Button color="primary" onClick={startEditingHandler}>Add Time Slot</Button></center>
       )}
       {isEditing && (
         <CalendarEventForm

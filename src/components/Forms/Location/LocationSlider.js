@@ -2,6 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
+import { ThemeProvider } from "@material-ui/styles";
+import { Theme } from '../../UI/Theme';
 
 const useStyles = makeStyles({
   root: {
@@ -44,6 +46,7 @@ const LocationSlider = () => {
       ];
     return (
         <div className={classes.root}>
+            <ThemeProvider theme={Theme}>
           <Typography id="discrete-slider-restricted" gutterBottom>
             Range
           </Typography>
@@ -58,6 +61,7 @@ const LocationSlider = () => {
             min={0}
             max={20}
           />
+         </ThemeProvider>
           </div>
           );
 }

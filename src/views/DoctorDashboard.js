@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import NewCalendarEvent from "../components/Calendar/NewCalendarEvent";
 import DynamicCard from "../components/UI/DynamicCard";
 import { Box } from "@material-ui/core";
+import { Theme } from "../components/UI/Theme";
+import { ThemeProvider } from "@material-ui/styles";
 
 const events = [
   {
@@ -63,8 +65,9 @@ const DoctorDashboard = () => {
   };
 
   return (   
+    <ThemeProvider theme={Theme}>
     <Page>
-      <Container>
+      <Container fluid>
         <Row>
           <Col>1 of 2</Col>
           <Col>2 of 2</Col>
@@ -109,6 +112,7 @@ const DoctorDashboard = () => {
         </Row>
       </Container>
     </Page>
+    </ThemeProvider>
   );
 };
 

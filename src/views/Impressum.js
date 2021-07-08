@@ -1,8 +1,11 @@
-import {Col, Container, Form, Image, Row} from "react-bootstrap";
+import {Col, Container} from "react-bootstrap";
 import React from "react";
-const ImpressumView = (props) => {
+import Page from "../components/Page";
 
+
+const ImpressumView = (props) => {
     return (
+        <Page>
         <Container>
             <h2><strong>Impressum</strong></h2>
 
@@ -13,6 +16,7 @@ const ImpressumView = (props) => {
              We are reachable via medizintermin@tum.de
 
         </Container>
+        </Page>
     );
 };
 
