@@ -58,7 +58,7 @@ export default class UserService {
     static getUser(id) {
         return new Promise((resolve, reject) => {
             HttpService.get(
-                `${UserService.baseURL()}/${id}`,
+                `${UserService.baseURL()}/`+id.id,
                 function (data) {
                     if (data !== undefined || Object.keys(data).length !== 0) {
                         resolve(data);

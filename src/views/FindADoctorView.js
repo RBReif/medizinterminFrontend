@@ -16,6 +16,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core";
 import image from "../images/professional.jpg"
+import MultiSelectDropdown from "../components/Forms/MultiSelectDropdown";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,7 +36,13 @@ const healthinsurancelist = [
   { displayname: "Public" },
   { displayname: "Private" },
 ];
-const languagelist = [{ displayname: "German" }, { displayname: "English" }];
+const languagelist = [
+  { displayname: "German" },
+  { displayname: "English" },
+  { displayname: "Russian"},
+  { displayname: "Turkish"},
+  { displayname: "French"}
+];
 const doctorlist = [
   { id: "1", displayname: "Dentist" },
   { id: "2", displayname: "Cardiologist" },
@@ -145,10 +152,10 @@ const FindADoctorView = () => {
                     <DynamicCard
                       variant="body2"
                       content={
-                        <DynamicDropdown
+                        <MultiSelectDropdown
                           label="Please choose your preferred language"
                           items={languagelist}
-                        ></DynamicDropdown>
+                        ></MultiSelectDropdown>
                       }
                     ></DynamicCard>
                     <DynamicCard
