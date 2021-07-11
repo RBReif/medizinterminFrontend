@@ -13,7 +13,7 @@ const getUser = () => {
         return {
             user: {
                 _id: userJson._id,
-                username: userJson.username
+                username: userJson.username,
             },
         };
     }

@@ -54,11 +54,11 @@ export default class UserService {
         };
     }
 
-    // this does not work
+/*    // this does not work
     static getUser(id) {
         return new Promise((resolve, reject) => {
             HttpService.get(
-                `${UserService.baseURL()}/${id}`,
+                `${UserService.baseURL()}/`+id.id,
                 function (data) {
                     if (data !== undefined || Object.keys(data).length !== 0) {
                         resolve(data);
@@ -71,7 +71,7 @@ export default class UserService {
                 }
             );
         });
-    }
+    }*/
 
     static isAuthenticated() {
         return !!window.localStorage['jwtToken'];

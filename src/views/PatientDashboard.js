@@ -1,23 +1,37 @@
+import React, { useState, useEffect } from 'react';
 import { Form, Container, Row, Col } from "react-bootstrap";
+import { connect, useSelector } from "react-redux";
 import NewsList from "../components/NewsList";
 import CheckupList from "../components/CheckupList";
 import AppointmentCard from "../components/AppointmentCard";
 import Page from "../components/Page";
-import { connect, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import UserService from "../services/UserService";
+import { getPatients, getPatient } from "../redux/actions";
 import {useIsUserInteractionMode} from "react-md";
 
 
 function PatientDashboard (props) {
+  // props can be deconstructed into single variables, so you do not need to write "props." all the time
+  let { match, getPatient } = props;
 
-  // this does not work
-  /*  const user = useSelector((state) => {
-    return state.user;
-  });*/
+  // from redux store
+  const selectedPatient = useSelector((state) => state.selectedPatient);
+  const user = useSelector((state) => state.user);
 
-  let id = UserService.getCurrentUser().id
-  let user = UserService.getUser(id)
+  // state variable of this functional component
+  //const [newMovie, setNewMovie] = React.useState(false);
+
+ /* useEffect(() => {
+    // get id of patient from URL
+    let patientId = match.params._id;
+    getPatient(patientId);
+    //console.log(getPatient(patientId));
+  }, [match.params]);*/
+
+  let patientId = UserService.getCurrentUser().id
+  console.log(getPatient(patientId))
+
 
   return (
       <Page>
@@ -31,7 +45,7 @@ function PatientDashboard (props) {
       <Row>
         <Col></Col>
         <Col>
-          <h2>Hello {user.name}</h2>
+          <h2>Hello </h2>
         </Col>
         <Col></Col>
       </Row>
@@ -73,4 +87,10 @@ function PatientDashboard (props) {
     </Page>
   );
 };
-export default connect()(withRouter(PatientDashboard));
+// connect() establishes allows the usage of redux functionality
+// here the function getMovie, changeMovie and addMovie are mentionend
+// this is an alternative way of calling connecting them with redux
+// another way is shown in MovieListView.js
+export default connect(null, { getPatient })(
+    PatientDashboard
+);
