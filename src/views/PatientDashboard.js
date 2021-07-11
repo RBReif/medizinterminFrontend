@@ -6,6 +6,7 @@ import Page from "../components/Page";
 import { connect, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import UserService from "../services/UserService";
+import {useIsUserInteractionMode} from "react-md";
 
 
 function PatientDashboard (props) {
@@ -15,8 +16,8 @@ function PatientDashboard (props) {
     return state.user;
   });*/
 
-  let user = UserService.getCurrentUser()
-  //let user = UserService.getUser()
+  let id = UserService.getCurrentUser().id
+  let user = UserService.getUser(id)
 
   return (
       <Page>
@@ -30,7 +31,7 @@ function PatientDashboard (props) {
       <Row>
         <Col></Col>
         <Col>
-          <h2>Hello {user.username}</h2>
+          <h2>Hello {user.name}</h2>
         </Col>
         <Col></Col>
       </Row>

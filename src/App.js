@@ -3,7 +3,7 @@ import {Provider} from "react-redux";
 import {createStore, applyMiddleware} from "redux";
 import reducers from "./redux/reducers";
 import thunkMiddleware from "redux-thunk";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import FindADoctorView from "./views/FindADoctorView";
 import LogInView from "./views/LoginView";
 import RegisterView from "./views/RegisterView";
