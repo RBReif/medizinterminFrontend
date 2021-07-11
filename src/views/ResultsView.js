@@ -10,7 +10,6 @@ return (
     <Page>
     <Container>
     <h2>We found the following results regarding your inquiry:</h2>
-
     </Container>
     </Page>
 );

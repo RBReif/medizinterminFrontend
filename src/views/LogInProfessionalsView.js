@@ -26,7 +26,7 @@ const LoginProf = () => {
               <Form.Check type="checkbox" label="Keep me logged in" />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button type="submit">
               Submit
             </Button>
             <br />

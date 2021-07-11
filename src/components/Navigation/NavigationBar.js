@@ -5,6 +5,8 @@ import {
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LogInButton from "./LogInButton";
+import { Theme } from "../UI/Theme";
+import { ThemeProvider } from "@material-ui/styles";
 // import KebabMenu from "./KebabMenu";
 
 const routes = [
@@ -15,11 +17,12 @@ const routes = [
 const NavigationBar = (props) => {
   return (
     <header>
-      <Navbar bg="light" expand="lg">
+      <ThemeProvider theme={Theme}>
+      <Navbar collapseOnSelect bg="light" variant="light" expand="lg">
       <Link to="/" className="navbar-brand">medizintermin</Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
+          <Nav  className="mr-auto">
               {routes.map((route)=> {
                     return (
                         <Nav.Item>
@@ -34,6 +37,7 @@ const NavigationBar = (props) => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+      </ThemeProvider>
     </header>
   );
 };

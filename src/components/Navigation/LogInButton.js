@@ -1,19 +1,23 @@
-import { Button } from "react-bootstrap";
+import { Button } from "@material-ui/core";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
+import { ThemeProvider } from "@material-ui/styles";
+import { Theme } from "../UI/Theme";
 
 
 const LogIn = (props) => {
   return (
+    <ThemeProvider theme={Theme}>
     <Button
-      variant="outline-primary"
+      variant="contained"
+      color="secondary"
       menuAlign="right"
       title="Log-In"
       id="dropdown-menu-align-right"
-      // href="/login"
+      href="/login"
     >
-      <Link to="/login">Login</Link>
+     Login
     </Button>
+    </ThemeProvider>
   );
 };
 

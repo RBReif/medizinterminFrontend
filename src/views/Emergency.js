@@ -1,8 +1,11 @@
 import {Col, Container, Form, Image, Row} from "react-bootstrap";
 import React from "react";
+import Page from "../components/Page";
+
 const EmergencyView = (props) => {
 
     return (
+        <Page>
         <Container>
             <h2><strong>In case of an emergency, call 112</strong></h2>
             <p>
@@ -10,6 +13,7 @@ const EmergencyView = (props) => {
             </p>
 
         </Container>
+        </Page>
     );
 };
 

@@ -2,6 +2,14 @@ import { Form } from "react-bootstrap";
 import { useState } from "react";
 import React from "react";
 import DynamicCard from "../UI/DynamicCard";
+import { ThemeProvider } from "@material-ui/styles";
+import { Theme } from "../UI/Theme";
+import FormLabel from "@material-ui/core/FormLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Switch from "@material-ui/core/Switch";
 
 const DynamicSwitch = (props) => {
   const [done, setDone] = useState(false);
@@ -10,39 +18,24 @@ const DynamicSwitch = (props) => {
     setDone(!done);
   }
 
-  console.log(done);
-
   return (
-    <DynamicCard variant="body2"
-      content={
-        <Form>
-          <Form.Label>{props.displayname}</Form.Label>
-          <Form.Check
-            onClick={handleClick}
-            type="switch"
-            id={props.id}
-            label={done ? "Yes" : "No"}
-          ></Form.Check>
-        </Form>
-      }
-    ></DynamicCard>
-    // <p>
-    // <Card className={classes.root}>
-    //   <CardContent>
-    //     <Typography variant="body2" component="p">
-    //       <Form>
-    //         <Form.Label>{props.displayname}</Form.Label>
-    //         <Form.Check
-    //           onClick={handleClick}
-    //           type="switch"
-    //           id={props.id}
-    //           label={done ? "Yes" : "No"}
-    //         ></Form.Check>
-    //       </Form>
-    //     </Typography>
-    //   </CardContent>
-    // </Card>
-    // </p>
+    <ThemeProvider theme={Theme}>
+      <DynamicCard
+        variant="body2"
+        content={
+          <Form>
+            <p>{props.displayname}</p>
+            {/* <FormLabel component="legend"></FormLabel> */}
+            <FormControlLabel
+              control={
+                <Switch checked={done} onChange={handleClick} name={props.id} color="primary" />
+              }
+              label={done ? "Yes" : "No"}
+            ></FormControlLabel>
+          </Form>
+        }
+      ></DynamicCard>
+    </ThemeProvider>
   );
 };
 
