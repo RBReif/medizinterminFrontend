@@ -172,13 +172,23 @@ const CalendarEventForm = (props) => {
             </Row>
             <Row>
               <Col>
-                <Button onClick={props.onCancel}>
-                  Cancel
-                </Button>
+                <Button onClick={props.onCancel}>Cancel</Button>
               </Col>
               <Col>
-                <form onSubmit={submitHandler}>
-                  <Button color="primary" type="submit">Add Date</Button>
+                <form
+                  onSubmit={
+                    selectedEndDate > selectedStartDate
+                      ? selectedStartDate > new Date()
+                        ? selectedEndDate > new Date()
+                          ? submitHandler
+                          : alertHandler
+                        : alertHandler
+                      : alertHandler
+                  }
+                >
+                  <Button color="primary" type="submit">
+                    Add Date
+                  </Button>
                 </form>
               </Col>
             </Row>

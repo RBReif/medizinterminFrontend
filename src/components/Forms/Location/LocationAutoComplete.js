@@ -22,8 +22,6 @@ export default function LocationAutoComplete(props) {
     props.onClick(latLng);
   };
 
-  console.log(coordinates);
-
   return (
     <ThemeProvider theme={Theme}>
     <div>

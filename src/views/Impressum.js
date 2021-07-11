@@ -1,4 +1,4 @@
-import {Col, Container} from "react-bootstrap";
+import {Container} from "react-bootstrap";
 import React from "react";
 import Page from "../components/Page";
 

@@ -104,22 +104,22 @@ const FindADoctorView = () => {
   };
 
   const languageChangeHandler = (event) => {
-    console.log("stateChangeHandler: ", event.target.value);
+    // console.log("stateChangeHandler: ", event.target.value);
     return setLanguage(event.target.value);
   };
 
   const healthInsuranceChangeHandler = (event) => {
-    console.log("healthinsurancechangehandler: ", event.target.value);
+    // console.log("healthinsurancechangehandler: ", event.target.value);
     return setHealthInsurance(event.target.value);
   };
 
   const doctorChangeHandler = (event) => {
-    console.log("stateChangeHandler: ", event.target.value);
+    // console.log("stateChangeHandler: ", event.target.value);
     return setDoctor(event.target.value);
   };
 
   const locationHandler = (latLng) => {
-    console.log("LOCATION ", latLng);
+    // console.log("LOCATION ", latLng);
     return setLatLng({
       lat: latLng.lat,
       lng: latLng.lng,
@@ -132,7 +132,7 @@ const FindADoctorView = () => {
   };
 
   const toggleChangeHandler = (displayname, isActive) => {
-    console.log(displayname, isActive);
+    // console.log(displayname, isActive);
     let objIndex = toggleItems.findIndex((obj => obj.displayname == displayname));
     toggleItems[objIndex].isActive = isActive;
     // console.log(toggleItems);

@@ -33,7 +33,7 @@ const DynamicDropdown = (props) => {
     <FormControl className={classes.formControl}>
       <p>{props.label}</p>
        <Select
-        key={props.id}
+        key={props.items.id}
         defaultValue="" 
         labelId="demo-simple-select-label"
         id="demo-simple-select"
