@@ -16,6 +16,18 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core";
 import image from "../images/professional.jpg"
+import ConfigService from "../services/ConfigService"
+
+const config = ConfigService.getConfig()
+
+let test
+
+config.then(function (data){
+  var t = JSON.parse(data);
+  console.log(t)
+  test = t
+  return t
+})
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,11 +42,31 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '5%'
   },
 }));
+console.log("Config:   ", config)
 
-const healthinsurancelist = [
+console.log("Config insurances:   ", config.then(function (result){return result.insurances}))
+// let healthinsurancelist =  await config.then(result => result.insurances)
+// console.log ("Insurances after assignment: ", healthinsurancelist)
+
+async function assignHealthisnuranceList() {
+  const data = await config.then(result =>   result.insurances);
+  console.log(data);
+
+  return data.map((element) => {return {"displayname":element.valueOf()}})
+}
+
+let healthinsurancelist = assignHealthisnuranceList().then(function (result){return result})
+console.log("!!!!!!!!!!!!!!!!!!!!!!1 ", healthinsurancelist)
+
+/*
+ const healthinsurancelist = [
   { displayname: "Public" },
   { displayname: "Private" },
 ];
+
+
+ */
+
 const languagelist = [{ displayname: "German" }, { displayname: "English" }];
 const doctorlist = [
   { id: "1", displayname: "Dentist" },
