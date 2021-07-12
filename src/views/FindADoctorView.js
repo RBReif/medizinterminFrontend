@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import DynamicDropdown from "../components/Forms/DynamicDropdown";
 import DynamicSwitch from "../components/Forms/DynamicSwitch";
 import { Form, Container, Row, Col } from "react-bootstrap";
@@ -18,16 +18,8 @@ import { makeStyles } from "@material-ui/core";
 import image from "../images/professional.jpg"
 import ConfigService from "../services/ConfigService"
 
-const config = ConfigService.getConfig()
 
-let test
 
-config.then(function (data){
-  var t = JSON.parse(data);
-  console.log(t)
-  test = t
-  return t
-})
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,53 +34,13 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '5%'
   },
 }));
-console.log("Config:   ", config)
-
-console.log("Config insurances:   ", config.then(function (result){return result.insurances}))
-// let healthinsurancelist =  await config.then(result => result.insurances)
-// console.log ("Insurances after assignment: ", healthinsurancelist)
-
-async function assignHealthisnuranceList() {
-  const data = await config.then(result =>   result.insurances);
-  console.log(data);
-
-  return data.map((element) => {return {"displayname":element.valueOf()}})
-}
-
-let healthinsurancelist = assignHealthisnuranceList().then(function (result){return result})
-console.log("!!!!!!!!!!!!!!!!!!!!!!1 ", healthinsurancelist)
-
-/*
- const healthinsurancelist = [
-  { displayname: "Public" },
-  { displayname: "Private" },
-];
 
 
- */
 
-const languagelist = [{ displayname: "German" }, { displayname: "English" }];
-const doctorlist = [
-  { id: "1", displayname: "Dentist" },
-  { id: "2", displayname: "Cardiologist" },
-  { id: "3", displayname: "Something" },
-  { id: "4", displayname: "More" },
-];
-
-const toggles = [
-  { id: "1", displayname: "Wheelchair availability needed?", isActive: false },
-  { id: "2", displayname: "Elevator needed", isActive: false },
-  { id: "3", displayname: "Car parking nearby", isActive: false },
-  {
-    id: "4",
-    displayname: "Public transportation station nearby",
-    isActive: false,
-  },
-];
 
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
-  const [toggle, setToggle] = useState(toggles.isActive);
+  //const [toggle, setToggle] = useState(facilities.isActive);
   const classes = useStyles();
 
   const addTimeSlotHandler = (timeslot) => {
@@ -109,9 +61,35 @@ const FindADoctorView = () => {
     // )}
   };
 
+  const [insurances, setInsurances ] = useState([])
+  const [languages, setLanguages ] = useState([])
+  const [areas, setAreas] = useState([])
+  const [facilities, setFacilities] = useState([])
+  useEffect(  () => {
+    const getConfig = async () => {
+      const config = await ConfigService.getConfig()
+
+      setInsurances(config.insurances.map((item) => {return {"displayname": item.valueOf()}}))
+      setLanguages(config.languages.map((item) => {return {"displayname": item.valueOf()}}))
+      setAreas(config.areas.map((item) => {return {"displayname": item.valueOf()}}))
+      setFacilities(config.facilities.map((item) => {return {"displayname": item.valueOf(),"isActive": false}}))
+
+      console.log("HealthinsuranceList inside:2 ", insurances)
+
+    }
+    getConfig()
+    console.log("Healthinsurancelist middle: ", insurances)
+  }, [])
+
+
+
 
   return (
-    <ThemeProvider theme={Theme}>
+
+
+
+
+  <ThemeProvider theme={Theme}>
       <Page>
         <Container fluid>
           <Row>
@@ -138,7 +116,7 @@ const FindADoctorView = () => {
                         content={
                           <DynamicDropdown
                             label="Please choose the type of doctor you need"
-                            items={doctorlist}
+                            items={areas}
                           ></DynamicDropdown>
                         }
                       ></DynamicCard>
@@ -179,7 +157,7 @@ const FindADoctorView = () => {
                       content={
                         <DynamicDropdown
                           label="Please choose your preferred language"
-                          items={languagelist}
+                          items={languages}
                         ></DynamicDropdown>
                       }
                     ></DynamicCard>
@@ -188,16 +166,16 @@ const FindADoctorView = () => {
                       content={
                         <DynamicDropdown
                           label="Please choose your health insurance"
-                          items={healthinsurancelist}
+                          items={insurances}
                         ></DynamicDropdown>
                       }
                     ></DynamicCard>
                     <div>
-                      {toggles.map((toggle) => {
+                      {facilities.map((toggle) => {
                         return (
                           <DynamicSwitch
                             id={toggle.id}
-                            displayname={toggle.displayname}
+                            displayname={toggle.displayname+" needed"}
                           ></DynamicSwitch>
                         );
                       })}

@@ -12,13 +12,13 @@ export default class ConfigService{
         return new Promise( async(resolve, reject) => {
           await  HttpService.get(
                 this.baseURL(),
-                function (data){return resolve(data); console.log("Received data: ", data, " -- ", resolve(data))},
+                function (data){resolve(data)},
                 function (textStatus){
                     reject(textStatus);
 
                 }
             )
-        })
+        }).then()
     }
 
 }
