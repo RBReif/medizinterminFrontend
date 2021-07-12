@@ -117,6 +117,7 @@ const FindADoctorView = () => {
                           <DynamicDropdown
                             label="Please choose the type of doctor you need"
                             items={areas}
+                         //   onChange={doctorChange}
                           ></DynamicDropdown>
                         }
                       ></DynamicCard>
