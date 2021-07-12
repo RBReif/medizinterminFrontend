@@ -16,6 +16,7 @@ const DynamicSwitch = (props) => {
 
   function handleClick() {
     setDone(!done);
+    props.onChange(props.displayname, !done)
   }
 
   return (
@@ -28,7 +29,7 @@ const DynamicSwitch = (props) => {
             {/* <FormLabel component="legend"></FormLabel> */}
             <FormControlLabel
               control={
-                <Switch checked={done} onChange={handleClick} name={props.id} color="primary" />
+                <Switch checked={done} onClick={handleClick} name={props.id} color="primary" />
               }
               label={done ? "Yes" : "No"}
             ></FormControlLabel>
