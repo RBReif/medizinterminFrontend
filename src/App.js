@@ -6,7 +6,6 @@ import RegisterView from "./views/RegisterView";
 import LogInProfessionalsView from "./views/LogInProfessionalsView";
 import RegisterProfessionalsView from "./views/RegisterProfessionalsView";
 import ResultsView from "./views/ResultsView";
-import Footer from "./components/Footer/Footer";
 import TermsView from "./views/Terms";
 import ImpressumView from "./views/Impressum";
 import PatientDashboard from "./views/PatientDashboard";
