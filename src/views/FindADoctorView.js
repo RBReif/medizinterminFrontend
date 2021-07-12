@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
-  //const [toggle, setToggle] = useState(facilities.isActive);
+ // const [toggle, setToggle] = useState(facilities.isActive);
   const classes = useStyles();
   const [doctor, setDoctor] = useState("");
   const [language, setLanguage] = useState("");
@@ -50,7 +50,12 @@ const FindADoctorView = () => {
     lng: null,
   });
   const [radius, setRadius] = useState("");
-  let toggleItems = toggles.map((toggle) => {
+  const [facilities, setFacilities] = useState([])
+  const [insurances, setInsurances ] = useState([])
+  const [languages, setLanguages ] = useState([])
+  const [areas, setAreas] = useState([])
+
+  let toggleItems = facilities.map((toggle) => {
     return {
       id: toggle.id,
       displayname: toggle.displayname,
@@ -94,7 +99,7 @@ const FindADoctorView = () => {
     return setHealthInsurance(event.target.value);
   };
 
-  const doctorChangeHandler = (event) => {
+  const areaChangeHandler = (event) => {
     // console.log("stateChangeHandler: ", event.target.value);
     return setDoctor(event.target.value);
   };
@@ -114,7 +119,7 @@ const FindADoctorView = () => {
 
   const toggleChangeHandler = (displayname, isActive) => {
     // console.log(displayname, isActive);
-    let objIndex = toggleItems.findIndex((obj => obj.displayname == displayname));
+    let objIndex = toggleItems.findIndex((obj => obj.displayname === displayname));
     toggleItems[objIndex].isActive = isActive;
     // console.log(toggleItems);
     return toggleItems;
@@ -132,10 +137,7 @@ const FindADoctorView = () => {
     // )}
   };
 
-  const [insurances, setInsurances ] = useState([])
-  const [languages, setLanguages ] = useState([])
-  const [areas, setAreas] = useState([])
-  const [facilities, setFacilities] = useState([])
+
   useEffect(  () => {
     const getConfig = async () => {
       const config = await ConfigService.getConfig()
@@ -186,7 +188,7 @@ const FindADoctorView = () => {
                             defaultValue=""
                             label="Please choose the type of doctor you need"
                             items={areas}
-                         //   onChange={doctorChange}
+                            onChange={areaChangeHandler}
                           ></DynamicDropdown>
                         }
                       ></DynamicCard>
@@ -233,6 +235,7 @@ const FindADoctorView = () => {
                           defaultValue=""
                           label="Please choose your preferred language"
                           items={languages}
+                          onChange={languageChangeHandler}
                         ></DynamicDropdown>
                       }
                     ></DynamicCard>
@@ -243,6 +246,7 @@ const FindADoctorView = () => {
                           defaultValue=""
                           label="Please choose your health insurance"
                           items={insurances}
+                          onChange={healthInsuranceChangeHandler}
                         ></DynamicDropdown>
                       }
                     ></DynamicCard>
@@ -251,7 +255,8 @@ const FindADoctorView = () => {
                         return (
                           <DynamicSwitch
                             id={toggle.id}
-                            displayname={toggle.displayname+" needed"}
+                            displayname={toggle.displayname}
+                            onChange={toggleChangeHandler}
                           ></DynamicSwitch>
                         );
                       })}
