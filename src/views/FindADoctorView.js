@@ -77,25 +77,9 @@ const FindADoctorView = () => {
     };
   });
 
-  // const [toggle, setToggle] = useState([
-  //   toggles.map(toggle) => {
-  //     return displayname={toggle.displayname}
-  //   }
-  // ])
-
-  // async function fetchDoctorsHandler() {
-  //   const response = await fetch("");
-  //   const data = await response.json();
-  //   const [doctors, setDoctors] = useState([]);
-
-  //   const transformedDoctors = data.results.map((doctorData) => {
-  //     return {
-  //       id: doctorData.id,
-  //       displayame: doctorData.displayname,
-  //     };
-  //   });
-  //   setDoctors(transformedDoctors);
-  // }
+  const submitHandler = (event) => {
+    console.log("Submit: Search for doctors now.");
+  }
 
   const addTimeSlotHandler = (timeslot) => {
     setTimeSlots((prevTimeSlots) => {
@@ -280,7 +264,7 @@ const FindADoctorView = () => {
               <br />
               <br />
               <center>
-                <Button color="secondary" href="/results">
+                <Button onSubmit={submitHandler} color="secondary" href="/results">
                   Find an appointment
                 </Button>
               </center>
