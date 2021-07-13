@@ -15,8 +15,6 @@ class PlainFooter extends React.Component {
     return (
       <footer class="footer">
         <Navbar bg="light" expand="lg">
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
               {routes.map((route) => {
                 return (
@@ -28,7 +26,6 @@ class PlainFooter extends React.Component {
                 );
               })}
             </Nav>
-          </Navbar.Collapse>
         </Navbar>
       </footer>
     );

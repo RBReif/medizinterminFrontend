@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import DynamicDropdown from "../components/Forms/DynamicDropdown";
 import DynamicSwitch from "../components/Forms/DynamicSwitch";
 import { Form, Container, Row, Col } from "react-bootstrap";
@@ -15,7 +15,8 @@ import { Button } from "@material-ui/core";
 import CardMedia from "@material-ui/core/CardMedia";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core";
-import image from "../images/professional.jpg";
+import image from "../images/professional.jpg"
+import ConfigService from "../services/ConfigService"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,35 +32,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const healthinsurancelist = [
-  { displayname: "Public" },
-  { displayname: "Private" },
-];
-const languagelist = [{ displayname: "German" }, { displayname: "English" }];
-const doctorlist = [
-  { id: "1", displayname: "Dentist" },
-  { id: "2", displayname: "Cardiologist" },
-  { id: "3", displayname: "Something" },
-  { id: "4", displayname: "More" },
-];
-
-const toggles = [
-  { id: "1", displayname: "Wheelchair availability needed?", isActive: false },
-  { id: "2", displayname: "Elevator needed", isActive: false },
-  { id: "3", displayname: "Car parking nearby", isActive: false },
-  {
-    id: "4",
-    displayname: "Public transportation station nearby",
-    isActive: false,
-  },
-];
-
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
-  const [toggle, setToggle] = useState({
-    displayname: "",
-    isActive: false,
-  });
+//  const [togglesSelected, setTogglesSelecteed] = useState([]);
   const classes = useStyles();
   const [doctor, setDoctor] = useState("");
   const [language, setLanguage] = useState("");
@@ -69,7 +44,12 @@ const FindADoctorView = () => {
     lng: null,
   });
   const [radius, setRadius] = useState("");
-  let toggleItems = toggles.map((toggle) => {
+  const [facilities, setFacilities] = useState([])
+  const [insurances, setInsurances ] = useState([])
+  const [languages, setLanguages ] = useState([])
+  const [areas, setAreas] = useState([])
+
+  let toggleItems = facilities.map((toggle) => {
     return {
       id: toggle.id,
       displayname: toggle.displayname,
@@ -97,7 +77,7 @@ const FindADoctorView = () => {
     return setHealthInsurance(event.target.value);
   };
 
-  const doctorChangeHandler = (event) => {
+  const areaChangeHandler = (event) => {
     // console.log("stateChangeHandler: ", event.target.value);
     return setDoctor(event.target.value);
   };
@@ -116,11 +96,11 @@ const FindADoctorView = () => {
   };
 
   const toggleChangeHandler = (displayname, isActive) => {
-    // console.log(displayname, isActive);
-    let objIndex = toggleItems.findIndex((obj => obj.displayname == displayname));
-    toggleItems[objIndex].isActive = isActive;
+     console.log(displayname, isActive);
+    let objIndex = facilities.findIndex((obj => obj.displayname === displayname));
+    facilities[objIndex].isActive = !facilities[objIndex].isActive;
     // console.log(toggleItems);
-    return toggleItems;
+    return facilities;
   };
 
   const deleteTimeSlotHandler = (timeslot) => {
@@ -135,8 +115,25 @@ const FindADoctorView = () => {
     // )}
   };
 
+
+  useEffect(  () => {
+    const getConfig = async () => {
+      const config = await ConfigService.getConfig()
+      console.log(config)
+      setInsurances(config.insurances.map((item) => {return {"displayname": item.valueOf()}}))
+      setLanguages(config.languages.map((item) => {return {"displayname": item.valueOf()}}))
+      setAreas(config.areas.map((item) => {return {"displayname": item.valueOf()}}))
+      setFacilities(config.facilities.map((item) => {return {"displayname": item.valueOf(),"isActive": false}}))
+
+      console.log("HealthinsuranceList inside:2 ", insurances)
+
+    }
+    getConfig()
+    console.log("Healthinsurancelist middle: ", insurances)
+  }, [])
+
   return (
-    <ThemeProvider theme={Theme}>
+  <ThemeProvider theme={Theme}>
       <Page>
         <Container fluid>
           <Row>
@@ -161,8 +158,8 @@ const FindADoctorView = () => {
                           <DynamicDropdown
                             defaultValue=""
                             label="Please choose the type of doctor you need"
-                            items={doctorlist}
-                            onChange={doctorChangeHandler}
+                            items={areas}
+                            onChange={areaChangeHandler}
                           ></DynamicDropdown>
                         }
                       ></DynamicCard>
@@ -208,7 +205,7 @@ const FindADoctorView = () => {
                         <DynamicDropdown
                           defaultValue=""
                           label="Please choose your preferred language"
-                          items={languagelist}
+                          items={languages}
                           onChange={languageChangeHandler}
                         ></DynamicDropdown>
                       }
@@ -219,13 +216,13 @@ const FindADoctorView = () => {
                         <DynamicDropdown
                           defaultValue=""
                           label="Please choose your health insurance"
-                          items={healthinsurancelist}
+                          items={insurances}
                           onChange={healthInsuranceChangeHandler}
                         ></DynamicDropdown>
                       }
                     ></DynamicCard>
                     <div>
-                      {toggles.map((toggle) => {
+                      {facilities.map((toggle) => {
                         return (
                           <DynamicSwitch
                             id={toggle.id}
