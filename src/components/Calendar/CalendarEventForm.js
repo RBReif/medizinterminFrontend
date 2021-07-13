@@ -16,7 +16,6 @@ import { Button } from "@material-ui/core";
 const appointmenttype = [
   { id: "1", displayname: "Out of Office" },
   { id: "2", displayname: "Occupied" },
-  { id: "3", displaynem: "Other" },
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -68,7 +67,8 @@ const CalendarEventForm = (props) => {
       from: new Date(selectedStartDate),
       to: new Date(selectedEndDate),
       title: title,
-      color: "#3694DF",
+      type: appointmenttype,
+      color: appointmenttype === "out of office" ? "#3694DF": "#ffc107",
       // description: description
     };
 

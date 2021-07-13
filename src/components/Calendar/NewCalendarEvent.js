@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import CalendarEventForm from "./CalendarEventForm";
+import Component from "./Calendar";
 
 const NewCalendarEvent = (props) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -14,6 +15,8 @@ const NewCalendarEvent = (props) => {
     props.onAddTimeSlot(calendarEvent);
     setIsEditing(false);
   };
+
+  <Component onChange/>
 
   const startEditingHandler = () => {
     setIsEditing(true);
