@@ -8,13 +8,11 @@ import DynamicCard from "../components/UI/DynamicCard";
 import TimeSlotDateList from "../components/TimeSlots/TimeSlotDateList";
 import LocationAutoComplete from "../components/Forms/Location/LocationAutoComplete";
 import LocationSlider from "../components/Forms/Location/LocationSlider";
-import { Box } from "@material-ui/core";
 import { Theme } from "../components/UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
-import { Button } from "@material-ui/core";
+import { Button, makeStyles, Box, Grid } from "@material-ui/core";
 import CardMedia from "@material-ui/core/CardMedia";
 import Card from "@material-ui/core/Card";
-import { makeStyles } from "@material-ui/core";
 import image from "../images/professional.jpg"
 import ConfigService from "../services/ConfigService"
 
@@ -135,6 +133,13 @@ const FindADoctorView = () => {
   return (
   <ThemeProvider theme={Theme}>
       <Page>
+      <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+        >
         <Container fluid>
           <Row>
             <Col md={12} fluid>
@@ -270,6 +275,7 @@ const FindADoctorView = () => {
             <Col></Col>
           </Row>
         </Container>
+        </Grid>
       </Page>
     </ThemeProvider>
   );

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Styled from "styled-components";
 import React from "react";
+import { Grid } from "@material-ui/core";
 
 const routes = [
   { path: "/terms", displayname: "Terms and Conditions" },
@@ -14,7 +15,7 @@ class PlainFooter extends React.Component {
   render() {
     return (
       <footer class="footer">
-        <Navbar bg="light" expand="lg">
+          <Navbar bg="light" expand="lg">
             <Nav className="mr-auto">
               {routes.map((route) => {
                 return (
@@ -26,7 +27,7 @@ class PlainFooter extends React.Component {
                 );
               })}
             </Nav>
-        </Navbar>
+          </Navbar>
       </footer>
     );
   }

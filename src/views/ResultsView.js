@@ -7,7 +7,36 @@ import { Theme } from "../components/UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
 import Doctor from "../components/Doctor/Doctor";
 import DynamicCard from "../components/UI/DynamicCard";
-import { Button } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
+
+const doctorlist = [
+  {
+    id: "1",
+    name: "Max Mustermann",
+    profession: "Dentist",
+    address: "Ungererstr. 58, 80805 München",
+    appointments: [{
+        id: 6,
+        color: "#fd3153",
+        to: new Date(),
+        title: "This is an aifjejffjewjgwejgjewigoifsiosfa",
+        from: new Date(),
+      },  {
+        id: 6,
+        color: "#fd3153",
+        to: new Date(),
+        title: "This is an event 2",
+        from: new Date(),
+      },],
+  },
+  {
+    id: "2",
+    name: "isjdgjdjsg fiaojs",
+    profession: "Dentist",
+    address: "Münchner Freiheit 12, 80803 München",
+    appointments: [{},{}],
+  },
+];
 
 const ResultsView = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,52 +62,39 @@ const ResultsView = (props) => {
   return (
     <ThemeProvider theme={Theme}>
       <Page>
-        <Container>
-          <Row>
-            <Col></Col>
-            <Col></Col>
-            <Col></Col>
-          </Row>
-          <Row>
-            <Col></Col>
-            <Col xl={10} xs={10}>
-              <DynamicCard
-                variant="body2"
-                content={
-                  <div>
-                    {!isLoading &&
-                      doctors.length > 0 &&
-                      doctors.map((doctor) => (
-                        <Doctor key={doctor.id} doctor={doctor} />
-                      ))}
-                    {!isLoading && doctors.length === 0 && (
-                      <center>
-                        <p>Found no doctors.</p>
-                        <p>
-                          <Button href="/">Try new search</Button>
-                        </p>
-                        <p>
-                          <Doctor
-                            name="Max Mustermann"
-                            profession="Dentist"
-                            address="Ungererstr. 58, 80805 München"
-                          ></Doctor>
-                        </p>
-                      </center>
-                    )}
-                    {isLoading && <p>Loading...</p>}
-                  </div>
-                }
-              />
-            </Col>
-            <Col></Col>
-          </Row>
-          <Row>
-            <Col></Col>
-            <Col></Col>
-            <Col></Col>
-          </Row>
-        </Container>
+          <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+        //   style={{ minHeight: "80vh" }}
+        >
+            <Grid><p>We found the following results for you:</p></Grid>
+          <Grid>
+            <DynamicCard
+              variant="body2"
+              content={
+                <div>
+                  {!isLoading &&
+                    doctorlist.length > 0 &&
+                    doctorlist.map((doctor) => (
+                      <Doctor key={doctor.id} doctor={doctor} />
+                    ))}
+                  {!isLoading && doctorlist.length === 0 && (
+                    <center>
+                      <p>Found no doctors.</p>
+                      <p>
+                        <Button href="/">Try new search</Button>
+                      </p>
+                    </center>
+                  )}
+                  {isLoading && <p>Loading...</p>}
+                </div>
+              }
+            />
+          </Grid>
+        </Grid>
       </Page>
     </ThemeProvider>
   );

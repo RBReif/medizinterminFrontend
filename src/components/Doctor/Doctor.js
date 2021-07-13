@@ -46,51 +46,48 @@ const Doctor = (props) => {
 
   return (
     <ThemeProvider theme={Theme}>
-      <Card className={classes.root}>
-        <CardHeader
-          avatar={
-            <Avatar
-              aria-label="doctor"
-              className={classes.avatar}
-              src="https://cdn.shopify.com/s/files/1/1390/2701/t/5/assets/doctor.jpg?v=12170138145179114637"
-            ></Avatar>
-          }
-          title={<p>{props.name}</p>} //query doctor name + profession
-          subheader={
-            <div>
-              <p>{props.profession}</p>
-              <p>{props.address}</p>
-            </div>
-          }
-        />
-        <CardActions disableSpacing>
-          <IconButton aria-label="call doctor">
-            <CallIcon />
-          </IconButton>
-          <IconButton aria-label="navigate">
-            <NavigationIcon />
-          </IconButton>
-          <Button onClick={handleExpandClick} variant="" size="small">
-            Show Appointments
-          </Button>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <li>
-              Appointment 1{" "}
-              <Button size="small" color="primary">
+      {console.log("props: ", props)}
+      {console.log("props.doctor: ", props.doctor)}
+      {console.log("props.doctor.appointments: ", props.doctor.appointments)}
+      <p>
+        <Card className={classes.root}>
+          <CardHeader
+            avatar={
+              <Avatar
+                aria-label="doctor"
+                className={classes.avatar}
+                src="https://cdn.shopify.com/s/files/1/1390/2701/t/5/assets/doctor.jpg?v=12170138145179114637"
+              ></Avatar>
+            }
+            title={<p>{props.doctor.name}</p>} //query doctor name + profession
+            subheader={
+              <div>
+                <p>{props.doctor.profession}</p>
+                <p>{props.doctor.address}</p>
+              </div>
+            }
+          />
+          <CardActions disableSpacing>
+            <IconButton aria-label="call doctor">
+              <CallIcon />
+            </IconButton>
+            <IconButton aria-label="navigate">
+              <NavigationIcon />
+            </IconButton>
+            <Button onClick={handleExpandClick} variant="" size="small">
+              Show Appointments
+            </Button>
+          </CardActions>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              {/* {props.doctor.appointments.map(appointment) (
+                <li> {appointment.title} <Button size="small" color="primary">
                 Book appointment
-              </Button>
-            </li>
-            <li>
-              Appointment 1{" "}
-              <Button size="small" color="primary">
-                Book appointment
-              </Button>
-            </li>
+              </Button></li>)}; */}
           </CardContent>
-        </Collapse>
-      </Card>
+          </Collapse>
+        </Card>
+      </p>
     </ThemeProvider>
   );
 };
