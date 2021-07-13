@@ -141,7 +141,7 @@ const FindADoctorView = () => {
   useEffect(  () => {
     const getConfig = async () => {
       const config = await ConfigService.getConfig()
-
+      console.log(config)
       setInsurances(config.insurances.map((item) => {return {"displayname": item.valueOf()}}))
       setLanguages(config.languages.map((item) => {return {"displayname": item.valueOf()}}))
       setAreas(config.areas.map((item) => {return {"displayname": item.valueOf()}}))
