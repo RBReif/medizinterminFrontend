@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
- // const [toggle, setToggle] = useState(facilities.isActive);
+//  const [togglesSelected, setTogglesSelecteed] = useState([]);
   const classes = useStyles();
   const [doctor, setDoctor] = useState("");
   const [language, setLanguage] = useState("");
@@ -118,11 +118,11 @@ const FindADoctorView = () => {
   };
 
   const toggleChangeHandler = (displayname, isActive) => {
-    // console.log(displayname, isActive);
-    let objIndex = toggleItems.findIndex((obj => obj.displayname === displayname));
-    toggleItems[objIndex].isActive = isActive;
+     console.log(displayname, isActive);
+    let objIndex = facilities.findIndex((obj => obj.displayname === displayname));
+    facilities[objIndex].isActive = !facilities[objIndex].isActive;
     // console.log(toggleItems);
-    return toggleItems;
+    return facilities;
   };
 
   const deleteTimeSlotHandler = (timeslot) => {
@@ -141,7 +141,7 @@ const FindADoctorView = () => {
   useEffect(  () => {
     const getConfig = async () => {
       const config = await ConfigService.getConfig()
-
+      console.log(config)
       setInsurances(config.insurances.map((item) => {return {"displayname": item.valueOf()}}))
       setLanguages(config.languages.map((item) => {return {"displayname": item.valueOf()}}))
       setAreas(config.areas.map((item) => {return {"displayname": item.valueOf()}}))
