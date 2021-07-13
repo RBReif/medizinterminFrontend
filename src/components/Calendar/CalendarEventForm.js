@@ -43,6 +43,7 @@ const CalendarEventForm = (props) => {
   const classes = useStyles();
   const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
+  const [appointmentType, setAppointmentType] = React.useState("");
 
   const handleStartDateChange = (date) => {
     setSelectedStartDate(date);
@@ -51,6 +52,10 @@ const CalendarEventForm = (props) => {
   const handleEndDateChange = (date) => {
     setSelectedEndDate(date);
   };
+ 
+  const handleAppointmentChange = (event) => {
+    setAppointmentType(event.target.value);
+  }
 
   const handleTitleChange = (string) => {
     setTitle(string.target.value);
@@ -67,8 +72,8 @@ const CalendarEventForm = (props) => {
       from: new Date(selectedStartDate),
       to: new Date(selectedEndDate),
       title: title,
-      type: appointmenttype,
-      color: appointmenttype === "out of office" ? "#3694DF": "#ffc107",
+      type: appointmentType,
+      color: appointmentType === "Out of Office" ? "#3694DF": "#ffc107",
       // description: description
     };
 
@@ -113,6 +118,7 @@ const CalendarEventForm = (props) => {
                   <Box p={2}>
                     <DynamicDropdown
                       items={appointmenttype}
+                      onChange={handleAppointmentChange}
                       label="Type"
                     ></DynamicDropdown>
                   </Box>
