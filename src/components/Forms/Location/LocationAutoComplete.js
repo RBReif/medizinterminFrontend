@@ -26,6 +26,7 @@ export default function LocationAutoComplete(props) {
     <ThemeProvider theme={Theme}>
     <div>
       <PlacesAutocomplete
+      key="12345"
         value={address}
         onChange={setAddress}
         onSelect={handleSelect}

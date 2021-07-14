@@ -1,8 +1,8 @@
-"use strict";
+// "use strict";
 
 export default class HttpService {
-    constructor() {
-    }
+    // constructor() {
+    // }
 
     static apiURL() {return 'http://localhost:3000'; }
 

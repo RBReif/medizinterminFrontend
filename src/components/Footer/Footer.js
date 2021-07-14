@@ -14,12 +14,12 @@ const routes = [
 class PlainFooter extends React.Component {
   render() {
     return (
-      <footer class="footer">
+      <footer className="footer">
           <Navbar bg="light" expand="lg">
             <Nav className="mr-auto">
               {routes.map((route) => {
                 return (
-                  <Nav.Item>
+                  <Nav.Item key={route.path}>
                     <Link to={route.path} className="nav-link">
                       {route.displayname}
                     </Link>

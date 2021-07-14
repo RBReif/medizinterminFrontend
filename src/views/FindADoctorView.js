@@ -35,9 +35,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
 //  const [togglesSelected, setTogglesSelecteed] = useState([]);
@@ -85,7 +82,7 @@ const FindADoctorView = () => {
   };
 
   const radiusHandler = (radius) => {
-    // console.log("RADIUS: ", radius);
+    console.log("RADIUS: ", radius);
     return setRadius(radius);
   };
 
@@ -197,6 +194,7 @@ const FindADoctorView = () => {
                       variant="body2"
                       content={
                         <DynamicDropdown
+                        key="languagedropdown"
                           defaultValue=""
                           label="Please choose your preferred language"
                           items={languages}
@@ -208,6 +206,7 @@ const FindADoctorView = () => {
                       variant="body2"
                       content={
                         <DynamicDropdown
+                          key={insurances.id}
                           defaultValue=""
                           label="Please choose your health insurance"
                           items={insurances}
@@ -219,6 +218,7 @@ const FindADoctorView = () => {
                       {facilities.map((toggle) => {
                         return (
                           <DynamicSwitch
+                            key={toggle.id}
                             id={toggle.id}
                             displayname={toggle.displayname}
                             onChange={toggleChangeHandler}

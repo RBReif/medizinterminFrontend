@@ -1,4 +1,4 @@
-import { Container, Col, Row } from "react-bootstrap";
+// import { Container, Col, Row } from "react-bootstrap";
 // import DynamicDropdown from "../components/Forms/DynamicDropdown";
 // import DynamicSwitch from "../components/Forms/DynamicSwitch";
 import React, { useState } from "react";
@@ -44,20 +44,20 @@ const ResultsView = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [doctors, setDoctors] = useState([]);
 
-  async function fetchDoctorsHandler() {
-    isLoading(true);
-    const response = "...";
-    const data = "...";
+//   async function fetchDoctorsHandler() {
+//     isLoading(true);
+//     const response = "...";
+//     const data = "...";
 
-    const transformedDoctors = data.results.map((doctorData) => {
-      return {
-        id: doctorData.id,
-        title: doctorData.title,
-      };
-    });
-    setDoctors(transformedDoctors);
-    setIsLoading(false);
-  }
+//     const transformedDoctors = data.results.map((doctorData) => {
+//       return {
+//         id: doctorData.id,
+//         title: doctorData.title,
+//       };
+//     });
+//     setDoctors(transformedDoctors);
+//     setIsLoading(false);
+//   }
 
   console.log(doctors);
 
@@ -81,7 +81,9 @@ const ResultsView = (props) => {
                   {!isLoading &&
                     doctorlist.length > 0 &&
                     doctorlist.map((doctor) => (
+                        <p>
                       <Doctor key={doctor.id} doctor={doctor} />
+                      </p>
                     ))}
                   {!isLoading && doctorlist.length === 0 && (
                     <center>

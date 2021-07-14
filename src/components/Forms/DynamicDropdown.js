@@ -1,8 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
@@ -36,12 +34,12 @@ const DynamicDropdown = (props) => {
         key={props.items.id}
         defaultValue="" 
         labelId="demo-simple-select-label"
-        id="demo-simple-select"
+        id={props.items.id}
         value={val}
         onClick={props.onChange}
         >
           {props.items.map((item) => {
-            return <MenuItem value={item.displayname}>{item.displayname}</MenuItem>;
+            return <MenuItem key={item.id} value={item.displayname}>{item.displayname}</MenuItem>;
           })}
         </Select>
     </FormControl>

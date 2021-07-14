@@ -44,7 +44,7 @@
 
 // export default Login;
 
-"use strict";
+// "use strict";
 
 import React from "react";
 import { Card } from "react-md";
@@ -140,10 +140,10 @@ class UserLogin extends React.Component {
                       id="submit"
                       type="submit"
                       disabled={
-                        this.state.username == undefined ||
-                        this.state.username == "" ||
-                        this.state.password == undefined ||
-                        this.state.password == ""
+                        this.state.username === undefined ||
+                        this.state.username === "" ||
+                        this.state.password === undefined ||
+                        this.state.password === ""
                           ? true
                           : false
                       }

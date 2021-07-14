@@ -50,7 +50,7 @@ export const Theme = createTheme ({
             }
         },
         MuiCard: {
-            display: "flex"
+            display: "flex",
         },
     }
 
