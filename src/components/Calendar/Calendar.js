@@ -1,6 +1,11 @@
 import React from 'react';
 import Calendar from "react-awesome-calendar";
 
+//What this component is about: This component is the calendar view which is used in the doctors dashboard
+//It visualizes a calendar and takes a json from the respective doctor as an input
+//Please check out NewCalendarEvent and CalendarEventForm for more information
+//The calendar is used in the Doctors Dashboard view
+
 export default class Component extends React.Component {
     constructor(props) {
         super(props);

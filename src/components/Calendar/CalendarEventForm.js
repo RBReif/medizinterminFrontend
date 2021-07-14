@@ -19,6 +19,7 @@ const appointmenttype = [
   { id: "3", displaynem: "Other" },
 ];
 
+//material-ui styles
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -38,13 +39,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CalendarEventForm = (props) => {
-  // The first commit of Material-UI
+  // This form will create a new calendar event with the following properties 
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const classes = useStyles();
   const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
 
+
+  //changeHandler
   const handleStartDateChange = (date) => {
     setSelectedStartDate(date);
   };
@@ -61,6 +64,8 @@ const CalendarEventForm = (props) => {
     setDescription(string.target.value);
   };
 
+
+  //submitHandler, will create a new event onSubmit
   const submitHandler = (event) => {
     event.preventDefault();
 
@@ -72,7 +77,7 @@ const CalendarEventForm = (props) => {
       // description: description
     };
 
-    console.log(calendarEvent);
+    // console.log(calendarEvent);
 
     props.onSaveTimeSlotData(calendarEvent);
     setSelectedStartDate("");
@@ -81,6 +86,7 @@ const CalendarEventForm = (props) => {
     setDescription("");
   };
 
+  //alertHandler. Will set an alert if input is invalid. STARTDATE has to be before ENDDATE. BOTH DATES have to be in the future
   const alertHandler = (event) => {
     event.preventDefault();
     console.log("Invalid input");
