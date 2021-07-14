@@ -16,7 +16,6 @@ import { Button } from "@material-ui/core";
 const appointmenttype = [
   { id: "1", displayname: "Out of Office" },
   { id: "2", displayname: "Occupied" },
-  { id: "3", displaynem: "Other" },
 ];
 
 //material-ui styles
@@ -45,6 +44,7 @@ const CalendarEventForm = (props) => {
   const classes = useStyles();
   const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
+  const [appointmentType, setAppointmentType] = React.useState("");
 
 
   //changeHandler
@@ -55,6 +55,10 @@ const CalendarEventForm = (props) => {
   const handleEndDateChange = (date) => {
     setSelectedEndDate(date);
   };
+ 
+  const handleAppointmentChange = (event) => {
+    setAppointmentType(event.target.value);
+  }
 
   const handleTitleChange = (string) => {
     setTitle(string.target.value);
@@ -73,7 +77,8 @@ const CalendarEventForm = (props) => {
       from: new Date(selectedStartDate),
       to: new Date(selectedEndDate),
       title: title,
-      color: "#3694DF",
+      type: appointmentType,
+      color: appointmentType === "Out of Office" ? "#3694DF": "#ffc107",
       // description: description
     };
 
@@ -119,6 +124,7 @@ const CalendarEventForm = (props) => {
                   <Box p={2}>
                     <DynamicDropdown
                       items={appointmenttype}
+                      onChange={handleAppointmentChange}
                       label="Type"
                     ></DynamicDropdown>
                   </Box>

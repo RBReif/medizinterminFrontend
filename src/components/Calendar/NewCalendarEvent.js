@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import CalendarEventForm from "./CalendarEventForm";
+import Component from "./Calendar";
 
 const NewCalendarEvent = (props) => {
   //this component is actually creating a new calendarevent

@@ -7,6 +7,7 @@ import DynamicCard from "../components/UI/DynamicCard";
 import { Box } from "@material-ui/core";
 import { Theme } from "../components/UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
+import { Link } from "react-router-dom";
 
 const events = [
   {
@@ -14,7 +15,9 @@ const events = [
     color: "#fd3153",
     from: new Date(),
     to: new Date(),
-    title: "This is an event",
+    title: <Link to="/">Hello</Link>,
+    body: "ugsjjgjsidjgjsdiugjsdgjsd",
+    type: "Out of Office",
   },
   {
     id: 2,
@@ -22,6 +25,7 @@ const events = [
     from: "2019-05-01T13:00:00+00:00",
     to: "2019-05-05T14:00:00+00:00",
     title: "This is another event",
+    type: "Out of Office",
   },
   {
     id: 3,
@@ -29,13 +33,15 @@ const events = [
     from: "2019-05-05T13:00:00+00:00",
     to: "2019-05-05T20:00:00+00:00",
     title: "This is also another event",
+    type: "Out of Office",
   },
   {
     id: 4,
-    color: "#fd3153",
+    color: "#ffc107",
     from: "2021-07-02T18:00:00+00:00",
     to: "2021-07-05T19:00:00+00:00",
     title: "This is an event",
+    type: "Out of Office",
   },
   {
     id: 5,
@@ -43,6 +49,7 @@ const events = [
     from: "2021-07-05T18:00:00+00:00",
     to: "2021-07-05T19:00:00+00:00",
     title: "This is an aoifsiosfa",
+    type: "Out of Office",
   },
   {
     id: 6,
@@ -50,6 +57,7 @@ const events = [
     to: new Date(),
     title: "This is an aifjejffjewjgwejgjewigoifsiosfa",
     from: new Date(),
+    type: "Out of Office",
   },
 ];
 
@@ -104,7 +112,7 @@ const DoctorDashboard = () => {
                     <h5>My Calendar</h5>
                     </Box>
                   </Row>
-                  <MyCalendar events={events} />
+                  <MyCalendar events={calendarEvents} />
                 </div>
               }
             ></DynamicCard>

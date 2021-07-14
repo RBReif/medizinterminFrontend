@@ -48,7 +48,10 @@ export const Theme = createTheme ({
             InputLabelProbs: {
                 shrink: false
             }
-        }
+        },
+        MuiCard: {
+            display: "flex"
+        },
     }
 
 
