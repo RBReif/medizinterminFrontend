@@ -1,9 +1,12 @@
-import { Form, Button, Container, Col } from "react-bootstrap";
-import RegisterButtonProfessional from "../components/Navigation/RegisterButtonProfessional";
+import { Form, Container, Col } from "react-bootstrap";
 import Page from "../components/Page";
+import { Button } from "@material-ui/core";
+import { Theme } from "../components/UI/Theme";
+import { ThemeProvider } from "@material-ui/styles";
 
 const LoginProf = () => {
   return (
+    <ThemeProvider theme={Theme}>
     <Page>
       <Container>
         <Col></Col>
@@ -33,12 +36,13 @@ const LoginProf = () => {
             <Form.Text className="text-muted">
               Not registered yet? Sign up now:
             </Form.Text>
-            <RegisterButtonProfessional></RegisterButtonProfessional>
+            <Button color="primary" Link to="/registerProfessional">Register</Button>
           </Form>
         </Col>
         <Col></Col>
       </Container>
     </Page>
+    </ThemeProvider>
   );
 };
 
