@@ -16,8 +16,6 @@ const NewCalendarEvent = (props) => {
     setIsEditing(false);
   };
 
-  <Component onChange/>
-
   const startEditingHandler = () => {
     setIsEditing(true);
   };

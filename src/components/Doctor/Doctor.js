@@ -39,10 +39,15 @@ const useStyles = makeStyles((theme) => ({
 const Doctor = (props) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [showNumber, setShowNumber] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const handleNumberClick = () => {
+    setShowNumber(!showNumber);
+  }
 
   return (
     <ThemeProvider theme={Theme}>
@@ -59,17 +64,18 @@ const Doctor = (props) => {
                 src="https://cdn.shopify.com/s/files/1/1390/2701/t/5/assets/doctor.jpg?v=12170138145179114637"
               ></Avatar>
             }
-            title={<p>{props.doctor.name}</p>} //query doctor name + profession
+            title={<b>{props.doctor.name}</b>} //query doctor name + profession
             subheader={
               <div>
-                <p>{props.doctor.profession}</p>
-                <p>{props.doctor.address}</p>
+                {props.doctor.profession}<br></br>
+                {props.doctor.address}<br></br>
+                {showNumber ? props.doctor.phone : ""}
               </div>
             }
           />
           <CardActions disableSpacing>
             <IconButton aria-label="call doctor">
-              <CallIcon />
+              <CallIcon onClick={handleNumberClick}/>
             </IconButton>
             <IconButton aria-label="navigate">
               <NavigationIcon />

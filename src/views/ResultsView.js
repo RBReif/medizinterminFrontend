@@ -15,6 +15,7 @@ const doctorlist = [
     name: "Max Mustermann",
     profession: "Dentist",
     address: "Ungererstr. 58, 80805 München",
+    phone: "123456",
     appointments: [{
         id: 6,
         color: "#fd3153",
@@ -34,6 +35,7 @@ const doctorlist = [
     name: "isjdgjdjsg fiaojs",
     profession: "Dentist",
     address: "Münchner Freiheit 12, 80803 München",
+    phone: "12345678",
     appointments: [{},{}],
   },
 ];
