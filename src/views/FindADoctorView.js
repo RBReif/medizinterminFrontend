@@ -8,13 +8,18 @@ import DynamicCard from "../components/UI/DynamicCard";
 import TimeSlotDateList from "../components/TimeSlots/TimeSlotDateList";
 import LocationAutoComplete from "../components/Forms/Location/LocationAutoComplete";
 import LocationSlider from "../components/Forms/Location/LocationSlider";
+import { Box } from "@material-ui/core";
 import { Theme } from "../components/UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
-import { Button, makeStyles, Box, Grid } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import CardMedia from "@material-ui/core/CardMedia";
 import Card from "@material-ui/core/Card";
+import { makeStyles } from "@material-ui/core";
 import image from "../images/professional.jpg"
 import ConfigService from "../services/ConfigService"
+
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
+
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
 //  const [togglesSelected, setTogglesSelecteed] = useState([]);
@@ -42,22 +50,10 @@ const FindADoctorView = () => {
     lng: null,
   });
   const [radius, setRadius] = useState("");
-  const [facilities, setFacilities] = useState([])
-  const [insurances, setInsurances ] = useState([])
-  const [languages, setLanguages ] = useState([])
-  const [areas, setAreas] = useState([])
-
-  let toggleItems = facilities.map((toggle) => {
-    return {
-      id: toggle.id,
-      displayname: toggle.displayname,
-      isActive: toggle.isActive,
-    };
-  });
-
-  const submitHandler = (event) => {
-    console.log("Submit: Search for doctors now.");
-  }
+  const [facilities, setFacilities] = useState([]);
+  const [insurances, setInsurances ] = useState([]);
+  const [languages, setLanguages ] = useState([]);
+  const [areas, setAreas] = useState([]);
 
   const addTimeSlotHandler = (timeslot) => {
     setTimeSlots((prevTimeSlots) => {
@@ -97,7 +93,7 @@ const FindADoctorView = () => {
      console.log(displayname, isActive);
     let objIndex = facilities.findIndex((obj => obj.displayname === displayname));
     facilities[objIndex].isActive = !facilities[objIndex].isActive;
-    // console.log(toggleItems);
+    console.log(facilities);
     return facilities;
   };
 
@@ -133,13 +129,6 @@ const FindADoctorView = () => {
   return (
   <ThemeProvider theme={Theme}>
       <Page>
-      <Grid
-          container
-          spacing={0}
-          direction="column"
-          alignItems="center"
-          justify="center"
-        >
         <Container fluid>
           <Row>
             <Col md={12} fluid>
@@ -266,7 +255,7 @@ const FindADoctorView = () => {
               <br />
               <br />
               <center>
-                <Button onSubmit={submitHandler} color="secondary" href="/results">
+                <Button color="secondary" href="/results">
                   Find an appointment
                 </Button>
               </center>
@@ -275,7 +264,6 @@ const FindADoctorView = () => {
             <Col></Col>
           </Row>
         </Container>
-        </Grid>
       </Page>
     </ThemeProvider>
   );
