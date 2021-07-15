@@ -6,14 +6,13 @@ import React from "react";
 import {withRouter, Link} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {connect, useSelector} from "react-redux";
-import LogInButton from "./LogInButton";
 import {Theme} from "../UI/Theme";
 import {ThemeProvider} from "@material-ui/styles";
+import { Button } from "@material-ui/core";
 import KebabMenu from "./KebabMenu";
 
 const routes = [
     {path: "/", displayname: "Home"},
-    {path: "/medics", displayname: "Are You a Doctor?"},
 ];
 
 const NavigationBar = (props) => {
@@ -37,7 +36,8 @@ const NavigationBar = (props) => {
                             })}
                         </Nav>
                         <Nav>
-                            <LogInButton/>
+                            <Button color="secondary" href="/login-professionals">Are You a Doctor?</Button>
+                            {/* <LogInButton/> */}
                             {/*<KebabMenu
                                 open={Boolean(menuAnchor)}
                                 anchor={menuAnchor}

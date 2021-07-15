@@ -24,7 +24,7 @@ function LoginPatientsView(props) {
 
     const onLogin = (username, password) => {
         props.dispatch(login(username, password))
-        props.history.push("/");
+        props.history.push("/find-doctor");
     };
 
     const onCancel = () => {
@@ -32,7 +32,7 @@ function LoginPatientsView(props) {
     };
 
     const onSignUp = () => {
-        props.history.push("/register");
+        props.history.push("/register-patients");
     };
 
     return (

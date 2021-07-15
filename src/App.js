@@ -5,9 +5,8 @@ import reducers from "./redux/reducers";
 import thunkMiddleware from "redux-thunk";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import FindADoctorView from "./views/FindADoctorView";
-import LoginView from "./views/LoginView";
 import LoginPatientsView from "./views/LoginPatientsView";
-import RegisterView from "./views/RegisterView";
+import RegisterPatientsView from "./views/RegisterPatientsView";
 import LogInProfessionalsView from "./views/LogInProfessionalsView";
 import RegisterProfessionalsView from "./views/RegisterProfessionalsView";
 import ResultsView from "./views/ResultsView";
@@ -16,6 +15,7 @@ import ImpressumView from "./views/Impressum";
 import PatientDashboard from "./views/PatientDashboard";
 import EmergencyView from "./views/Emergency";
 import Landing from "./views/Landing";
+
 
 import DoctorDashboard from "./views/DoctorDashboard";
 
@@ -32,26 +32,23 @@ function App(props) {
                 <div>
                     {/* <NavigationBar/> */}
                     <Switch>
-                        < Route path="/" exact>
+                        < Route path="/find-doctor" exact>
                             <FindADoctorView/>
                         </Route>
-                        <Route path="/medics">
+                        <Route path="/login-professionals">
                             <LogInProfessionalsView/>
                         </Route>
-                        <Route path="/registerProfessional">
+                        <Route path="/register-patients">
+                            <RegisterPatientsView/>
+                        </Route>
+                        <Route path="/register-professionals">
                             <RegisterProfessionalsView/>
                         </Route>
-                        {/*<Route path="/login">
-                            <LoginView/>
-                        </Route>*/}
-                        <Route path="/loginPatient">
+                        <Route path="/login-patients">
                             <LoginPatientsView/>
                         </Route>
                         <Route path="/results">
                             <ResultsView/>
-                        </Route>
-                        <Route path="/register">
-                            <RegisterView/>
                         </Route>
                         <Route path={"/terms"}>
                             <TermsView/>
@@ -65,10 +62,10 @@ function App(props) {
                         <Route path="/dashboard">
                             <PatientDashboard/>
                         </Route>
-                        <Route path="/doctordashboard">
+                        <Route path="/doctor-dashboard">
                             <DoctorDashboard/>
                         </Route>
-                        <Route path="/landing">
+                        <Route path="/">
                             <Landing/>
                         </Route>
                     </Switch>

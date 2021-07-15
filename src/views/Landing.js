@@ -2,8 +2,6 @@ import React from "react";
 import { Button } from "@material-ui/core";
 import { Theme } from "../components/UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
-import { Box } from "@material-ui/core";
-import { Grid } from "@material-ui/core";
 import "./Landing.scss"
 import { Link } from "@material-ui/core";
 
@@ -21,14 +19,14 @@ const Landing = () => (
               <div>
                 <Button
                   color="primary"
-                  href="/register"
+                  href="/register-patients"
                 >
                   Sign Up
                 </Button>
                 &nbsp;&nbsp;&nbsp;
                 <Button
                   color="secondary"
-                  href="/login"
+                  href="/login-patients"
                 >
                   Login
                 </Button>
@@ -37,7 +35,7 @@ const Landing = () => (
                 <p></p>
                 <p></p>
                 <p>
-                    <Link color="inherit" href="/medics"> I am a medical professional</Link>
+                    <Link color="inherit" href="/login-professionals"> I am a medical professional</Link>
                 </p>
               </div>
             </div>
