@@ -55,7 +55,8 @@ export default class UserService {
 
         return {
             id: JSON.parse(window.atob(base64))._id,
-            username: JSON.parse(window.atob(base64)).username
+            username: JSON.parse(window.atob(base64)).username,
+            token
         };
     }
 

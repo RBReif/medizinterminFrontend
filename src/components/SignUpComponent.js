@@ -10,6 +10,8 @@ import {Col, Container, Form, Row} from "react-bootstrap";
 import DynamicDropdown from "./Forms/DynamicDropdown";
 import ConfigService from "../services/ConfigService";
 import LocationAutoComplete from "./Forms/Location/LocationAutoComplete";
+import {useSelector} from "react-redux";
+import {useHistory} from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     usersignUpRoot: {
@@ -44,6 +46,17 @@ const useStyles = makeStyles((theme) => ({
  * @param {props} props
  */
 const SignUpComponent = (props) => {
+    const history = useHistory()
+    const userData = useSelector((state) => state.user);
+
+// this has to be made working for redux
+    useEffect(() => {
+        if (userData?.user?.username) {
+            history.push("/find-doctor");
+        }
+    }, [userData, history]);
+
+
     const classes = useStyles();
 
     const [firstName, setFirstName] = React.useState("");
@@ -89,10 +102,11 @@ const SignUpComponent = (props) => {
         setRegisterError("");
     };
 
-    const onClickAddress = (e) => {
+    const onSelectAddress = (address_value, {lat, lng}) => {
         setAddress({
-            lat: e.lat,
-            lng: e.lng,
+            address_value,
+            lat,
+            lng,
         });
         setRegisterError("");
     };
@@ -188,8 +202,8 @@ const SignUpComponent = (props) => {
                         <Col>
                             <Form.Label> Address </Form.Label>
                             <LocationAutoComplete
-                                onClick={onClickAddress}
-                            ></LocationAutoComplete>
+                                onSelect={onSelectAddress}
+                            />
                         </Col>
                     </Row>
                     <Row>

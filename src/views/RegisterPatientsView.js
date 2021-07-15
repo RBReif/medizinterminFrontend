@@ -20,7 +20,6 @@ function RegisterPatientsView(props) {
 
     const onRegister = (username, password, firstName, lastName, birthDate, healthInsurance, address) => {
         props.dispatch(register(username, password, firstName, lastName, birthDate, healthInsurance, address));
-        props.history.push("/");
     };
 
     const onCancel = () => {

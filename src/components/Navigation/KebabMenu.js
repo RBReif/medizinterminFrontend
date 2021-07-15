@@ -25,10 +25,10 @@ const useStyles = makeStyles((theme) => ({
 function KebabMenu(props) {
     const classes = useStyles();
 
-    /*const user = useSelector((state) => {
+    const userData = useSelector((state) => {
         // return the currently logged in user from redux store
         return state.user;
-    });*/
+    });
 
     const onClickLogin = () => {
         // close this menu
@@ -50,21 +50,16 @@ function KebabMenu(props) {
     return (
         <Menu
             open={props.open}
-            anchorEl={props.anchor}
+            anchorEl={props.anchorEl}
             onClose={props.onClose}
-            getContentAnchorEl={null}
-            anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-            }}
         >
-            {/*{user.user
+            {userData.user
                 ? [
                     <MenuItem key="user" className={classes.menuitem}>
                         <Avatar className={classes.avatar}>
-                            {user.user.username ? user.user.username[0] : ""}
+                            {userData.user.username ? userData.user.username[0] : ""}
                         </Avatar>
-                        {user.user.username}
+                        {userData.user.username}
                     </MenuItem>,
                     <Divider key="divider" />,
                     <MenuItem
@@ -74,9 +69,9 @@ function KebabMenu(props) {
                     >
                         <ExitToAppIcon className={classes.avatar} />
                         Logout
-                    </MenuItem>,
+                    </MenuItem>
                 ]
-                : [*/}
+                : [
                     <MenuItem
                         key="login"
                         onClick={onClickLogin}
@@ -84,8 +79,8 @@ function KebabMenu(props) {
                     >
                         <VerifiedUserIcon className={classes.avatar} />
                         Login
-                    </MenuItem>,
-        {/*        ]}*/}
+                    </MenuItem>
+                    ]}
         </Menu>
     );
 }

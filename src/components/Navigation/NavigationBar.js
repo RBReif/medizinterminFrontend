@@ -2,15 +2,16 @@ import {
     Navbar,
     Nav,
 } from "react-bootstrap";
-import React from "react";
+import React, {useRef, useState} from "react";
 import {withRouter, Link} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {connect, useSelector} from "react-redux";
-import { logout } from "../../redux/actions";
+import {logout} from "../../redux/actions";
 import {Theme} from "../UI/Theme";
 import {ThemeProvider} from "@material-ui/styles";
-import { Button } from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import KebabMenu from "./KebabMenu";
+import MenuIcon from "@material-ui/icons/Menu";
 
 const routes = [
     {path: "/", displayname: "Home"},
@@ -18,8 +19,15 @@ const routes = [
 
 
 const NavigationBar = (props) => {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const ref = useRef(null)
+    const handleClose = () => {
+        setAnchorEl(null);
+    }
 
-    const [menuAnchor, setMenuAnchor] = React.useState(null);
+    const handleClick = (e) => {
+        setAnchorEl(e.currentTarget);
+    }
 
     const onClickLogout = () => {
         // trigger redux logout action
@@ -40,33 +48,26 @@ const NavigationBar = (props) => {
     return (
         <header>
             <ThemeProvider theme={Theme}>
-                <Navbar collapseOnSelect bg="light" variant="light" expand="lg">
+
+
+                <Navbar expand={"xl"} bg="light" variant="light">
+
                     <Link to="/" className="navbar-brand">medizintermin</Link>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="mr-auto">
-                            {routes.map((route) => {
-                                return (
-                                    <Nav.Item>
-                                        <Link to={route.path} className="nav-link">{route.displayname}</Link>
-                                    </Nav.Item>
-                                );
-                            })}
-                        </Nav>
-                        <Nav>
-                            <Button color="secondary" onClick={onClickAreYouADoctor}>Are You a Doctor?</Button>
-                            {/* <LogInButton/> */}
-                            {/*<KebabMenu
-                                open={Boolean(menuAnchor)}
-                                anchor={menuAnchor}
-                                onClose={() => setMenuAnchor(null)}
-                            />*/}
-                        </Nav>
-                        <Nav>
-                            <Button onClick={onClickLogout}>Logout</Button>
-                        </Nav>
-                    </Navbar.Collapse>
+                    <div>
+                    <Button style={{marginRight: 5}} color="secondary" onClick={onClickAreYouADoctor}>Are You a Doctor?</Button>
+                    <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                        <MenuIcon/>
+                    </Button>
+                    </div>
+
                 </Navbar>
+                <KebabMenu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    open={!!anchorEl}
+                    onClose={handleClose}/>
+
+
             </ThemeProvider>
         </header>
     );
