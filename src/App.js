@@ -5,9 +5,7 @@ import reducers from "./redux/reducers";
 import thunkMiddleware from "redux-thunk";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import FindADoctorView from "./views/FindADoctorView";
-import LoginView from "./views/LoginView";
 import LoginPatientsView from "./views/LoginPatientsView";
-import RegisterView from "./views/RegisterView";
 import RegisterPatientsView from "./views/RegisterPatientsView";
 import LogInProfessionalsView from "./views/LogInProfessionalsView";
 import RegisterProfessionalsView from "./views/RegisterProfessionalsView";
@@ -45,9 +43,6 @@ function App(props) {
                         <Route path="/registerProfessional">
                             <RegisterProfessionalsView/>
                         </Route>
-                        {/*<Route path="/login">
-                            <LoginView/>
-                        </Route>*/}
                         <Route path="/loginPatient">
                             <LoginPatientsView/>
                         </Route>

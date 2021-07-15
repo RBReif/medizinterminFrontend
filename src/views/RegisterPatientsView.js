@@ -18,12 +18,6 @@ import ConfigService from "../services/ConfigService";
 function RegisterPatientsView(props) {
     const user = useSelector((state) => state.user);
 
-    /*useEffect(() => {
-        if (user.user) {
-            props.history.push("/");
-        }
-    }, [user, props.history]);
-*/
     const onRegister = (username, password, firstName, lastName, birthDate, healthInsurance) => {
         props.dispatch(register(username, password, firstName, lastName, birthDate, healthInsurance));
         props.history.push("/");

@@ -20,7 +20,6 @@ export default class UserService {
                 lastname: lastName,
                 date_of_birth: dateBirth,
                 insurance: insurance
-
             }, function (data) {
                 resolve(data);
             }, function (textStatus) {
@@ -58,25 +57,6 @@ export default class UserService {
             username: JSON.parse(window.atob(base64)).username
         };
     }
-
-/*    // this does not work
-    static getUser(id) {
-        return new Promise((resolve, reject) => {
-            HttpService.get(
-                `${UserService.baseURL()}/`+id.id,
-                function (data) {
-                    if (data !== undefined || Object.keys(data).length !== 0) {
-                        resolve(data);
-                    } else {
-                        reject("Error while retrieving movie");
-                    }
-                },
-                function (textStatus) {
-                    reject(textStatus);
-                }
-            );
-        });
-    }*/
 
     static isAuthenticated() {
         return !!window.localStorage['jwtToken'];

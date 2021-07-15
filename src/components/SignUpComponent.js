@@ -53,10 +53,10 @@ const SignUpComponent = (props) => {
     const [birthDate, setBirthDate] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [password2, setPassword2] = React.useState("");
+    const [registerError, setRegisterError] = React.useState("");
 
     const [insurances, setInsurances ] = useState([]);
 
-    const [registerError, setRegisterError] = React.useState("");
 
     /*useEffect(() => {
         if (props.user.error) {
