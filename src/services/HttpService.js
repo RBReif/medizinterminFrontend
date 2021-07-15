@@ -4,9 +4,9 @@ export default class HttpService {
     // constructor() {
     // }
 
-    static apiURL() {return 'http://localhost:3000'; }
+    static apiURL() {return 'http://localhost:3000/?language=GERMAN'; }
 
-    static async get(url, onSuccess, onError, data) {
+    static async get(url, onSuccess, onError) {
         let token = window.localStorage['jwtToken'];
         let header = new Headers();
         if(token) {
@@ -15,18 +15,11 @@ export default class HttpService {
 
         try {
             let resp
-           if (data ==null){
+
                  resp = await fetch(url, {
                     method: 'GET',
                     headers: header,
                 });
-           }else{
-                 resp = await fetch(url, {
-                    method: 'GET',
-                    headers: header,
-                    body: JSON.stringify(data)
-                });
-            }
 
 
 

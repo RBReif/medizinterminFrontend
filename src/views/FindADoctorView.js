@@ -16,9 +16,8 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core";
 import image from "../images/professional.jpg"
+import MultiSelectDropdown from "../components/Forms/MultiSelectDropdown";
 import ConfigService from "../services/ConfigService"
-
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,12 +34,40 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const healthinsurancelist = [
+  { displayname: "Public" },
+  { displayname: "Private" },
+];
+const languagelist = [
+  { displayname: "German" },
+  { displayname: "English" },
+  { displayname: "Russian"},
+  { displayname: "Turkish"},
+  { displayname: "French"}
+];
+const doctorlist = [
+  { id: "1", displayname: "Dentist" },
+  { id: "2", displayname: "Cardiologist" },
+  { id: "3", displayname: "Something" },
+  { id: "4", displayname: "More" },
+];
+
+const toggles = [
+  { id: "1", displayname: "Wheelchair availability needed?", isActive: false },
+  { id: "2", displayname: "Elevator needed", isActive: false },
+  { id: "3", displayname: "Car parking nearby", isActive: false },
+  {
+    id: "4",
+    displayname: "Public transportation station nearby",
+    isActive: false,
+  },
+];
+
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
 //  const [togglesSelected, setTogglesSelecteed] = useState([]);
   const classes = useStyles();
   const [doctor, setDoctor] = useState("");
-  const [language, setLanguage] = useState("");
   const [healthInsurance, setHealthInsurance] = useState("");
   const [latLng, setLatLng] = useState({
     lat: null,
@@ -58,9 +85,9 @@ const FindADoctorView = () => {
     });
   };
 
-  const languageChangeHandler = (event) => {
+  const languagesChangeHandler = (event) => {
     // console.log("stateChangeHandler: ", event.target.value);
-    return setLanguage(event.target.value);
+    return setLanguages(event.target.value);
   };
 
   const healthInsuranceChangeHandler = (event) => {
@@ -193,21 +220,17 @@ const FindADoctorView = () => {
                     <DynamicCard
                       variant="body2"
                       content={
-                        <DynamicDropdown
-                        key="languagedropdown"
-                          defaultValue=""
+                        <MultiSelectDropdown
                           label="Please choose your preferred language"
                           items={languages}
-                          onChange={languageChangeHandler}
-                        ></DynamicDropdown>
+                          onChange={languagesChangeHandler}
+                        ></MultiSelectDropdown>
                       }
                     ></DynamicCard>
                     <DynamicCard
                       variant="body2"
                       content={
                         <DynamicDropdown
-                          key={insurances.id}
-                          defaultValue=""
                           label="Please choose your health insurance"
                           items={insurances}
                           onChange={healthInsuranceChangeHandler}

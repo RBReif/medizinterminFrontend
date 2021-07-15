@@ -26,8 +26,8 @@ export default class AppointmentService{
 
     static filterAppointments(area, languages, facilities, startpoint, endpoint){
         return new Promise( async(resolve, reject) => {
-            await  HttpService.get(
-                this.baseURL(),
+            await  HttpService.post(
+                this.baseURL()+"/filter",
                 function (data){resolve(data)},
                 function (textStatus){
                     reject(textStatus);
