@@ -79,8 +79,8 @@ const PatientDashboard = (props) => {
   console.log(appointments);
   console.log("patient ", patient)
 
-  const prevAppointments = appointments.map((appointment) => (moment(new Date(appointment.startPoint)).toDate() < new Date() ? [...prevAppointments]: ""));
-  const upcomingAppointments = appointments.map((appointment) => (moment(new Date(appointment.startPoint)).toDate() > new Date() ? [...prevAppointments]: ""));
+  // const prevAppointments = appointments.map((appointment) => (moment(new Date(appointment.startPoint)).toDate() < new Date() ? [...prevAppointments]: ""));
+  // const upcomingAppointments = appointments.map((appointment) => (moment(new Date(appointment.startPoint)).toDate() > new Date() ? [...prevAppointments]: ""));
 
   return (
     <ThemeProvider theme={Theme}>
@@ -88,7 +88,7 @@ const PatientDashboard = (props) => {
         {/*************** GRID 1, 3 COLUMNS *****************/}
         <Grid container justifyContent="center" alignItems="center">
           <Grid item  >
-              <h2>Hello {patient.firstname} {patient.lastname}</h2>
+              <h2>Hello {patient.name}</h2>
           </Grid>
         </Grid>
         <Grid container spacing={3}>
@@ -117,21 +117,21 @@ const PatientDashboard = (props) => {
             <NewsList></NewsList>
           </Grid>
           <Grid item xs> 
-          {upcomingAppointments.length > 0 ? upcomingAppointments.map((appointment) => (
+          {/* {upcomingAppointments.length > 0 ? upcomingAppointments.map((appointment) => (
             <Paper>{appointment.startPoint}</Paper>
-                    )): <Paper className={classes.paper}>You have no upcoming apppointments</Paper>}
-            {/* {appointments.map((appointment) => (
+                    )): <Paper className={classes.paper}>You have no upcoming apppointments</Paper>} */}
+            {appointments.map((appointment) => (
             moment(new Date(appointment.startPoint)).toDate() > new Date() ? <Paper>{appointment.startPoint}</Paper> : ""
-                    ))} */}
+                    ))}
               </Grid>
-              <Grid item xs>
+              {/* <Grid item xs>
               {prevAppointments.length > 0 ? prevAppointments.map((appointment) => (
             <Paper>{appointment.startPoint}</Paper>
                     )): <Paper className={classes.paper}>You have no previous appointments.</Paper>}
-                    </Grid>
-           {/* <Grid item xs>{appointments.map((appointment) => (
+                    </Grid> */}
+           <Grid item xs>{appointments.map((appointment) => (
             moment(new Date(appointment.startPoint)).toDate() <= new Date() ? <Paper>{appointment.startPoint}</Paper> : ""
-                    ))}</Grid> */}
+                    ))}</Grid>
         </Grid>
         {/*************** GRID 2, 3 COLUMNS *****************/}
         <Grid container spacing={3}>
