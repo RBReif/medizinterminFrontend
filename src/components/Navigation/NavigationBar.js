@@ -36,7 +36,7 @@ const NavigationBar = (props) => {
                             })}
                         </Nav>
                         <Nav>
-                            <Button color="secondary" href="/medics">Are You a Doctor?</Button>
+                            <Button color="secondary" href="/login-professionals">Are You a Doctor?</Button>
                             {/* <LogInButton/> */}
                             {/*<KebabMenu
                                 open={Boolean(menuAnchor)}
