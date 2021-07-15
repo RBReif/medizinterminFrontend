@@ -89,7 +89,7 @@ const ResultsView = (props) => {
                     <center>
                       <p>Found no doctors.</p>
                       <p>
-                        <Button href="/">Try new search</Button>
+                        <Button href="/find-doctor">Try new search</Button>
                       </p>
                     </center>
                   )}

@@ -16,15 +16,15 @@ function LoginPatientsView(props) {
     const user = useSelector((state) => state.user);
 
 // this has to be made working for redux
-/*    useEffect(() => {
+    useEffect(() => {
         if (user.user) {
-            props.history.push("/");
+            props.history.push("/find-doctor");
         }
-    }, [user, props.history]);*/
+    }, [user, props.history]);
 
     const onLogin = (username, password) => {
         props.dispatch(login(username, password))
-        props.history.push("/");
+        // props.history.push("/find-doctor");
     };
 
     const onCancel = () => {
@@ -32,7 +32,7 @@ function LoginPatientsView(props) {
     };
 
     const onSignUp = () => {
-        props.history.push("/registerPatients");
+        props.history.push("/register-patients");
     };
 
     return (

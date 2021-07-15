@@ -3,6 +3,7 @@ import Page from "../components/Page";
 import { Button } from "@material-ui/core";
 import { Theme } from "../components/UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
+import moment from "moment";
 
 const LoginProf = () => {
   return (
@@ -36,7 +37,7 @@ const LoginProf = () => {
             <Form.Text className="text-muted">
               Not registered yet? Sign up now:
             </Form.Text>
-            <Button color="primary" Link to="/registerProfessional">Register</Button>
+            <Button color="primary" Link to="/register-professionals">Register</Button>
           </Form>
         </Col>
         <Col></Col>
