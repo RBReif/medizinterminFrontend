@@ -15,12 +15,11 @@ import {ThemeProvider} from "@material-ui/styles";
 function LoginPatientsView(props) {
     const user = useSelector((state) => state.user);
 
-// this has to be made working for redux
-/*    useEffect(() => {
+    useEffect(() => {
         if (user.user) {
-            props.history.push("/");
+            props.history.push("/find-doctor");
         }
-    }, [user, props.history]);*/
+    }, [user, props.history]);
 
     const onLogin = (username, password) => {
         props.dispatch(login(username, password))

@@ -7,14 +7,16 @@ import { Theme } from "../components/UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
+import { connect, useSelector } from "react-redux";
 import { Paper } from "@material-ui/core";
 import Doctor from "../components/Doctor/Doctor";
 import PatientService from "../services/PatientService";
+import UserService from "../services/UserService";
+import AppointmentService from "../services/AppointmentService";
+import { getPatients, getPatient } from "../redux/actions";
+import DoctorService from "../services/DoctorService";
 import DynamicCard from "../components/UI/DynamicCard";
 import { Button} from "@material-ui/core";
-import AppointmentService from "../services/AppointmentService";
-import DoctorService from "../services/DoctorService";
-import UserService from "../services/UserService";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,23 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const appointments = [{
-  appointmentStatus: "available",
-  _id: "604963996946",
-  doctor: "84t84843646",
-  startPoint: "2021-07-09T21:30:00.0000Z"
-},{
-  appointmentStatus: "available",
-  _id: "483863597937",
-  doctor: "9543694",
-  startPoint: "2021-07-21T21:30:00.0000Z"
-},
-];
-
-const patient = {firstname:"Max", lastname:"Muster", checkups: [{service: "Teeth Cleaning", date: "2021.12.12"}]};
-
-const PatientDashboard = () => {
-
+const PatientDashboard = (props) => {
 
   const classes = useStyles();
 
@@ -83,14 +69,18 @@ const PatientDashboard = () => {
 
       })
     }
-  }, [])
    const a = getAppointments()
 
     a.then(console.log("finally",appointments))
+  }, [])
 
   const moment = require("moment");
 
+  console.log(appointments);
+  console.log("patient ", patient)
 
+  const prevAppointments = appointments.map((appointment) => (moment(new Date(appointment.startPoint)).toDate() < new Date() ? [...prevAppointments]: ""));
+  const upcomingAppointments = appointments.map((appointment) => (moment(new Date(appointment.startPoint)).toDate() > new Date() ? [...prevAppointments]: ""));
 
   return (
     <ThemeProvider theme={Theme}>
@@ -126,14 +116,22 @@ const PatientDashboard = () => {
           <Grid item xs>
             <NewsList></NewsList>
           </Grid>
-          <Grid item xs>
-            {appointments.map((appointment) => (
+          <Grid item xs> 
+          {upcomingAppointments.length > 0 ? upcomingAppointments.map((appointment) => (
+            <Paper>{appointment.startPoint}</Paper>
+                    )): <Paper className={classes.paper}>You have no upcoming apppointments</Paper>}
+            {/* {appointments.map((appointment) => (
             moment(new Date(appointment.startPoint)).toDate() > new Date() ? <Paper>{appointment.startPoint}</Paper> : ""
-                    ))}
+                    ))} */}
+              </Grid>
+              <Grid item xs>
+              {prevAppointments.length > 0 ? prevAppointments.map((appointment) => (
+            <Paper>{appointment.startPoint}</Paper>
+                    )): <Paper className={classes.paper}>You have no previous appointments.</Paper>}
                     </Grid>
-           <Grid item xs>{appointments.map((appointment) => (
+           {/* <Grid item xs>{appointments.map((appointment) => (
             moment(new Date(appointment.startPoint)).toDate() <= new Date() ? <Paper>{appointment.startPoint}</Paper> : ""
-                    ))}</Grid>
+                    ))}</Grid> */}
         </Grid>
         {/*************** GRID 2, 3 COLUMNS *****************/}
         <Grid container spacing={3}>
@@ -147,7 +145,7 @@ const PatientDashboard = () => {
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs>
-            <Paper className={classes.paper}>
+            {/* <Paper className={classes.paper}>
               {patient.checkups.length === 0 ? <p>No recommendations found</p> : patient.checkups.map((item) => (
                 <DynamicCard
                 content={
@@ -155,11 +153,31 @@ const PatientDashboard = () => {
                   <b>{item.service}:</b> {item.date} &nbsp;&nbsp;&nbsp;<Button color="primary">Book Now</Button>
                   </div>}>
                 </DynamicCard>))}
-            </Paper>
+            </Paper> */}
           </Grid>
           <Grid item xs></Grid>
           <Grid item xs></Grid>
         </Grid>
+
+        {/* <Container>
+          <br />
+          <h3>Recommended Checkup</h3>
+          <CheckupList />
+        </Col>
+        <Col>
+          <Form>
+            <AppointmentCard />
+            <br />
+            <AppointmentCard />
+            <br />
+            <AppointmentCard />
+          </Form>
+        </Col>
+        <Col>
+          <AppointmentCard />
+        </Col>
+      </Row>
+    </Container> */}
       </Page>
     </ThemeProvider>
   );
@@ -168,3 +186,4 @@ const PatientDashboard = () => {
 export default connect(null, { getPatient })(
   PatientDashboard
 );
+
