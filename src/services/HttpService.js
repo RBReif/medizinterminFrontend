@@ -1,12 +1,12 @@
-"use strict";
+// "use strict";
 
 export default class HttpService {
-    constructor() {
-    }
+    // constructor() {
+    // }
 
     static apiURL() {return 'http://localhost:3000'; }
 
-    static async get(url, onSuccess, onError) {
+    static async get(url, onSuccess, onError, data) {
         let token = window.localStorage['jwtToken'];
         let header = new Headers();
         if(token) {
@@ -14,10 +14,21 @@ export default class HttpService {
         }
 
         try {
-            let resp = await fetch(url, {
-                method: 'GET',
-                headers: header
-            });
+            let resp
+           if (data ==null){
+                 resp = await fetch(url, {
+                    method: 'GET',
+                    headers: header,
+                });
+           }else{
+                 resp = await fetch(url, {
+                    method: 'GET',
+                    headers: header,
+                    body: JSON.stringify(data)
+                });
+            }
+
+
 
             if(this.checkIfUnauthorized(resp)) {
                 window.location = '/#login';

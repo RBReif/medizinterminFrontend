@@ -7,7 +7,7 @@ import { Input } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { Theme } from '../../UI/Theme';
 
-export default function LocationAutoComplete() {
+export default function LocationAutoComplete(props) {
   const [address, setAddress] = React.useState("");
   const [coordinates, setCoordinates] = React.useState({
     lat: null,
@@ -19,14 +19,14 @@ export default function LocationAutoComplete() {
     const latLng = await getLatLng(results[0]);
     setAddress(value);
     setCoordinates(latLng);
+    props.onClick(latLng);
   };
-
-  console.log(coordinates);
 
   return (
     <ThemeProvider theme={Theme}>
     <div>
       <PlacesAutocomplete
+      key="12345"
         value={address}
         onChange={setAddress}
         onSelect={handleSelect}

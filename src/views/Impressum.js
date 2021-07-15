@@ -1,10 +1,13 @@
-import {Col, Container} from "react-bootstrap";
+import {Container} from "react-bootstrap";
 import React from "react";
 import Page from "../components/Page";
+import {ThemeProvider} from "@material-ui/styles";
+import {Theme} from "../components/UI/Theme"
 
 
 const ImpressumView = (props) => {
     return (
+        <ThemeProvider theme={Theme}>
         <Page>
         <Container>
             <h2><strong>Impressum</strong></h2>
@@ -17,6 +20,7 @@ const ImpressumView = (props) => {
 
         </Container>
         </Page>
+    </ThemeProvider>
     );
 };
 

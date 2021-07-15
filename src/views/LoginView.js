@@ -44,13 +44,13 @@
 
 // export default Login;
 
-"use strict";
+// "use strict";
 
 import React from "react";
 import { Card } from "react-md";
 import { TextField } from "@material-ui/core";
 import { withRouter, Link } from "react-router-dom";
-import { Form, Container, Col } from "react-bootstrap";
+import { Container, Col } from "react-bootstrap";
 import { Button } from "@material-ui/core";
 
 import { AlertMessage } from "../components/UI/AlertMessage";
@@ -140,10 +140,10 @@ class UserLogin extends React.Component {
                       id="submit"
                       type="submit"
                       disabled={
-                        this.state.username == undefined ||
-                        this.state.username == "" ||
-                        this.state.password == undefined ||
-                        this.state.password == ""
+                        this.state.username === undefined ||
+                        this.state.username === "" ||
+                        this.state.password === undefined ||
+                        this.state.password === ""
                           ? true
                           : false
                       }
