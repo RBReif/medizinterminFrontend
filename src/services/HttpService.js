@@ -1,8 +1,8 @@
-"use strict";
+// "use strict";
 
 export default class HttpService {
-    constructor() {
-    }
+    // constructor() {
+    // }
 
     static apiURL() {return 'http://localhost:3000'; }
 
@@ -115,6 +115,8 @@ export default class HttpService {
         let header = new Headers();
         if(token) {
             header.append('Authorization', `JWT ${token}`);
+        }else {
+
         }
         header.append('Content-Type', 'application/json');
 
@@ -122,11 +124,11 @@ export default class HttpService {
             let resp = await fetch(url, {
                 method: 'POST',
                 headers: header,
-                body: JSON.stringify(data)
+                body: JSON.stringify(data),
             });
 
             if(this.checkIfUnauthorized(resp)) {
-                window.location = '/#login';
+                window.location = '/login';
                 return;
             }
             else {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
@@ -57,7 +57,8 @@ const LocationSlider = (props) => {
             Range
           </Typography>
           <Slider
-            defaultValue={value}
+            key={`slider-location`}
+            value={value}
             getAriaValueText={valuetext}
             aria-labelledby="discrete-slider-restrict"
             valueLabelDisplay="auto"

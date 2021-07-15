@@ -7,6 +7,11 @@ import {
   KeyboardTimePicker,
 } from "@material-ui/pickers";
 
+
+//What is this component about? 
+//This is a dynamic timepicker. It is a pop-up which will let the user set a time
+//There is another component to set the date Check out DynamicDatePicker.js
+//PROPS: id, label, value
 const DynamicTimePicker = (props) => {
 
    const dateChangeHandler = (date) => {

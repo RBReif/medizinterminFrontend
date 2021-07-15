@@ -35,9 +35,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
 //  const [togglesSelected, setTogglesSelecteed] = useState([]);
@@ -50,38 +47,10 @@ const FindADoctorView = () => {
     lng: null,
   });
   const [radius, setRadius] = useState("");
-  const [facilities, setFacilities] = useState([])
-  const [insurances, setInsurances ] = useState([])
-  const [languages, setLanguages ] = useState([])
-  const [areas, setAreas] = useState([])
-
-  let toggleItems = facilities.map((toggle) => {
-    return {
-      id: toggle.id,
-      displayname: toggle.displayname,
-      isActive: toggle.isActive,
-    };
-  });
-
-  // const [toggle, setToggle] = useState([
-  //   toggles.map(toggle) => {
-  //     return displayname={toggle.displayname}
-  //   }
-  // ])
-
-  // async function fetchDoctorsHandler() {
-  //   const response = await fetch("");
-  //   const data = await response.json();
-  //   const [doctors, setDoctors] = useState([]);
-
-  //   const transformedDoctors = data.results.map((doctorData) => {
-  //     return {
-  //       id: doctorData.id,
-  //       displayame: doctorData.displayname,
-  //     };
-  //   });
-  //   setDoctors(transformedDoctors);
-  // }
+  const [facilities, setFacilities] = useState([]);
+  const [insurances, setInsurances ] = useState([]);
+  const [languages, setLanguages ] = useState([]);
+  const [areas, setAreas] = useState([]);
 
   const addTimeSlotHandler = (timeslot) => {
     setTimeSlots((prevTimeSlots) => {
@@ -113,7 +82,7 @@ const FindADoctorView = () => {
   };
 
   const radiusHandler = (radius) => {
-    // console.log("RADIUS: ", radius);
+    console.log("RADIUS: ", radius);
     return setRadius(radius);
   };
 
@@ -121,7 +90,7 @@ const FindADoctorView = () => {
      console.log(displayname, isActive);
     let objIndex = facilities.findIndex((obj => obj.displayname === displayname));
     facilities[objIndex].isActive = !facilities[objIndex].isActive;
-    // console.log(toggleItems);
+    console.log(facilities);
     return facilities;
   };
 
@@ -154,14 +123,7 @@ const FindADoctorView = () => {
     console.log("Healthinsurancelist middle: ", insurances)
   }, [])
 
-
-
-
   return (
-
-
-
-
   <ThemeProvider theme={Theme}>
       <Page>
         <Container fluid>
@@ -232,6 +194,7 @@ const FindADoctorView = () => {
                       variant="body2"
                       content={
                         <DynamicDropdown
+                        key="languagedropdown"
                           defaultValue=""
                           label="Please choose your preferred language"
                           items={languages}
@@ -243,6 +206,7 @@ const FindADoctorView = () => {
                       variant="body2"
                       content={
                         <DynamicDropdown
+                          key={insurances.id}
                           defaultValue=""
                           label="Please choose your health insurance"
                           items={insurances}
@@ -254,6 +218,7 @@ const FindADoctorView = () => {
                       {facilities.map((toggle) => {
                         return (
                           <DynamicSwitch
+                            key={toggle.id}
                             id={toggle.id}
                             displayname={toggle.displayname}
                             onChange={toggleChangeHandler}

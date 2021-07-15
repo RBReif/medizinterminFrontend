@@ -1,10 +1,10 @@
-"use strict";
+// "use strict";
 
 import HttpService from './HttpService'
 
 export default class ConfigService{
-    constructor() {
-    }
+    // constructor() {
+    // }
 
     static baseURL() {return 'http://localhost:4000/config';}
 

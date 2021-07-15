@@ -1,6 +1,7 @@
 import { createTheme } from "@material-ui/core";
 
-//Create a theme
+//THIS IS THE medizintermin THEME. You can import it by importing ThemeProvider and this theme.
+//It has our CI colors and some basic props, for some component stylings.
 export const Theme = createTheme ({
     palette: {
         primary: {
@@ -47,7 +48,10 @@ export const Theme = createTheme ({
             InputLabelProbs: {
                 shrink: false
             }
-        }
+        },
+        MuiCard: {
+            display: "flex",
+        },
     }
 
 
