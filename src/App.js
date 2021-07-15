@@ -16,6 +16,7 @@ import PatientDashboard from "./views/PatientDashboard";
 import EmergencyView from "./views/Emergency";
 import Landing from "./views/Landing";
 
+
 import DoctorDashboard from "./views/DoctorDashboard";
 
 
@@ -34,16 +35,16 @@ function App(props) {
                         < Route path="/find-doctor" exact>
                             <FindADoctorView/>
                         </Route>
-                        <Route path="/medics">
+                        <Route path="/login-professionals">
                             <LogInProfessionalsView/>
                         </Route>
-                        <Route path="/registerPatients">
+                        <Route path="/register-patients">
                             <RegisterPatientsView/>
                         </Route>
-                        <Route path="/registerProfessional">
+                        <Route path="/register-professionals">
                             <RegisterProfessionalsView/>
                         </Route>
-                        <Route path="/loginPatients">
+                        <Route path="/login-patients">
                             <LoginPatientsView/>
                         </Route>
                         <Route path="/results">
@@ -61,7 +62,7 @@ function App(props) {
                         <Route path="/dashboard">
                             <PatientDashboard/>
                         </Route>
-                        <Route path="/doctordashboard">
+                        <Route path="/doctor-dashboard">
                             <DoctorDashboard/>
                         </Route>
                         <Route path="/">

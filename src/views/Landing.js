@@ -19,14 +19,14 @@ const Landing = () => (
               <div>
                 <Button
                   color="primary"
-                  href="/registerPatients"
+                  href="/register-patients"
                 >
                   Sign Up
                 </Button>
                 &nbsp;&nbsp;&nbsp;
                 <Button
                   color="secondary"
-                  href="/loginPatients"
+                  href="/login-patients"
                 >
                   Login
                 </Button>
@@ -35,7 +35,7 @@ const Landing = () => (
                 <p></p>
                 <p></p>
                 <p>
-                    <Link color="inherit" href="/medics"> I am a medical professional</Link>
+                    <Link color="inherit" href="/login-professionals"> I am a medical professional</Link>
                 </p>
               </div>
             </div>
