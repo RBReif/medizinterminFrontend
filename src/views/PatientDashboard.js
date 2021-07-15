@@ -45,7 +45,7 @@ function PatientDashboard (props) {
       <Row>
         <Col></Col>
         <Col>
-          <h2>Hello </h2>
+          <h2>Hello Max Mustermann</h2>
         </Col>
         <Col></Col>
       </Row>
