@@ -1,6 +1,6 @@
 import React from 'react';
 import NavigationBar from './Navigation/NavigationBar';
-import { Footer } from "./Footer/Footer";
+import Footer from "./Footer/Footer.js"
 
 
 export default class Page extends React.Component {
@@ -24,7 +24,7 @@ export default class Page extends React.Component {
             <section>
                 <NavigationBar/>
                 {this.props.children}
-                <Footer />
+                {/* <Footer /> */}
             </section>
         );
     }

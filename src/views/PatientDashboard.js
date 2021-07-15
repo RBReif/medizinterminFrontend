@@ -26,6 +26,19 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
+  box: {
+    height: "100%",
+    width: "100%",
+  },
+  container: {
+    height: "400px",
+  },
+  innerContainer: {
+    height: "100%",
+  },
+  item: {
+    flex: 1,
+  },
 }));
 
 const PatientDashboard = (props) => {
@@ -83,9 +96,11 @@ const PatientDashboard = (props) => {
   //arrays for previous and upcoming appointments
   const prevAppointments = [];
   const upcomingAppointments = [];
-  //total appointments, merged 
-  const totalAppointments = doctors.map((item, i) => Object.assign({}, item, appointments[i]));
- 
+  //total appointments, merged
+  const totalAppointments = doctors.map((item, i) =>
+    Object.assign({}, item, appointments[i])
+  );
+
   //check which appointments are in the past and which are in the future
   totalAppointments.map((appointment) =>
     moment(new Date(appointment.startPoint)).toDate() < new Date()
@@ -95,89 +110,79 @@ const PatientDashboard = (props) => {
 
   console.log("prevAppointments: ", prevAppointments);
   console.log("upcomingAppointments: ", upcomingAppointments);
-  console.log("totalAppo :", totalAppointments)
+  console.log("totalAppo :", totalAppointments);
 
   return (
     <ThemeProvider theme={Theme}>
       <Page>
         {/*************** GRID 1, 3 COLUMNS *****************/}
-        <Grid container justifyContent="center" alignItems="center">
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          direction="row"
+          spacing={3}
+          xs={12}
+        >
           <Grid item>
             <h2>Hello {patient.name}</h2>
           </Grid>
         </Grid>
-        <Grid container spacing={3}>
-          <Grid item xs>
+        <Grid className={classes.container} container spacing={3}
+          xs={12}>
+          <Grid className={classes.item} item xs={4}>
             <Paper className={classes.paper}>
               <h3>News Center</h3>
             </Paper>
+            <p></p>
+            <Grid>
+              <NewsList></NewsList>
+            </Grid>
           </Grid>
-          {/* <Grid item xs>
-         <h3>News Center</h3> <NewsList></NewsList>
-        </Grid> */}
-          <Grid item xs>
+          <Grid item xs={4}>
             <Paper className={classes.paper}>
               <h3>Upcoming Appointments</h3>
             </Paper>
+            <p></p>
+            <Grid item xs={12}>
+              <p>
+              {upcomingAppointments.length > 0 ? (
+                upcomingAppointments.map((appointment) => (
+                  <p>
+                    <Appointment
+                      props={appointment}
+                      readOnly={true}
+                    ></Appointment>
+                  </p>
+                ))
+              ) : (
+                <Paper className={classes.paper}>
+                  You have no upcoming appointments
+                </Paper>
+              )}
+              </p>
+            </Grid>
           </Grid>
-          <Grid item xs>
+          <Grid xs={4} item>
             <Paper className={classes.paper}>
               <h3>Previous Appointments</h3>
             </Paper>
+            <p></p>
+            <Grid item xs={12} alignItems="center">
+              {prevAppointments.length > 0 ? (
+                prevAppointments.map((appointment) => (
+                  <Appointment
+                    props={appointment}
+                    readOnly={false}
+                  ></Appointment>
+                ))
+              ) : (
+                <Paper className={classes.paper}>
+                  You have no previous appointments.
+                </Paper>
+              )}
+            </Grid>
           </Grid>
-        </Grid>
-        {/*************** GRID 2, 3 COLUMNS *****************/}
-        <Grid container spacing={3}>
-          <Grid item xs>
-            <NewsList></NewsList>
-          </Grid>
-          <Grid item xs>
-            {upcomingAppointments.length > 0 ? (
-              upcomingAppointments.map((appointment) => (
-                <Appointment props={appointment} readOnly={true}></Appointment>
-              ))
-            ) : (
-              <Paper className={classes.paper}>
-                You have no upcoming apppointments
-              </Paper>
-            )}
-          </Grid>
-          <Grid item xs>
-            {prevAppointments.length > 0 ? (
-              prevAppointments.map((appointment) => (
-                <Appointment props={appointment} readOnly={false}></Appointment>
-              ))
-            ) : (
-              <Paper className={classes.paper}>
-                You have no previous appointments.
-              </Paper>
-            )}
-          </Grid>
-        </Grid>
-        {/*************** GRID 2, 3 COLUMNS *****************/}
-        <Grid container spacing={3}>
-          <Grid item xs>
-            <Paper className={classes.paper}>
-              <h3>Recommended Check-Ups</h3>
-            </Paper>
-          </Grid>
-          <Grid item xs></Grid>
-          <Grid item xs></Grid>
-        </Grid>
-        <Grid container spacing={3}>
-          <Grid item xs>
-            {/* <Paper className={classes.paper}>
-              {patient.checkups.length === 0 ? <p>No recommendations found</p> : patient.checkups.map((item) => (
-                <DynamicCard
-                content={
-                  <div>
-                  <b>{item.service}:</b> {item.date} &nbsp;&nbsp;&nbsp;<Button color="primary">Book Now</Button>
-                  </div>}>
-                </DynamicCard>))}
-            </Paper> */}
-          </Grid>
-          <Grid item xs></Grid>
-          <Grid item xs></Grid>
         </Grid>
       </Page>
     </ThemeProvider>

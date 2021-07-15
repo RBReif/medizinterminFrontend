@@ -1,26 +1,17 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import { Button } from "@material-ui/core";
+
 import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import CallIcon from "@material-ui/icons/Call";
-import NavigationIcon from "@material-ui/icons/Navigation";
 import { Theme } from "../UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
-import { Box } from "@material-ui/core";
-import Rating from "@material-ui/lab/Rating";
 import Ratings from "../Forms/Ratings";
-import DynamicCard from "../UI/DynamicCard";
-import { lightBlue } from "@material-ui/core/colors";
+import { Card } from "@material-ui/core";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      maxWidth: 345,
+      display: "flex",
     },
     media: {
       height: 0,
@@ -45,7 +36,6 @@ const Appointment = (props) => {
     return (
         <ThemeProvider theme={Theme}>
           {console.log("props: ", props)}
-          <Box p={2} xs={1} xl={1}>
             <Card className={classes.root}>
               <CardHeader
                 avatar={
@@ -78,7 +68,6 @@ const Appointment = (props) => {
                 }
               />
             </Card>
-          </Box>
         </ThemeProvider>
       );
     };
