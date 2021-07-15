@@ -1,31 +1,15 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import NavigationBar from './Navigation/NavigationBar';
 import { Footer } from "./Footer/Footer";
 
-
-export default class Page extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            title: ''
-        }
-    }
-
-    componentDidMount(){
-       this.setState({
-           title: document.title
-       });
-    }
-
-    render() {
-        return (
-            <section>
-                <NavigationBar/>
-                {this.props.children}
-                <Footer />
-            </section>
-        );
-    }
+const Page = ({children}) => {
+    return (
+        <section>
+            <NavigationBar/>
+            {children}
+            <Footer />
+        </section>
+    )
 }
+
+export default Page

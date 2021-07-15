@@ -1,5 +1,5 @@
-import {Switch, Route} from "react-router-dom";
-import {Provider} from "react-redux";
+import {Switch, Route, Redirect} from "react-router-dom";
+import {Provider, useDispatch, useSelector} from "react-redux";
 import {createStore, applyMiddleware} from "redux";
 import reducers from "./redux/reducers";
 import thunkMiddleware from "redux-thunk";
@@ -18,7 +18,37 @@ import Landing from "./views/Landing";
 
 
 import DoctorDashboard from "./views/DoctorDashboard";
+import React, {useEffect, useState} from "react";
+import UserService from "./services/UserService";
+import {setUser} from "./redux/actions";
 
+
+const AuthenticatedRoute = (props) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(undefined)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setUser())
+    }, [])
+
+    const userData = useSelector(state => state.user)
+    useEffect(() => {
+        if(!!userData) {
+            setIsLoggedIn(!!userData?.user?.username)
+        }
+
+    }, [userData])
+
+    if(isLoggedIn !== undefined && !isLoggedIn) {
+        return <Redirect to={"/"}/>
+    }
+
+    return <Route {...props}/>
+}
+
+const NotAuthenticatedRoute = (props) => {
+    return <Route {...props}/>
+}
 
 
 function App(props) {
@@ -32,9 +62,9 @@ function App(props) {
                 <div>
                     {/* <NavigationBar/> */}
                     <Switch>
-                        < Route path="/find-doctor" exact>
+                        <AuthenticatedRoute path="/find-doctor" exact>
                             <FindADoctorView/>
-                        </Route>
+                        </AuthenticatedRoute>
                         <Route path="/login-professionals">
                             <LogInProfessionalsView/>
                         </Route>
@@ -47,9 +77,9 @@ function App(props) {
                         <Route path="/login-patients">
                             <LoginPatientsView/>
                         </Route>
-                        <Route path="/results">
+                        <AuthenticatedRoute path="/results">
                             <ResultsView/>
-                        </Route>
+                        </AuthenticatedRoute>
                         <Route path={"/terms"}>
                             <TermsView/>
                         </Route>
@@ -59,9 +89,9 @@ function App(props) {
                         <Route path="/emergency">
                             <EmergencyView/>
                         </Route>
-                        <Route path="/dashboard">
+                        <AuthenticatedRoute path="/dashboard">
                             <PatientDashboard/>
-                        </Route>
+                        </AuthenticatedRoute>
                         <Route path="/doctor-dashboard">
                             <DoctorDashboard/>
                         </Route>
