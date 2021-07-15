@@ -11,7 +11,7 @@ import ImpressumView from "./views/Impressum";
 import PatientDashboard from "./views/PatientDashboard";
 import EmergencyView from "./views/Emergency";
 import DoctorDashboard from "./views/DoctorDashboard";
-
+import DoctorDailyPlanView from "./views/DoctorDailyPlanView"
 
 function App(props) {
     return (
@@ -46,12 +46,15 @@ function App(props) {
 
                     <Route path="/emergency">
                         <EmergencyView/>
-                        </Route>
+                    </Route>
                     <Route path="/dashboard">
                         <PatientDashboard/>
                     </Route>
                     <Route path="/doctordashboard">
                         <DoctorDashboard/>
+                    </Route>
+                    <Route path="/doctordailyplan">
+                        <DoctorDailyPlanView/>
                     </Route>
                 </Switch>
             </div>
