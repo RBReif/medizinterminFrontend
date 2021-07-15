@@ -12,6 +12,9 @@ import Doctor from "../components/Doctor/Doctor";
 import PatientService from "../services/PatientService";
 import DynamicCard from "../components/UI/DynamicCard";
 import { Button} from "@material-ui/core";
+import AppointmentService from "../services/AppointmentService";
+import DoctorService from "../services/DoctorService";
+import UserService from "../services/UserService";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,22 +42,55 @@ const appointments = [{
 
 const patient = {firstname:"Max", lastname:"Muster", checkups: [{service: "Teeth Cleaning", date: "2021.12.12"}]};
 
-const PatientDashboard = (props) => {
+const PatientDashboard = () => {
+
+
   const classes = useStyles();
 
-  const dateTest = "2021-07-12T00:30:10.000Z";
-  const newdate = new Date(dateTest);
-  // const newdate = Convert.ToDateTime(datetest);
-  console.log("NEWDATE" , newdate);
+  let patientId = UserService.getCurrentUser().id
+  console.log(patientId)
+  const [patient, setPatient] = useState({})
+  const [appointments, setAppointments] = useState([])
+  const [doctors, setDoctors] = useState([])
+
+  useEffect(  async() => {
+    const getPatient = async () => {
+      const patient = await PatientService.getPatient(patientId)
+      console.log(patient)
+      setPatient(patient)
+    }
+    getPatient()
+
+    const getAppointments = async () => {
+      const appointments = await AppointmentService.getAppointmentsPatient(patientId)
+      console.log(appointments)
+      setAppointments(appointments.map((item) =>  item))
+      console.log("finished with getAppointments ", appointments)
+      console.log("length: ", appointments.length)
+      let doctorIDs = []
+      appointments.forEach(a => {
+        if (!doctorIDs.some(e => e===a.doctor)){
+          doctorIDs=[...doctorIDs,a.doctor]
+        }
+    })
+      console.log(doctorIDs)
+
+      doctorIDs.forEach(async a => {
+          const doctor = await DoctorService.getDoctor(a)
+          console.log("RECEIVED DOCTOR", doctor)
+
+          setDoctors([...doctors, doctor])
+
+      })
+    }
+  }, [])
+   const a = getAppointments()
+
+    a.then(console.log("finally",appointments))
 
   const moment = require("moment");
 
-  /* useEffect(() => {
-    // get id of patient from URL
-    let patientId = match.params._id;
-    getPatient(patientId);
-    //console.log(getPatient(patientId));
-  }, [match.params]);*/
+
 
   return (
     <ThemeProvider theme={Theme}>
@@ -124,28 +160,11 @@ const PatientDashboard = (props) => {
           <Grid item xs></Grid>
           <Grid item xs></Grid>
         </Grid>
-
-        {/* <Container>
-          <br />
-          <h3>Recommended Checkup</h3>
-          <CheckupList />
-        </Col>
-        <Col>
-          <Form>
-            <AppointmentCard />
-            <br />
-            <AppointmentCard />
-            <br />
-            <AppointmentCard />
-          </Form>
-        </Col>
-        <Col>
-          <AppointmentCard />
-        </Col>
-      </Row>
-    </Container> */}
       </Page>
     </ThemeProvider>
   );
 };
-export default PatientDashboard;
+
+export default connect(null, { getPatient })(
+  PatientDashboard
+);
