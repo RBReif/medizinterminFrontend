@@ -20,14 +20,14 @@ const Landing = () => (
               <div>
                 <Button
                   color="primary"
-                  href="/register"
+                  href="/registerPatients"
                 >
                   Sign Up
                 </Button>
                 &nbsp;&nbsp;&nbsp;
                 <Button
                   color="secondary"
-                  href="/login"
+                  href="/loginPatients"
                 >
                   Login
                 </Button>

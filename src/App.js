@@ -5,9 +5,7 @@ import reducers from "./redux/reducers";
 import thunkMiddleware from "redux-thunk";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import FindADoctorView from "./views/FindADoctorView";
-import LoginView from "./views/LoginView";
 import LoginPatientsView from "./views/LoginPatientsView";
-import RegisterView from "./views/RegisterView";
 import RegisterPatientsView from "./views/RegisterPatientsView";
 import LogInProfessionalsView from "./views/LogInProfessionalsView";
 import RegisterProfessionalsView from "./views/RegisterProfessionalsView";
@@ -33,7 +31,7 @@ function App(props) {
                 <div>
                     {/* <NavigationBar/> */}
                     <Switch>
-                        < Route path="/" exact>
+                        < Route path="/find-doctor" exact>
                             <FindADoctorView/>
                         </Route>
                         <Route path="/medics">
@@ -45,10 +43,7 @@ function App(props) {
                         <Route path="/registerProfessional">
                             <RegisterProfessionalsView/>
                         </Route>
-                        {/*<Route path="/login">
-                            <LoginView/>
-                        </Route>*/}
-                        <Route path="/loginPatient">
+                        <Route path="/loginPatients">
                             <LoginPatientsView/>
                         </Route>
                         <Route path="/results">
@@ -69,7 +64,7 @@ function App(props) {
                         <Route path="/doctordashboard">
                             <DoctorDashboard/>
                         </Route>
-                        <Route path="/landing">
+                        <Route path="/">
                             <Landing/>
                         </Route>
                     </Switch>
