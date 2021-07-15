@@ -32,7 +32,7 @@ function LoginPatientsView(props) {
     };
 
     const onSignUp = () => {
-        props.history.push("/register");
+        props.history.push("/registerPatients");
     };
 
     return (

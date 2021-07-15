@@ -21,11 +21,11 @@ const Register = () => {
 
           <Row>
             <Col>
-              <Form.Label> First name </Form.Label>
+              <Form.Label> First Name </Form.Label>
               <Form.Control placeholder="Fresh" />
             </Col>
             <Col>
-              <Form.Label> Last name </Form.Label>
+              <Form.Label> Last Name </Form.Label>
               <Form.Control placeholder="Hermann" />
             </Col>
           </Row>
@@ -42,7 +42,7 @@ const Register = () => {
             </Form.Group>
           </Row>
 
-          <h4>Address information</h4>
+          <h4>Address Information</h4>
 
           <Row className="mb-3">
             <Col>

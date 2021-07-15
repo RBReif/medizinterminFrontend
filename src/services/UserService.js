@@ -11,11 +11,16 @@ export default class UserService {
         return 'http://localhost:4000/patient';
     }
 
-    static register(user, pass) {
+    static register(username, password, firstName, lastName, dateBirth, insurance) {
         return new Promise((resolve, reject) => {
             HttpService.post(`${UserService.baseURL()}/register`, {
-                username: user,
-                password: pass
+                username: username,
+                password: password,
+                firstname: firstName,
+                lastname: lastName,
+                date_of_birth: dateBirth,
+                insurance: insurance
+
             }, function (data) {
                 resolve(data);
             }, function (textStatus) {

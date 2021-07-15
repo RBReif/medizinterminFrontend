@@ -8,6 +8,7 @@ import FindADoctorView from "./views/FindADoctorView";
 import LoginView from "./views/LoginView";
 import LoginPatientsView from "./views/LoginPatientsView";
 import RegisterView from "./views/RegisterView";
+import RegisterPatientsView from "./views/RegisterPatientsView";
 import LogInProfessionalsView from "./views/LogInProfessionalsView";
 import RegisterProfessionalsView from "./views/RegisterProfessionalsView";
 import ResultsView from "./views/ResultsView";
@@ -38,6 +39,9 @@ function App(props) {
                         <Route path="/medics">
                             <LogInProfessionalsView/>
                         </Route>
+                        <Route path="/registerPatients">
+                            <RegisterPatientsView/>
+                        </Route>
                         <Route path="/registerProfessional">
                             <RegisterProfessionalsView/>
                         </Route>
@@ -49,9 +53,6 @@ function App(props) {
                         </Route>
                         <Route path="/results">
                             <ResultsView/>
-                        </Route>
-                        <Route path="/register">
-                            <RegisterView/>
                         </Route>
                         <Route path={"/terms"}>
                             <TermsView/>
