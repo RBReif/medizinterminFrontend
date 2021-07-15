@@ -13,6 +13,7 @@ import ConfigService from "../services/ConfigService";
 import PatientService from "../services/PatientService";
 import AppointmentService from "../services/AppointmentService";
 import DoctorService from "../services/DoctorService";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 
 const PatientDashboard = () => {
@@ -24,7 +25,7 @@ const PatientDashboard = () => {
   const [appointments, setAppointments] = useState([])
   const [doctors, setDoctors] = useState([])
 
-  useEffect(  () => {
+  useEffect(  async() => {
     const getPatient = async () => {
       const patient = await PatientService.getPatient(patientId)
       console.log(patient)
@@ -35,28 +36,51 @@ const PatientDashboard = () => {
     const getAppointments = async () => {
       const appointments = await AppointmentService.getAppointmentsPatient(patientId)
       console.log(appointments)
-      setAppointments(appointments)
-    }
-    getAppointments()
+      setAppointments(appointments.map((item) =>  item))
+      console.log("finished with getAppointments ", appointments)
+      console.log("length: ", appointments.length)
+      let doctorIDs = []
+      appointments.forEach(a => {
+        if (!doctorIDs.some(e => e===a.doctor)){
+          doctorIDs=[...doctorIDs,a.doctor]
+        }
+    })
+      console.log(doctorIDs)
 
-    const getDoctor = async () => {
+      doctorIDs.forEach(async a => {
+          const doctor = await DoctorService.getDoctor(a)
+          console.log("RECEIVED DOCTOR", doctor)
+
+          setDoctors([...doctors, doctor])
+
+      })
+    }
+   const a = getAppointments()
+
+    a.then(console.log("finally",appointments))
+
+
+
+    /*
+    const getDoctor = () => {
+      a.then(  () => {
       console.log("getDoctor called")
       console.log(" after get Doctor called", appointments)
-      const doctors =  appointments.map( async (item) => {
+      const doctors = appointments.map(async (item) => {
         console.log("inside map")
-        if (!doctors.some((i) => i._id === item.doctor)){
-          console.log ("If is true")
+        if (!doctors.some((i) => i._id === item.doctor)) {
+          console.log("If is true")
           const doctor = await DoctorService.getDoctor(item.doctor)
           console.log("received doctor: ", doctor)
           return doctor
         }
-        return
-          })
-          setDoctors(doctors)
 
+      })
+      setDoctors(doctors) },)
     }
-    getDoctor()
+      getDoctor()
 
+     */
   }, [])
 
   return (
@@ -71,7 +95,7 @@ const PatientDashboard = () => {
       <Row>
         <Col></Col>
         <Col>
-          <h2>Hello {patient.name} , {doctors}</h2>
+          <h2>Hello {patient.name} </h2>
         </Col>
         <Col></Col>
       </Row>
