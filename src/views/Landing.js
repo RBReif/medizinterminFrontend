@@ -5,6 +5,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import { Box } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import "./Landing.scss"
+import { Link } from "react-router-dom";
 
 const Landing = () => (
   <ThemeProvider theme={Theme}>
@@ -31,6 +32,13 @@ const Landing = () => (
                 >
                   Login
                 </Button>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p>
+                    <Link to="/medics"> I am a medical professional</Link>
+                </p>
               </div>
             </div>
           </div>
