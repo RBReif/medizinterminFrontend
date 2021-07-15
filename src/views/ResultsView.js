@@ -91,7 +91,7 @@ const ResultsView = (props) => {
                   {!isLoading &&
                     doctorlist.length > 0 &&
                     doctorlist.map((doctor) => (
-                      <Doctor key={doctor.id} doctor={doctor} />
+                      <Doctor key={doctor.id} doctor={doctor} readOnly={true} />
                     ))}
                   {!isLoading && doctorlist.length === 0 && (
                     <center>

@@ -1,5 +1,4 @@
 import React, { useState , useEffect} from "react";
-import { Router } from "react-router";
 import DynamicDropdown from "../components/Forms/DynamicDropdown";
 import DynamicSwitch from "../components/Forms/DynamicSwitch";
 import { Form, Container, Row, Col } from "react-bootstrap";

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import NewsList from "../components/NewsList";
-import CheckupList from "../components/CheckupList";
-import AppointmentCard from "../components/AppointmentCard";
 import Page from "../components/Page";
 import { Theme } from "../components/UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
@@ -16,7 +14,8 @@ import AppointmentService from "../services/AppointmentService";
 import { getPatients, getPatient } from "../redux/actions";
 import DoctorService from "../services/DoctorService";
 import DynamicCard from "../components/UI/DynamicCard";
-import { Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
+import Appointment from "../components/Appointment/Appointment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,65 +29,81 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PatientDashboard = (props) => {
-
   const classes = useStyles();
 
-  let patientId = UserService.getCurrentUser().id
-  console.log(patientId)
-  const [patient, setPatient] = useState({})
-  const [appointments, setAppointments] = useState([])
-  const [doctors, setDoctors] = useState([])
+  let patientId = UserService.getCurrentUser().id;
+  console.log(patientId);
+  const [patient, setPatient] = useState({});
+  const [appointments, setAppointments] = useState([]);
+  const [doctors, setDoctors] = useState([]);
 
-  useEffect(  async() => {
+  useEffect(async () => {
     const getPatient = async () => {
-      const patient = await PatientService.getPatient(patientId)
-      console.log(patient)
-      setPatient(patient)
-    }
-    getPatient()
+      const patient = await PatientService.getPatient(patientId);
+      console.log(patient);
+      setPatient(patient);
+    };
+    getPatient();
 
     const getAppointments = async () => {
-      const appointments = await AppointmentService.getAppointmentsPatient(patientId)
-      console.log(appointments)
-      setAppointments(appointments.map((item) =>  item))
-      console.log("finished with getAppointments ", appointments)
-      console.log("length: ", appointments.length)
-      let doctorIDs = []
-      appointments.forEach(a => {
-        if (!doctorIDs.some(e => e===a.doctor)){
-          doctorIDs=[...doctorIDs,a.doctor]
+      const appointments = await AppointmentService.getAppointmentsPatient(
+        patientId
+      );
+      console.log(appointments);
+      setAppointments(appointments.map((item) => item));
+      console.log("finished with getAppointments ", appointments);
+      console.log("length: ", appointments.length);
+      let doctorIDs = [];
+      appointments.forEach((a) => {
+        if (!doctorIDs.some((e) => e === a.doctor)) {
+          doctorIDs = [...doctorIDs, a.doctor];
         }
-    })
-      console.log(doctorIDs)
+      });
+      console.log(doctorIDs);
 
-      doctorIDs.forEach(async a => {
-          const doctor = await DoctorService.getDoctor(a)
-          console.log("RECEIVED DOCTOR", doctor)
+      doctorIDs.forEach(async (a) => {
+        const doctor = await DoctorService.getDoctor(a);
+        console.log("RECEIVED DOCTOR", doctor);
 
-          setDoctors([...doctors, doctor])
+        setDoctors([...doctors, doctor]);
+      });
+    };
+    const a = getAppointments();
 
-      })
-    }
-   const a = getAppointments()
-
-    a.then(console.log("finally",appointments))
-  }, [])
+    a.then(console.log("finally", appointments));
+  }, []);
 
   const moment = require("moment");
 
   console.log(appointments);
-  console.log("patient ", patient)
+  console.log("patient ", patient);
+  console.log("appointment ", appointments);
+  console.log("doctors ", doctors);
 
-  // const prevAppointments = appointments.map((appointment) => (moment(new Date(appointment.startPoint)).toDate() < new Date() ? [...prevAppointments]: ""));
-  // const upcomingAppointments = appointments.map((appointment) => (moment(new Date(appointment.startPoint)).toDate() > new Date() ? [...prevAppointments]: ""));
+  //arrays for previous and upcoming appointments
+  const prevAppointments = [];
+  const upcomingAppointments = [];
+  //total appointments, merged 
+  const totalAppointments = doctors.map((item, i) => Object.assign({}, item, appointments[i]));
+ 
+  //check which appointments are in the past and which are in the future
+  totalAppointments.map((appointment) =>
+    moment(new Date(appointment.startPoint)).toDate() < new Date()
+      ? prevAppointments.push(appointment)
+      : upcomingAppointments.push(appointment)
+  );
+
+  console.log("prevAppointments: ", prevAppointments);
+  console.log("upcomingAppointments: ", upcomingAppointments);
+  console.log("totalAppo :", totalAppointments)
 
   return (
     <ThemeProvider theme={Theme}>
       <Page>
         {/*************** GRID 1, 3 COLUMNS *****************/}
         <Grid container justifyContent="center" alignItems="center">
-          <Grid item  >
-              <h2>Hello {patient.name}</h2>
+          <Grid item>
+            <h2>Hello {patient.name}</h2>
           </Grid>
         </Grid>
         <Grid container spacing={3}>
@@ -116,22 +131,28 @@ const PatientDashboard = (props) => {
           <Grid item xs>
             <NewsList></NewsList>
           </Grid>
-          <Grid item xs> 
-          {/* {upcomingAppointments.length > 0 ? upcomingAppointments.map((appointment) => (
-            <Paper>{appointment.startPoint}</Paper>
-                    )): <Paper className={classes.paper}>You have no upcoming apppointments</Paper>} */}
-            {appointments.map((appointment) => (
-            moment(new Date(appointment.startPoint)).toDate() > new Date() ? <Paper>{appointment.startPoint}</Paper> : ""
-                    ))}
-              </Grid>
-              {/* <Grid item xs>
-              {prevAppointments.length > 0 ? prevAppointments.map((appointment) => (
-            <Paper>{appointment.startPoint}</Paper>
-                    )): <Paper className={classes.paper}>You have no previous appointments.</Paper>}
-                    </Grid> */}
-           <Grid item xs>{appointments.map((appointment) => (
-            moment(new Date(appointment.startPoint)).toDate() <= new Date() ? <Paper>{appointment.startPoint}</Paper> : ""
-                    ))}</Grid>
+          <Grid item xs>
+            {upcomingAppointments.length > 0 ? (
+              upcomingAppointments.map((appointment) => (
+                <Appointment props={appointment} readOnly={true}></Appointment>
+              ))
+            ) : (
+              <Paper className={classes.paper}>
+                You have no upcoming apppointments
+              </Paper>
+            )}
+          </Grid>
+          <Grid item xs>
+            {prevAppointments.length > 0 ? (
+              prevAppointments.map((appointment) => (
+                <Appointment props={appointment} readOnly={false}></Appointment>
+              ))
+            ) : (
+              <Paper className={classes.paper}>
+                You have no previous appointments.
+              </Paper>
+            )}
+          </Grid>
         </Grid>
         {/*************** GRID 2, 3 COLUMNS *****************/}
         <Grid container spacing={3}>
@@ -158,32 +179,9 @@ const PatientDashboard = (props) => {
           <Grid item xs></Grid>
           <Grid item xs></Grid>
         </Grid>
-
-        {/* <Container>
-          <br />
-          <h3>Recommended Checkup</h3>
-          <CheckupList />
-        </Col>
-        <Col>
-          <Form>
-            <AppointmentCard />
-            <br />
-            <AppointmentCard />
-            <br />
-            <AppointmentCard />
-          </Form>
-        </Col>
-        <Col>
-          <AppointmentCard />
-        </Col>
-      </Row>
-    </Container> */}
       </Page>
     </ThemeProvider>
   );
 };
 
-export default connect(null, { getPatient })(
-  PatientDashboard
-);
-
+export default connect(null, { getPatient })(PatientDashboard);
