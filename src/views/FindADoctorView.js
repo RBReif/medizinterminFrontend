@@ -34,34 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const healthinsurancelist = [
-  { displayname: "Public" },
-  { displayname: "Private" },
-];
-const languagelist = [
-  { displayname: "German" },
-  { displayname: "English" },
-  { displayname: "Russian"},
-  { displayname: "Turkish"},
-  { displayname: "French"}
-];
-const doctorlist = [
-  { id: "1", displayname: "Dentist" },
-  { id: "2", displayname: "Cardiologist" },
-  { id: "3", displayname: "Something" },
-  { id: "4", displayname: "More" },
-];
 
-const toggles = [
-  { id: "1", displayname: "Wheelchair availability needed?", isActive: false },
-  { id: "2", displayname: "Elevator needed", isActive: false },
-  { id: "3", displayname: "Car parking nearby", isActive: false },
-  {
-    id: "4",
-    displayname: "Public transportation station nearby",
-    isActive: false,
-  },
-];
 
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
