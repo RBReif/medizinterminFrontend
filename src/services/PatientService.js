@@ -11,12 +11,7 @@ export default class PatientService {
            await HttpService.get(
                 `${PatientService.baseURL()}/${id}`,
                 function (data) {
-                    if (data !== undefined || Object.keys(data).length !== 0) {
-                        resolve(data);
-                    } else {
-                        reject("Error while retrieving movie");
-                    }
-                },
+                    if (data !== undefined || Object.keys(data).length !== 0) {resolve(data);} else {reject("Error while retrieving patient");}},
                 function (textStatus) {
                     reject(textStatus);
                 }
