@@ -52,6 +52,9 @@ export const Theme = createTheme ({
         MuiCard: {
             display: "flex",
         },
+        MuiLink: {
+            color: "#FFFFFF",
+        }
     }
 
 

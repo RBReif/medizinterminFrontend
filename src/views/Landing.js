@@ -5,7 +5,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import { Box } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import "./Landing.scss"
-import { Link } from "react-router-dom";
+import { Link } from "@material-ui/core";
 
 const Landing = () => (
   <ThemeProvider theme={Theme}>
@@ -37,7 +37,7 @@ const Landing = () => (
                 <p></p>
                 <p></p>
                 <p>
-                    <Link to="/medics"> I am a medical professional</Link>
+                    <Link color="inherit" href="/medics"> I am a medical professional</Link>
                 </p>
               </div>
             </div>
