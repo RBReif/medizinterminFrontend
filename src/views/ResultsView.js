@@ -16,6 +16,7 @@ const doctorlist = [
     profession: "Dentist",
     address: "Ungererstr. 58, 80805 München",
     phone: "123456",
+    avgAudienceRating: "4",
     appointments: [{
         id: 6,
         color: "#fd3153",
@@ -35,6 +36,7 @@ const doctorlist = [
     name: "isjdgjdjsg fiaojs",
     profession: "Dentist",
     address: "Münchner Freiheit 12, 80803 München",
+    avgAudienceRating: "5",
     phone: "12345678",
     appointments: [{},{}],
   },
@@ -81,9 +83,7 @@ const ResultsView = (props) => {
                   {!isLoading &&
                     doctorlist.length > 0 &&
                     doctorlist.map((doctor) => (
-                        <p>
                       <Doctor key={doctor.id} doctor={doctor} />
-                      </p>
                     ))}
                   {!isLoading && doctorlist.length === 0 && (
                     <center>
