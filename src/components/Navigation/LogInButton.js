@@ -13,7 +13,7 @@ const LogIn = (props) => {
       menuAlign="right"
       title="Log-In"
       id="dropdown-menu-align-right"
-      href="/login"
+      href="/loginPatient"
     >
      Login
     </Button>

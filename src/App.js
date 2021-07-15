@@ -5,7 +5,8 @@ import reducers from "./redux/reducers";
 import thunkMiddleware from "redux-thunk";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import FindADoctorView from "./views/FindADoctorView";
-import LogInView from "./views/LoginView";
+import LoginView from "./views/LoginView";
+import LoginPatientsView from "./views/LoginPatientsView";
 import RegisterView from "./views/RegisterView";
 import LogInProfessionalsView from "./views/LogInProfessionalsView";
 import RegisterProfessionalsView from "./views/RegisterProfessionalsView";
@@ -14,8 +15,9 @@ import TermsView from "./views/Terms";
 import ImpressumView from "./views/Impressum";
 import PatientDashboard from "./views/PatientDashboard";
 import EmergencyView from "./views/Emergency";
-import UserLoginView from "./views/UserLoginView";
+
 import DoctorDashboard from "./views/DoctorDashboard";
+
 
 
 function App(props) {
@@ -38,8 +40,11 @@ function App(props) {
                         <Route path="/registerProfessional">
                             <RegisterProfessionalsView/>
                         </Route>
-                        <Route path="/login">
-                            <UserLoginView/>
+                        {/*<Route path="/login">
+                            <LoginView/>
+                        </Route>*/}
+                        <Route path="/loginPatient">
+                            <LoginPatientsView/>
                         </Route>
                         <Route path="/results">
                             <ResultsView/>

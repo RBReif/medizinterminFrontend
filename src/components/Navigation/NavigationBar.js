@@ -37,12 +37,12 @@ const NavigationBar = (props) => {
                             })}
                         </Nav>
                         <Nav>
-                            {/* <LogInButton/>*/}
-                            <KebabMenu
+                            <LogInButton/>
+                            {/*<KebabMenu
                                 open={Boolean(menuAnchor)}
                                 anchor={menuAnchor}
                                 onClose={() => setMenuAnchor(null)}
-                            />
+                            />*/}
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

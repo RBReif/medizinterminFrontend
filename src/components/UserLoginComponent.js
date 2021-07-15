@@ -7,14 +7,14 @@ const useStyles = makeStyles((theme) => ({
         margin: "auto",
     },
     loginPaper: {
-        width: "500px",
+        width: "400px",
         padding: theme.spacing(2),
     },
     loginRow: {
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(1),
         "&:last-child": {
-            paddingBottom: theme.spacing(0),
+            paddingBottom: theme.spacing(1),
         },
         "&:first-child": {
             paddingTop: theme.spacing(0),
@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: theme.spacing(1),
     },
 }));
+
 
 /**
  * For user login
