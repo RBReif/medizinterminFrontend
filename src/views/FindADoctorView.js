@@ -186,9 +186,7 @@ const FindADoctorView = () => {
                         content={
                           <div>
                             <h4>Preferred Location</h4>
-                            <DynamicCard
-                              variant="body2"
-                              content={
+                      
                                 <div>
                                   <Box p={2}>
                                     <LocationAutoComplete
@@ -201,8 +199,6 @@ const FindADoctorView = () => {
                                     ></LocationSlider>
                                   </Box>
                                 </div>
-                              }
-                            ></DynamicCard>
                           </div>
                         }
                       ></DynamicCard>
