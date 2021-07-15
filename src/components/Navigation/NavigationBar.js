@@ -53,12 +53,15 @@ const NavigationBar = (props) => {
                 <Navbar expand={"xl"} bg="light" variant="light">
 
                     <Link to="/" className="navbar-brand">medizintermin</Link>
-                    <div>
-                    <Button style={{marginRight: 5}} color="secondary" onClick={onClickAreYouADoctor}>Are You a Doctor?</Button>
-                    <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                        <MenuIcon/>
-                    </Button>
-                    </div>
+                    <Nav className="ml-auto">
+                        <div>
+                            <Button style={{marginRight: 5}} color="secondary" onClick={onClickAreYouADoctor}>Are You a
+                                Doctor?</Button>
+                            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                                <MenuIcon/>
+                            </Button>
+                        </div>
+                    </Nav>
 
                 </Navbar>
                 <KebabMenu
