@@ -1,71 +1,120 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Container, Row, Col } from "react-bootstrap";
-import { connect, useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
 import NewsList from "../components/NewsList";
 import CheckupList from "../components/CheckupList";
 import AppointmentCard from "../components/AppointmentCard";
 import Page from "../components/Page";
-import { withRouter } from "react-router-dom";
-import UserService from "../services/UserService";
-import { getPatients, getPatient } from "../redux/actions";
-import {useIsUserInteractionMode} from "react-md";
+import { Theme } from "../components/UI/Theme";
+import { ThemeProvider } from "@material-ui/styles";
+import { Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
+import Doctor from "../components/Doctor/Doctor";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+}));
 
-function PatientDashboard (props) {
-  // props can be deconstructed into single variables, so you do not need to write "props." all the time
-  let { match, getPatient } = props;
+const appointments = [{
+  appointmentStatus: "available",
+  _id: "604963996946",
+  doctor: "84t84843646",
+  startPoint: "2021-07-09T21:30:00.0000Z"
+},{
+  appointmentStatus: "available",
+  _id: "483863597937",
+  doctor: "9543694",
+  startPoint: "2021-07-21T21:30:00.0000Z"
+},
+];
 
-  // from redux store
-  const selectedPatient = useSelector((state) => state.selectedPatient);
-  const user = useSelector((state) => state.user);
+const PatientDashboard = (props) => {
+  const classes = useStyles();
 
-  // state variable of this functional component
-  //const [newMovie, setNewMovie] = React.useState(false);
+  const dateTest = "2021-07-12T00:30:10.000Z";
+  const newdate = new Date(dateTest);
+  // const newdate = Convert.ToDateTime(datetest);
+  console.log("NEWDATE" , newdate);
 
- /* useEffect(() => {
+  const moment = require("moment");
+
+  /* useEffect(() => {
     // get id of patient from URL
     let patientId = match.params._id;
     getPatient(patientId);
     //console.log(getPatient(patientId));
   }, [match.params]);*/
 
-  let patientId = UserService.getCurrentUser().id
-  console.log(getPatient(patientId))
-
-
   return (
+    <ThemeProvider theme={Theme}>
       <Page>
-    <Container>
-      <Row>
-        <Col xs={8} md={3}>
-          {" "}
-        </Col>
-      </Row>
-      <br />
-      <Row>
-        <Col></Col>
-        <Col>
-          <h2>Hello Max Mustermann</h2>
-        </Col>
-        <Col></Col>
-      </Row>
-      <br />
-      <Row>
-        <Col>
-          <h3>News Center</h3>
-        </Col>
-        <Col>
-          <h3>Upcoming Appointments</h3>
-        </Col>
-        <Col>
-          <h3>Previous Appointments</h3>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Form>
+        {/*************** GRID 1, 3 COLUMNS *****************/}
+        <Grid container justifyContent="center" alignItems="center">
+          <Grid item  >
+              <h2>Hello Max Mustermann</h2>
+          </Grid>
+        </Grid>
+        <Grid container spacing={3}>
+          <Grid item xs>
+            <Paper className={classes.paper}>
+              <h3>News Center</h3>
+            </Paper>
+          </Grid>
+          {/* <Grid item xs>
+         <h3>News Center</h3> <NewsList></NewsList>
+        </Grid> */}
+          <Grid item xs>
+            <Paper className={classes.paper}>
+              <h3>Upcoming Appointments</h3>
+            </Paper>
+          </Grid>
+          <Grid item xs>
+            <Paper className={classes.paper}>
+              <h3>Previous Appointments</h3>
+            </Paper>
+          </Grid>
+        </Grid>
+        {/*************** GRID 2, 3 COLUMNS *****************/}
+        <Grid container spacing={3}>
+          <Grid item xs>
             <NewsList></NewsList>
-          </Form>
+          </Grid>
+          <Grid item xs>
+            {appointments.map((appointment) => (
+            moment(new Date(appointment.startPoint)).toDate() > new Date() ? <Paper>{appointment.startPoint}</Paper> : ""
+                    ))}
+                    </Grid>
+           <Grid item xs>{appointments.map((appointment) => (
+            moment(new Date(appointment.startPoint)).toDate() <= new Date() ? <Paper>{appointment.startPoint}</Paper> : ""
+                    ))}</Grid>
+        </Grid>
+        {/*************** GRID 2, 3 COLUMNS *****************/}
+        <Grid container spacing={3}>
+          <Grid item xs>
+            <Paper className={classes.paper}>
+              <h3>Recommended Check-Ups</h3>
+            </Paper>
+          </Grid>
+          <Grid item xs></Grid>
+          <Grid item xs></Grid>
+        </Grid>
+        <Grid container spacing={3}>
+          <Grid item xs>
+            <Paper className={classes.paper}>
+              <CheckupList></CheckupList>
+            </Paper>
+          </Grid>
+          <Grid item xs></Grid>
+          <Grid item xs></Grid>
+        </Grid>
+
+        {/* <Container>
           <br />
           <h3>Recommended Checkup</h3>
           <CheckupList />
@@ -83,14 +132,9 @@ function PatientDashboard (props) {
           <AppointmentCard />
         </Col>
       </Row>
-    </Container>
-    </Page>
+    </Container> */}
+      </Page>
+    </ThemeProvider>
   );
 };
-// connect() establishes allows the usage of redux functionality
-// here the function getMovie, changeMovie and addMovie are mentionend
-// this is an alternative way of calling connecting them with redux
-// another way is shown in MovieListView.js
-export default connect(null, { getPatient })(
-    PatientDashboard
-);
+export default PatientDashboard;
