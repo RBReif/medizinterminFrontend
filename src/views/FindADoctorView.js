@@ -176,7 +176,7 @@ const FindADoctorView = () => {
                           <DynamicDropdown
                             defaultValue=""
                             label="Please choose the type of doctor you need"
-                            items={doctorlist}
+                            items={areas}
                             onChange={areaChangeHandler}
                           ></DynamicDropdown>
                         }
@@ -222,7 +222,7 @@ const FindADoctorView = () => {
                       content={
                         <MultiSelectDropdown
                           label="Please choose your preferred language"
-                          items={languagelist}
+                          items={languages}
                           onChange={languagesChangeHandler}
                         ></MultiSelectDropdown>
                       }
@@ -232,7 +232,7 @@ const FindADoctorView = () => {
                       content={
                         <DynamicDropdown
                           label="Please choose your health insurance"
-                          items={healthinsurancelist}
+                          items={insurances}
                           onChange={healthInsuranceChangeHandler}
                         ></DynamicDropdown>
                       }
