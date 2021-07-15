@@ -9,6 +9,7 @@ import Doctor from "../components/Doctor/Doctor";
 import DynamicCard from "../components/UI/DynamicCard";
 import { Button, Grid } from "@material-ui/core";
 
+
 const doctorlist = [
   {
     id: "1",
@@ -45,6 +46,13 @@ const doctorlist = [
 const ResultsView = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [doctors, setDoctors] = useState([]);
+
+  // render() {
+  //   const { data } = useLocation().data;
+  //   return (
+  //     // render logic here
+  //   )
+  // }
 
 //   async function fetchDoctorsHandler() {
 //     isLoading(true);

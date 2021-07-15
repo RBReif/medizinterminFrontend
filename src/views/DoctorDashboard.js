@@ -77,7 +77,7 @@ const DoctorDashboard = () => {
 
   useEffect( (id) => {
     const getProfsAppointments = async () => {
-      const appointments = await AppointmentService.getAppointments(id, "DOCTOR")
+      const appointments = await AppointmentService.getAppointmentsDoctor(id)
       console.log("Received appointments: ", appointments)
       setCalendarEvents(appointments.map((item) => {return {
         "color": "#fd3153",
