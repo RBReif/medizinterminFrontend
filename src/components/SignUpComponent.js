@@ -49,7 +49,6 @@ const SignUpComponent = (props) => {
     const history = useHistory()
     const userData = useSelector((state) => state.user);
 
-// this has to be made working for redux
     useEffect(() => {
         if (userData?.user?.username) {
             history.push("/find-doctor");
@@ -73,14 +72,6 @@ const SignUpComponent = (props) => {
     const [registerError, setRegisterError] = React.useState("");
 
     const [insurances, setInsurances ] = useState([]);
-
-    /*useEffect(() => {
-        if (props.user.error) {
-            setRegisterError(props.user.error);
-        } else {
-            setRegisterError("");
-        }
-    }, [props.user]);*/
 
     const onRegister = (e) => {
         e.preventDefault();

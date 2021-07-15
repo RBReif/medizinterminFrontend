@@ -21,6 +21,7 @@ const getUser = () => {
     return {};
 };
 
+// For results carrying over
 // dispatch("SET_RESULTS", {results: {areas, languages, results, ....}})
 
 export default function user(state = getUser(), action) {

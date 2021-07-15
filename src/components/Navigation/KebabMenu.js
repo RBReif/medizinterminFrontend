@@ -39,8 +39,8 @@ function KebabMenu(props) {
 
     const onClickLogout = () => {
         // trigger redux logout action
-        //props.dispatch(logout());
-        logout();
+        props.dispatch(logout());
+        //logout();
         // close this menu
         props.onClose();
         // navigate to the home page

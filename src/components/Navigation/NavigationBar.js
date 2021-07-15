@@ -31,16 +31,16 @@ const NavigationBar = (props) => {
 
     const onClickLogout = () => {
         // trigger redux logout action
-        //props.dispatch(logout());
-        logout();
+        props.dispatch(logout());
+        //logout();
         // navigate to the home page
         props.history.push("/");
     };
 
     const onClickAreYouADoctor = () => {
         // trigger redux logout action
-        //props.dispatch(logout());
-        logout();
+        props.dispatch(logout());
+        //logout();
         // navigate to the healthcare professional login
         props.history.push("/login-professionals");
     };
@@ -48,7 +48,6 @@ const NavigationBar = (props) => {
     return (
         <header>
             <ThemeProvider theme={Theme}>
-
 
                 <Navbar expand={"xl"} bg="light" variant="light">
 
