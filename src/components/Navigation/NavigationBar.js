@@ -6,6 +6,7 @@ import React from "react";
 import {withRouter, Link} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {connect, useSelector} from "react-redux";
+import { logout } from "../../redux/actions";
 import {Theme} from "../UI/Theme";
 import {ThemeProvider} from "@material-ui/styles";
 import { Button } from "@material-ui/core";
@@ -15,9 +16,26 @@ const routes = [
     {path: "/", displayname: "Home"},
 ];
 
+
 const NavigationBar = (props) => {
 
     const [menuAnchor, setMenuAnchor] = React.useState(null);
+
+    const onClickLogout = () => {
+        // trigger redux logout action
+        //props.dispatch(logout());
+        logout();
+        // navigate to the home page
+        props.history.push("/");
+    };
+
+    const onClickAreYouADoctor = () => {
+        // trigger redux logout action
+        //props.dispatch(logout());
+        logout();
+        // navigate to the healthcare professional login
+        props.history.push("/login-professionals");
+    };
 
     return (
         <header>
@@ -36,13 +54,16 @@ const NavigationBar = (props) => {
                             })}
                         </Nav>
                         <Nav>
-                            <Button color="secondary" href="/login-professionals">Are You a Doctor?</Button>
+                            <Button color="secondary" onClick={onClickAreYouADoctor}>Are You a Doctor?</Button>
                             {/* <LogInButton/> */}
                             {/*<KebabMenu
                                 open={Boolean(menuAnchor)}
                                 anchor={menuAnchor}
                                 onClose={() => setMenuAnchor(null)}
                             />*/}
+                        </Nav>
+                        <Nav>
+                            <Button onClick={onClickLogout}>Logout</Button>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

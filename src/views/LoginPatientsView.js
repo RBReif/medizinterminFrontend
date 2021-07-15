@@ -18,13 +18,14 @@ function LoginPatientsView(props) {
 // this has to be made working for redux
     useEffect(() => {
         if (user.user) {
+            console.log("user");
             props.history.push("/find-doctor");
         }
     }, [user, props.history]);
 
     const onLogin = (username, password) => {
-        props.dispatch(login(username, password))
-        // props.history.push("/find-doctor");
+        props.dispatch(login(username, password));
+        props.history.push("/find-doctor");
     };
 
     const onCancel = () => {
