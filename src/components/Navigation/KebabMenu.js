@@ -34,12 +34,13 @@ function KebabMenu(props) {
         // close this menu
         props.onClose();
         // navigate to the login page
-        props.history.push("/login");
+        props.history.push("/login-patients");
     };
 
     const onClickLogout = () => {
         // trigger redux logout action
-        props.dispatch(logout());
+        //props.dispatch(logout());
+        logout();
         // close this menu
         props.onClose();
         // navigate to the home page

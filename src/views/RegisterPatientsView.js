@@ -18,8 +18,8 @@ import ConfigService from "../services/ConfigService";
 function RegisterPatientsView(props) {
     const user = useSelector((state) => state.user);
 
-    const onRegister = (username, password, firstName, lastName, birthDate, healthInsurance) => {
-        props.dispatch(register(username, password, firstName, lastName, birthDate, healthInsurance));
+    const onRegister = (username, password, firstName, lastName, birthDate, healthInsurance, address) => {
+        props.dispatch(register(username, password, firstName, lastName, birthDate, healthInsurance, address));
         props.history.push("/");
     };
 
@@ -39,6 +39,7 @@ function RegisterPatientsView(props) {
                     onCancel={onCancel}
                 /></Col>
                 <Col></Col>
+                <br/>
             </Page>
         </ThemeProvider>
     );

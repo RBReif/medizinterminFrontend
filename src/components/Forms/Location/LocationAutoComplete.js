@@ -36,7 +36,7 @@ export default function LocationAutoComplete(props) {
             <Input
               fullWidth="true"
               id="outlined"
-              {...getInputProps({ placeholder: "Type address" })}
+              {...getInputProps({ placeholder: "Address" })}
             />
 
             <div>

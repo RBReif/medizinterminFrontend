@@ -9,6 +9,7 @@ import {
 import {Col, Container, Form, Row} from "react-bootstrap";
 import DynamicDropdown from "./Forms/DynamicDropdown";
 import ConfigService from "../services/ConfigService";
+import LocationAutoComplete from "./Forms/Location/LocationAutoComplete";
 
 const useStyles = makeStyles((theme) => ({
     usersignUpRoot: {
@@ -48,7 +49,10 @@ const SignUpComponent = (props) => {
     const [firstName, setFirstName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
     const [username, setUsername] = React.useState("");
-    const [address, setAddress] = React.useState("");
+    const [address, setAddress] = useState({
+        lat: null,
+        lng: null,
+    });
     const [healthInsurance, setHealthInsurance] = useState("");
     const [birthDate, setBirthDate] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -56,7 +60,6 @@ const SignUpComponent = (props) => {
     const [registerError, setRegisterError] = React.useState("");
 
     const [insurances, setInsurances ] = useState([]);
-
 
     /*useEffect(() => {
         if (props.user.error) {
@@ -68,7 +71,7 @@ const SignUpComponent = (props) => {
 
     const onRegister = (e) => {
         e.preventDefault();
-        props.onRegister(username, password, firstName, lastName, birthDate, healthInsurance);
+        props.onRegister(username, password, firstName, lastName, birthDate, healthInsurance, address);
     };
 
     const onChangeFirstName = (e) => {
@@ -86,15 +89,18 @@ const SignUpComponent = (props) => {
         setRegisterError("");
     };
 
-    const onChangeAddress = (e) => {
-        setAddress(e.target.value);
+    const onClickAddress = (e) => {
+        setAddress({
+            lat: e.lat,
+            lng: e.lng,
+        });
         setRegisterError("");
     };
 
-    const onChangeHealthInsurance = (event) => {
+    const onChangeHealthInsurance = (e) => {
         // console.log("healthinsurancechangehandler: ", event.target.value);
         setRegisterError("");
-        setHealthInsurance(event.target.value);
+        setHealthInsurance(e.target.value);
 
     };
 
@@ -181,19 +187,13 @@ const SignUpComponent = (props) => {
                         </Col>
                         <Col>
                             <Form.Label> Address </Form.Label>
-                            <div className={classes.signUpRow}>
-                                <TextField
-                                    label="Address"
-                                    fullWidth
-                                    value={address}
-                                    onChange={onChangeAddress}
-                                />
-                            </div>
+                            <LocationAutoComplete
+                                onClick={onClickAddress}
+                            ></LocationAutoComplete>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-
                             <DynamicDropdown
                                 key={insurances.id}
                                 defaultValue=""
@@ -214,7 +214,7 @@ const SignUpComponent = (props) => {
                             </div>
                         </Col>
                     </Row>
-
+                    <Form.Label> Password </Form.Label>
                     <div className={classes.signUpRow}>
                         <TextField
                             label="Password"
@@ -226,9 +226,10 @@ const SignUpComponent = (props) => {
                             type="password"
                         />
                     </div>
+                    <Form.Label> Repeat Password </Form.Label>
                     <div className={classes.signUpRow}>
                         <TextField
-                            label="Repeat Password"
+                            label="Password"
                             fullWidth
                             value={password2}
                             onChange={onChangePassword2}

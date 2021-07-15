@@ -25,7 +25,7 @@ function LoginPatientsView(props) {
 
     const onLogin = (username, password) => {
         props.dispatch(login(username, password));
-        props.history.push("/find-doctor");
+        //props.history.push("/find-doctor");
     };
 
     const onCancel = () => {
