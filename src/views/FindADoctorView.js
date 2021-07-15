@@ -1,4 +1,5 @@
 import React, { useState , useEffect} from "react";
+import { Router } from "react-router";
 import DynamicDropdown from "../components/Forms/DynamicDropdown";
 import DynamicSwitch from "../components/Forms/DynamicSwitch";
 import { Form, Container, Row, Col } from "react-bootstrap";
@@ -35,9 +36,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
 //  const [togglesSelected, setTogglesSelecteed] = useState([]);
@@ -49,6 +47,7 @@ const FindADoctorView = () => {
     lng: null,
   });
   const [radius, setRadius] = useState("");
+  const [address, setAddress] = useState("");
   const [facilities, setFacilities] = useState([]);
   const [insurances, setInsurances ] = useState([]);
   const [languages, setLanguages ] = useState([]);
@@ -75,8 +74,11 @@ const FindADoctorView = () => {
     return setDoctor(event.target.value);
   };
 
-  const locationHandler = (latLng) => {
+
+  const locationHandler = (latLng, value) => {
     // console.log("LOCATION ", latLng);
+    // console.log("value:::: ", value);
+    setAddress([{address_value: value, lat: latLng.lat, lng: latLng.lng}]);
     return setLatLng({
       lat: latLng.lat,
       lng: latLng.lng,
@@ -87,6 +89,15 @@ const FindADoctorView = () => {
     console.log("RADIUS: ", radius);
     return setRadius(radius);
   };
+
+  const submitHandler = (data) => {
+    console.log("Does this even work?");
+    console.log(this.context.router.push)
+    this.context.router.push({
+      pathname: "/results",
+      state: data
+    });
+  }
 
   const toggleChangeHandler = (displayname, isActive) => {
      console.log(displayname, isActive);
@@ -161,7 +172,9 @@ const FindADoctorView = () => {
                         content={
                           <div>
                             <h4>Preferred Location</h4>
-                      
+                            <DynamicCard
+                              variant="body2"
+                              content={
                                 <div>
                                   <Box p={2}>
                                     <LocationAutoComplete
@@ -174,6 +187,8 @@ const FindADoctorView = () => {
                                     ></LocationSlider>
                                   </Box>
                                 </div>
+                              }
+                            ></DynamicCard>
                           </div>
                         }
                       ></DynamicCard>
@@ -249,7 +264,7 @@ const FindADoctorView = () => {
               <br />
               <br />
               <center>
-                <Button color="secondary" href="/results">
+                <Button onClick={submitHandler} color="secondary" href="/results">
                   Find an appointment
                 </Button>
               </center>
