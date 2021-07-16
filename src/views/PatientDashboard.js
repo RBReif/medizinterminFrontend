@@ -60,27 +60,6 @@ const PatientDashboard = () => {
     //a.then(console.log("finally",appointments))
 
 
-
-    /*
-    const getDoctor = () => {
-      a.then(  () => {
-      console.log("getDoctor called")
-      console.log(" after get Doctor called", appointments)
-      const doctors = appointments.map(async (item) => {
-        console.log("inside map")
-        if (!doctors.some((i) => i._id === item.doctor)) {
-          console.log("If is true")
-          const doctor = await DoctorService.getDoctor(item.doctor)
-          console.log("received doctor: ", doctor)
-          return doctor
-        }
-
-      })
-      setDoctors(doctors) },)
-    }
-      getDoctor()
-
-     */
   }, [])
 
   return (

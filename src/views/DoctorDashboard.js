@@ -12,59 +12,17 @@ import moment from "moment";
 import {Link} from "react-router-dom";
 import PatientService from "../services/PatientService";
 import DoctorService from "../services/DoctorService";
+import CEV from "../components/Calendar/CalendarEventForm"
 
-const events = [
-    {
-        id: 1,
-        color: "#fd3153",
-        from: new Date(),
-        to: new Date(),
-        title: <Link to="/">Hello</Link>,
-        body: "ugsjjgjsidjgjsdiugjsdgjsd",
-        type: "Out of Office",
-    },
-    {
-        id: 2,
-        color: "#1ccb9e",
-        from: "2019-05-01T13:00:00+00:00",
-        to: "2019-05-05T14:00:00+00:00",
-        title: "This is another event",
-        type: "Out of Office",
-    },
-    {
-        id: 3,
-        color: "#3694DF",
-        from: "2019-05-05T13:00:00+00:00",
-        to: "2019-05-05T20:00:00+00:00",
-        title: "This is also another event",
-        type: "Out of Office",
-    },
-    {
-        id: 4,
-        color: "#ffc107",
-        from: "2021-07-02T18:00:00+00:00",
-        to: "2021-07-05T19:00:00+00:00",
-        title: "This is an event",
-        type: "Out of Office",
-    },
-    {
-        id: 5,
-        color: "#fd3153",
-        from: "2021-07-05T18:00:00+00:00",
-        to: "2021-07-05T19:00:00+00:00",
-        title: "This is an aoifsiosfa",
-        type: "Out of Office",
-    },
-    {
-        id: 6,
-        color: "#fd3153",
-        to: new Date(),
-        title: "This is an aifjejffjewjgwejgjewigoifsiosfa",
-        from: new Date(),
-        type: "Out of Office",
-    },
-];
-
+const getColor = (status) => {
+    switch (status){
+        case "AVAILABLE": return "#41b23d"
+        case "FAILED": return "#b23d49"
+        case "SCHEDULED": return "#ffc107"
+        case "SUCCESSFUL": return "#185619"
+        default: return "#473db2"
+    }
+}
 const DoctorDashboard = () => {
     let doctorID = "60e70bc72c79d33ed899b25f"
     const [doctor, setDoctor] = useState({})
@@ -85,15 +43,6 @@ const DoctorDashboard = () => {
         }
         getDoctor()
 
-   //here we want to return the name of a patient based on its ID
-    const  getNamePatient = async (id) => {
-            console.log("Here are all stored patients (in getNamePatient): ", patients)
-
-        const patient = await patients.some(e => e._id === id)
-        console.log("PATIENT FOUND: ",patient)
-        //here we get the error indicating that 'patient' is undefined. Because it is not yet stored in patients
-        return  patient.name
-    }
 
     const getAppointments = async () => {
         const appointments = await AppointmentService.getAppointmentsDoctor(doctorID)
@@ -108,27 +57,12 @@ const DoctorDashboard = () => {
         })
 
         console.log("PATIENT IDS EXTRACTED: ", patientIDs)
-        let promises = [];
         for (const a1 of patientIDs) {
             const patient = await PatientService.getPatient(a1)
             console.log("RECEIVED PATIENT", patient)
           setPatients([...patients,patient])
         }
 
-        Promise.all(promises).then (async e =>{
-          setCalendarEvents(appointments.map( (item) => {
-             console.log("PATIENTS STORED: ",patients)
-             console.log("HAS PATIENT:", item.hasOwnProperty("patient")? item.patient:"")
-         return {
-            "color": "#fd3153",
-            "from": new Date(item.startPoint),
-            "to": moment(new Date(item.startPoint)).add(30, 'm').toDate(),
-            "title":item.appointmentStatus ,
-            "description":item.hasOwnProperty("patient")?  item.patient:"",
-          //"description":item.hasOwnProperty("patient")?  getNamePatient(item.patient):"",
-
-         }}
-         )) })
 
 
     }
@@ -146,6 +80,27 @@ const DoctorDashboard = () => {
      */
 
 }, [])
+
+        const  getNamePatient =
+            (id) => {
+
+            const patient =  patients.find(e => e._id === id)
+            return  patient.name
+        }
+    useEffect(() => {
+        setCalendarEvents(appointments.map( (item) => {
+            console.log("PATIENTS STORED: ",patients)
+            console.log("HAS PATIENT:", item.hasOwnProperty("patient")? item.patient:"")
+            return {
+                "color": getColor(item.appointmentStatus),
+                "from": new Date(item.startPoint),
+                "to": moment(new Date(item.startPoint)).add(30, 'm').toDate(),
+                "title":item.appointmentStatus ,
+                "description":item.hasOwnProperty("patient")?  "Your appointment is with " +getNamePatient(item.patient):"",
+
+            }}
+        ))
+    }, [patients])
 
 /*
   useEffect( (id) => {
@@ -170,7 +125,8 @@ const DoctorDashboard = () => {
              //   if calendarevent
                 return [calendarevent, ...prevCalendarEvents];
             });}
-    console.log("Here are all stored patients (later in the code/time): ", patients)
+
+
 return (
     <ThemeProvider theme={Theme}>
         <Page>
