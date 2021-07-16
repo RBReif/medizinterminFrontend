@@ -168,6 +168,9 @@ const FindADoctorView = () => {
     // )}
   };
 
+
+  //This component will go somewhere else 
+  //In the backend most probaly. It will calculate the distance between two coordinates
   let hbf = {lat: 48.166629, lng: 11.591026}
   let home = {lat: 48.1402669, lng: 11.559998};
 
@@ -176,12 +179,12 @@ const FindADoctorView = () => {
    {
      var R = 6371; // km
      var dLat = toRad(lat2-lat1);
-     var dLon = toRad(lng2-lng1);
+     var dLng = toRad(lng2-lng1);
      var lat1 = toRad(lat1);
      var lat2 = toRad(lat2);
 
      var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-       Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+       Math.sin(dLng/2) * Math.sin(dLng/2) * Math.cos(lat1) * Math.cos(lat2); 
      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
      var d = R * c;
      return d;
