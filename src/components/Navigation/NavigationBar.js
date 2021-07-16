@@ -2,50 +2,74 @@ import {
     Navbar,
     Nav,
 } from "react-bootstrap";
-import React from "react";
+import React, {useRef, useState} from "react";
 import {withRouter, Link} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {connect, useSelector} from "react-redux";
+import {logout} from "../../redux/actions";
 import {Theme} from "../UI/Theme";
 import {ThemeProvider} from "@material-ui/styles";
-import { Button } from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import KebabMenu from "./KebabMenu";
+import MenuIcon from "@material-ui/icons/Menu";
 
 const routes = [
-    {path: "/", displayname: "Home"},
+    {path: "/find-doctor", displayname: "Home"},
 ];
 
-const NavigationBar = (props) => {
 
-    const [menuAnchor, setMenuAnchor] = React.useState(null);
+const NavigationBar = (props) => {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const ref = useRef(null)
+    const handleClose = () => {
+        setAnchorEl(null);
+    }
+
+    const handleClick = (e) => {
+        setAnchorEl(e.currentTarget);
+    }
+
+    const onClickLogout = () => {
+        // trigger redux logout action
+        props.dispatch(logout());
+        //logout();
+        // navigate to the home page
+        props.history.push("/");
+    };
+
+    const onClickAreYouADoctor = () => {
+        // trigger redux logout action
+        props.dispatch(logout());
+        //logout();
+        // navigate to the healthcare professional login
+        props.history.push("/login-professionals");
+    };
 
     return (
         <header>
             <ThemeProvider theme={Theme}>
-                <Navbar collapseOnSelect bg="light" variant="light" expand="lg">
-                    <Link to="/" className="navbar-brand">medizintermin</Link>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="mr-auto">
-                            {routes.map((route) => {
-                                return (
-                                    <Nav.Item>
-                                        <Link to={route.path} className="nav-link">{route.displayname}</Link>
-                                    </Nav.Item>
-                                );
-                            })}
-                        </Nav>
-                        <Nav>
-                            <Button color="secondary" href="/login-professionals">Are You a Doctor?</Button>
-                            {/* <LogInButton/> */}
-                            {/*<KebabMenu
-                                open={Boolean(menuAnchor)}
-                                anchor={menuAnchor}
-                                onClose={() => setMenuAnchor(null)}
-                            />*/}
-                        </Nav>
-                    </Navbar.Collapse>
+
+                <Navbar expand={"xl"} bg="light" variant="light">
+
+                    <Link to="/find-doctor" className="navbar-brand">medizintermin</Link>
+                    <Nav className="ml-auto">
+                        <div>
+                            <Button style={{marginRight: 5}} color="secondary" onClick={onClickAreYouADoctor}>Are You a
+                                Doctor?</Button>
+                            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                                <MenuIcon/>
+                            </Button>
+                        </div>
+                    </Nav>
+
                 </Navbar>
+                <KebabMenu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    open={!!anchorEl}
+                    onClose={handleClose}/>
+
+
             </ThemeProvider>
         </header>
     );

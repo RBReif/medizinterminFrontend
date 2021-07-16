@@ -19,7 +19,7 @@ export default function LocationAutoComplete(props) {
     const latLng = await getLatLng(results[0]);
     setAddress(value);
     setCoordinates(latLng);
-    props.onClick(latLng, value);
+    props.onSelect(address, latLng);
   };
 
   return (
@@ -36,7 +36,7 @@ export default function LocationAutoComplete(props) {
             <Input
               fullWidth="true"
               id="outlined"
-              {...getInputProps({ placeholder: "Type address" })}
+              {...getInputProps({ placeholder: "Address" })}
             />
 
             <div>

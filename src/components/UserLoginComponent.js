@@ -43,8 +43,8 @@ function LoginComponent(props) {
     const [loginError, setLoginError] = React.useState("");
 
     useEffect(() => {
-        if (props.user.error) {
-            setLoginError(props.user.error);
+        if (props.userData?.error) {
+            setLoginError(props.userData?.error);
         } else {
             setLoginError("");
         }

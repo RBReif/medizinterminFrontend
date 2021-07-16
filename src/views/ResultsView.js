@@ -8,6 +8,10 @@ import { ThemeProvider } from "@material-ui/styles";
 import Doctor from "../components/Doctor/Doctor";
 import DynamicCard from "../components/UI/DynamicCard";
 import { Button, Grid } from "@material-ui/core";
+import {
+    useLocation
+} from "react-router-dom";
+
 
 
 const doctorlist = [
@@ -43,7 +47,14 @@ const doctorlist = [
   },
 ];
 
+const useQuery = () => {
+    return new URLSearchParams(useLocation().search);
+}
+
 const ResultsView = (props) => {
+    const query = useQuery()
+    const radius = query.get("radius")
+    console.log(radius)
   const [isLoading, setIsLoading] = useState(false);
   const [doctors, setDoctors] = useState([]);
 

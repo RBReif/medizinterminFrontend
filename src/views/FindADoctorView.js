@@ -177,7 +177,7 @@ const FindADoctorView = () => {
                                 <div>
                                   <Box p={2}>
                                     <LocationAutoComplete
-                                      onClick={locationHandler}
+                                      onSelect={locationHandler}
                                     ></LocationAutoComplete>
                                   </Box>
                                   <Box p={2}>
@@ -263,7 +263,7 @@ const FindADoctorView = () => {
               <br />
               <br />
               <center>
-                <Button onClick={submitHandler} color="secondary" href="/results">
+                <Button color="secondary" href={`/results?radius=${radius}`}>
                   Find an appointment
                 </Button>
               </center>

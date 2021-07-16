@@ -13,17 +13,17 @@ import {ThemeProvider} from "@material-ui/styles";
  * @param {props} props
  */
 function LoginPatientsView(props) {
-    const user = useSelector((state) => state.user);
+    const userData = useSelector((state) => state.user);
 
     useEffect(() => {
-        if (user.user) {
+        if (userData?.user?.username) {
             props.history.push("/find-doctor");
         }
-    }, [user, props.history]);
+    }, [userData, props.history]);
 
     const onLogin = (username, password) => {
-        props.dispatch(login(username, password))
-        props.history.push("/find-doctor");
+        props.dispatch(login(username, password));
+        //props.history.push("/find-doctor");
     };
 
     const onCancel = () => {
@@ -44,7 +44,7 @@ function LoginPatientsView(props) {
                         <Col></Col>
                         <Col>
                             <LoginComponent
-                                user={user}
+                                user={userData.user}
                                 onCancel={onCancel}
                                 onLogin={onLogin}
                                 onSignUp={onSignUp}
