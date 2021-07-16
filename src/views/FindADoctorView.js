@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
+
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
 //  const [togglesSelected, setTogglesSelecteed] = useState([]);
@@ -45,8 +48,8 @@ const FindADoctorView = () => {
     lat: null,
     lng: null,
   });
-  const [radius, setRadius] = useState("");
   const [address, setAddress] = useState("");
+  const [radius, setRadius] = useState("");
   const [facilities, setFacilities] = useState([]);
   const [insurances, setInsurances ] = useState([]);
   const [languages, setLanguages ] = useState([]);
@@ -73,10 +76,9 @@ const FindADoctorView = () => {
     return setDoctor(event.target.value);
   };
 
-
   const locationHandler = (latLng, value) => {
     // console.log("LOCATION ", latLng);
-    // console.log("value:::: ", value);
+     // console.log("value:::: ", value);
     setAddress([{address_value: value, lat: latLng.lat, lng: latLng.lng}]);
     return setLatLng({
       lat: latLng.lat,
@@ -84,19 +86,12 @@ const FindADoctorView = () => {
     });
   };
 
+  console.log(address);
+
   const radiusHandler = (radius) => {
     console.log("RADIUS: ", radius);
     return setRadius(radius);
   };
-
-  const submitHandler = (data) => {
-    console.log("Does this even work?");
-    console.log(this.context.router.push)
-    this.context.router.push({
-      pathname: "/results",
-      state: data
-    });
-  }
 
   const toggleChangeHandler = (displayname, isActive) => {
      console.log(displayname, isActive);
@@ -171,9 +166,6 @@ const FindADoctorView = () => {
                         content={
                           <div>
                             <h4>Preferred Location</h4>
-                            <DynamicCard
-                              variant="body2"
-                              content={
                                 <div>
                                   <Box p={2}>
                                     <LocationAutoComplete
@@ -186,30 +178,20 @@ const FindADoctorView = () => {
                                     ></LocationSlider>
                                   </Box>
                                 </div>
-                              }
-                            ></DynamicCard>
                           </div>
                         }
                       ></DynamicCard>
-                    </div>
-                  }
-                ></DynamicCard>
-              </Form>
-            </Col>
-            <Col>
-              <DynamicCard
-                variant="outlined"
-                content={
-                  <div>
-                    <h4>Language, Location, and Disability Settings</h4>
-                    <DynamicCard
+                      <DynamicCard
                       variant="body2"
                       content={
+                        <div>
+                        <h4>Language, Insurance</h4>
                         <MultiSelectDropdown
                           label="Please choose your preferred language"
                           items={languages}
                           onChange={languagesChangeHandler}
                         ></MultiSelectDropdown>
+                            </div>
                       }
                     ></DynamicCard>
                     <DynamicCard
@@ -232,15 +214,16 @@ const FindADoctorView = () => {
                             onChange={toggleChangeHandler}
                           ></DynamicSwitch>
                         );
-                      })}
+                      })} 
                     </div>
-                    {/* <LocationSetter/> */}
-                  </div>
-                }
-              ></DynamicCard>
+                
+                    </div>
+                  }
+                ></DynamicCard>
+              </Form>
             </Col>
             <Col>
-              <DynamicCard
+            <DynamicCard
                 variant="outlined"
                 content={
                   <div>
@@ -256,18 +239,25 @@ const FindADoctorView = () => {
                 }
               ></DynamicCard>
             </Col>
+            <Col>
+            <DynamicCard
+                variant="outlined"
+                content={
+                  <div>
+                  <center>
+                    <h4>Search for appointments!</h4>
+                    <p></p>
+                  <Button color="secondary" href={`/results?radius=${radius}?latLng=${latLng.lat}-${latLng.lng}`}>
+                    Find an appointment
+                  </Button>
+                </center>
+                </div>}
+              ></DynamicCard>
+            </Col>
           </Row>
           <Row>
             <Col></Col>
             <Col>
-              <br />
-              <br />
-              <center>
-                <Button color="secondary" href={`/results?radius=${radius}`}>
-                  Find an appointment
-                </Button>
-              </center>
-              {""}
             </Col>
             <Col></Col>
           </Row>

@@ -19,7 +19,7 @@ export default function LocationAutoComplete(props) {
     const latLng = await getLatLng(results[0]);
     setAddress(value);
     setCoordinates(latLng);
-    props.onSelect(address, latLng);
+    props.onSelect(latLng, value);
   };
 
   return (

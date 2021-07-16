@@ -7,7 +7,7 @@ const Page = ({children}) => {
         <section>
             <NavigationBar/>
             {children}
-            <Footer />
+            {/* <Footer /> */}
         </section>
     )
 }
