@@ -30,7 +30,7 @@ export default class Component extends React.Component {
 
 
     render() {
-        console.log("sgisghiehg" , this.props.events)
+      //  console.log("sgisghiehg" , this.props.events)
         return (
             <Calendar
                 ref={this.calendar}

@@ -57,7 +57,7 @@ const PatientDashboard = () => {
     }
    const a = getAppointments()
 
-    a.then(console.log("finally",appointments))
+    //a.then(console.log("finally",appointments))
 
 
 
