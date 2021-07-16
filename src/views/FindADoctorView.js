@@ -86,19 +86,18 @@ const FindADoctorView = () => {
   const [radius, setRadius] = useState("");
   const [facilities, setFacilities] = useState([]);
   const [insurances, setInsurances] = useState([]);
-  const [insurance, setInsurance] = useState("")
+  const [insurance, setInsurance] = useState("");
   const [languages, setLanguages] = useState([]);
   const [languageList, setLanguageList] = useState([]);
   const [areas, setAreas] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState(false);
 
-
   const addTimeSlotHandler = (timeslot) => {
     setTimeSlots((prevTimeSlots) => {
       return [timeslot, ...prevTimeSlots];
     });
-  }; 
+  };
 
   const languagesChangeHandler = (value) => {
     setLanguageList(value);
@@ -169,6 +168,35 @@ const FindADoctorView = () => {
     // )}
   };
 
+  let hbf = {lat: 48.166629, lng: 11.591026}
+  let home = {lat: 48.1402669, lng: 11.559998};
+
+   //This function takes in latitude and longitude of two location and returns the distance between them as the crow flies (in km)
+   function calcDistance(lat1, lng1, lat2, lng2) 
+   {
+     var R = 6371; // km
+     var dLat = toRad(lat2-lat1);
+     var dLon = toRad(lng2-lng1);
+     var lat1 = toRad(lat1);
+     var lat2 = toRad(lat2);
+
+     var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+       Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+     var d = R * c;
+     return d;
+   }
+
+   // Converts numeric degrees to radians
+   function toRad(Value) 
+   {
+       return Value * Math.PI / 180;
+   }
+
+   let test = calcDistance(hbf.lat, hbf.lng, home.lat, home.lng);
+   console.log("DISTANCE: ", test);
+
+
   useEffect(() => {
     const getConfig = async () => {
       const config = await ConfigService.getConfig();
@@ -219,6 +247,7 @@ const FindADoctorView = () => {
                   variant="outlined"
                   content={
                     <div>
+                      <center>
                       <h4>Area of Expertise</h4>
                       <DynamicCard
                         variant="body2"
@@ -230,6 +259,7 @@ const FindADoctorView = () => {
                             onChange={areaChangeHandler}
                           ></DynamicDropdown>
                         }
+                        
                       ></DynamicCard>
                       <DynamicCard
                         variant="outlined"
@@ -286,6 +316,7 @@ const FindADoctorView = () => {
                           );
                         })}
                       </div>
+                      </center>
                     </div>
                   }
                 ></DynamicCard>
@@ -296,6 +327,7 @@ const FindADoctorView = () => {
                 variant="outlined"
                 content={
                   <div>
+                    <center>
                     <h4>When are you usually free?</h4>
                     <br />
                     {/* <TimeSlots items={timeslots} /> */}
@@ -304,6 +336,7 @@ const FindADoctorView = () => {
                       onDeleteTimeSlotHandler={deleteTimeSlotHandler}
                     />
                     <NewTimeSlot onAddTimeSlot={addTimeSlotHandler} />
+                    </center>
                   </div>
                 }
               ></DynamicCard>
@@ -325,13 +358,13 @@ const FindADoctorView = () => {
               ></DynamicCard>
               {search ? (
                 <div>
-                  <Grid>
-                    <p>We found the following results for you:</p>
-                  </Grid>
-                  <Grid>
-                    <DynamicCard
-                      variant="body2"
-                      content={
+                  <DynamicCard
+                    variant="outlined"
+                    content={
+                      <div>
+                        <center>
+                        <h4>We found the following results for you:</h4>
+                        </center>
                         <div>
                           {!isLoading &&
                             doctorlist.length > 0 &&
@@ -354,9 +387,9 @@ const FindADoctorView = () => {
                           )}
                           {isLoading && <p>Loading...</p>}
                         </div>
-                      }
-                    />
-                  </Grid>{" "}
+                      </div>
+                    }
+                  ></DynamicCard>
                 </div>
               ) : (
                 ""
