@@ -12,7 +12,6 @@ import {ThemeProvider} from "@material-ui/styles";
 import {Button} from "@material-ui/core";
 import KebabMenu from "./KebabMenu";
 import MenuIcon from "@material-ui/icons/Menu";
-import DoctorService from "../../services/DoctorService";
 
 const routes = [
     {path: "/find-doctor", displayname: "Home"},
