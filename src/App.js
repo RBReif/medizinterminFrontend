@@ -9,7 +9,6 @@ import LoginPatientsView from "./views/LoginPatientsView";
 import RegisterPatientsView from "./views/RegisterPatientsView";
 import LogInProfessionalsView from "./views/LogInProfessionalsView";
 import RegisterProfessionalsView from "./views/RegisterProfessionalsView";
-import ResultsView from "./views/ResultsView";
 import TermsView from "./views/Terms";
 import ImpressumView from "./views/Impressum";
 import PatientDashboard from "./views/PatientDashboard";
@@ -77,9 +76,6 @@ function App(props) {
                         <Route path="/login-patients">
                             <LoginPatientsView/>
                         </Route>
-                        <AuthenticatedRoute path="/results">
-                            <ResultsView/>
-                        </AuthenticatedRoute>
                         <Route path={"/terms"}>
                             <TermsView/>
                         </Route>

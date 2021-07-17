@@ -11,6 +11,7 @@ export default class Component extends React.Component {
         super(props);
         this.calendar = React.createRef();
     }
+
     
 
     componentDidMount() {
@@ -28,13 +29,13 @@ export default class Component extends React.Component {
         // call endpoint to retrieve events
     }
 
-
     render() {
         console.log("sgisghiehg" , this.props.events)
         return (
             <Calendar
                 ref={this.calendar}
                 events={this.props.events}
+                onClick={this.props.onClick(this.props.events)}
             />
         );
     }
