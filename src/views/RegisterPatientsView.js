@@ -28,18 +28,17 @@ function RegisterPatientsView(props) {
 
     return (
         <ThemeProvider theme={Theme}>
+            <div className="Landing">
             <Page>
-                <center><h2>Welcome to medizintermin!</h2></center>
                 <br/>
-                <Col></Col>
                 <Col><SignUpComponent
                     user={user}
                     onRegister={onRegister}
                     onCancel={onCancel}
                 /></Col>
-                <Col></Col>
                 <br/>
             </Page>
+                </div>
         </ThemeProvider>
     );
 }

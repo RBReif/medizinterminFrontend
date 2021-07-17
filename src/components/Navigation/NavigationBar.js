@@ -60,14 +60,13 @@ const NavigationBar = (props) => {
                     <Nav className="ml-auto">
                         <div>
                             {userData.user
-                                ? []
+                                ? [<Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                                    <MenuIcon/>
+                                </Button>]
                                 : [
                                     <Button style={{marginRight: 5}} color="secondary" onClick={onClickAreYouADoctor}>Are
                                         You a Doctor?</Button>
                                 ]}
-                            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                                <MenuIcon/>
-                            </Button>
                         </div>
                     </Nav>
 
