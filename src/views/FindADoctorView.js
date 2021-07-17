@@ -288,7 +288,7 @@ const FindADoctorView = () => {
                         variant="body2"
                         content={
                           <div>
-                            <h4>Language, Insurance</h4>
+                            <h4>Language</h4>
                             <MultiSelectDropdown
                               label="Please choose your preferred language"
                               items={languages}
@@ -300,14 +300,21 @@ const FindADoctorView = () => {
                       <DynamicCard
                         variant="body2"
                         content={
+                          <div>
+                          <h4>Insurance</h4>
                           <DynamicDropdown
                             label="Please choose your health insurance"
                             items={insurances}
                             onChange={healthInsuranceChangeHandler}
                           ></DynamicDropdown>
+                          </div>
                         }
                       ></DynamicCard>
+                       <DynamicCard
+                        variant="body2"
+                        content={
                       <div>
+                      <h4>Accessibility</h4>
                         {facilities.map((toggle) => {
                           return (
                             <DynamicSwitch
@@ -318,7 +325,7 @@ const FindADoctorView = () => {
                             ></DynamicSwitch>
                           );
                         })}
-                      </div>
+                      </div>}></DynamicCard>
                       </center>
                     </div>
                   }

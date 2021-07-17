@@ -5,10 +5,10 @@ import { createTheme } from "@material-ui/core";
 export const Theme = createTheme ({
     palette: {
         primary: {
-            main: "#8bc34a"
+            main: "#5B84B1FF"
         },
         secondary: {
-            main: "#ffc107"
+            main: "#C7D3D4FF"
         }
     },
     typography: {
@@ -53,7 +53,7 @@ export const Theme = createTheme ({
             display: "flex",
         },
         MuiLink: {
-            color: "#FFFFFF",
+            color: "#FFFFFF",     
         }
     }
 

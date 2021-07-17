@@ -64,6 +64,7 @@ const NavigationBar = (props) => {
 
                 </Navbar>
                 <KebabMenu
+                color="secondary"
                     id="simple-menu"
                     anchorEl={anchorEl}
                     open={!!anchorEl}

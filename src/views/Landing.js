@@ -10,8 +10,6 @@ import UserService from "../services/UserService";
 import {setUser} from "../redux/actions";
 
 const Landing = () => {
-
-
   return (
       <ThemeProvider theme={Theme}>
         <div className="Landing">

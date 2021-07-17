@@ -5,7 +5,6 @@ import { withRouter } from "react-router-dom";
 import { logout } from "../../redux/actions";
 import { Menu, MenuItem, Avatar, Divider } from "@material-ui/core";
 import { connect, useSelector } from "react-redux";
-
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 
