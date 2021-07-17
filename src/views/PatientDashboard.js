@@ -50,11 +50,12 @@ const PatientDashboard = (props) => {
   const [appointments, setAppointments] = useState([]);
   const [doctors, setDoctors] = useState([]);
   const [doctorList, setDoctorList] = useState([]);
+  const [totalAppointments, setTotalAppointments] = useState([]);
 
   useEffect(async () => {
     const getPatient = async () => {
       const patient = await PatientService.getPatient(patientId);
-      console.log(patient);
+      // console.log(patient);
       setPatient(patient);
     };
     getPatient();
@@ -65,8 +66,8 @@ const PatientDashboard = (props) => {
       );
       console.log(appointments);
       setAppointments(appointments.map((item) => item));
-      console.log("finished with getAppointments ", appointments);
-      console.log("length: ", appointments.length);
+      // console.log("finished with getAppointments ", appointments);
+      // console.log("length: ", appointments.length);
       let doctorIDs = [];
       appointments.forEach((a) => {
         if (!doctorIDs.some((e) => e === a.doctor)) {
@@ -80,8 +81,19 @@ const PatientDashboard = (props) => {
         console.log("RECEIVED DOCTOR", doctor);
         console.log("RECEIVED DOCTOR", doctor);
         doctorList.push(doctor);
-        // setDoctors(doctorList);
-        // setDoctors([...doctors, doctor]);
+        setDoctors(doctorList);
+        setTotalAppointments(
+          appointments.map((item) => {
+            if (item.doctor === a) {
+              item["doctor_name"] = doctor.name;
+              item["doctor_address"] = doctor.address;
+              item["doctor_area_of_expertise"] = doctor.area_of_expertise;
+              return item;
+            } else {
+              return item;
+            }
+          })
+        );
       });
     };
     const a = getAppointments();
@@ -100,9 +112,6 @@ const PatientDashboard = (props) => {
   const prevAppointments = [];
   const upcomingAppointments = [];
   //total appointments, merged
-  const totalAppointments = appointments.map((item, i) =>
-    Object.assign({}, item, doctorList[i])
-  );
 
   //check which appointments are in the past and which are in the future
   totalAppointments.map((appointment) =>
