@@ -10,8 +10,6 @@ import UserService from "../services/UserService";
 import {setUser} from "../redux/actions";
 
 const Landing = () => {
-
-
   return (
       <ThemeProvider theme={Theme}>
         <div className="Landing">
@@ -24,14 +22,14 @@ const Landing = () => {
                     Find the best doctors and your area and book your appointment!
                   </p>
                   <div>
-                    <Button
+                    <Button style={{marginRight: 5}}
                         color="primary"
                         href="/register-patients"
                     >
                       Sign Up
                     </Button>
-                    &nbsp;&nbsp;&nbsp;
                     <Button
+                    style={{marginLeft: 5}}
                         color="secondary"
                         href="/login-patients"
                     >

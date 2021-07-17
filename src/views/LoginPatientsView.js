@@ -15,7 +15,6 @@ import {ThemeProvider} from "@material-ui/styles";
 function LoginPatientsView(props) {
     const userData = useSelector((state) => state.user);
 
-// this has to be made working for redux
     useEffect(() => {
         if (userData?.user?.username) {
             props.history.push("/find-doctor");

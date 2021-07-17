@@ -14,7 +14,7 @@ import KebabMenu from "./KebabMenu";
 import MenuIcon from "@material-ui/icons/Menu";
 
 const routes = [
-    {path: "/", displayname: "Home"},
+    {path: "/find-doctor", displayname: "Home"},
 ];
 
 
@@ -51,7 +51,7 @@ const NavigationBar = (props) => {
 
                 <Navbar expand={"xl"} bg="light" variant="light">
 
-                    <Link to="/" className="navbar-brand">medizintermin</Link>
+                    <Link to="/find-doctor" className="navbar-brand">medizintermin</Link>
                     <Nav className="ml-auto">
                         <div>
                             <Button style={{marginRight: 5}} color="secondary" onClick={onClickAreYouADoctor}>Are You a
@@ -64,6 +64,7 @@ const NavigationBar = (props) => {
 
                 </Navbar>
                 <KebabMenu
+                color="secondary"
                     id="simple-menu"
                     anchorEl={anchorEl}
                     open={!!anchorEl}

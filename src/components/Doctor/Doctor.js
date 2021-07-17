@@ -14,6 +14,7 @@ import { Theme } from "../UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
 import { Box } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
+import Ratings from "../Forms/Ratings";
 import DynamicCard from "../UI/DynamicCard";
 import { lightBlue } from "@material-ui/core/colors";
 
@@ -42,6 +43,7 @@ const Doctor = (props) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [showNumber, setShowNumber] = React.useState(false);
+  const [avgAudienceRating, setAvgAudienceRating] = React.useState("");
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -73,11 +75,15 @@ const Doctor = (props) => {
                 <br></br>
                 {props.doctor.address}
                 <br></br>
-                <Rating
+                <Ratings 
+                value={props.doctor.avgAudienceRating}
+                readOnly={props.readOnly}
+                />
+                {/* <Rating
                   name="read-only"
                   value={props.doctor.avgAudienceRating}
                   readOnly
-                />
+                /> */}
                 {showNumber ? props.doctor.phone : ""}
               </div>
             }

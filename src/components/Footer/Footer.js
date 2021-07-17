@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Styled from "styled-components";
 import React from "react";
+import "./Footer.css"
 import { Grid } from "@material-ui/core";
 
 const routes = [
@@ -11,8 +12,7 @@ const routes = [
   { path: "/emergency", displayname: "Emergency" },
 ];
 
-class PlainFooter extends React.Component {
-  render() {
+const Footer = () => {
     return (
       <footer className="footer">
           <Navbar bg="light" expand="lg">
@@ -30,16 +30,7 @@ class PlainFooter extends React.Component {
           </Navbar>
       </footer>
     );
-  }
-}
+  };
 
-export const Footer = Styled(PlainFooter)`
-    max-height: 35px;
-    bottom: 0;
-    position: flexible;
-    background: white;
-    > p {
-        text-align: center;
-        margin-top: 4px;
-    }
-`;
+export default Footer;
+

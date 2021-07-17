@@ -23,6 +23,7 @@ const MultiSelectDropdown = (props) => {
 
     const handleChange = (event) => {
         setValues(event.target.value);
+        props.onChange(event.target.value);
     };
     // const handleChangeMultiple = (event) => {
     //     setValues = (Array.isArray(event)? event.map(x=>x.label): []);
