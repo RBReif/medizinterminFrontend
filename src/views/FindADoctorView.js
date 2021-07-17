@@ -21,6 +21,8 @@ import ConfigService from "../services/ConfigService";
 import { connect, useSelector } from "react-redux";
 import { Grid } from "@material-ui/core";
 import Doctor from "../components/Doctor/Doctor";
+import AppointmentService from "../services/AppointmentService"
+import {forEach} from "react-bootstrap/ElementChildren";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,41 +38,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const doctorlist = [
-  {
-    id: "1",
-    name: "Max Mustermann",
-    profession: "Dentist",
-    address: "Ungererstr. 58, 80805 München",
-    phone: "123456",
-    avgAudienceRating: "4",
-    appointments: [
-      {
-        id: 6,
-        color: "#fd3153",
-        to: new Date(),
-        title: "This is an aifjejffjewjgwejgjewigoifsiosfa",
-        from: new Date(),
-      },
-      {
-        id: 6,
-        color: "#fd3153",
-        to: new Date(),
-        title: "This is an event 2",
-        from: new Date(),
-      },
-    ],
-  },
-  {
-    id: "2",
-    name: "isjdgjdjsg fiaojs",
-    profession: "Dentist",
-    address: "Münchner Freiheit 12, 80803 München",
-    avgAudienceRating: "5",
-    phone: "12345678",
-    appointments: [{}, {}],
-  },
-];
 
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
@@ -92,10 +59,10 @@ const FindADoctorView = () => {
   const [areas, setAreas] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState(false);
+  const [results, setResults] = useState([]);
 
   const addTimeSlotHandler = (timeslot) => {
     setTimeSlots((prevTimeSlots) => {
-      console.log(prevTimeSlots);
       return [timeslot, ...prevTimeSlots];
     });
   };
@@ -110,7 +77,7 @@ const FindADoctorView = () => {
     return setInsurance(event.target.value);
   };
 
-  const professionChangeHandler = (event) => {
+  const areaChangeHandler = (event) => {
     // console.log("stateChangeHandler: ", event.target.value);
     return setDoctor(event.target.value);
   };
@@ -140,21 +107,22 @@ const FindADoctorView = () => {
     return facilities;
   };
 
-  const submitHandler = () => {
-    let query = [];
-    query.push({
-      address: address.address_value,
-      lat: address.lat,
-      lng: address.lng,
-      radius: radius,
-      toggles: facilities,
-      insurance: insurance,
-      languages: languageList,
-      doctor: doctor,
-      timeslots: timeslots,
-    });
-    console.log("query: ", query);
-    query.length > 0 ? setSearch(true) : setSearch(false);
+  const submitHandler = async () => {
+ const facilitiesRightFormat = []
+    for (let i = 0; i< facilities.length; i++){
+      if (facilities[i].isActive){
+        facilitiesRightFormat.push(facilities[i].displayname)
+      }
+    }
+    console.log("CALLED SUBMITHANDLER")
+    for (let i = 0; i < timeslots.length; i++){
+      setIsLoading(true)
+      console.log("We will soon request answers")
+         let receivedResults = await AppointmentService.filterAppointments(doctor, languageList, facilitiesRightFormat,timeslots[i].startdate,timeslots[i].enddate, radius, address.lat, address.lng,insurance)
+         setResults([...results, receivedResults])
+      console.log("RECEIVED RESULT: ", receivedResults)
+  }
+  setIsLoading(false)
   };
 
 
@@ -229,7 +197,7 @@ const FindADoctorView = () => {
                             defaultValue=""
                             label="Please choose the type of doctor you need"
                             items={areas}
-                            onChange={professionChangeHandler}
+                            onChange={areaChangeHandler}
                           ></DynamicDropdown>
                         }
                         
@@ -347,15 +315,11 @@ const FindADoctorView = () => {
                         </center>
                         <div>
                           {!isLoading &&
-                            doctorlist.length > 0 &&
-                            doctorlist.map((doctor) => (
-                              <Doctor
-                                key={doctor.id}
-                                doctor={doctor}
-                                readOnly={true}
-                              />
+                            results.length > 0 &&
+                            results.map((r) => (
+                              console.log(r)
                             ))}
-                          {!isLoading && doctorlist.length === 0 && (
+                          {!isLoading && results.length === 0 && (
                             <center>
                               <p>Found no doctors.</p>
                               <p>
