@@ -35,9 +35,10 @@ export default function LocationAutoComplete(props) {
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
             <TextField
+             label="Address"
               fullWidth="true"
               id="outlined"
-              {...getInputProps({ placeholder: "Address" })}
+              {...getInputProps({})}
             />
 
             <div>
