@@ -95,6 +95,7 @@ const FindADoctorView = () => {
 
   const addTimeSlotHandler = (timeslot) => {
     setTimeSlots((prevTimeSlots) => {
+      console.log(prevTimeSlots);
       return [timeslot, ...prevTimeSlots];
     });
   };
@@ -109,7 +110,7 @@ const FindADoctorView = () => {
     return setInsurance(event.target.value);
   };
 
-  const areaChangeHandler = (event) => {
+  const professionChangeHandler = (event) => {
     // console.log("stateChangeHandler: ", event.target.value);
     return setDoctor(event.target.value);
   };
@@ -227,7 +228,7 @@ const FindADoctorView = () => {
                             defaultValue=""
                             label="Please choose the type of doctor you need"
                             items={areas}
-                            onChange={areaChangeHandler}
+                            onChange={professionChangeHandler}
                           ></DynamicDropdown>
                         }
                         
