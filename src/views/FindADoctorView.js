@@ -125,6 +125,7 @@ const FindADoctorView = () => {
   setIsLoading(false)
   };
 
+
   const deleteTimeSlotHandler = (timeslot) => {
     // setTimeSlots(prevTimeSlots => {
     // var index = timeslot.indexOf(timeslot.id);
