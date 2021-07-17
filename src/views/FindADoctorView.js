@@ -157,6 +157,7 @@ const FindADoctorView = () => {
     query.length > 0 ? setSearch(true) : setSearch(false);
   };
 
+
   const deleteTimeSlotHandler = (timeslot) => {
     // setTimeSlots(prevTimeSlots => {
     // var index = timeslot.indexOf(timeslot.id);
