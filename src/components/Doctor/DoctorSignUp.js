@@ -57,7 +57,6 @@ const SignUpComponent = (props) => {
         }
     }, [userData, history]);
 
-
     const classes = useStyles();
 
     const [firstName, setFirstName] = React.useState("");
@@ -80,7 +79,8 @@ const SignUpComponent = (props) => {
 
     const onRegister = (e) => {
         e.preventDefault();
-        props.onRegister(username, password, firstName, lastName, birthDate, expertise, languageList, address);
+        let docFacilities = facilities.filter(x => x.isActive).map(x => x.displayname)
+        props.onRegister(username, password, firstName, lastName, birthDate, expertise, languageList, address, docFacilities);
     };
 
     const onChangeFirstName = (e) => {

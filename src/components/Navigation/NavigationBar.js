@@ -12,6 +12,7 @@ import {ThemeProvider} from "@material-ui/styles";
 import {Button} from "@material-ui/core";
 import KebabMenu from "./KebabMenu";
 import MenuIcon from "@material-ui/icons/Menu";
+import DoctorService from "../../services/DoctorService";
 
 const routes = [
     {path: "/find-doctor", displayname: "Home"},
@@ -19,6 +20,7 @@ const routes = [
 
 
 const NavigationBar = (props) => {
+
     const userData = useSelector((state) => {
         // return the currently logged in user from redux store
         return state.user;
@@ -47,6 +49,11 @@ const NavigationBar = (props) => {
         props.history.push("/login-professionals");
     };
 
+    const onClickAreYouAPatient = () => {
+        // navigate to the patient login
+        props.history.push("/login-patients");
+    };
+
     return (
         <header>
             <ThemeProvider theme={Theme}>
@@ -60,10 +67,10 @@ const NavigationBar = (props) => {
                                 ? [<Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                     <MenuIcon/>
                                 </Button>]
-                                : [
-                                    <Button style={{marginRight: 5}} color="secondary" onClick={onClickAreYouADoctor}>Are
-                                        You a Doctor?</Button>
-                                ]}
+                                : [<Button style={{marginRight: 5}} color="secondary"
+                                           onClick={onClickAreYouADoctor}>Are
+                                    You a Doctor?</Button>]
+                            }
                         </div>
                     </Nav>
 

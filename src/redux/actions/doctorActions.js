@@ -2,10 +2,11 @@ import DoctorService from "../../services/DoctorService";
 
 export function login(name, password) {
     function onSuccess(user) {
-        return { type: "LOGIN_SUCCESS", user };
+        return {type: "LOGIN_SUCCESS", user};
     }
+
     function onFailure(error) {
-        return { type: "LOGIN_FAILURE", error };
+        return {type: "LOGIN_FAILURE", error};
     }
 
     return async (dispatch) => {
@@ -18,8 +19,6 @@ export function login(name, password) {
     };
 }
 
-
-
 export function setDoctor() {
     return async (dispatch) => {
         const user = await DoctorService.getCurrentUser()
@@ -30,25 +29,25 @@ export function setDoctor() {
 
 export function logout() {
     DoctorService.logout();
-    return { type: "LOGOUT" };
+    return {type: "LOGOUT"};
 }
 
 export function loginReset() {
-    return { type: "LOGIN_RESET" };
+    return {type: "LOGIN_RESET"};
 }
 
-export function register(username, password, firstName, lastName, birthDate, expertise, languageList, address) {
+export function register(username, password, firstName, lastName, birthDate, expertise, languageList, address, facilities) {
     function onSuccess(user) {
-        //console.log('doctorActions GOESIN')
-        return { type: "LOGIN_SUCCESS", user: user };
+        return {type: "LOGIN_SUCCESS", user: user};
     }
+
     function onFailure(error) {
-        return { type: "LOGIN_FAILURE", error: error };
+        return {type: "LOGIN_FAILURE", error: error};
     }
 
     return async (dispatch) => {
         try {
-            const user = await DoctorService.register(username, password, firstName, lastName, birthDate, expertise, languageList, address);
+            const user = await DoctorService.register(username, password, firstName, lastName, birthDate, expertise, languageList, address, facilities);
             dispatch(onSuccess(user));
         } catch (e) {
             dispatch(onFailure(e));
