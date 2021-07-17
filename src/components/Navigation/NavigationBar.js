@@ -43,9 +43,6 @@ const NavigationBar = (props) => {
     };
 
     const onClickAreYouADoctor = () => {
-        // trigger redux logout action
-        props.dispatch(logout());
-        //logout();
         // navigate to the healthcare professional login
         props.history.push("/login-professionals");
     };
