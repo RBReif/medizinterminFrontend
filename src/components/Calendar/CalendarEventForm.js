@@ -12,11 +12,32 @@ import DynamicDropdown from "../Forms/DynamicDropdown";
 import DynamicCard from "../UI/DynamicCard";
 import { Box } from "@material-ui/core";
 import { Button } from "@material-ui/core";
-
+/*
 const appointmenttype = [
   { id: "1", displayname: "Out of Office" },
   { id: "2", displayname: "Occupied" },
 ];
+
+ */
+
+const getColor = (status) => {
+  switch (status){
+    case "AVAILABLE": return "#41b23d"
+    case "FAILED": return "#b23d49"
+    case "SCHEDULED": return "#ffc107"
+    case "SUCCESSFUL": return "#185619"
+    default: return "#473db2"
+  }
+}
+
+const appointmenttype = [
+  {displayname: "SUCCESSFUL"},
+  {displayname: "SCHEDULED"},
+  //   REQUESTED: "REQUESTED",
+  {displayname: "FAILED"},
+  {displayname: "AVAILABLE"},
+]
+
 
 //material-ui styles
 const useStyles = makeStyles((theme) => ({
@@ -78,7 +99,7 @@ const CalendarEventForm = (props) => {
       to: new Date(selectedEndDate),
       title: title,
       type: appointmentType,
-      color: appointmentType === "Out of Office" ? "#3694DF": "#ffc107",
+      color: getColor(appointmentType),
       // description: description
     };
 
