@@ -132,8 +132,7 @@ return (
         <Page>
             <Container fluid>
                 <Row>
-                    <Col>1 of 2</Col>
-                    <Col>2 of 2</Col>
+                    <Col><center><h4>Manage My Timeslots</h4></center></Col>
                 </Row>
                 <Row>
                     <Col>
