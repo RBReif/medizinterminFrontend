@@ -151,7 +151,7 @@ const SignUpComponent = (props) => {
             <Container>
                 <Paper className={classes.signUpPaper} component="form">
                 <Form>
-                    <center><h4>Patient Sign Up</h4></center>
+                    <center><h4>Welcome to medizintermin!</h4></center>
                     <br/>
                     <Row>
                         <Col>

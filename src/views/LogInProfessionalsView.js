@@ -13,49 +13,48 @@ import {ThemeProvider} from "@material-ui/styles";
  * @param {props} props
  */
 function LoginPatientsView(props) {
-  const userData = useSelector((state) => state.user);
+    const userData = useSelector((state) => state.user);
 
-  useEffect(() => {
-    if (userData?.user?.username) {
-      props.history.push("/doctor-dashboard");
-    }
-  }, [userData, props.history]);
+    useEffect(() => {
+        if (userData?.user?.username) {
+            props.history.push("/doctor-dashboard");
+        }
+    }, [userData, props.history]);
 
-  const onLogin = (username, password) => {
-    props.dispatch(login(username, password));
-  };
+    const onLogin = (username, password) => {
+        props.dispatch(login(username, password));
+    };
 
-  const onCancel = () => {
-    props.history.push("/");
-  };
+    const onCancel = () => {
+        props.history.push("/");
+    };
 
-  const onSignUp = () => {
-    props.history.push("/register-professionals");
-  };
+    const onSignUp = () => {
+        props.history.push("/register-professionals");
+    };
 
-  return (
-      <ThemeProvider theme={Theme}>
-        <Page>
-          <Container>
-            <center>
-              <br />
-              <Col></Col>
-              <p><h3>Login for Medical Professionals</h3></p>
-              <Col></Col>
-              <Col>
-                <LoginComponent
-                    user={userData.user}
-                    onCancel={onCancel}
-                    onLogin={onLogin}
-                    onSignUp={onSignUp}
-                />
-              </Col>
-              <br/>
-            </center>
-          </Container>
-        </Page>
-      </ThemeProvider>
-  );
+    return (
+        <ThemeProvider theme={Theme}>
+            <div className="Landing">
+                <Page>
+                    <Container>
+                        <center>
+                            <br/>
+                            <Col>
+                                <LoginComponent
+                                    user={userData.user}
+                                    onCancel={onCancel}
+                                    onLogin={onLogin}
+                                    onSignUp={onSignUp}
+                                />
+                            </Col>
+                            <br/>
+                        </center>
+                    </Container>
+                </Page>
+            </div>
+        </ThemeProvider>
+    );
 }
 
 export default connect()(withRouter(LoginPatientsView));

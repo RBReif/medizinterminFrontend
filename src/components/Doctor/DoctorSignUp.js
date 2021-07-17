@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
         margin: "auto",
     },
     signUpPaper: {
-        width: "1000px",
+        width: "800px",
         margin: "auto",
         padding: theme.spacing(2)
     },
@@ -80,7 +80,7 @@ const SignUpComponent = (props) => {
 
     const onRegister = (e) => {
         e.preventDefault();
-        props.onRegister(username, password, firstName, lastName, birthDate, expertise, languages, address);
+        props.onRegister(username, password, firstName, lastName, birthDate, expertise, languageList, address);
     };
 
     const onChangeFirstName = (e) => {
@@ -173,10 +173,9 @@ const SignUpComponent = (props) => {
             <Container>
                 <Paper className={classes.signUpPaper} component="form">
                     <Form>
-                        <center><h4>Medical Professional Sign Up</h4></center>
+                        <center><h4>Welcome to medizintermin!</h4></center>
                         <br/>
                         <Row>
-
                             <Col>
                                 <Form.Label> First Name </Form.Label>
                                 <div className={classes.signUpRow}>

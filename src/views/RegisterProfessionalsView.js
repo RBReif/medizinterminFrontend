@@ -17,8 +17,8 @@ import {Col} from "react-bootstrap";
 function RegisterProfessionals(props) {
     const user = useSelector((state) => state.user);
 
-    const onRegister = (username, password, firstName, lastName, birthDate, expertise, languages, address) => {
-        props.dispatch(register(username, password, firstName, lastName, birthDate, expertise, languages, address));
+    const onRegister = (username, password, firstName, lastName, birthDate, expertise, languageList, address) => {
+        props.dispatch(register(username, password, firstName, lastName, birthDate, expertise, languageList, address));
     };
 
     const onCancel = () => {

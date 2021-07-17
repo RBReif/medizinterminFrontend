@@ -36,25 +36,24 @@ function LoginPatientsView(props) {
 
     return (
         <ThemeProvider theme={Theme}>
-            <Page>
-                <Container>
-                    <center>
-                        <br />
-                        <Col></Col>
-                        <p><h3>Login for Patients</h3></p>
-                        <Col></Col>
-                        <Col>
-                            <LoginComponent
-                                user={userData.user}
-                                onCancel={onCancel}
-                                onLogin={onLogin}
-                                onSignUp={onSignUp}
-                            />
-                        </Col>
-                        <br/>
-                    </center>
-                </Container>
-            </Page>
+            <div className="Landing">
+                <Page>
+                    <Container>
+                        <center>
+                            <br/>
+                            <Col>
+                                <LoginComponent
+                                    user={userData.user}
+                                    onCancel={onCancel}
+                                    onLogin={onLogin}
+                                    onSignUp={onSignUp}
+                                />
+                            </Col>
+                            <br/>
+                        </center>
+                    </Container>
+                </Page>
+            </div>
         </ThemeProvider>
     );
 }

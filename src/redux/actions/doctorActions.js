@@ -37,7 +37,7 @@ export function loginReset() {
     return { type: "LOGIN_RESET" };
 }
 
-export function register(username, password, firstName, lastName, birthDate, expertise, languages, address) {
+export function register(username, password, firstName, lastName, birthDate, expertise, languageList, address) {
     function onSuccess(user) {
         //console.log('doctorActions GOESIN')
         return { type: "LOGIN_SUCCESS", user: user };
@@ -48,7 +48,7 @@ export function register(username, password, firstName, lastName, birthDate, exp
 
     return async (dispatch) => {
         try {
-            const user = await DoctorService.register(username, password, firstName, lastName, birthDate, expertise, languages, address);
+            const user = await DoctorService.register(username, password, firstName, lastName, birthDate, expertise, languageList, address);
             dispatch(onSuccess(user));
         } catch (e) {
             dispatch(onFailure(e));
