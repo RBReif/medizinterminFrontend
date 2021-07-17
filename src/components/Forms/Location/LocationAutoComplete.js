@@ -44,7 +44,7 @@ export default function LocationAutoComplete(props) {
 
               {suggestions.map((suggestion) => {
                 const style = {
-                  backgroundColor: suggestion.active ? "#5B84B1FF" : "#fff",
+                  backgroundColor: suggestion.active ? "#88BDC0" : "#fff",
                 };
 
                 return (

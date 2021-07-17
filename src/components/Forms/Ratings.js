@@ -2,8 +2,20 @@ import React from "react";
 import { Table, TableBody, TableCell, TableRow } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/styles";
+import { Box } from "@material-ui/core";
 
 
+const StyledRating = withStyles({
+    iconFilled: {
+    //   color: '#6D9A6F',
+    color: "#D7C49EFF",
+    },
+    iconHover: {
+    //   color: '#6D9A6F',
+    color: "#AC9D7E",
+    },
+  })(Rating);
 /**
  * For presenting and changing rating details
  * @param {props} props
@@ -13,7 +25,7 @@ function Ratings(props) {
         <Table>
             <TableBody>
                 <TableRow>
-                        <Rating
+                        <StyledRating
                             value={props.value}
                             onChange={(e, value) =>
                                 props.onChangeOwnRating(value)

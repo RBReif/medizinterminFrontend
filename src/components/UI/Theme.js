@@ -5,10 +5,12 @@ import { createTheme } from "@material-ui/core";
 export const Theme = createTheme ({
     palette: {
         primary: {
-            main: "#5B84B1FF"
+            // main: "#5B84B1FF"
+            main: "#88BDC0",
         },
         secondary: {
-            main: "#C7D3D4FF"
+            // main: "#C7D3D4FF",
+            main: "#D7C49EFF",
         }
     },
     typography: {
