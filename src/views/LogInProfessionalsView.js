@@ -1,50 +1,60 @@
-import { Form, Container, Col } from "react-bootstrap";
+import React, {useEffect} from "react";
+import {withRouter} from "react-router-dom";
+import {connect, useSelector} from "react-redux";
+import {login} from "../redux/actions/doctorActions";
+import {Container, Col} from "react-bootstrap";
+import LoginComponent from "../components/Patient/UserLoginComponent";
 import Page from "../components/Page";
-import { Button } from "@material-ui/core";
-import { Theme } from "../components/UI/Theme";
-import { ThemeProvider } from "@material-ui/styles";
-import moment from "moment";
+import {Theme} from "../components/UI/Theme";
+import {ThemeProvider} from "@material-ui/styles";
 
-const LoginProf = () => {
-  return (
-    <ThemeProvider theme={Theme}>
-    <Page>
-      <Container>
-        <Col></Col>
-        <h2>Login for medical professionals</h2>
-        <Col>
-          <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
-            </Form.Group>
+/**
+ * For user login
+ * @param {props} props
+ */
+function LoginPatientsView(props) {
+    const userData = useSelector((state) => state.user);
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Keep me logged in" />
-            </Form.Group>
+    useEffect(() => {
+        if (userData?.user?.username) {
+            props.history.push("/doctor-dashboard");
+        }
+    }, [userData, props.history]);
 
-            <Button type="submit">
-              Submit
-            </Button>
-            <br />
-            <Form.Text className="text-muted">
-              Not registered yet? Sign up now:
-            </Form.Text>
-            <Button color="primary" Link to="/register-professionals">Register</Button>
-          </Form>
-        </Col>
-        <Col></Col>
-      </Container>
-    </Page>
-    </ThemeProvider>
-  );
-};
+    const onLogin = (username, password) => {
+        props.dispatch(login(username, password));
+    };
 
-export default LoginProf;
+    const onCancel = () => {
+        props.history.push("/");
+    };
+
+    const onSignUp = () => {
+        props.history.push("/register-professionals");
+    };
+
+    return (
+        <ThemeProvider theme={Theme}>
+            <div className="Landing">
+                <Page>
+                    <Container>
+                        <center>
+                            <br/>
+                            <Col>
+                                <LoginComponent
+                                    user={userData.user}
+                                    onCancel={onCancel}
+                                    onLogin={onLogin}
+                                    onSignUp={onSignUp}
+                                />
+                            </Col>
+                            <br/>
+                        </center>
+                    </Container>
+                </Page>
+            </div>
+        </ThemeProvider>
+    );
+}
+
+export default connect()(withRouter(LoginPatientsView));

@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
 import {withRouter} from "react-router-dom";
 import {connect, useSelector} from "react-redux";
-import {login} from "../redux/actions";
+import {login} from "../redux/actions/userActions";
 import {Container, Col} from "react-bootstrap";
-import LoginComponent from "../components/UserLoginComponent";
+import LoginComponent from "../components/Patient/UserLoginComponent";
 import Page from "../components/Page";
 import {Theme} from "../components/UI/Theme";
 import {ThemeProvider} from "@material-ui/styles";
@@ -36,24 +36,24 @@ function LoginPatientsView(props) {
 
     return (
         <ThemeProvider theme={Theme}>
-            <Page>
-                <Container>
-                    <center>
-                        <Col></Col>
-                        <p><h3>Login for Patients</h3></p>
-                        <Col></Col>
-                        <Col>
-                            <LoginComponent
-                                user={userData.user}
-                                onCancel={onCancel}
-                                onLogin={onLogin}
-                                onSignUp={onSignUp}
-                            />
-                        </Col>
-                        <br/>
-                    </center>
-                </Container>
-            </Page>
+            <div className="Landing">
+                <Page>
+                    <Container>
+                        <center>
+                            <br/>
+                            <Col>
+                                <LoginComponent
+                                    user={userData.user}
+                                    onCancel={onCancel}
+                                    onLogin={onLogin}
+                                    onSignUp={onSignUp}
+                                />
+                            </Col>
+                            <br/>
+                        </center>
+                    </Container>
+                </Page>
+            </div>
         </ThemeProvider>
     );
 }

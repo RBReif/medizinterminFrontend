@@ -1,8 +1,12 @@
+import React, {useEffect, useState} from "react";
 import {Switch, Route, Redirect} from "react-router-dom";
 import {Provider, useDispatch, useSelector} from "react-redux";
 import {createStore, applyMiddleware} from "redux";
 import reducers from "./redux/reducers";
 import thunkMiddleware from "redux-thunk";
+import {setUser} from "./redux/actions";
+import {setDoctor} from "./redux/actions";
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import FindADoctorView from "./views/FindADoctorView";
 import LoginPatientsView from "./views/LoginPatientsView";
@@ -11,15 +15,10 @@ import LogInProfessionalsView from "./views/LogInProfessionalsView";
 import RegisterProfessionalsView from "./views/RegisterProfessionalsView";
 import TermsView from "./views/Terms";
 import ImpressumView from "./views/Impressum";
+import DoctorDashboard from "./views/DoctorDashboard";
 import PatientDashboard from "./views/PatientDashboard";
 import EmergencyView from "./views/Emergency";
 import Landing from "./views/Landing";
-
-
-import DoctorDashboard from "./views/DoctorDashboard";
-import React, {useEffect, useState} from "react";
-import UserService from "./services/UserService";
-import {setUser} from "./redux/actions";
 
 
 const AuthenticatedRoute = (props) => {
@@ -28,17 +27,18 @@ const AuthenticatedRoute = (props) => {
 
     useEffect(() => {
         dispatch(setUser())
+        dispatch(setDoctor())
     }, [])
 
     const userData = useSelector(state => state.user)
     useEffect(() => {
-        if(!!userData) {
+        if (!!userData) {
             setIsLoggedIn(!!userData?.user?.username)
         }
 
     }, [userData])
 
-    if(isLoggedIn !== undefined && !isLoggedIn) {
+    if (isLoggedIn !== undefined && !isLoggedIn) {
         return <Redirect to={"/"}/>
     }
 
@@ -48,7 +48,6 @@ const AuthenticatedRoute = (props) => {
 const NotAuthenticatedRoute = (props) => {
     return <Route {...props}/>
 }
-
 
 function App(props) {
 
@@ -88,9 +87,9 @@ function App(props) {
                         <AuthenticatedRoute path="/dashboard">
                             <PatientDashboard/>
                         </AuthenticatedRoute>
-                        <Route path="/doctor-dashboard">
+                        <AuthenticatedRoute path="/doctor-dashboard">
                             <DoctorDashboard/>
-                        </Route>
+                        </AuthenticatedRoute>
                         <Route path="/">
                             <Landing/>
                         </Route>

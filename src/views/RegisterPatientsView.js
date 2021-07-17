@@ -1,14 +1,13 @@
 import React, {useEffect} from "react";
 import {withRouter} from "react-router-dom";
 import {connect, useSelector} from "react-redux";
-
-import SignUpComponent from "../components/SignUpComponent";
-import Page from "../components/Page";
 import {register} from "../redux/actions";
+
+import Page from "../components/Page";
+import PatientSignUp from "../components/PatientSignUp";
 import {Theme} from "../components/UI/Theme";
 import {ThemeProvider} from "@material-ui/styles";
-import {Form, Button, Container, Col, Row} from "react-bootstrap";
-import ConfigService from "../services/ConfigService";
+import {Col} from "react-bootstrap";
 
 
 /**
@@ -28,18 +27,17 @@ function RegisterPatientsView(props) {
 
     return (
         <ThemeProvider theme={Theme}>
+            <div className="Landing">
             <Page>
-                <center><h2>Welcome to medizintermin!</h2></center>
                 <br/>
-                <Col></Col>
-                <Col><SignUpComponent
+                <Col><PatientSignUp
                     user={user}
                     onRegister={onRegister}
                     onCancel={onCancel}
                 /></Col>
-                <Col></Col>
                 <br/>
             </Page>
+                </div>
         </ThemeProvider>
     );
 }
