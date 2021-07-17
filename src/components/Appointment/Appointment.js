@@ -45,14 +45,14 @@ const Appointment = (props) => {
                     src="https://cdn.shopify.com/s/files/1/1390/2701/t/5/assets/doctor.jpg?v=12170138145179114637"
                   ></Avatar>
                 }
-                title={<b>{props.props.name} {props.props.last_name}</b>} 
+                title={<b>{props.props.doctor_name} {props.props.last_name}</b>} 
                 subheader={
                   <div>
-                    {props.props.area_of_expertise}
+                    {props.props.doctor_area_of_expertise}
                     <br></br>
                     {props.props.startPoint}
                     <br></br>
-                    {props.props.address}
+                    {props.props.doctor_address}
                     <br></br>
                     <Ratings 
                     value={props.props.audienceRatings}

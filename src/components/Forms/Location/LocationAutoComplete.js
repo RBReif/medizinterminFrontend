@@ -6,6 +6,7 @@ import PlacesAutocomplete, {
 import { Input } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { Theme } from '../../UI/Theme';
+import { TextField } from "@material-ui/core";
 
 export default function LocationAutoComplete(props) {
   const [address, setAddress] = React.useState("");
@@ -33,7 +34,7 @@ export default function LocationAutoComplete(props) {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
-            <Input
+            <TextField
               fullWidth="true"
               id="outlined"
               {...getInputProps({ placeholder: "Address" })}
