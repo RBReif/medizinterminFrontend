@@ -43,26 +43,22 @@ export default class AppointmentService{
         }).then()
     }
 
-    static filterAppointments(area, languages, facilities, startpoint, endpoint, radius, lat, lng, insurance){
+    static filterAppointments(area, languages, facilities, startpoint, endpoint){
         return new Promise( async(resolve, reject) => {
             await  HttpService.post(
                 this.baseURL()+"/filter",
-                {
-                profession: area,
-                languages: languages,
-                facilities: facilities,
-                startpoint: startpoint,
-                endpoint: endpoint,
-                radius: radius,
-                lat: lat,
-                lng: lng,
-        },
                 function (data){resolve(data)},
                 function (textStatus){
                     reject(textStatus);
 
                 },
-
+                {
+                    profession: area,
+                    languages: languages,
+                    facilities: facilities,
+                    startpoint: startpoint,
+                    endpoint: endpoint,
+                }
             )
         }).then()
     }
