@@ -8,21 +8,19 @@ import DynamicCard from "../components/UI/DynamicCard";
 import TimeSlotDateList from "../components/TimeSlots/TimeSlotDateList";
 import LocationAutoComplete from "../components/Forms/Location/LocationAutoComplete";
 import LocationSlider from "../components/Forms/Location/LocationSlider";
-import { Box } from "@material-ui/core";
+import { Box, Button, makeStyles, Paper, Grid } from "@material-ui/core";
 import { Theme } from "../components/UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
-import { Button } from "@material-ui/core";
 import CardMedia from "@material-ui/core/CardMedia";
 import Card from "@material-ui/core/Card";
-import { makeStyles } from "@material-ui/core";
 import image from "../images/professional.jpg";
 import MultiSelectDropdown from "../components/Forms/MultiSelectDropdown";
 import ConfigService from "../services/ConfigService";
 import { connect, useSelector } from "react-redux";
-import { Grid } from "@material-ui/core";
 import Doctor from "../components/Doctor/Doctor";
-import AppointmentService from "../services/AppointmentService"
-import {forEach} from "react-bootstrap/ElementChildren";
+import AppointmentService from "../services/AppointmentService";
+import { forEach } from "react-bootstrap/ElementChildren";
+import DoctorList from "../components/Doctor/DoctorList";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "5%",
   },
 }));
-
 
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
@@ -58,7 +55,7 @@ const FindADoctorView = () => {
   const [languageList, setLanguageList] = useState([]);
   const [areas, setAreas] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [search, setSearch] = useState(false);
+  const [activateSearch, setActivateSearch] = useState(false);
   const [results, setResults] = useState([]);
 
   const addTimeSlotHandler = (timeslot) => {
@@ -107,24 +104,34 @@ const FindADoctorView = () => {
     return facilities;
   };
 
-  const submitHandler = async () => {
- const facilitiesRightFormat = []
-    for (let i = 0; i< facilities.length; i++){
-      if (facilities[i].isActive){
-        facilitiesRightFormat.push(facilities[i].displayname)
+  async function fetchAppointmentsHandler() {
+    const facilitiesRightFormat = [];
+    for (let i = 0; i < facilities.length; i++) {
+      if (facilities[i].isActive) {
+        facilitiesRightFormat.push(facilities[i].displayname);
       }
     }
-    console.log("CALLED SUBMITHANDLER")
-    for (let i = 0; i < timeslots.length; i++){
-      setIsLoading(true)
-      console.log("We will soon request answers")
-         let receivedResults = await AppointmentService.filterAppointments(doctor, languageList, facilitiesRightFormat,timeslots[i].startdate,timeslots[i].enddate, radius, address.lat, address.lng,insurance)
-         setResults([...results, receivedResults])
-      console.log("RECEIVED RESULT: ", receivedResults)
+    // console.log("CALLED SUBMITHANDLER")
+    for (let i = 0; i < timeslots.length; i++) {
+      setIsLoading(true);
+      setActivateSearch(true);
+      console.log("We will soon request answers");
+      let receivedResults = await AppointmentService.filterAppointments(
+        doctor,
+        languageList,
+        facilitiesRightFormat,
+        timeslots[i].startdate,
+        timeslots[i].enddate,
+        radius,
+        address.lat,
+        address.lng,
+        insurance
+      );
+      setResults([...results, receivedResults]);
+      console.log("RECEIVED RESULT: ", receivedResults);
+    }
+    setIsLoading(false);
   }
-  setIsLoading(false)
-  };
-
 
   const deleteTimeSlotHandler = (timeslot) => {
     // setTimeSlots(prevTimeSlots => {
@@ -189,81 +196,82 @@ const FindADoctorView = () => {
                   content={
                     <div>
                       <center>
-                      <h4>Area of Expertise</h4>
-                      <DynamicCard
-                        variant="body2"
-                        content={
-                          <DynamicDropdown
-                            defaultValue=""
-                            label="Please choose the type of doctor you need"
-                            items={areas}
-                            onChange={areaChangeHandler}
-                          ></DynamicDropdown>
-                        }
-                        
-                      ></DynamicCard>
-                      <DynamicCard
-                        variant="outlined"
-                        content={
-                          <div>
-                            <h4>Preferred Location</h4>
+                        <h4>Area of Expertise</h4>
+                        <DynamicCard
+                          variant="body2"
+                          content={
+                            <DynamicDropdown
+                              defaultValue=""
+                              label="Please choose the type of doctor you need"
+                              items={areas}
+                              onChange={areaChangeHandler}
+                            ></DynamicDropdown>
+                          }
+                        ></DynamicCard>
+                        <DynamicCard
+                          variant="outlined"
+                          content={
                             <div>
-                              <Box p={2}>
-                                <LocationAutoComplete
-                                  onSelect={locationHandler}
-                                ></LocationAutoComplete>
-                              </Box>
-                              <Box p={2}>
-                                <LocationSlider
-                                  onClick={radiusHandler}
-                                ></LocationSlider>
-                              </Box>
+                              <h4>Preferred Location</h4>
+                              <div>
+                                <Box p={2}>
+                                  <LocationAutoComplete
+                                    onSelect={locationHandler}
+                                  ></LocationAutoComplete>
+                                </Box>
+                                <Box p={2}>
+                                  <LocationSlider
+                                    onClick={radiusHandler}
+                                  ></LocationSlider>
+                                </Box>
+                              </div>
                             </div>
-                          </div>
-                        }
-                      ></DynamicCard>
-                      <DynamicCard
-                        variant="body2"
-                        content={
-                          <div>
-                            <h4>Language</h4>
-                            <MultiSelectDropdown
-                              label="Please choose your preferred language"
-                              items={languages}
-                              onChange={languagesChangeHandler}
-                            ></MultiSelectDropdown>
-                          </div>
-                        }
-                      ></DynamicCard>
-                      <DynamicCard
-                        variant="body2"
-                        content={
-                          <div>
-                          <h4>Insurance</h4>
-                          <DynamicDropdown
-                            label="Please choose your health insurance"
-                            items={insurances}
-                            onChange={healthInsuranceChangeHandler}
-                          ></DynamicDropdown>
-                          </div>
-                        }
-                      ></DynamicCard>
-                       <DynamicCard
-                        variant="body2"
-                        content={
-                      <div>
-                      <h4>Accessibility</h4>
-                        {facilities.map((toggle) => {
-                          return (
-                            <DynamicSwitch
-                              key={toggle.id}
-                              id={toggle.id}
-                              displayname={toggle.displayname}
-                              onChange={toggleChangeHandler}
-                            ></DynamicSwitch>
-                          );
-                        })}
-                      </div>}></DynamicCard>
+                          }
+                        ></DynamicCard>
+                        <DynamicCard
+                          variant="body2"
+                          content={
+                            <div>
+                              <h4>Language</h4>
+                              <MultiSelectDropdown
+                                label="Please choose your preferred language"
+                                items={languages}
+                                onChange={languagesChangeHandler}
+                              ></MultiSelectDropdown>
+                            </div>
+                          }
+                        ></DynamicCard>
+                        <DynamicCard
+                          variant="body2"
+                          content={
+                            <div>
+                              <h4>Insurance</h4>
+                              <DynamicDropdown
+                                label="Please choose your health insurance"
+                                items={insurances}
+                                onChange={healthInsuranceChangeHandler}
+                              ></DynamicDropdown>
+                            </div>
+                          }
+                        ></DynamicCard>
+                        <DynamicCard
+                          variant="body2"
+                          content={
+                            <div>
+                              <h4>Accessibility</h4>
+                              {facilities.map((toggle) => {
+                                return (
+                                  <DynamicSwitch
+                                    key={toggle.id}
+                                    id={toggle.id}
+                                    displayname={toggle.displayname}
+                                    onChange={toggleChangeHandler}
+                                  ></DynamicSwitch>
+                                );
+                              })}
+                            </div>
+                          }
+                        ></DynamicCard>
                       </center>
                     </div>
                   }
@@ -276,14 +284,14 @@ const FindADoctorView = () => {
                 content={
                   <div>
                     <center>
-                    <h4>When are you usually free?</h4>
-                    <br />
-                    {/* <TimeSlots items={timeslots} /> */}
-                    <TimeSlotDateList
-                      items={timeslots}
-                      onDeleteTimeSlotHandler={deleteTimeSlotHandler}
-                    />
-                    <NewTimeSlot onAddTimeSlot={addTimeSlotHandler} />
+                      <h4>When are you usually free?</h4>
+                      <br />
+                      {/* <TimeSlots items={timeslots} /> */}
+                      <TimeSlotDateList
+                        items={timeslots}
+                        onDeleteTimeSlotHandler={deleteTimeSlotHandler}
+                      />
+                      <NewTimeSlot onAddTimeSlot={addTimeSlotHandler} />
                     </center>
                   </div>
                 }
@@ -297,39 +305,49 @@ const FindADoctorView = () => {
                     <center>
                       <h4>Search for appointments!</h4>
                       <p></p>
-                      <Button color="secondary" onClick={submitHandler}>
+                      <Button
+                        color="secondary"
+                        onClick={fetchAppointmentsHandler}
+                      >
                         Find an appointment
                       </Button>
                     </center>
                   </div>
                 }
               ></DynamicCard>
-              {search ? (
+              {activateSearch ? (
                 <div>
                   <DynamicCard
                     variant="outlined"
                     content={
                       <div>
                         <center>
-                        <h4>We found the following results for you:</h4>
+                          {results.length > 0 ? (
+                            <h4>We found the following results for you:</h4>
+                          ) : (
+                            ""
+                          )}
                         </center>
                         <div>
-                          {!isLoading &&
-                            results.length > 0 &&
-                            results.map((r) => (
-                              console.log(r)
-                            ))}
+                          {!isLoading && results.length > 0 && (
+                            <DoctorList results={results} />
+                          )}
                           {!isLoading && results.length === 0 && (
                             <center>
-                              <p>Found no doctors.</p>
-                              <p>
-                                <Button href="/find-doctor">
-                                  Try new search
-                                </Button>
-                              </p>
+                              <Paper className={classes.paper}>
+                                <p>
+                                  Found no doctors. Please try another Search.
+                                </p>
+                              </Paper>
                             </center>
                           )}
-                          {isLoading && <p>Loading...</p>}
+                          {isLoading && (
+                            <center>
+                              <Paper className={classes.paper}>
+                                <p>Loading...</p>
+                              </Paper>
+                            </center>
+                          )}
                         </div>
                       </div>
                     }
