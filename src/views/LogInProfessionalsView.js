@@ -3,7 +3,7 @@ import {withRouter} from "react-router-dom";
 import {connect, useSelector} from "react-redux";
 import {login} from "../redux/actions/doctorActions";
 import {Container, Col} from "react-bootstrap";
-import LoginComponent from "../components/UserLoginComponent";
+import LoginComponent from "../components/Patient/UserLoginComponent";
 import Page from "../components/Page";
 import {Theme} from "../components/UI/Theme";
 import {ThemeProvider} from "@material-ui/styles";

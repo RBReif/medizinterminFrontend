@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
  * For register new users
  * @param {props} props
  */
-const SignUpComponent = (props) => {
+const PatientSignUp = (props) => {
     const history = useHistory()
     const userData = useSelector((state) => state.user);
 
@@ -288,4 +288,4 @@ const SignUpComponent = (props) => {
         </div>
 );
 }
-export default SignUpComponent;
+export default PatientSignUp;

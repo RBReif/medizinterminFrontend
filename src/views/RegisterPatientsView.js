@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {withRouter} from "react-router-dom";
 import {connect, useSelector} from "react-redux";
 
-import SignUpComponent from "../components/SignUpComponent";
+import PatientSignUp from "../components/PatientSignUp";
 import Page from "../components/Page";
 import {register} from "../redux/actions";
 import {Theme} from "../components/UI/Theme";
@@ -31,7 +31,7 @@ function RegisterPatientsView(props) {
             <div className="Landing">
             <Page>
                 <br/>
-                <Col><SignUpComponent
+                <Col><PatientSignUp
                     user={user}
                     onRegister={onRegister}
                     onCancel={onCancel}
