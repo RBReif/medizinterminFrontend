@@ -49,6 +49,7 @@ const PatientDashboard = (props) => {
   const [patient, setPatient] = useState({});
   const [appointments, setAppointments] = useState([]);
   const [doctors, setDoctors] = useState([]);
+  const [doctorList, setDoctorList] = useState([]);
 
   useEffect(async () => {
     const getPatient = async () => {
@@ -77,8 +78,10 @@ const PatientDashboard = (props) => {
       doctorIDs.forEach(async (a) => {
         const doctor = await DoctorService.getDoctor(a);
         console.log("RECEIVED DOCTOR", doctor);
-
-        setDoctors([...doctors, doctor]);
+        console.log("RECEIVED DOCTOR", doctor);
+        doctorList.push(doctor);
+        // setDoctors(doctorList);
+        // setDoctors([...doctors, doctor]);
       });
     };
     const a = getAppointments();
@@ -97,8 +100,8 @@ const PatientDashboard = (props) => {
   const prevAppointments = [];
   const upcomingAppointments = [];
   //total appointments, merged
-  const totalAppointments = doctors.map((item, i) =>
-    Object.assign({}, item, appointments[i])
+  const totalAppointments = appointments.map((item, i) =>
+    Object.assign({}, item, doctorList[i])
   );
 
   //check which appointments are in the past and which are in the future
@@ -128,8 +131,7 @@ const PatientDashboard = (props) => {
             <h2>Hello {patient.name}</h2>
           </Grid>
         </Grid>
-        <Grid className={classes.container} container spacing={3}
-          xs={12}>
+        <Grid className={classes.container} container spacing={3} xs={12}>
           <Grid className={classes.item} item xs={4}>
             <Paper className={classes.paper}>
               <h3>News Center</h3>
@@ -146,20 +148,20 @@ const PatientDashboard = (props) => {
             <p></p>
             <Grid item xs={12}>
               <p>
-              {upcomingAppointments.length > 0 ? (
-                upcomingAppointments.map((appointment) => (
-                  <p>
-                    <Appointment
-                      props={appointment}
-                      readOnly={true}
-                    ></Appointment>
-                  </p>
-                ))
-              ) : (
-                <Paper className={classes.paper}>
-                  You have no upcoming appointments
-                </Paper>
-              )}
+                {upcomingAppointments.length > 0 ? (
+                  upcomingAppointments.map((appointment) => (
+                    <p>
+                      <Appointment
+                        props={appointment}
+                        readOnly={true}
+                      ></Appointment>
+                    </p>
+                  ))
+                ) : (
+                  <Paper className={classes.paper}>
+                    You have no upcoming appointments
+                  </Paper>
+                )}
               </p>
             </Grid>
           </Grid>
