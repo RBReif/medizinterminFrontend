@@ -35,7 +35,7 @@ export default class Component extends React.Component {
             <Calendar
                 ref={this.calendar}
                 events={this.props.events}
-                onClick={this.props.onClick(this.props.events)}
+                //onClick={this.props.onClick(this.props.events)}
             />
         );
     }
