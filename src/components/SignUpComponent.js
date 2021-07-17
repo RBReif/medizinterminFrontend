@@ -93,7 +93,7 @@ const SignUpComponent = (props) => {
         setRegisterError("");
     };
 
-    const onSelectAddress = (address_value, {lat, lng}) => {
+    const onSelectAddress = ({lat, lng}, address_value) => {
         setAddress({
             address_value,
             lat,
