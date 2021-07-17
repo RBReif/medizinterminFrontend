@@ -19,6 +19,11 @@ const routes = [
 
 
 const NavigationBar = (props) => {
+    const userData = useSelector((state) => {
+        // return the currently logged in user from redux store
+        return state.user;
+    });
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const ref = useRef(null)
     const handleClose = () => {
@@ -54,8 +59,12 @@ const NavigationBar = (props) => {
                     <Link to="/find-doctor" className="navbar-brand">medizintermin</Link>
                     <Nav className="ml-auto">
                         <div>
-                            <Button style={{marginRight: 5}} color="secondary" onClick={onClickAreYouADoctor}>Are You a
-                                Doctor?</Button>
+                            {userData.user
+                                ? []
+                                : [
+                                    <Button style={{marginRight: 5}} color="secondary" onClick={onClickAreYouADoctor}>Are
+                                        You a Doctor?</Button>
+                                ]}
                             <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                 <MenuIcon/>
                             </Button>
@@ -64,7 +73,7 @@ const NavigationBar = (props) => {
 
                 </Navbar>
                 <KebabMenu
-                color="secondary"
+                    color="secondary"
                     id="simple-menu"
                     anchorEl={anchorEl}
                     open={!!anchorEl}

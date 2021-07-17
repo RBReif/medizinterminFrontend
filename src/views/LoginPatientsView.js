@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {withRouter} from "react-router-dom";
 import {connect, useSelector} from "react-redux";
-import {login} from "../redux/actions";
+import {login} from "../redux/actions/userActions";
 import {Container, Col} from "react-bootstrap";
 import LoginComponent from "../components/UserLoginComponent";
 import Page from "../components/Page";
@@ -39,6 +39,7 @@ function LoginPatientsView(props) {
             <Page>
                 <Container>
                     <center>
+                        <br />
                         <Col></Col>
                         <p><h3>Login for Patients</h3></p>
                         <Col></Col>

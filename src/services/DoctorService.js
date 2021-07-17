@@ -5,6 +5,59 @@ export default class DoctorService {
         return "http://localhost:4000/doctor";
     }
 
+    static register(username, password, firstName, lastName, dateBirth, expertise, facilities, address) {
+        return new Promise((resolve, reject) => {
+            HttpService.post(`${DoctorService.baseURL()}/register`, {
+                username: username,
+                password: password,
+                firstname: firstName,
+                lastname: lastName,
+                date_of_birth: dateBirth,
+                area_of_expertise: expertise,
+                special_facilities: facilities,
+                address: address
+            }, function (data) {
+                resolve(data);
+            }, function (textStatus) {
+                reject(textStatus);
+            });
+        });
+    }
+
+    static login(user, pass) {
+        return new Promise((resolve, reject) => {
+            HttpService.post(`${DoctorService.baseURL()}/login`, {
+                username: user,
+                password: pass
+            }, function (data) {
+                resolve(data);
+            }, function (textStatus) {
+                reject(textStatus);
+            });
+        });
+    }
+
+    static logout() {
+        window.localStorage.removeItem('jwtToken');
+    }
+
+    static getCurrentUser() {
+        let token = window.localStorage['jwtToken'];
+        if (!token) return {};
+
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace('-', '+').replace('_', '/');
+
+        return {
+            id: JSON.parse(window.atob(base64))._id,
+            username: JSON.parse(window.atob(base64)).username,
+            token
+        };
+    }
+
+    static isAuthenticated() {
+        return !!window.localStorage['jwtToken'];
+    }
 
     static getDoctor(id) {
         return new Promise(async (resolve, reject) => {
@@ -17,6 +70,5 @@ export default class DoctorService {
             );
         }).then();
     }
-
 
 }

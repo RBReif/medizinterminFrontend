@@ -20,6 +20,7 @@ import DoctorDashboard from "./views/DoctorDashboard";
 import React, {useEffect, useState} from "react";
 import UserService from "./services/UserService";
 import {setUser} from "./redux/actions";
+import {setDoctor} from "./redux/actions";
 
 
 const AuthenticatedRoute = (props) => {
@@ -28,6 +29,7 @@ const AuthenticatedRoute = (props) => {
 
     useEffect(() => {
         dispatch(setUser())
+        dispatch(setDoctor())
     }, [])
 
     const userData = useSelector(state => state.user)
@@ -48,7 +50,6 @@ const AuthenticatedRoute = (props) => {
 const NotAuthenticatedRoute = (props) => {
     return <Route {...props}/>
 }
-
 
 function App(props) {
 
@@ -88,9 +89,9 @@ function App(props) {
                         <AuthenticatedRoute path="/dashboard">
                             <PatientDashboard/>
                         </AuthenticatedRoute>
-                        <Route path="/doctor-dashboard">
+                        <AuthenticatedRoute path="/doctor-dashboard">
                             <DoctorDashboard/>
-                        </Route>
+                        </AuthenticatedRoute>
                         <Route path="/">
                             <Landing/>
                         </Route>
