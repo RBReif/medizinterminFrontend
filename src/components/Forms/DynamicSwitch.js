@@ -21,11 +21,13 @@ const DynamicSwitch = (props) => {
         variant="body2"
         content={
           <Form>
-            <p>{props.displayname}</p>
+            <p></p>
             {/* <FormLabel component="legend"></FormLabel> */}
             <FormControlLabel
               control={
-                <Switch key={props.id} checked={done} onClick={handleClick} name={props.id} color="primary" />
+                <div>
+                {props.displayname}: <Switch key={props.id} checked={done} onClick={handleClick} name={props.id} color="primary" />
+                </div>
               }
               label={done ? "Yes" : "No"}
             ></FormControlLabel>

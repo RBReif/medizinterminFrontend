@@ -1,125 +1,192 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Container, Row, Col } from "react-bootstrap";
-import { connect, useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
 import NewsList from "../components/NewsList";
-import CheckupList from "../components/CheckupList";
-import AppointmentCard from "../components/AppointmentCard";
 import Page from "../components/Page";
-import { withRouter } from "react-router-dom";
-import UserService from "../services/UserService";
-import { getPatients, getPatient } from "../redux/actions";
-import {useIsUserInteractionMode} from "react-md";
-import ConfigService from "../services/ConfigService";
+import { Theme } from "../components/UI/Theme";
+import { ThemeProvider } from "@material-ui/styles";
+import { Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
+import { connect, useSelector } from "react-redux";
+import { Paper } from "@material-ui/core";
+import Doctor from "../components/Doctor/Doctor";
 import PatientService from "../services/PatientService";
+import UserService from "../services/UserService";
 import AppointmentService from "../services/AppointmentService";
+import { getPatients, getPatient } from "../redux/actions";
 import DoctorService from "../services/DoctorService";
-import {forEach} from "react-bootstrap/ElementChildren";
+import DynamicCard from "../components/UI/DynamicCard";
+import { Button } from "@material-ui/core";
+import Appointment from "../components/Appointment/Appointment";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+  box: {
+    height: "100%",
+    width: "100%",
+  },
+  container: {
+    height: "400px",
+  },
+  innerContainer: {
+    height: "100%",
+  },
+  item: {
+    flex: 1,
+  },
+}));
 
-const PatientDashboard = () => {
+const PatientDashboard = (props) => {
+  const classes = useStyles();
 
+  let patientId = UserService.getCurrentUser().id;
+  console.log(patientId);
+  const [patient, setPatient] = useState({});
+  const [appointments, setAppointments] = useState([]);
+  const [doctors, setDoctors] = useState([]);
 
-  let patientId = UserService.getCurrentUser().id
-  console.log(patientId)
-  const [patient, setPatient] = useState({})
-  const [appointments, setAppointments] = useState([])
-  const [doctors, setDoctors] = useState([])
-
-  useEffect(  async() => {
+  useEffect(async () => {
     const getPatient = async () => {
-      const patient = await PatientService.getPatient(patientId)
-      console.log(patient)
-      setPatient(patient)
-    }
-    getPatient()
+      const patient = await PatientService.getPatient(patientId);
+      console.log(patient);
+      setPatient(patient);
+    };
+    getPatient();
 
     const getAppointments = async () => {
-      const appointments = await AppointmentService.getAppointmentsPatient(patientId)
-      console.log(appointments)
-      setAppointments(appointments.map((item) =>  item))
-      console.log("finished with getAppointments ", appointments)
-      console.log("length: ", appointments.length)
-      let doctorIDs = []
-      appointments.forEach(a => {
-        if (!doctorIDs.some(e => e===a.doctor)){
-          doctorIDs=[...doctorIDs,a.doctor]
+      const appointments = await AppointmentService.getAppointmentsPatient(
+        patientId
+      );
+      console.log(appointments);
+      setAppointments(appointments.map((item) => item));
+      console.log("finished with getAppointments ", appointments);
+      console.log("length: ", appointments.length);
+      let doctorIDs = [];
+      appointments.forEach((a) => {
+        if (!doctorIDs.some((e) => e === a.doctor)) {
+          doctorIDs = [...doctorIDs, a.doctor];
         }
-    })
-      console.log(doctorIDs)
+      });
+      console.log(doctorIDs);
 
-      doctorIDs.forEach(async a => {
-          const doctor = await DoctorService.getDoctor(a)
-          console.log("RECEIVED DOCTOR", doctor)
+      doctorIDs.forEach(async (a) => {
+        const doctor = await DoctorService.getDoctor(a);
+        console.log("RECEIVED DOCTOR", doctor);
 
-          setDoctors([...doctors, doctor])
+        setDoctors([...doctors, doctor]);
+      });
+    };
+    const a = getAppointments();
 
-      })
-    }
-   const a = getAppointments()
+    a.then(console.log("finally", appointments));
+  }, []);
 
-    //a.then(console.log("finally",appointments))
+  const moment = require("moment");
 
+  console.log(appointments);
+  console.log("patient ", patient);
+  console.log("appointment ", appointments);
+  console.log("doctors ", doctors);
 
-  }, [])
+  //arrays for previous and upcoming appointments
+  const prevAppointments = [];
+  const upcomingAppointments = [];
+  //total appointments, merged
+  const totalAppointments = doctors.map((item, i) =>
+    Object.assign({}, item, appointments[i])
+  );
+
+  //check which appointments are in the past and which are in the future
+  totalAppointments.map((appointment) =>
+    moment(new Date(appointment.startPoint)).toDate() < new Date()
+      ? prevAppointments.push(appointment)
+      : upcomingAppointments.push(appointment)
+  );
+
+  console.log("prevAppointments: ", prevAppointments);
+  console.log("upcomingAppointments: ", upcomingAppointments);
+  console.log("totalAppo :", totalAppointments);
 
   return (
+    <ThemeProvider theme={Theme}>
       <Page>
-    <Container>
-      <Row>
-        <Col xs={8} md={3}>
-          {" "}
-        </Col>
-      </Row>
-      <br />
-      <Row>
-        <Col></Col>
-        <Col>
-          <h2>Hello {patient.name} </h2>
-        </Col>
-        <Col></Col>
-      </Row>
-      <br />
-      <Row>
-        <Col>
-          <h3>News Center</h3>
-        </Col>
-        <Col>
-          <h3>Upcoming Appointments</h3>
-        </Col>
-        <Col>
-          <h3>Previous Appointments</h3>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Form>
-            <NewsList></NewsList>
-          </Form>
-          <br />
-          <h3>Recommended Checkup</h3>
-          <CheckupList />
-        </Col>
-        <Col>
-          <Form>
-            <AppointmentCard />
-            <br />
-            <AppointmentCard />
-            <br />
-            <AppointmentCard />
-          </Form>
-        </Col>
-        <Col>
-          <AppointmentCard />
-        </Col>
-      </Row>
-    </Container>
-    </Page>
+        {/*************** GRID 1, 3 COLUMNS *****************/}
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          direction="row"
+          spacing={3}
+          xs={12}
+        >
+          <Grid item>
+            <h2>Hello {patient.name}</h2>
+          </Grid>
+        </Grid>
+        <Grid className={classes.container} container spacing={3}
+          xs={12}>
+          <Grid className={classes.item} item xs={4}>
+            <Paper className={classes.paper}>
+              <h3>News Center</h3>
+            </Paper>
+            <p></p>
+            <Grid>
+              <NewsList></NewsList>
+            </Grid>
+          </Grid>
+          <Grid item xs={4}>
+            <Paper className={classes.paper}>
+              <h3>Upcoming Appointments</h3>
+            </Paper>
+            <p></p>
+            <Grid item xs={12}>
+              <p>
+              {upcomingAppointments.length > 0 ? (
+                upcomingAppointments.map((appointment) => (
+                  <p>
+                    <Appointment
+                      props={appointment}
+                      readOnly={true}
+                    ></Appointment>
+                  </p>
+                ))
+              ) : (
+                <Paper className={classes.paper}>
+                  You have no upcoming appointments
+                </Paper>
+              )}
+              </p>
+            </Grid>
+          </Grid>
+          <Grid xs={4} item>
+            <Paper className={classes.paper}>
+              <h3>Previous Appointments</h3>
+            </Paper>
+            <p></p>
+            <Grid item xs={12} alignItems="center">
+              {prevAppointments.length > 0 ? (
+                prevAppointments.map((appointment) => (
+                  <Appointment
+                    props={appointment}
+                    readOnly={false}
+                  ></Appointment>
+                ))
+              ) : (
+                <Paper className={classes.paper}>
+                  You have no previous appointments.
+                </Paper>
+              )}
+            </Grid>
+          </Grid>
+        </Grid>
+      </Page>
+    </ThemeProvider>
   );
 };
-// connect() establishes allows the usage of redux functionality
-// here the function getMovie, changeMovie and addMovie are mentionend
-// this is an alternative way of calling connecting them with redux
-// another way is shown in MovieListView.js
-export default connect(null, { getPatient })(
-    PatientDashboard
-);
+
+export default connect(null, { getPatient })(PatientDashboard);
