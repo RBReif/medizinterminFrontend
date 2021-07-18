@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 import { register } from "../redux/actions";
-
 import Page from "../components/Page";
 import PatientSignUp from "../components/PatientSignUp";
 import { Theme } from "../components/UI/Theme";
@@ -16,27 +15,9 @@ import { Col } from "react-bootstrap";
 function RegisterPatientsView(props) {
   const user = useSelector((state) => state.user);
 
-  const onRegister = (
-    username,
-    password,
-    firstName,
-    lastName,
-    birthDate,
-    healthInsurance,
-    address
-  ) => {
-    props.dispatch(
-      register(
-        username,
-        password,
-        firstName,
-        lastName,
-        birthDate,
-        healthInsurance,
-        address
-      )
-    );
-  };
+    const onRegister = (username, password, firstName, lastName, birthDate, healthInsurance, address, gender) => {
+        props.dispatch(register(username, password, firstName, lastName, birthDate, healthInsurance, address, gender));
+    };
 
   const onCancel = () => {
     props.history.push("/");

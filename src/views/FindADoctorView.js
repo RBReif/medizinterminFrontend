@@ -36,11 +36,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FindADoctorView = (props) => {
+
+const FindADoctorView = () => {
+
   const [timeslots, setTimeSlots] = useState("");
   //  const [togglesSelected, setTogglesSelecteed] = useState([]);
   const classes = useStyles();
   const [doctor, setDoctor] = useState("");
+  let area =""
   const [healthInsurances, setHealthInsurances] = useState("");
   const [latLng, setLatLng] = useState({
     lat: null,
@@ -57,6 +60,8 @@ const FindADoctorView = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [activateSearch, setActivateSearch] = useState(false);
   const [results, setResults] = useState([]);
+
+
 
   const addTimeSlotHandler = (timeslot) => {
     setTimeSlots((prevTimeSlots) => {
@@ -179,7 +184,30 @@ const FindADoctorView = (props) => {
     };
     getConfig();
     // console.log("Healthinsurancelist middle: ", insurances);
+
+    const paramsStr = window.location.search;
+    console.log ("params received: ", paramsStr)
+    if (paramsStr.includes("area")){
+      const params = new URLSearchParams(paramsStr)
+      const areaI = params.get('area')
+      setDoctor(areaI)
+      area = areaI.toUpperCase()
+      console.log("JUST SET AREA," , area)
+    }
+
   }, []);
+
+
+  const paramsStr = window.location.search;
+  console.log ("params received: ", paramsStr)
+  if (paramsStr.includes("area")){
+    const params = new URLSearchParams(paramsStr)
+    const areaI = params.get('area')
+   // setDoctor(areaI)
+    area = areaI.toUpperCase()
+    console.log("JUST SET AREA," , area)
+  }
+
 
   return (
     <ThemeProvider theme={Theme}>
@@ -201,22 +229,23 @@ const FindADoctorView = (props) => {
                   content={
                     <div>
                       <center>
-                        <h4>Area of Expertise</h4>
-                        <DynamicCard
-                          variant="body2"
-                          content={
-                            <DynamicDropdown
-                              defaultValue={profession}
-                              label="Please choose the type of doctor you need"
-                              items={areas}
-                              onChange={areaChangeHandler}
-                            ></DynamicDropdown>
-                          }
-                        ></DynamicCard>
-                        <DynamicCard
-                          variant="outlined"
-                          content={
-                            <div>
+                      <h4>Area of Expertise</h4>
+                      <DynamicCard
+                        variant="body2"
+                        content={
+                          <DynamicDropdown
+                            defaultValue={area}
+                            label="Please choose the type of doctor you need"
+                            items={areas}
+                            onChange={areaChangeHandler}
+                          ></DynamicDropdown>
+                        }
+                        
+                      ></DynamicCard>
+                      <DynamicCard
+                        variant="outlined"
+                        content={
+                          <div>
                               <h4>Preferred Location</h4>
                               <div>
                                 <Box p={2}>

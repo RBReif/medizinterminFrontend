@@ -12,6 +12,7 @@ import moment from "moment";
 import {Link} from "react-router-dom";
 import PatientService from "../services/PatientService";
 import DoctorService from "../services/DoctorService";
+import UserService from "../services/UserService"
 import CEV from "../components/Calendar/CalendarEventForm"
 
 const getColor = (status) => {
@@ -24,7 +25,7 @@ const getColor = (status) => {
     }
 }
 const DoctorDashboard = () => {
-    let doctorID = "60e70bc72c79d33ed899b25f"
+    let doctorID =  DoctorService.getCurrentUser().id//"60e70bc72c79d33ed899b25f"
     const [doctor, setDoctor] = useState({})
     const [appointments, setAppointments] = useState([])
     const [name, setName] =useState("")
@@ -163,7 +164,7 @@ return (
                                 <div>
                                     <Row>
                                         <Box p={2}>
-                                            <h5>My Calendar</h5>
+                                            <h5>The Calendar of {doctor.firstname} {doctor.lastname} ({doctor.area_of_expertise})</h5>
                                         </Box>
                                     </Row>
                                     <MyCalendar events={calendarEvents}/>
