@@ -102,10 +102,10 @@ const CalendarEventForm = (props) => {
       title: title,
       type: appointmentType,
       color: getColor(appointmentType),
-      // description: description
+      
     };
 
-    // console.log(calendarEvent);
+    console.log(calendarEvent);
 
     props.onSaveTimeSlotData(calendarEvent);
     setSelectedStartDate("");
@@ -203,6 +203,7 @@ const CalendarEventForm = (props) => {
                         rows={7}
                         defaultValue={""}
                         variant="outlined"
+                        onChange={handleDescriptionChange}
                       />
                     </Box>
                   </Grid>

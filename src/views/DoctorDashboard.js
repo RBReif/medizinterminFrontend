@@ -99,7 +99,7 @@ const DoctorDashboard = () => {
           color: getColor(item.appointmentStatus),
           from: new Date(item.startPoint),
           to: moment(new Date(item.startPoint)).add(30, "m").toDate(),
-          title: item.appointmentStatus,
+          title: item.appointmentTitle,
           description: item.hasOwnProperty("patient")
             ? "Your appointment is with " + getNamePatient(item.patient)
             : "",

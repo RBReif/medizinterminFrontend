@@ -43,7 +43,7 @@ export default class AppointmentService{
         }).then()
     }
 
-    static createAppointment(doctor, startpoint, appointmentStatus){
+    static createAppointment(doctor, startpoint, appointmentStatus, appointmentDetails, appointmentTitle){
         return new Promise( async(resolve, reject) => {
             await  HttpService.post(
                 this.baseURL(),
@@ -51,6 +51,8 @@ export default class AppointmentService{
                     doctor: doctor,
                     startpoint: startpoint,
                     appointmentStatus: appointmentStatus,
+                    appointmentDetails: appointmentDetails,
+                    appointmentTitle: appointmentTitle,
                 },
                 function (data){resolve(data)},
                 function (textStatus){
