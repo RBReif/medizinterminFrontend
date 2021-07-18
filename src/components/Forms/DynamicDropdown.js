@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 const DynamicDropdown = (props) => {
   const classes = useStyles(props.id);
   const [val, setVal] = React.useState(props.displayname);
+  console.log("DEFAULT in dynamicDroop", props.defaultValue)
 
   // const handleChange = (event) => {
   //   console.log("handleChange DynamicDropdown :" , event.target.value);
@@ -32,7 +33,7 @@ const DynamicDropdown = (props) => {
       <p>{props.label}</p>
        <Select
         key={props.items.id}
-        defaultValue="" 
+        defaultValue={props.defaultValue}
         labelId="demo-simple-select-label"
         id={props.items.id}
         value={val}

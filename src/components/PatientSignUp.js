@@ -70,12 +70,14 @@ const PatientSignUp = (props) => {
     const [password, setPassword] = React.useState("");
     const [password2, setPassword2] = React.useState("");
     const [registerError, setRegisterError] = React.useState("");
+    const [gender, setGender] = React.useState("");
+    const [genders, setGenders] = React.useState([])
 
     const [insurances, setInsurances ] = useState([]);
 
     const onRegister = (e) => {
         e.preventDefault();
-        props.onRegister(username, password, firstName, lastName, birthDate, healthInsurance, address);
+        props.onRegister(username, password, firstName, lastName, birthDate, healthInsurance, address, gender);
     };
 
     const onChangeFirstName = (e) => {
@@ -107,6 +109,10 @@ const PatientSignUp = (props) => {
         setRegisterError("");
         setHealthInsurance(e.target.value);
 
+    };
+    const onChangeGender = (e) => {
+        setRegisterError("");
+        setGender(e.target.value);
     };
 
     const onChangeBirthDate = (e) => {
@@ -140,7 +146,7 @@ const PatientSignUp = (props) => {
             console.log(config)
             setInsurances(config.insurances.map((item) => {return {"displayname": item.valueOf()}}))
             console.log("HealthinsuranceList inside:2 ", insurances)
-
+            setGenders(config.genders.map((item) => {return {"displayname": item.valueOf()}}))
         }
         getConfig()
         console.log("Healthinsurancelist middle: ", insurances)
@@ -219,6 +225,19 @@ const PatientSignUp = (props) => {
                             </div>
                         </Col>
                     </Row>
+                    <Row>
+                    <Col>
+                        <DynamicDropdown
+                            key={genders.id}
+                            defaultValue=""
+                            label="Gender"
+                            items={genders}
+                            onChange={onChangeGender}
+                        ></DynamicDropdown>
+
+
+                    </Col>
+                    </Row>
                     <Form.Label> Password </Form.Label>
                     <div className={classes.signUpRow}>
                         <TextField
@@ -271,6 +290,7 @@ const PatientSignUp = (props) => {
                                 lastName === "" ||
                                 birthDate === "" ||
                                 healthInsurance === "" ||
+                                    gender === "" ||
                                 //address === "" ||
 
                                 registerError !== "" ||

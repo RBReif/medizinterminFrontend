@@ -17,8 +17,8 @@ import {Col} from "react-bootstrap";
 function RegisterPatientsView(props) {
     const user = useSelector((state) => state.user);
 
-    const onRegister = (username, password, firstName, lastName, birthDate, healthInsurance, address) => {
-        props.dispatch(register(username, password, firstName, lastName, birthDate, healthInsurance, address));
+    const onRegister = (username, password, firstName, lastName, birthDate, healthInsurance, address, gender) => {
+        props.dispatch(register(username, password, firstName, lastName, birthDate, healthInsurance, address, gender));
     };
 
     const onCancel = () => {
