@@ -117,7 +117,11 @@ const CalendarEventForm = (props) => {
     event.preventDefault();
     console.log("Invalid input");
     alert(
-      "Invalid input. Please choose a end date and end time greater than start date and start time"
+      appointmentType === "AVAILABLE" || appointmentType === "SCHEDULED?" ? 
+      "Invalid input. 'AVAILABLE' and 'SCHEDULED' timeslots can only occur in the future. If this is the case, please check if the end date is after the start date." :
+      appointmentType === "SUCCESSFUL" || appointmentType === "FAILED?" ? 
+      "Invalid input. 'SUCCESSFUL' and 'FAILED' timeslots can only occur in the past. If this is the case, please check if the end date is after the start date." :
+      "Invalid input. Please check your parameters again."
     );
   };
 
@@ -218,7 +222,14 @@ const CalendarEventForm = (props) => {
                           : alertHandler
                         : alertHandler
                       : alertHandler
-                      :""
+                      : appointmentType === "FAILED" || appointmentType === "SUCCESSFUL" ? 
+                      selectedEndDate > selectedStartDate
+                      ? selectedStartDate < new Date()
+                        ? selectedEndDate < new Date()
+                          ? submitHandler
+                          : alertHandler
+                        : alertHandler
+                      : alertHandler : alertHandler
                   }
                 >
                   <Button color="primary" type="submit">
