@@ -21,23 +21,27 @@ const appointmenttype = [
  */
 
 const getColor = (status) => {
-  switch (status){
-    case "AVAILABLE": return "#41b23d"
-    case "FAILED": return "#b23d49"
-    case "SCHEDULED": return "#ffc107"
-    case "SUCCESSFUL": return "#185619"
-    default: return "#473db2"
+  switch (status) {
+    case "AVAILABLE":
+      return "#41b23d";
+    case "FAILED":
+      return "#b23d49";
+    case "SCHEDULED":
+      return "#ffc107";
+    case "SUCCESSFUL":
+      return "#185619";
+    default:
+      return "#473db2";
   }
-}
+};
 
 const appointmenttype = [
-  {displayname: "SUCCESSFUL"},
-  {displayname: "SCHEDULED"},
+  { displayname: "SUCCESSFUL" },
+  { displayname: "SCHEDULED" },
   //   REQUESTED: "REQUESTED",
-  {displayname: "FAILED"},
-  {displayname: "AVAILABLE"},
-]
-
+  { displayname: "FAILED" },
+  { displayname: "AVAILABLE" },
+];
 
 //material-ui styles
 const useStyles = makeStyles((theme) => ({
@@ -59,14 +63,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CalendarEventForm = (props) => {
-  // This form will create a new calendar event with the following properties 
+  // This form will create a new calendar event with the following properties
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const classes = useStyles();
   const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
   const [appointmentType, setAppointmentType] = React.useState("");
-
 
   //changeHandler
   const handleStartDateChange = (date) => {
@@ -76,10 +79,10 @@ const CalendarEventForm = (props) => {
   const handleEndDateChange = (date) => {
     setSelectedEndDate(date);
   };
- 
+
   const handleAppointmentChange = (event) => {
     setAppointmentType(event.target.value);
-  }
+  };
 
   const handleTitleChange = (string) => {
     setTitle(string.target.value);
@@ -88,7 +91,6 @@ const CalendarEventForm = (props) => {
   const handleDescriptionChange = (string) => {
     setDescription(string.target.value);
   };
-
 
   //submitHandler, will create a new event onSubmit
   const submitHandler = (event) => {
@@ -117,11 +119,11 @@ const CalendarEventForm = (props) => {
     event.preventDefault();
     console.log("Invalid input");
     alert(
-      appointmentType === "AVAILABLE" || appointmentType === "SCHEDULED?" ? 
-      "Invalid input. 'AVAILABLE' and 'SCHEDULED' timeslots can only occur in the future. If this is the case, please check if the end date is after the start date." :
-      appointmentType === "SUCCESSFUL" || appointmentType === "FAILED?" ? 
-      "Invalid input. 'SUCCESSFUL' and 'FAILED' timeslots can only occur in the past. If this is the case, please check if the end date is after the start date." :
-      "Invalid input. Please check your parameters again."
+      appointmentType === "AVAILABLE" || appointmentType === "SCHEDULED?"
+        ? "Invalid input. 'AVAILABLE' and 'SCHEDULED' timeslots can only occur in the future. If this is the case, please check if the end date/time is after the start date/time."
+        : appointmentType === "SUCCESSFUL" || appointmentType === "FAILED"
+        ? "Invalid input. 'SUCCESSFUL' and 'FAILED' timeslots can only occur in the past. If this is the case, please check if the end date/time is after the start date/time."
+        : "Invalid input. Please check your parameters again."
     );
   };
 
@@ -214,22 +216,25 @@ const CalendarEventForm = (props) => {
               <Col>
                 <form
                   onSubmit={
-                  appointmentType === "AVAILABLE" || appointmentType === "SCHEDULED" ? 
-                    selectedEndDate > selectedStartDate
-                      ? selectedStartDate > new Date()
-                        ? selectedEndDate > new Date()
-                          ? submitHandler
+                    appointmentType === "AVAILABLE" ||
+                    appointmentType === "SCHEDULED"
+                      ? selectedEndDate > selectedStartDate
+                        ? selectedStartDate > new Date()
+                          ? selectedEndDate > new Date()
+                            ? submitHandler
+                            : alertHandler
+                          : alertHandler
+                        : alertHandler
+                      : appointmentType === "FAILED" ||
+                        appointmentType === "SUCCESSFUL"
+                      ? selectedEndDate > selectedStartDate
+                        ? selectedStartDate < new Date()
+                          ? selectedEndDate < new Date()
+                            ? submitHandler
+                            : alertHandler
                           : alertHandler
                         : alertHandler
                       : alertHandler
-                      : appointmentType === "FAILED" || appointmentType === "SUCCESSFUL" ? 
-                      selectedEndDate > selectedStartDate
-                      ? selectedStartDate < new Date()
-                        ? selectedEndDate < new Date()
-                          ? submitHandler
-                          : alertHandler
-                        : alertHandler
-                      : alertHandler : alertHandler
                   }
                 >
                   <Button color="primary" type="submit">
