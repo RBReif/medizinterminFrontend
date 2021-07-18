@@ -15,6 +15,7 @@ import { getPatients, getPatient } from "../redux/actions";
 import DoctorService from "../services/DoctorService";
 import DynamicCard from "../components/UI/DynamicCard";
 import { Button } from "@material-ui/core";
+import Recommendation from "../components/Recommendations/Recmmendation"
 import Appointment from "../components/Appointment/Appointment";
 
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +52,8 @@ const PatientDashboard = (props) => {
   const [doctors, setDoctors] = useState([]);
   const [doctorList, setDoctorList] = useState([]);
   const [totalAppointments, setTotalAppointments] = useState([]);
+
+  const [recommendations, setRecommendations] = useState([]);
 
   useEffect(async () => {
     const getPatient = async () => {
@@ -97,7 +100,6 @@ const PatientDashboard = (props) => {
       });
     };
     const a = getAppointments();
-
     a.then(console.log("finally", appointments));
   }, []);
 
@@ -124,6 +126,108 @@ const PatientDashboard = (props) => {
   console.log("upcomingAppointments: ", upcomingAppointments);
   console.log("totalAppo :", totalAppointments);
 
+  const oldestDATE = new Date(-8640000000000000)
+
+  const findNewestAppointment = (area) => {
+    let fittingAppointments= totalAppointments.filter(e => e.doctor_area_of_expertise === area)
+    let mostRecent = oldestDATE
+    console.log("[FINDNEWEST fitting appointments:" , fittingAppointments)
+    for ( let i = 0; i<fittingAppointments.length; i++){
+
+      if (new Date(fittingAppointments[i].startPoint) > mostRecent){
+        mostRecent = new Date(fittingAppointments[i].startPoint)
+       // console.log("[FINDNEWEST newer found")
+      }else{
+       // console.log("[FINDNEWEST newer NOT found")
+
+      }
+    }
+    console.log ("[FINDNEWEST]", area, mostRecent)
+    return mostRecent
+  }
+
+  const makeRecomm = (area, title, description) => {
+  const rec =   {
+      area: area,
+      title: title,
+      description: description,
+    }
+        return rec
+  }
+
+  function calculateAge(birthday) { // birthday is a date
+    var ageDifMs = Date.now() - birthday.getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
+  const recomResults = []
+
+const findRecommendations = () => {
+  console.log("[Recomm] totalAppointments: ", totalAppointments)
+  let halfAYearAgo = new Date(new Date().setMonth(new Date().getMonth() - 6))
+  let oneYearAgo = new Date(new Date().setFullYear(new Date().getFullYear() - 1))
+  let threeYearsAgo = new Date(new Date().setFullYear(new Date().getFullYear() - 3))
+  let tenYearsAgo = new Date(new Date().setFullYear(new Date().getFullYear() - 10))
+  let priv = (patient.insurance === "PRIVATE")
+  let fem = (patient.gender==="FEMALE")
+  let age = calculateAge(new Date(patient.date_of_birth))
+  console.log("[RECOMm] age: ", age)
+
+  if (age <18){
+    if (!(findNewestAppointment("DENTIST") > halfAYearAgo) ){
+      recomResults.push(makeRecomm("DENTIST", "Regular teeth check-up for children", "You should visit your Dentist every 6th month. All health-insured patients under the age of 18 have the right to this checkup."))
+    }
+    if (!(findNewestAppointment("GENERAL_PHYSICIAN") > oneYearAgo)) {
+      recomResults.push(makeRecomm("GENERAL_PHYSICIAN", "Regular check-up for children", "You should visit your general physician at least once per year. All health-insured patients under the age of 18 have the right to this checkup."))
+    }
+
+  }else {
+
+    if (!(findNewestAppointment("DENTIST") > oneYearAgo)) {
+      recomResults.push(makeRecomm("DENTIST", "Regular teeth check-up", "You should visit your Dentist every year. All health-insured adult patients have the right to this checkup."))
+    }
+    if (!(findNewestAppointment("GENERAL_PHYSICIAN") > threeYearsAgo)) {
+      recomResults.push(makeRecomm("GENERAL_PHYSICIAN", "Regular check-up", "You should visit your general physician at least every 3rd year. All health-insured adult patients have the right to this checkup."))
+    }
+    if (!(findNewestAppointment("DERMATOLOGIST") > tenYearsAgo)) {
+      recomResults.push(makeRecomm("DERMATOLOGIST", "Skin cancer screening", "You should visit your dermatologist at least every 10th year for a skin cancer screening. All health-insured adult patients have the right to this checkup."))
+    }
+
+
+    if(fem){
+      if (!(findNewestAppointment("ONCOLOGIST") > threeYearsAgo) && age >35) {
+        recomResults.push(makeRecomm("ONCOLOGIST", "Breast cancer screening", "You should visit your oncologist at least every 3rd year for a breast cancer screening. All health-insured female patients over the age of 35 have the right to this checkup."))
+      }
+      if (!(findNewestAppointment("GYNAECOLOGIST") > threeYearsAgo)) {
+        recomResults.push(makeRecomm("GYNAECOLOGIST", "Cervical cancer screening", "You should visit your gynaecologist at least every 3rd year for a cervical cancer screening. All health-insured adult female patients have the right to this checkup."))
+      }
+
+    }else{
+      if (!(findNewestAppointment("ONCOLOGIST") > tenYearsAgo) && age >35) {
+        recomResults.push(makeRecomm("ONCOLOGIST", "Breast cancer screening (non-female)", "You should visit your oncologist at least every 10th year for a breast cancer screening. All health-insured not-female patients over the age of 35 have the right to this checkup."))
+      }
+
+    }
+
+
+  }
+  if (priv){
+    if (!(findNewestAppointment("CARDIOLOGIST") > oneYearAgo)) {
+      recomResults.push(makeRecomm("CARDIOLOGIST", "Regular heart check-up", "You should visit your Cardiologist every year. All privately health-insured patients have the right to this checkup."))
+    }
+    if (!(findNewestAppointment("SPORTS_DOCTOR") > threeYearsAgo)) {
+      recomResults.push(makeRecomm("SPORTS_DOCTOR", "Fitness check-up", "You should visit your sports doctor every 3rd year for a check-up of your mobility. All privately health-insured patients have the right to this checkup."))
+    }
+  }
+
+  console.log("{Recomm] Results: ", recomResults)
+  //setRecommendations(recomResults)
+}
+  findRecommendations()
+
+ // console.log("Recommondations set: ",recommendations)
+
+
   return (
     <ThemeProvider theme={Theme}>
       <Page>
@@ -137,7 +241,7 @@ const PatientDashboard = (props) => {
           xs={12}
         >
           <Grid item>
-            <h2>Hello {patient.name}</h2>
+            <h2>Hello {patient.firstname} {patient.lastname}</h2>
           </Grid>
         </Grid>
         <Grid className={classes.container} container spacing={3} xs={12}>
@@ -148,6 +252,30 @@ const PatientDashboard = (props) => {
             <p></p>
             <Grid>
               <NewsList></NewsList>
+              <p></p>
+              <p></p>
+
+              <Paper className={classes.paper}>
+                <h3>Recommended Checkups</h3>
+                <p> <small>(These check-ups were individually calculated for you based on your age, your gender, your health-insurance status and your medical history)</small></p>
+              </Paper>
+              <p></p>
+              <p>
+                {recomResults.length > 0 ? (
+                    recomResults.map((recom) => (
+                        <p>
+                          <Recommendation
+                              props={recom}
+                              readOnly={true}
+                          ></Recommendation>
+                        </p>
+                    ))
+                ) : (
+                    <Paper className={classes.paper}>
+                      You have no recommended check-ups
+                    </Paper>
+                )}
+              </p>
             </Grid>
           </Grid>
           <Grid item xs={4}>

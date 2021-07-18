@@ -40,10 +40,12 @@ const useStyles = makeStyles((theme) => ({
 
 
 const FindADoctorView = () => {
+
   const [timeslots, setTimeSlots] = useState("");
   //  const [togglesSelected, setTogglesSelecteed] = useState([]);
   const classes = useStyles();
   const [doctor, setDoctor] = useState("");
+  let area =""
   const [healthInsurances, setHealthInsurances] = useState("");
   const [latLng, setLatLng] = useState({
     lat: null,
@@ -60,6 +62,8 @@ const FindADoctorView = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState(false);
   const [results, setResults] = useState([]);
+
+
 
   const addTimeSlotHandler = (timeslot) => {
     setTimeSlots((prevTimeSlots) => {
@@ -167,7 +171,30 @@ const FindADoctorView = () => {
     };
     getConfig();
     // console.log("Healthinsurancelist middle: ", insurances);
+
+    const paramsStr = window.location.search;
+    console.log ("params received: ", paramsStr)
+    if (paramsStr.includes("area")){
+      const params = new URLSearchParams(paramsStr)
+      const areaI = params.get('area')
+      setDoctor(areaI)
+      area = areaI.toUpperCase()
+      console.log("JUST SET AREA," , area)
+    }
+
   }, []);
+
+
+  const paramsStr = window.location.search;
+  console.log ("params received: ", paramsStr)
+  if (paramsStr.includes("area")){
+    const params = new URLSearchParams(paramsStr)
+    const areaI = params.get('area')
+   // setDoctor(areaI)
+    area = areaI.toUpperCase()
+    console.log("JUST SET AREA," , area)
+  }
+
 
   return (
     <ThemeProvider theme={Theme}>
@@ -194,7 +221,7 @@ const FindADoctorView = () => {
                         variant="body2"
                         content={
                           <DynamicDropdown
-                            defaultValue=""
+                            defaultValue={area}
                             label="Please choose the type of doctor you need"
                             items={areas}
                             onChange={areaChangeHandler}
