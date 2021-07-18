@@ -33,7 +33,6 @@ const DoctorDashboard = () => {
     //here we declare 'patients' with useState
     const [patients, setPatients] = useState([])
 
-
     const [calendarEvents, setCalendarEvents] = useState([]);
 
     useEffect(async () => {
@@ -121,10 +120,13 @@ const DoctorDashboard = () => {
 
     console.log("KalenderEvents: ", calendarEvents);
 
-    const addCalendarEventHandler = (calendarevent) => {
+    const  addCalendarEventHandler = async (calendarevent) => {
             setCalendarEvents((prevCalendarEvents) => {
              //   if calendarevent
-                return [calendarevent, ...prevCalendarEvents];
+           //     return [calendarevent, ...prevCalendarEvents];
+
+                let receivedResults = await AppointmentService.createAppointment(doctorID,st)
+
             });}
 
 
