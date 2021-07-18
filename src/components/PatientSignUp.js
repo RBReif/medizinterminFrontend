@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
  * For register new users
  * @param {props} props
  */
-const SignUpComponent = (props) => {
+const PatientSignUp = (props) => {
     const history = useHistory()
     const userData = useSelector((state) => state.user);
 
@@ -93,7 +93,7 @@ const SignUpComponent = (props) => {
         setRegisterError("");
     };
 
-    const onSelectAddress = (address_value, {lat, lng}) => {
+    const onSelectAddress = ({lat, lng}, address_value) => {
         setAddress({
             address_value,
             lat,
@@ -151,7 +151,7 @@ const SignUpComponent = (props) => {
             <Container>
                 <Paper className={classes.signUpPaper} component="form">
                 <Form>
-                    <center><h4>Patient Sign Up</h4></center>
+                    <center><h4>Welcome to medizintermin!</h4></center>
                     <br/>
                     <Row>
                         <Col>
@@ -287,4 +287,4 @@ const SignUpComponent = (props) => {
         </div>
 );
 }
-export default SignUpComponent;
+export default PatientSignUp;

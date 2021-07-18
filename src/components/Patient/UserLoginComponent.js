@@ -68,6 +68,10 @@ function LoginComponent(props) {
     return (
         <div className={classes.userLoginRoot}>
             <Paper className={classes.loginPaper} component="form">
+                <br/>
+                <center><h4>Welcome to medizintermin!</h4></center>
+                <center><h7>Pleas login with your credentials</h7></center>
+                <br/>
                 <div className={classes.loginRow}>
                     <TextField
                         label="Name"

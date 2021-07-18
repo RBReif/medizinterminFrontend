@@ -19,7 +19,7 @@ const Landing = () => {
                 <div className="col-md-12 text-center Landing-content">
                   <h1>medizintermin</h1>
                   <p >
-                    Find the best doctors and your area and book your appointment!
+                    Find the Best Doctors in Your Area and Book Your Appointment Today
                   </p>
                   <div>
                     <Button style={{marginRight: 5}}

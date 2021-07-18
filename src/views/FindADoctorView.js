@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FindADoctorView = () => {
+const FindADoctorView = (props) => {
   const [timeslots, setTimeSlots] = useState("");
   //  const [togglesSelected, setTogglesSelecteed] = useState([]);
   const classes = useStyles();
@@ -103,6 +103,11 @@ const FindADoctorView = () => {
     console.log(facilities);
     return facilities;
   };
+
+  var paramsString = window.location.search;
+  var searchParams = new URLSearchParams(paramsString);
+  const profession = (searchParams.get('profession') != undefined ? searchParams.get('profession').toUpperCase() : "");
+
 
   async function fetchAppointmentsHandler() {
     const facilitiesRightFormat = [];
@@ -201,7 +206,7 @@ const FindADoctorView = () => {
                           variant="body2"
                           content={
                             <DynamicDropdown
-                              defaultValue=""
+                              defaultValue={profession}
                               label="Please choose the type of doctor you need"
                               items={areas}
                               onChange={areaChangeHandler}
