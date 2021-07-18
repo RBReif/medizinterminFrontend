@@ -210,6 +210,7 @@ const CalendarEventForm = (props) => {
               <Col>
                 <form
                   onSubmit={
+                  appointmentType === "AVAILABLE" || appointmentType === "SCHEDULED" ? 
                     selectedEndDate > selectedStartDate
                       ? selectedStartDate > new Date()
                         ? selectedEndDate > new Date()
@@ -217,6 +218,7 @@ const CalendarEventForm = (props) => {
                           : alertHandler
                         : alertHandler
                       : alertHandler
+                      :""
                   }
                 >
                   <Button color="primary" type="submit">
