@@ -12,13 +12,9 @@ import DynamicDropdown from "../Forms/DynamicDropdown";
 import DynamicCard from "../UI/DynamicCard";
 import { Box } from "@material-ui/core";
 import { Button } from "@material-ui/core";
-/*
-const appointmenttype = [
-  { id: "1", displayname: "Out of Office" },
-  { id: "2", displayname: "Occupied" },
-];
-
- */
+import AppointmentService from "../../services/AppointmentService";
+import DoctorService from "../../services/DoctorService";
+import moment from "moment";
 
 const getColor = (status) => {
   switch (status) {
@@ -62,7 +58,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * For register new users
+ * @param {props} props
+ */
+
 const CalendarEventForm = (props) => {
+  let doctorID = DoctorService.getCurrentUser().id;
   // This form will create a new calendar event with the following properties
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
@@ -93,9 +95,16 @@ const CalendarEventForm = (props) => {
   };
 
   //submitHandler, will create a new event onSubmit
-  const submitHandler = (event) => {
-    event.preventDefault();
+  const submitHandler = async (event) => {
 
+    event.preventDefault(); 
+
+ let testDate = moment(new Date(selectedStartDate)).toDate();
+
+ console.log("TESTDATE: ", testDate); 
+    let newEvent = await AppointmentService.createAppointment(doctorID, selectedStartDate, appointmentType, description, title)
+
+    console.log("NEW EVENT", newEvent);
     const calendarEvent = {
       from: new Date(selectedStartDate),
       to: new Date(selectedEndDate),
