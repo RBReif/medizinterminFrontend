@@ -115,6 +115,8 @@ const FindADoctorView = () => {
 
 
   async function fetchAppointmentsHandler() {
+    setIsLoading(true);
+    setActivateSearch(true);
     const facilitiesRightFormat = [];
     for (let i = 0; i < facilities.length; i++) {
       if (facilities[i].isActive) {
@@ -123,7 +125,6 @@ const FindADoctorView = () => {
     }
     console.log("CALLED SUBMITHANDLER", address.address_value)
     for (let i = 0; i < timeslots.length; i++) {
-      setIsLoading(true);
       let receivedResults = await AppointmentService.filterAppointments(
         doctor,
         languageList,
@@ -136,10 +137,14 @@ const FindADoctorView = () => {
         address.lng,
         insurance
       );
-      console.log(results)
-      // setResults([...results, receivedResults]);
-      console.log("RECEIVED RESULT: ", receivedResults);
       setIsLoading(false);
+      setResults(prevResults => ({
+        ...receivedResults
+      }));
+      // setResults([...results, receivedResults]);
+      // results.push(receivedResults);
+      // console.log("RECEIVED RESULT: ", receivedResults);
+      
     }
    
   }
@@ -209,6 +214,7 @@ const FindADoctorView = () => {
   }
 
 
+  console.log("RESULTS: " , Object.keys(results).length)
   return (
     <ThemeProvider theme={Theme}>
       <Page>
@@ -363,10 +369,18 @@ const FindADoctorView = () => {
                           )}
                         </center>
                         <div>
-                          {!isLoading && results.length > 0 && (
-                            <DoctorList results={results} />
+                          {!isLoading && Object.keys(results).length > 0 && (
+                            <div>
+                            {Object.values(results).map((result) => {
+                              return (
+                                <DoctorList
+                                  result={result}
+                                ></DoctorList>
+                              );
+                            })}
+                          </div>
                           )}
-                          {!isLoading && results.length === 0 && (
+                          {!isLoading && Object.keys(results).length === 0 && (
                             <center>
                               <Paper className={classes.paper}>
                                 <p>
