@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 const DynamicDropdown = (props) => {
   const classes = useStyles();
   const [val, setVal] = React.useState(props.displayname);
-  console.log("DEFAULT in dynamicDroop", props.defaultValue)
 
   // const handleChange = (event) => {
   //   console.log("handleChange DynamicDropdown :" , event.target.value);

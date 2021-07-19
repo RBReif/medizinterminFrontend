@@ -74,7 +74,7 @@ const FindADoctorView = () => {
   };
 
   const healthInsuranceChangeHandler = (event) => {
-    console.log("healthinsurancechangehandler: ", event.target.value);
+    // console.log("healthinsurancechangehandler: ", event.target.value);
     //dispatch
     return setInsurance(event.target.value);
   };
@@ -100,12 +100,12 @@ const FindADoctorView = () => {
   };
 
   const toggleChangeHandler = (displayname, isActive) => {
-    console.log(displayname, isActive);
+    // console.log(displayname, isActive);
     let objIndex = facilities.findIndex(
       (obj) => obj.displayname === displayname
     );
     facilities[objIndex].isActive = !facilities[objIndex].isActive;
-    console.log(facilities);
+    // console.log(facilities);
     return facilities;
   };
 
@@ -121,11 +121,9 @@ const FindADoctorView = () => {
         facilitiesRightFormat.push(facilities[i].displayname);
       }
     }
-    // console.log("CALLED SUBMITHANDLER")
+    console.log("CALLED SUBMITHANDLER", address.address_value)
     for (let i = 0; i < timeslots.length; i++) {
       setIsLoading(true);
-      setActivateSearch(true);
-      console.log("We will soon request answers");
       let receivedResults = await AppointmentService.filterAppointments(
         doctor,
         languageList,
@@ -133,14 +131,17 @@ const FindADoctorView = () => {
         timeslots[i].startdate,
         timeslots[i].enddate,
         radius,
+        address.address_value,
         address.lat,
         address.lng,
         insurance
       );
-      setResults([...results, receivedResults]);
+      console.log(results)
+      // setResults([...results, receivedResults]);
       console.log("RECEIVED RESULT: ", receivedResults);
+      setIsLoading(false);
     }
-    setIsLoading(false);
+   
   }
 
   const deleteTimeSlotHandler = (timeslot) => {
@@ -186,26 +187,25 @@ const FindADoctorView = () => {
     // console.log("Healthinsurancelist middle: ", insurances);
 
     const paramsStr = window.location.search;
-    console.log ("params received: ", paramsStr)
+    // console.log ("params received: ", paramsStr)
     if (paramsStr.includes("area")){
       const params = new URLSearchParams(paramsStr)
       const areaI = params.get('area')
       setDoctor(areaI)
       area = areaI.toUpperCase()
-      console.log("JUST SET AREA," , area)
+      // console.log("JUST SET AREA," , area)
     }
 
   }, []);
 
 
   const paramsStr = window.location.search;
-  console.log ("params received: ", paramsStr)
+  // console.log ("params received: ", paramsStr)
   if (paramsStr.includes("area")){
     const params = new URLSearchParams(paramsStr)
     const areaI = params.get('area')
    // setDoctor(areaI)
     area = areaI.toUpperCase()
-    console.log("JUST SET AREA," , area)
   }
 
 
