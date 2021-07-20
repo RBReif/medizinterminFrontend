@@ -36,14 +36,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const FindADoctorView = () => {
-
   const [timeslots, setTimeSlots] = useState("");
   //  const [togglesSelected, setTogglesSelecteed] = useState([]);
   const classes = useStyles();
   const [doctor, setDoctor] = useState("");
-  let area =""
+  let area = "";
   const [healthInsurances, setHealthInsurances] = useState("");
   const [latLng, setLatLng] = useState({
     lat: null,
@@ -60,8 +58,6 @@ const FindADoctorView = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [activateSearch, setActivateSearch] = useState(false);
   const [results, setResults] = useState([]);
-
-
 
   const addTimeSlotHandler = (timeslot) => {
     setTimeSlots((prevTimeSlots) => {
@@ -111,8 +107,10 @@ const FindADoctorView = () => {
 
   var paramsString = window.location.search;
   var searchParams = new URLSearchParams(paramsString);
-  const profession = (searchParams.get('profession') != undefined ? searchParams.get('profession').toUpperCase() : "");
-
+  const profession =
+    searchParams.get("profession") != undefined
+      ? searchParams.get("profession").toUpperCase()
+      : "";
 
   async function fetchAppointmentsHandler() {
     setIsLoading(true);
@@ -123,7 +121,7 @@ const FindADoctorView = () => {
         facilitiesRightFormat.push(facilities[i].displayname);
       }
     }
-    console.log("CALLED SUBMITHANDLER", address.address_value)
+    console.log("CALLED SUBMITHANDLER", address.address_value);
     for (let i = 0; i < timeslots.length; i++) {
       let receivedResults = await AppointmentService.filterAppointments(
         doctor,
@@ -138,15 +136,11 @@ const FindADoctorView = () => {
         insurance
       );
       setIsLoading(false);
-      setResults(prevResults => ({
-        ...receivedResults
+      setResults((prevResults) => ({
+        ...receivedResults,
       }));
-      // setResults([...results, receivedResults]);
-      // results.push(receivedResults);
-      // console.log("RECEIVED RESULT: ", receivedResults);
-      
+      console.log("RECEIVED RESULT: ", receivedResults);
     }
-   
   }
 
   const deleteTimeSlotHandler = (timeslot) => {
@@ -193,28 +187,26 @@ const FindADoctorView = () => {
 
     const paramsStr = window.location.search;
     // console.log ("params received: ", paramsStr)
-    if (paramsStr.includes("area")){
-      const params = new URLSearchParams(paramsStr)
-      const areaI = params.get('area')
-      setDoctor(areaI)
-      area = areaI.toUpperCase()
+    if (paramsStr.includes("area")) {
+      const params = new URLSearchParams(paramsStr);
+      const areaI = params.get("area");
+      setDoctor(areaI);
+      area = areaI.toUpperCase();
       // console.log("JUST SET AREA," , area)
     }
-
   }, []);
-
 
   const paramsStr = window.location.search;
   // console.log ("params received: ", paramsStr)
-  if (paramsStr.includes("area")){
-    const params = new URLSearchParams(paramsStr)
-    const areaI = params.get('area')
-   // setDoctor(areaI)
-    area = areaI.toUpperCase()
+  if (paramsStr.includes("area")) {
+    const params = new URLSearchParams(paramsStr);
+    const areaI = params.get("area");
+    // setDoctor(areaI)
+    area = areaI.toUpperCase();
   }
 
-
-  console.log("RESULTS: " , Object.keys(results).length)
+  console.log("RESULTS: ", Object.keys(results).length);
+  console.log("Results", results);
   return (
     <ThemeProvider theme={Theme}>
       <Page>
@@ -235,23 +227,22 @@ const FindADoctorView = () => {
                   content={
                     <div>
                       <center>
-                      <h4>Area of Expertise</h4>
-                      <DynamicCard
-                        variant="body2"
-                        content={
-                          <DynamicDropdown
-                            defaultValue={area}
-                            label="Please choose the type of doctor you need"
-                            items={areas}
-                            onChange={areaChangeHandler}
-                          ></DynamicDropdown>
-                        }
-                        
-                      ></DynamicCard>
-                      <DynamicCard
-                        variant="outlined"
-                        content={
-                          <div>
+                        <h4>Area of Expertise</h4>
+                        <DynamicCard
+                          variant="body2"
+                          content={
+                            <DynamicDropdown
+                              defaultValue={area}
+                              label="Please choose the type of doctor you need"
+                              items={areas}
+                              onChange={areaChangeHandler}
+                            ></DynamicDropdown>
+                          }
+                        ></DynamicCard>
+                        <DynamicCard
+                          variant="outlined"
+                          content={
+                            <div>
                               <h4>Preferred Location</h4>
                               <div>
                                 <Box p={2}>
@@ -361,26 +352,17 @@ const FindADoctorView = () => {
                     variant="outlined"
                     content={
                       <div>
-                        <center>
-                          {results.length > 0 ? (
-                            <h4>We found the following results for you:</h4>
-                          ) : (
-                            ""
-                          )}
-                        </center>
                         <div>
                           {!isLoading && Object.keys(results).length > 0 && (
                             <div>
-                            {Object.values(results).map((result) => {
-                              return (
-                                <DoctorList
-                                  result={result}
-                                ></DoctorList>
-                              );
-                            })}
-                          </div>
+                              {Object.values(results).map((result) => {
+                                return (
+                                  <DoctorList result={result}></DoctorList>
+                                );
+                              })}
+                            </div>
                           )}
-                          {!isLoading && Object.keys(results).length === 0 && (
+                          {!isLoading && Object.keys(results) === 0 && (
                             <center>
                               <Paper className={classes.paper}>
                                 <p>
@@ -389,13 +371,13 @@ const FindADoctorView = () => {
                               </Paper>
                             </center>
                           )}
-                          {isLoading && (
-                            <center>
-                              <Paper className={classes.paper}>
-                                <p>Loading...</p>
-                              </Paper>
-                            </center>
-                          )}
+                          {isLoading  && (
+                                <center>
+                                  <Paper className={classes.paper}>
+                                    <p>Loading...</p>
+                                  </Paper>
+                                </center>
+                              )}
                         </div>
                       </div>
                     }
