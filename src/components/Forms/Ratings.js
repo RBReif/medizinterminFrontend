@@ -41,10 +41,8 @@ function Ratings(props) {
 
 // attributes of props and their type
 Ratings.propTypes = {
-    criticsRating: PropTypes.number,
     avgAudienceRating: PropTypes.number,
     editMode: PropTypes.bool,
-    onChangeCriticsRating: PropTypes.func,
     onChangeOwnRating: PropTypes.func,
 };
 

@@ -1,13 +1,16 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
 import { Theme } from "../UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
 import Ratings from "../Forms/Ratings";
 import { Card } from "@material-ui/core";
-
+import IconButton from '@material-ui/core/IconButton';
+import Menu from "@material-ui/icons/Menu";
+import { MenuItem } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,7 +35,25 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Appointment = (props) => {
-    const classes = useStyles();    
+    const classes = useStyles();      
+    
+    const clickHandler = () => {
+      <Menu
+            open={true}
+            anchorEl={props.anchorEl}
+            onClose={props.onClose}
+        >
+                    <MenuItem key="ss" className={classes.menuitem}>
+                        ssss
+                    </MenuItem>,
+                    <Divider key="divider" />,
+                    <MenuItem>
+                    sffsfsf
+                    </MenuItem>
+                    <MenuItem>
+                    </MenuItem>
+        </Menu>
+    };
     return (
         <ThemeProvider theme={Theme}>
           {console.log("props: ", props)}
@@ -45,7 +66,12 @@ const Appointment = (props) => {
                     src="https://cdn.shopify.com/s/files/1/1390/2701/t/5/assets/doctor.jpg?v=12170138145179114637"
                   ></Avatar>
                 }
-                title={<b>{props.props.doctor_name} {props.props.last_name}</b>} 
+                action={
+                  <IconButton aria-label="settings" onClick={clickHandler}>
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                title={<b>{props.props.doctor_name} {props.props.doctor_last_name}</b>} 
                 subheader={
                   <div>
                     {props.props.doctor_area_of_expertise}

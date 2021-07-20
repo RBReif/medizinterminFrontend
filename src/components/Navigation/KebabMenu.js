@@ -57,7 +57,7 @@ function KebabMenu(props) {
         // close this menu
         props.onClose();
         // navigate to the doctor calendar
-        props.history.push("/doctor-dashboard");
+        props.history.push("/doctor-daily-plan");
     };
 
     const onClickLogout = () => {

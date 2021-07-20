@@ -106,6 +106,7 @@ const SignUpComponent = (props) => {
             lng,
         });
         setRegisterError("");
+        console.log(address);
     };
 
     const onChangeExpertise = (e) => {

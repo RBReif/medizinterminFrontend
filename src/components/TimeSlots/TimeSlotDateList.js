@@ -12,7 +12,7 @@ import { Link
     return <h5>Found no timeslots.</h5>;
   }
 
-  console.log("Timeslots: ", timeslotitems);
+  // console.log("Timeslots: ", timeslotitems);
 
   return (
     <center>
