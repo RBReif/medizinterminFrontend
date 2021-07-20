@@ -9,7 +9,8 @@ import Select from '@material-ui/core/Select';
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
-        minWidth: 120,
+        minWidth: 150,
+        maxWidth: 150,
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
@@ -39,6 +40,7 @@ const MultiSelectDropdown = (props) => {
                 value={values}
                 onChange={handleChange}
                 multiple
+                fullWidth
             >
                 {props.items.map((item) => {
                     return <MenuItem value={item.displayname}>{item.displayname}</MenuItem>;

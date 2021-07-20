@@ -7,7 +7,6 @@ import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import { connect, useSelector } from "react-redux";
 import { Paper } from "@material-ui/core";
-import Doctor from "../components/Doctor/Doctor";
 import PatientService from "../services/PatientService";
 import UserService from "../services/UserService";
 import AppointmentService from "../services/AppointmentService";
