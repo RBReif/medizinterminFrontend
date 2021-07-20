@@ -8,6 +8,10 @@ import { ThemeProvider } from "@material-ui/styles";
 import Doctor from "../components/Doctor/Doctor";
 import DynamicCard from "../components/UI/DynamicCard";
 import { Button, Grid } from "@material-ui/core";
+import {
+    useLocation
+} from "react-router-dom";
+
 
 const doctorlist = [
   {
@@ -16,6 +20,7 @@ const doctorlist = [
     profession: "Dentist",
     address: "Ungererstr. 58, 80805 München",
     phone: "123456",
+    avgAudienceRating: "4",
     appointments: [{
         id: 6,
         color: "#fd3153",
@@ -35,12 +40,20 @@ const doctorlist = [
     name: "isjdgjdjsg fiaojs",
     profession: "Dentist",
     address: "Münchner Freiheit 12, 80803 München",
+    avgAudienceRating: "5",
     phone: "12345678",
     appointments: [{},{}],
   },
 ];
 
+const useQuery = () => {
+    return new URLSearchParams(useLocation().search);
+}
+
 const ResultsView = (props) => {
+    const query = useQuery()
+    const radius = query.get("radius")
+    console.log(radius)
   const [isLoading, setIsLoading] = useState(false);
   const [doctors, setDoctors] = useState([]);
 
@@ -81,15 +94,13 @@ const ResultsView = (props) => {
                   {!isLoading &&
                     doctorlist.length > 0 &&
                     doctorlist.map((doctor) => (
-                        <p>
                       <Doctor key={doctor.id} doctor={doctor} />
-                      </p>
                     ))}
                   {!isLoading && doctorlist.length === 0 && (
                     <center>
                       <p>Found no doctors.</p>
                       <p>
-                        <Button href="/">Try new search</Button>
+                        <Button href="/find-doctor">Try new search</Button>
                       </p>
                     </center>
                   )}

@@ -3,8 +3,15 @@ import DynamicDropdown from "../components/Forms/DynamicDropdown";
 import React from "react";
 import DynamicSwitch from "../components/Forms/DynamicSwitch";
 import Page from "../components/Page";
+import MultiSelectDropdown from "../components/Forms/MultiSelectDropdown";
 
-const languagelist = [{displayname: "none"}, { displayname: "French" }, { displayname: "Turkish" }, {displayname: "Spanish"}];
+const languagelist = [
+    { displayname: "German" },
+    { displayname: "English" },
+    { displayname: "Russian"},
+    { displayname: "Turkish"},
+    { displayname: "French"}
+];
 const doctorlist = [
     { id: "1", displayname: "Dentist" },
     { id: "2", displayname: "Cardiologist" },
@@ -89,6 +96,12 @@ const RegisterProfessionals = () => {
                 </Row>
                 <Row>
                     <br/>
+                    <Col>
+                        <MultiSelectDropdown
+                            label="Please choose your preferred language"
+                            items={languagelist}
+                        ></MultiSelectDropdown>
+                    </Col>
                         <Col>
                         <DynamicSwitch
                             id="custom-switch-1"
@@ -102,31 +115,9 @@ const RegisterProfessionals = () => {
                             id="custom-switch-4"
                             displayname="Public transport station nearby"
                         />
-                            </Col>
-                        <Col>
-                            <DynamicSwitch id="custom-switch-5" displayname="I speak English fluently" />
-
-                            <DynamicSwitch id="custom-switch-6" displayname="I speak German fluently" />
-
                         </Col>
                 </Row>
                 <br/>
-                <Row>
-                    <Col>
-                <DynamicDropdown
-                    label="Further language capability (I)"
-                    items={languagelist}
-                ></DynamicDropdown>
-                    </Col>
-                    <Col>
-                        <DynamicDropdown
-                            label="Further language capability (II)"
-                            items={languagelist}
-                        ></DynamicDropdown>
-                    </Col>
-
-
-                </Row>
                 <br/>
                 <Form.Group className="mb-3" id="formGridCheckbox">
                     <Form.Check type="checkbox" label="Agree to terms and conditions"/>

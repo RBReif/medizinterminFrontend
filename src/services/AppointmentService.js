@@ -8,26 +8,45 @@ export default class AppointmentService{
 
     static baseURL() {return 'http://localhost:4000/appointment';}
 
-    static getAppointments(id, usecase){
+    static getAppointmentsPatient(id){
         return new Promise( async(resolve, reject) => {
             await  HttpService.get(
-                `${this.baseURL()}/${id}`,
+                `${this.baseURL()}/patient/${id}`,
                 function (data){resolve(data)},
                 function (textStatus){
                     reject(textStatus);
-
                 },
-                {
-                    usecase: usecase,
-                }
+            )
+        }).then()
+    }
+    static getAppointmentsDoctor(id){
+        return new Promise( async(resolve, reject) => {
+            await  HttpService.get(
+                `${this.baseURL()}/doctor/${id}`,
+                function (data){resolve(data)},
+                function (textStatus){
+                    reject(textStatus);
+                },
+            )
+        }).then()
+    }
+
+    static getAppointment(id){
+        return new Promise( async(resolve, reject) => {
+            await  HttpService.get(
+                `${this.baseURL()}/patient/${id}`,
+                function (data){resolve(data)},
+                function (textStatus){
+                    reject(textStatus);
+                },
             )
         }).then()
     }
 
     static filterAppointments(area, languages, facilities, startpoint, endpoint){
         return new Promise( async(resolve, reject) => {
-            await  HttpService.get(
-                this.baseURL(),
+            await  HttpService.post(
+                this.baseURL()+"/filter",
                 function (data){resolve(data)},
                 function (textStatus){
                     reject(textStatus);

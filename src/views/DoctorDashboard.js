@@ -1,12 +1,14 @@
 import MyCalendar from "../components/Calendar/Calendar";
 import Page from "../components/Page";
 import { Container, Row, Col } from "react-bootstrap";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import NewCalendarEvent from "../components/Calendar/NewCalendarEvent";
 import DynamicCard from "../components/UI/DynamicCard";
 import { Box } from "@material-ui/core";
 import { Theme } from "../components/UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
+import AppointmentService from "../services/AppointmentService";
+import moment from "moment";
 import { Link } from "react-router-dom";
 
 const events = [
@@ -62,7 +64,8 @@ const events = [
 ];
 
 const DoctorDashboard = () => {
-  const [calendarEvents, setCalendarEvents] = useState(events);
+  const [calendarEvents, setCalendarEvents] = useState([]);
+
 
   console.log("KalenderEvents: ", calendarEvents);
 
@@ -72,7 +75,23 @@ const DoctorDashboard = () => {
     });
   };
 
-  return (   
+  useEffect( (id) => {
+    const getProfsAppointments = async () => {
+      const appointments = await AppointmentService.getAppointments(id, "DOCTOR")
+      console.log("Received appointments: ", appointments)
+      setCalendarEvents(appointments.map((item) => {return {
+        "color": "#fd3153",
+        "from": new Date(item.startpoint),
+        "to": moment(new Date(item.startpoint)).add(30, 'm').toDate(),
+        "title":item.appointmentStatus,
+      }}))
+    }
+    getProfsAppointments()
+
+
+  }, [])
+
+  return (
     <ThemeProvider theme={Theme}>
     <Page>
       <Container fluid>

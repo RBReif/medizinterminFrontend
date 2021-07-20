@@ -3,48 +3,41 @@
 export default class HttpService {
     // constructor() {
     // }
+    static apiURL() {
+        return 'http://localhost:3000/?language=GERMAN';
+    }
 
-    static apiURL() {return 'http://localhost:3000'; }
-
-    static async get(url, onSuccess, onError, data) {
+    static async get(url, onSuccess, onError) {
         let token = window.localStorage['jwtToken'];
         let header = new Headers();
-        if(token) {
+        if (token) {
             header.append('Authorization', `JWT ${token}`);
         }
 
         try {
             let resp
-           if (data ==null){
-                 resp = await fetch(url, {
-                    method: 'GET',
-                    headers: header,
-                });
-           }else{
-                 resp = await fetch(url, {
-                    method: 'GET',
-                    headers: header,
-                    body: JSON.stringify(data)
-                });
-            }
+
+            resp = await fetch(url, {
+                method: 'GET',
+                headers: header,
+            });
 
 
-
-            if(this.checkIfUnauthorized(resp)) {
+            if (this.checkIfUnauthorized(resp)) {
                 window.location = '/#login';
             } else {
                 resp = await resp.json();
             }
 
-            if(resp.error) {
+            if (resp.error) {
                 onError(resp.error);
             } else {
-                if(resp.hasOwnProperty('token')) {
+                if (resp.hasOwnProperty('token')) {
                     window.localStorage['jwtToken'] = resp.token;
                 }
                 onSuccess(resp);
             }
-        } catch(err) {
+        } catch (err) {
             onError(err.message);
         }
 
@@ -76,7 +69,7 @@ export default class HttpService {
     static async put(url, data, onSuccess, onError) {
         let token = window.localStorage['jwtToken'];
         let header = new Headers();
-        if(token) {
+        if (token) {
             header.append('Authorization', `JWT ${token}`);
         }
         header.append('Content-Type', 'application/json');
@@ -88,24 +81,22 @@ export default class HttpService {
                 body: JSON.stringify(data)
             });
 
-            if(this.checkIfUnauthorized(resp)) {
+            if (this.checkIfUnauthorized(resp)) {
                 window.location = '/#login';
                 return;
-            }
-            else {
+            } else {
                 resp = await resp.json();
             }
 
-            if(resp.error) {
+            if (resp.error) {
                 onError(resp.error);
-            }
-            else {
-                if(resp.hasOwnProperty('token')) {
+            } else {
+                if (resp.hasOwnProperty('token')) {
                     window.localStorage['jwtToken'] = resp.token;
                 }
                 onSuccess(resp);
             }
-        } catch(err) {
+        } catch (err) {
             onError(err.message);
         }
     }
@@ -113,8 +104,10 @@ export default class HttpService {
     static async post(url, data, onSuccess, onError) {
         let token = window.localStorage['jwtToken'];
         let header = new Headers();
-        if(token) {
+        if (token) {
             header.append('Authorization', `JWT ${token}`);
+        } else {
+
         }
         header.append('Content-Type', 'application/json');
 
@@ -122,27 +115,25 @@ export default class HttpService {
             let resp = await fetch(url, {
                 method: 'POST',
                 headers: header,
-                body: JSON.stringify(data)
+                body: JSON.stringify(data),
             });
 
-            if(this.checkIfUnauthorized(resp)) {
-                window.location = '/#login';
+            if (this.checkIfUnauthorized(resp)) {
+                window.location = '/login';
                 return;
-            }
-            else {
+            } else {
                 resp = await resp.json();
             }
 
-            if(resp.error) {
+            if (resp.error) {
                 onError(resp.error);
-            }
-            else {
-                if(resp.hasOwnProperty('token')) {
+            } else {
+                if (resp.hasOwnProperty('token')) {
                     window.localStorage['jwtToken'] = resp.token;
                 }
                 onSuccess(resp);
             }
-        } catch(err) {
+        } catch (err) {
             onError(err.message);
         }
     }
@@ -150,7 +141,7 @@ export default class HttpService {
     static async remove(url, onSuccess, onError) {
         let token = window.localStorage['jwtToken'];
         let header = new Headers();
-        if(token) {
+        if (token) {
             header.append('Authorization', `JWT ${token}`);
         }
 
@@ -160,27 +151,25 @@ export default class HttpService {
                 headers: header
             });
 
-            if(this.checkIfUnauthorized(resp)) {
+            if (this.checkIfUnauthorized(resp)) {
                 window.location = '/#login';
                 return;
-            }
-            else {
+            } else {
                 resp = await resp.json();
             }
 
-            if(resp.error) {
+            if (resp.error) {
                 onError(resp.error);
-            }
-            else {
+            } else {
                 onSuccess(resp)
             }
-        } catch(err) {
+        } catch (err) {
             onError(err.message);
         }
     }
 
     static checkIfUnauthorized(res) {
-        if(res.status === 401) {
+        if (res.status === 401) {
             return true;
         }
         return false;

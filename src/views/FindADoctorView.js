@@ -16,9 +16,9 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core";
 import image from "../images/professional.jpg"
-import ConfigService from "../services/ConfigService"
-
-
+import MultiSelectDropdown from "../components/Forms/MultiSelectDropdown";
+import ConfigService from "../services/ConfigService";
+import {connect, useSelector} from "react-redux";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,12 +35,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
+
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
 //  const [togglesSelected, setTogglesSelecteed] = useState([]);
   const classes = useStyles();
   const [doctor, setDoctor] = useState("");
-  const [language, setLanguage] = useState("");
   const [healthInsurance, setHealthInsurance] = useState("");
   const [latLng, setLatLng] = useState({
     lat: null,
@@ -58,9 +60,9 @@ const FindADoctorView = () => {
     });
   };
 
-  const languageChangeHandler = (event) => {
+  const languagesChangeHandler = (event) => {
     // console.log("stateChangeHandler: ", event.target.value);
-    return setLanguage(event.target.value);
+    return setLanguages(event.target.value);
   };
 
   const healthInsuranceChangeHandler = (event) => {
@@ -165,7 +167,7 @@ const FindADoctorView = () => {
                                 <div>
                                   <Box p={2}>
                                     <LocationAutoComplete
-                                      onClick={locationHandler}
+                                      onSelect={locationHandler}
                                     ></LocationAutoComplete>
                                   </Box>
                                   <Box p={2}>
@@ -193,21 +195,17 @@ const FindADoctorView = () => {
                     <DynamicCard
                       variant="body2"
                       content={
-                        <DynamicDropdown
-                        key="languagedropdown"
-                          defaultValue=""
+                        <MultiSelectDropdown
                           label="Please choose your preferred language"
                           items={languages}
-                          onChange={languageChangeHandler}
-                        ></DynamicDropdown>
+                          onChange={languagesChangeHandler}
+                        ></MultiSelectDropdown>
                       }
                     ></DynamicCard>
                     <DynamicCard
                       variant="body2"
                       content={
                         <DynamicDropdown
-                          key={insurances.id}
-                          defaultValue=""
                           label="Please choose your health insurance"
                           items={insurances}
                           onChange={healthInsuranceChangeHandler}
@@ -255,7 +253,7 @@ const FindADoctorView = () => {
               <br />
               <br />
               <center>
-                <Button color="secondary" href="/results">
+                <Button color="secondary" href={`/results?radius=${radius}`}>
                   Find an appointment
                 </Button>
               </center>

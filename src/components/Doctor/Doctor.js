@@ -12,7 +12,10 @@ import CallIcon from "@material-ui/icons/Call";
 import NavigationIcon from "@material-ui/icons/Navigation";
 import { Theme } from "../UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
-import { Grid } from "@material-ui/core";
+import { Box } from "@material-ui/core";
+import Rating from "@material-ui/lab/Rating";
+import DynamicCard from "../UI/DynamicCard";
+import { lightBlue } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,15 +49,15 @@ const Doctor = (props) => {
 
   const handleNumberClick = () => {
     setShowNumber(!showNumber);
-  }
+  };
 
   return (
     <ThemeProvider theme={Theme}>
       {console.log("props: ", props)}
       {console.log("props.doctor: ", props.doctor)}
       {console.log("props.doctor.appointments: ", props.doctor.appointments)}
-      <Grid item className={classes.root} spacing={5}>
-        <Card shadows={0} className={classes.root}>
+      <Box p={2} xs={1} xl={1}>
+        <Card className={classes.root}>
           <CardHeader
             avatar={
               <Avatar
@@ -66,15 +69,22 @@ const Doctor = (props) => {
             title={<b>{props.doctor.name}</b>} //query doctor name + profession
             subheader={
               <div>
-                {props.doctor.profession}<br></br>
-                {props.doctor.address}<br></br>
+                {props.doctor.profession}
+                <br></br>
+                {props.doctor.address}
+                <br></br>
+                <Rating
+                  name="read-only"
+                  value={props.doctor.avgAudienceRating}
+                  readOnly
+                />
                 {showNumber ? props.doctor.phone : ""}
               </div>
             }
           />
           <CardActions disableSpacing>
             <IconButton aria-label="call doctor">
-              <CallIcon onClick={handleNumberClick}/>
+              <CallIcon onClick={handleNumberClick} />
             </IconButton>
             <IconButton aria-label="navigate">
               <NavigationIcon />
@@ -85,14 +95,20 @@ const Doctor = (props) => {
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
-              {/* {props.doctor.appointments.map(appointment) (
-                <li> {appointment.title} <Button size="small" color="primary">
-                Book appointment
-              </Button></li>)}; */}
-          </CardContent>
+              {props.doctor.appointments.map((appointment) => (
+                <Box p={2}>
+                  <li>
+                        {appointment.title}
+                        <Button size="small" color="primary">
+                          Book appointment
+                        </Button>
+                  </li>
+                </Box>
+              ))}
+            </CardContent>
           </Collapse>
         </Card>
-        </Grid>
+      </Box>
     </ThemeProvider>
   );
 };
