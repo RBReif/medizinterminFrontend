@@ -13,14 +13,48 @@ import NavigationIcon from "@material-ui/icons/Navigation";
 import { Theme } from "../UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
 import { Box } from "@material-ui/core";
-import Rating from "@material-ui/lab/Rating";
 import Ratings from "../Forms/Ratings";
-import DynamicCard from "../UI/DynamicCard";
-import { lightBlue } from "@material-ui/core/colors";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
+import PropTypes from "prop-types";
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    "aria-controls": `vertical-tabpanel-${index}`,
+  };
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    maxWidth: 500,
   },
   media: {
     height: 0,
@@ -44,6 +78,11 @@ const Doctor = (props) => {
   const [expanded, setExpanded] = React.useState(false);
   const [showNumber, setShowNumber] = React.useState(false);
   const [avgAudienceRating, setAvgAudienceRating] = React.useState("");
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -53,12 +92,9 @@ const Doctor = (props) => {
     setShowNumber(!showNumber);
   };
 
+  console.log("props.appointments", props.appointment);
   return (
     <ThemeProvider theme={Theme}>
-      {console.log("props: ", props)}
-      {console.log("props.doctor: ", props.doctor)}
-      {console.log("props.doctor.appointments: ", props.doctor.appointments)}
-      <Box p={2} xs={1} xl={1}>
         <Card className={classes.root}>
           <CardHeader
             avatar={
@@ -68,53 +104,56 @@ const Doctor = (props) => {
                 src="https://cdn.shopify.com/s/files/1/1390/2701/t/5/assets/doctor.jpg?v=12170138145179114637"
               ></Avatar>
             }
-            title={<b>{props.doctor.name}</b>} //query doctor name + profession
+            action={
+              <Button onClick={handleExpandClick} color="primary"  size="small">
+              Book Appointment
+            </Button>
+            }
+            title={
+              <b>
+                {props.doctor.firstname} {props.doctor.lastname}
+              </b>
+            } //query doctor name + profession
             subheader={
               <div>
-                {props.doctor.profession}
-                <br></br>
-                {props.doctor.address}
-                <br></br>
-                <Ratings 
-                value={props.doctor.avgAudienceRating}
-                readOnly={props.readOnly}
+                <Ratings
+                  value={props.doctor.audience_ratings}
+                  readOnly={true}
                 />
-                {/* <Rating
-                  name="read-only"
-                  value={props.doctor.avgAudienceRating}
-                  readOnly
-                /> */}
-                {showNumber ? props.doctor.phone : ""}
               </div>
             }
           />
+          <CardContent>
+            <div>
+              <Tabs
+                orientation="horizontal"
+                variant="scrollable"
+                value={value}
+                onChange={handleChange}
+                aria-label="Vertical tabs example"
+                className={classes.tabs}
+              >
+                <Tab label="Appointment Details" {...a11yProps(0)} />
+                <Tab label="About" {...a11yProps(1)} />
+              </Tabs>
+              <TabPanel value={value} index={0}>
+                <b>Appointment at</b> {props.appointment.startPoint}
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                {props.doctor.area_of_expertise}
+                <br></br>
+                <b>Address: </b> {props.doctor.address.address_value}
+                <br></br>
+                <b>Languages:</b> {props.doctor.languages.map((language) => {return (language + " ")})}
+                <br></br>
+                <b>Special Facilties:</b> {props.doctor.special_facilities.map((facility) => {return (facility + " ")})}
+              </TabPanel>
+            </div>
+          </CardContent>
+
           <CardActions disableSpacing>
-            <IconButton aria-label="call doctor">
-              <CallIcon onClick={handleNumberClick} />
-            </IconButton>
-            <IconButton aria-label="navigate">
-              <NavigationIcon />
-            </IconButton>
-            <Button onClick={handleExpandClick} variant="" size="small">
-              Show Appointments
-            </Button>
           </CardActions>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              {props.doctor.appointments.map((appointment) => (
-                <Box p={2}>
-                  <li>
-                        {appointment.title}
-                        <Button size="small" color="primary">
-                          Book appointment
-                        </Button>
-                  </li>
-                </Box>
-              ))}
-            </CardContent>
-          </Collapse>
         </Card>
-      </Box>
     </ThemeProvider>
   );
 };
