@@ -11,7 +11,7 @@ export default class UserService {
         return 'http://localhost:4000/patient';
     }
 
-    static register(username, password, firstName, lastName, dateBirth, insurance, address, gender) {
+    static register(username, password, firstName, lastName, dateBirth, insurance, address, gender, thumbnail) {
         return new Promise((resolve, reject) => {
             HttpService.post(`${UserService.baseURL()}/register`, {
                 username: username,
@@ -22,6 +22,7 @@ export default class UserService {
                 insurance: insurance,
                 address: address,
                 gender: gender,
+                thumbnail: thumbnail,
             }, function (data) {
                 resolve(data);
             }, function (textStatus) {
@@ -57,6 +58,8 @@ export default class UserService {
         return {
             id: JSON.parse(window.atob(base64))._id,
             username: JSON.parse(window.atob(base64)).username,
+            role: JSON.parse(window.atob(base64)).role,
+            thumbnail: JSON.parse(window.atob(base64)).thumbnail,
             token
         };
     }
