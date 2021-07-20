@@ -108,7 +108,9 @@ const DoctorDashboard = () => {
         };
       })
     );
-  }, [patients]);
+    console.log("in useEffect KalenderEvents: ", calendarEvents);
+
+  }, [patients, appointments]);
 
   /*
   useEffect( (id) => {
