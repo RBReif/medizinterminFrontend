@@ -52,6 +52,7 @@ export default class DoctorService {
         return {
             id: JSON.parse(window.atob(base64))._id,
             username: JSON.parse(window.atob(base64)).username,
+            role: JSON.parse(window.atob(base64)).role,
             token
         };
     }

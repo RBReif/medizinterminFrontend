@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 import { register } from "../redux/actions";
 import Page from "../components/Page";
-import PatientSignUp from "../components/PatientSignUp";
+import PatientSignUp from "../components/Patient/PatientSignUp";
 import { Theme } from "../components/UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
 import { Col } from "react-bootstrap";
