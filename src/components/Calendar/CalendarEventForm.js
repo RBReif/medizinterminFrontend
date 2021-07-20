@@ -113,7 +113,7 @@ const CalendarEventForm = (props) => {
  let testDate = moment(new Date(selectedStartDate)).toDate();
 
  console.log("TESTDATE: ", testDate); 
-    let newEvent = await AppointmentService.createAppointment(doctorID, selectedStartDate, appointmentType, description, title)
+    let newEvent = await AppointmentService.createAppointment(doctorID, selectedStartDate, selectedEndDate,appointmentType, description, title)
 
     console.log("NEW EVENT", newEvent);
     const calendarEvent = {
