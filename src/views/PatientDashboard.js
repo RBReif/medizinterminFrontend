@@ -89,10 +89,11 @@ const PatientDashboard = (props) => {
         setTotalAppointments(
           appointments.map((item) => {
             if (item.doctor === a) {
-              item["doctor_name"] = doctor.name;
-              item["doctor_last_name"] = doctor.last_name;
-              item["doctor_address"] = doctor.address;
+              item["doctor_name"] = doctor.firstname;
+              item["doctor_last_name"] = doctor.lastname;
+              item["doctor_address"] = doctor.address.address_value;
               item["doctor_area_of_expertise"] = doctor.area_of_expertise;
+              item["doctor_thumbnail"] = doctor.thumbnail;
               return item;
             } else {
               return item;
@@ -297,6 +298,7 @@ const findRecommendations = () => {
                       <p>
                         <Appointment
                           props={appointment}
+                          upcoming={true}
                           readOnly={true}
                         ></Appointment>
                       </p>
@@ -324,6 +326,7 @@ const findRecommendations = () => {
                     prevAppointments.map((appointment) => (
                       <Appointment
                         props={appointment}
+                      upcoming ={false}
                         readOnly={false}
                       ></Appointment>
                     ))
