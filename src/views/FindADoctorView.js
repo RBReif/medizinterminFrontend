@@ -21,6 +21,7 @@ import Doctor from "../components/Doctor/Doctor";
 import AppointmentService from "../services/AppointmentService";
 import { forEach } from "react-bootstrap/ElementChildren";
 import DoctorList from "../components/Doctor/DoctorList";
+import _ from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -204,9 +205,19 @@ const FindADoctorView = () => {
     // setDoctor(areaI)
     area = areaI.toUpperCase();
   }
+  
+  const grouped = _.groupBy(Object.values(results), function (result) {
+    return result.doctor;
+  });
 
-  console.log("RESULTS: ", Object.keys(results).length);
-  console.log("Results", results);
+  // console.log("GROUPED: ", grouped);
+
+  for (const [key, value] of Object.entries(grouped)) {
+    console.log(`${key}`);
+  }
+
+  // console.log("TEST", Object.entries(grouped)[1])
+
   return (
     <ThemeProvider theme={Theme}>
       <Page>
@@ -355,10 +366,9 @@ const FindADoctorView = () => {
                         <div>
                           {!isLoading && Object.keys(results).length > 0 && (
                             <div>
-                              {Object.values(results).map((result) => {
-                                return (
-                                  <DoctorList result={result}></DoctorList>
-                                );
+                              {Object.entries(grouped).map((item) => {
+                                // console.log("ID ID: ", item);
+                                return <DoctorList result={item}></DoctorList>;
                               })}
                             </div>
                           )}
@@ -371,13 +381,13 @@ const FindADoctorView = () => {
                               </Paper>
                             </center>
                           )}
-                          {isLoading  && (
-                                <center>
-                                  <Paper className={classes.paper}>
-                                    <p>Loading...</p>
-                                  </Paper>
-                                </center>
-                              )}
+                          {isLoading && (
+                            <center>
+                              <Paper className={classes.paper}>
+                                <p>Loading...</p>
+                              </Paper>
+                            </center>
+                          )}
                         </div>
                       </div>
                     }

@@ -18,6 +18,10 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
+import DynamicDropdown from "../Forms/DynamicDropdown";
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -71,6 +75,13 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(7),
     height: theme.spacing(7),
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 200,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 const Doctor = (props) => {
@@ -79,6 +90,7 @@ const Doctor = (props) => {
   const [showNumber, setShowNumber] = React.useState(false);
   const [avgAudienceRating, setAvgAudienceRating] = React.useState("");
   const [value, setValue] = React.useState(0);
+  const [appointmentDate, setAppointmentDate] = React.useState("");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -92,68 +104,88 @@ const Doctor = (props) => {
     setShowNumber(!showNumber);
   };
 
-  console.log("props.appointments", props.appointment);
+  const dateChangeHandler = (event) => {
+    console.log("stateChangeHandler: ", event.target.value);
+    return setAppointmentDate(event.target.value);
+  };
+
+  console.log("props.appointments", props.appointments);
   return (
     <ThemeProvider theme={Theme}>
-        <Card className={classes.root}>
-          <CardHeader
-            avatar={
-              <Avatar
-                aria-label="doctor"
-                className={classes.avatar}
-                src="https://cdn.shopify.com/s/files/1/1390/2701/t/5/assets/doctor.jpg?v=12170138145179114637"
-              ></Avatar>
-            }
-            action={
-              <Button onClick={handleExpandClick} color="primary"  size="small">
+      <Card className={classes.root}>
+        <CardHeader
+          avatar={
+            <Avatar
+              aria-label="doctor"
+              className={classes.avatar}
+              src="https://cdn.shopify.com/s/files/1/1390/2701/t/5/assets/doctor.jpg?v=12170138145179114637"
+            ></Avatar>
+          }
+          action={ <Ratings value={props.doctor.audience_ratings} readOnly={true} />
+          }
+          title={
+            <b>
+              {props.doctor.firstname} {props.doctor.lastname}
+            </b>
+          } //query doctor name + profession
+          subheader={
+            <div>
+              {props.doctor.area_of_expertise}       
+            </div>
+          }
+        />
+        <CardContent>
+          <div>
+            <Tabs
+              orientation="horizontal"
+              variant="scrollable"
+              value={value}
+              indicatorColor="primary"
+              onChange={handleChange}
+              aria-label="Vertical tabs example"
+              className={classes.tabs}
+            >
+              <Tab label="Appointment Details" {...a11yProps(0)} />
+              <Tab label="About" {...a11yProps(1)} />
+            </Tabs>
+            <TabPanel value={value} index={0}>
+              {/* <b>Appointment at</b> {props.appointment.startPoint} */}
+              <FormControl className={classes.formControl}>
+                <Select
+                  onClick={dateChangeHandler}
+                >
+                  {props.appointments.map((item) => {
+                    return (
+                      <MenuItem key={item._id} value={item.startPoint}>
+                        {item.startPoint}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>  <Button style={{marginLeft: 10}} onClick={handleExpandClick} color="primary" size="small">
               Book Appointment
             </Button>
-            }
-            title={
-              <b>
-                {props.doctor.firstname} {props.doctor.lastname}
-              </b>
-            } //query doctor name + profession
-            subheader={
-              <div>
-                <Ratings
-                  value={props.doctor.audience_ratings}
-                  readOnly={true}
-                />
-              </div>
-            }
-          />
-          <CardContent>
-            <div>
-              <Tabs
-                orientation="horizontal"
-                variant="scrollable"
-                value={value}
-                onChange={handleChange}
-                aria-label="Vertical tabs example"
-                className={classes.tabs}
-              >
-                <Tab label="Appointment Details" {...a11yProps(0)} />
-                <Tab label="About" {...a11yProps(1)} />
-              </Tabs>
-              <TabPanel value={value} index={0}>
-                <b>Appointment at</b> {props.appointment.startPoint}
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                {props.doctor.area_of_expertise}
-                <br></br>
-                <b>Address: </b> {props.doctor.address.address_value}
-                <br></br>
-                <b>Languages:</b> {props.doctor.languages.map((language) => {return (language + " ")})}
-                <br></br>
-                <b>Special Facilties:</b> {props.doctor.special_facilities.map((facility) => {return (facility + " ")})}
-              </TabPanel>
-            </div>
-          </CardContent>
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              {props.doctor.area_of_expertise}
+              <br></br>
+              <b>Address: </b> {props.doctor.address.address_value}
+              <br></br>
+              <b>Languages:</b>{" "}
+              {props.doctor.languages.map((language) => {
+                return language + " ";
+              })}
+              <br></br>
+              <b>Special Facilties:</b>{" "}
+              {props.doctor.special_facilities.map((facility) => {
+                return facility + ", ";
+              })}
+            </TabPanel>
+          </div>
+        </CardContent>
 
-          <CardActions disableSpacing>
-          </CardActions>
-        </Card>
+        <CardActions disableSpacing></CardActions>
+      </Card>
     </ThemeProvider>
   );
 };
