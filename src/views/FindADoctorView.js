@@ -145,16 +145,16 @@ const FindADoctorView = () => {
   }
 
   const deleteTimeSlotHandler = (timeslot) => {
-    // setTimeSlots(prevTimeSlots => {
+    // console.log("Timeslot to be deleted" , timeslot);
+    setTimeSlots(prevTimeSlots => {
     // var index = timeslot.indexOf(timeslot.id);
     // console.log(timeslot);
-    // const updatedTimeSlots = prevTimeSlots.filter(slot => slot.id !== timeslot.id);
-    // console.log("updatedtimeslots: ", updatedTimeSlots);
-    // console.log("prevtimeslots: ", prevTimeSlots);
-    // console.log("timeslotId", timeslot.id);
-    // return updatedTimeSlots;
-    // )}
+    const updatedTimeSlots = prevTimeSlots.filter(slot => slot.id !== timeslot.id);
+    return updatedTimeSlots;
+    })
   };
+
+  console.log("TIMESLOTS: ", timeslots);
 
   useEffect(() => {
     const getConfig = async () => {

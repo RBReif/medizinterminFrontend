@@ -112,13 +112,13 @@ const Doctor = (props) => {
   console.log("props.appointments", props.appointments);
   return (
     <ThemeProvider theme={Theme}>
-      <Card className={classes.root}>
+      <Card id={props.id} className={classes.root}>
         <CardHeader
           avatar={
             <Avatar
               aria-label="doctor"
               className={classes.avatar}
-              src="https://cdn.shopify.com/s/files/1/1390/2701/t/5/assets/doctor.jpg?v=12170138145179114637"
+              src={props.doctor.thumbnail}
             ></Avatar>
           }
           action={ <Ratings value={props.doctor.audience_ratings} readOnly={true} />

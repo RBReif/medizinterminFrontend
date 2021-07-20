@@ -26,7 +26,7 @@ const DoctorList = (props) => {
       variant="outlined"
       content={
         <div>
-          {doctor ? <Doctor doctor={doctor} appointments={props.result[1]}></Doctor> : ""}
+          {doctor ? <Doctor id={doctor._id} key={doctor._id} doctor={doctor} appointments={props.result[1]}></Doctor> : ""}
         </div>
       }
     ></DynamicCard>
