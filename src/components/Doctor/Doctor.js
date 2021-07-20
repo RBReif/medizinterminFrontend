@@ -19,9 +19,11 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import DynamicDropdown from "../Forms/DynamicDropdown";
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import moment from "moment";
+import calcDistance from "../Forms/Location/CalcDistance";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -109,7 +111,12 @@ const Doctor = (props) => {
     return setAppointmentDate(event.target.value);
   };
 
-  console.log("props.appointments", props.appointments);
+  let distance = Math.round(calcDistance(
+    props.patientAddress.lat,
+    props.patientAddress.lng,
+    props.doctor.address.lat,
+    props.doctor.address.lng
+  ) * 100)/100;
   return (
     <ThemeProvider theme={Theme}>
       <Card id={props.id} className={classes.root}>
@@ -121,18 +128,16 @@ const Doctor = (props) => {
               src={props.doctor.thumbnail}
             ></Avatar>
           }
-          action={ <Ratings value={props.doctor.audience_ratings} readOnly={true} />
+          action={
+            <Ratings value={props.doctor.audience_ratings} readOnly={true} />
           }
           title={
             <b>
               {props.doctor.firstname} {props.doctor.lastname}
             </b>
           } //query doctor name + profession
-          subheader={
-            <div>
-              {props.doctor.area_of_expertise}       
-            </div>
-          }
+          subheader={<div>{props.doctor.area_of_expertise} <br></br>
+          {distance} km away</div>}
         />
         <CardContent>
           <div>
@@ -151,9 +156,7 @@ const Doctor = (props) => {
             <TabPanel value={value} index={0}>
               {/* <b>Appointment at</b> {props.appointment.startPoint} */}
               <FormControl className={classes.formControl}>
-                <Select
-                  onClick={dateChangeHandler}
-                >
+                <Select onClick={dateChangeHandler}>
                   {props.appointments.map((item) => {
                     return (
                       <MenuItem key={item._id} value={item.startPoint}>
@@ -162,9 +165,15 @@ const Doctor = (props) => {
                     );
                   })}
                 </Select>
-              </FormControl>  <Button style={{marginLeft: 10}} onClick={handleExpandClick} color="primary" size="small">
-              Book Appointment
-            </Button>
+              </FormControl>{" "}
+              <Button
+                style={{ marginLeft: 10 }}
+                onClick={handleExpandClick}
+                color="primary"
+                size="small"
+              >
+                Book Appointment
+              </Button>
             </TabPanel>
             <TabPanel value={value} index={1}>
               {props.doctor.area_of_expertise}

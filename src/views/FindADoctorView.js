@@ -206,16 +206,11 @@ const FindADoctorView = () => {
     area = areaI.toUpperCase();
   }
   
+  //Grouping the results by doctorID, so that all appointments are grouped by that doctor 
   const grouped = _.groupBy(Object.values(results), function (result) {
     return result.doctor;
   });
-
   // console.log("GROUPED: ", grouped);
-
-  for (const [key, value] of Object.entries(grouped)) {
-    console.log(`${key}`);
-  }
-
   // console.log("TEST", Object.entries(grouped)[1])
 
   return (
@@ -364,19 +359,19 @@ const FindADoctorView = () => {
                     content={
                       <div>
                         <div>
-                          {!isLoading && Object.keys(results).length > 0 && (
+                          {!isLoading && Object.keys(grouped).length > 0 && (
                             <div>
                               {Object.entries(grouped).map((item) => {
                                 // console.log("ID ID: ", item);
-                                return <DoctorList result={item}></DoctorList>;
+                                return <DoctorList patientAddress={address} result={item}></DoctorList>;
                               })}
                             </div>
                           )}
-                          {!isLoading && Object.keys(results) === 0 && (
+                          {!isLoading && Object.keys(grouped).length === 0 && (
                             <center>
                               <Paper className={classes.paper}>
                                 <p>
-                                  Found no doctors. Please try another Search.
+                                  Found no doctors. Please try another search.
                                 </p>
                               </Paper>
                             </center>
