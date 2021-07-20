@@ -15,10 +15,11 @@ import LogInProfessionalsView from "./views/LogInProfessionalsView";
 import RegisterProfessionalsView from "./views/RegisterProfessionalsView";
 import TermsView from "./views/Terms";
 import ImpressumView from "./views/Impressum";
-import DoctorDashboard from "./views/DoctorDashboard";
 import PatientDashboard from "./views/PatientDashboard";
 import EmergencyView from "./views/Emergency";
 import Landing from "./views/Landing";
+import DoctorDashboard from "./views/DoctorDashboard";
+import DoctorDailyPlanView from "./views/DoctorDailyPlanView"
 
 
 const AuthenticatedRoute = (props) => {
@@ -90,13 +91,15 @@ function App(props) {
                         <AuthenticatedRoute path="/doctor-dashboard">
                             <DoctorDashboard/>
                         </AuthenticatedRoute>
+                        <Route path="/doctor-daily-plan">
+                            <DoctorDailyPlanView/>
+                        </Route>
                         <Route path="/">
                             <Landing/>
                         </Route>
                     </Switch>
                 </div>
             </Provider>
-
         </div>
     );
 }
