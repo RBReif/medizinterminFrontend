@@ -18,8 +18,6 @@ export function login(name, password) {
     };
 }
 
-
-
 export function setUser() {
     return async (dispatch) => {
         const user = await UserService.getCurrentUser()

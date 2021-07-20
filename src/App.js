@@ -27,7 +27,8 @@ const AuthenticatedRoute = (props) => {
 
     useEffect(() => {
         dispatch(setUser())
-        dispatch(setDoctor())
+        console.log('Hello!')
+        //dispatch(setDoctor())
     }, [])
 
     const userData = useSelector(state => state.user)
