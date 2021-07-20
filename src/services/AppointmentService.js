@@ -90,6 +90,28 @@ export default class AppointmentService{
         }).then()
     }
 
+
+    static updateAppointment(id, appointmentStatus, appointmentDetails, appointmentTitle, patient){
+        return new Promise( async(resolve, reject) => {
+            await  HttpService.put(
+                `${this.baseURL()}/${id}`,
+                {
+                    appointmentStatus: appointmentStatus,
+                    appointmentDetails: appointmentDetails,
+                    appointmentTitle: appointmentTitle,
+                    patient: patient,
+                },
+                function (data){resolve(data)},
+                function (textStatus){
+                    reject(textStatus);
+
+                }
+
+            )
+        }).then()
+    }
+
+
     static deleteAppointment(id){
         return new Promise( async(resolve, reject) => {
             await  HttpService.remove(
