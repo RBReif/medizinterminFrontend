@@ -183,7 +183,6 @@ const PatientSignUp = (props) => {
                             </div>
                         </Col>
                     </Row>
-
                     <Row>
                         <Col>
                             <Form.Label> E-Mail </Form.Label>

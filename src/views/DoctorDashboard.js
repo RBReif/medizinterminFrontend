@@ -87,6 +87,7 @@ const DoctorDashboard = () => {
     const patient = patients.find((e) => e._id === id);
     return patient.name;
   };
+
   useEffect(() => {
     setCalendarEvents(
       appointments.map((item) => {

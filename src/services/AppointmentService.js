@@ -64,7 +64,7 @@ export default class AppointmentService{
     }
 
 
-    static filterAppointments(area, languages, facilities, startpoint, endpoint){
+    static filterAppointments(area, languages, facilities, startpoint, endpoint, radius, address, lat, lng, insurance){
         return new Promise( async(resolve, reject) => {
             await  HttpService.post(
                 this.baseURL()+"/filter",
@@ -74,6 +74,10 @@ export default class AppointmentService{
                     facilities: facilities,
                     startpoint: startpoint,
                     endpoint: endpoint,
+                    address: address,
+                    lng: lng,
+                    lat: lat,
+                    maxDistance: radius,
                 },
                 function (data){resolve(data)},
                 function (textStatus){

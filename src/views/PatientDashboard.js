@@ -15,7 +15,7 @@ import { getPatients, getPatient } from "../redux/actions";
 import DoctorService from "../services/DoctorService";
 import DynamicCard from "../components/UI/DynamicCard";
 import { Button } from "@material-ui/core";
-import Recommendation from "../components/Recommendations/Recmmendation"
+import Recommendation from "../components/Recommendations/Recommendation"
 import Appointment from "../components/Appointment/Appointment";
 
 const useStyles = makeStyles((theme) => ({
@@ -52,6 +52,7 @@ const PatientDashboard = (props) => {
   const [doctors, setDoctors] = useState([]);
   const [doctorList, setDoctorList] = useState([]);
   const [totalAppointments, setTotalAppointments] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [recommendations, setRecommendations] = useState([]);
 
@@ -64,6 +65,7 @@ const PatientDashboard = (props) => {
     getPatient();
 
     const getAppointments = async () => {
+      setIsLoading(true);
       const appointments = await AppointmentService.getAppointmentsPatient(
         patientId
       );
@@ -81,7 +83,7 @@ const PatientDashboard = (props) => {
 
       doctorIDs.forEach(async (a) => {
         const doctor = await DoctorService.getDoctor(a);
-        console.log("RECEIVED DOCTOR", doctor);
+        // console.log("RECEIVED DOCTOR", doctor);
         console.log("RECEIVED DOCTOR", doctor);
         doctorList.push(doctor);
         setDoctors(doctorList);
@@ -89,6 +91,7 @@ const PatientDashboard = (props) => {
           appointments.map((item) => {
             if (item.doctor === a) {
               item["doctor_name"] = doctor.name;
+              item["doctor_last_name"] = doctor.last_name;
               item["doctor_address"] = doctor.address;
               item["doctor_area_of_expertise"] = doctor.area_of_expertise;
               return item;
@@ -98,6 +101,7 @@ const PatientDashboard = (props) => {
           })
         );
       });
+      setIsLoading(false);
     };
     const a = getAppointments();
     a.then(console.log("finally", appointments));
@@ -272,10 +276,13 @@ const findRecommendations = () => {
                     ))
                 ) : (
                     <Paper className={classes.paper}>
-                      You have no recommended check-ups
+                      You have no recommended check-ups.
                     </Paper>
                 )}
               </p>
+            </Grid>
+            <Grid>
+            <p></p>
             </Grid>
           </Grid>
           <Grid item xs={4}>
@@ -284,22 +291,26 @@ const findRecommendations = () => {
             </Paper>
             <p></p>
             <Grid item xs={12}>
-              <p>
-                {upcomingAppointments.length > 0 ? (
-                  upcomingAppointments.map((appointment) => (
-                    <p>
-                      <Appointment
-                        props={appointment}
-                        readOnly={true}
-                      ></Appointment>
-                    </p>
-                  ))
-                ) : (
-                  <Paper className={classes.paper}>
-                    You have no upcoming appointments
-                  </Paper>
-                )}
-              </p>
+              {!isLoading ? (
+                <p>
+                  {upcomingAppointments.length > 0 ? (
+                    upcomingAppointments.map((appointment) => (
+                      <p>
+                        <Appointment
+                          props={appointment}
+                          readOnly={true}
+                        ></Appointment>
+                      </p>
+                    ))
+                  ) : (
+                    <Paper className={classes.paper}>
+                      You have no upcoming appointments.
+                    </Paper>
+                  )}
+                </p>
+              ) : (
+                <Paper className={classes.paper}>Loading...</Paper>
+              )}
             </Grid>
           </Grid>
           <Grid xs={4} item>
@@ -308,17 +319,23 @@ const findRecommendations = () => {
             </Paper>
             <p></p>
             <Grid item xs={12} alignItems="center">
-              {prevAppointments.length > 0 ? (
-                prevAppointments.map((appointment) => (
-                  <Appointment
-                    props={appointment}
-                    readOnly={false}
-                  ></Appointment>
-                ))
+              {!isLoading ? (
+                <div>
+                  {prevAppointments.length > 0 ? (
+                    prevAppointments.map((appointment) => (
+                      <Appointment
+                        props={appointment}
+                        readOnly={false}
+                      ></Appointment>
+                    ))
+                  ) : (
+                    <Paper className={classes.paper}>
+                      You have no previous appointments.
+                    </Paper>
+                  )}{" "}
+                </div>
               ) : (
-                <Paper className={classes.paper}>
-                  You have no previous appointments.
-                </Paper>
+                <Paper className={classes.paper}>Loading...</Paper>
               )}
             </Grid>
           </Grid>

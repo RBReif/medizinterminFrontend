@@ -73,6 +73,17 @@ const CalendarEventForm = (props) => {
   const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
   const [appointmentType, setAppointmentType] = React.useState("");
 
+
+  function roundTimeHalfHour(time) {
+    var timeToReturn = new Date(time);
+
+    timeToReturn.setMilliseconds(Math.round(timeToReturn.getMilliseconds() / 1000) * 1000);
+    timeToReturn.setSeconds(Math.round(timeToReturn.getSeconds() / 60) * 60);
+    timeToReturn.setMinutes(Math.round(timeToReturn.getMinutes() / 30) * 30);
+    return timeToReturn;
+}
+
+
   //changeHandler
   const handleStartDateChange = (date) => {
     setSelectedStartDate(date);
@@ -177,7 +188,7 @@ const CalendarEventForm = (props) => {
                             id="date-picker-startdate"
                           />
                           <DynamicTimePicker
-                            selected={selectedStartDate}
+                            selected={roundTimeHalfHour(selectedStartDate)}
                             changehandler={handleStartDateChange}
                             label="Please select start time"
                             id="date-picker-starttime"
@@ -191,7 +202,7 @@ const CalendarEventForm = (props) => {
                             id="date-picker-enddate"
                           />
                           <DynamicTimePicker
-                            selected={selectedEndDate}
+                            selected={roundTimeHalfHour(selectedEndDate)}
                             changehandler={handleEndDateChange}
                             label="Please select end time"
                             id="date-picker-endtime"
