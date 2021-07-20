@@ -72,6 +72,7 @@ const SignUpComponent = (props) => {
     });
     const [expertise, setExpertise] = useState("");
     const [birthDate, setBirthDate] = React.useState("");
+    const [pictureUrl, setPictureUrl] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [password2, setPassword2] = React.useState("");
     const [registerError, setRegisterError] = React.useState("");
@@ -80,7 +81,7 @@ const SignUpComponent = (props) => {
     const onRegister = (e) => {
         e.preventDefault();
         let docFacilities = facilities.filter(x => x.isActive).map(x => x.displayname)
-        props.onRegister(username, password, firstName, lastName, birthDate, expertise, languageList, address, docFacilities);
+        props.onRegister(username, password, firstName, lastName, birthDate, expertise, languageList, address, docFacilities, pictureUrl);
     };
 
     const onChangeFirstName = (e) => {
@@ -130,6 +131,11 @@ const SignUpComponent = (props) => {
         return facilities;
     };
 
+    const onChangePictureUrl = (e) => {
+        setPictureUrl(e.target.value);
+        setRegisterError("");
+    };
+
     const onChangePassword = (e) => {
         setPassword(e.target.value);
         setRegisterError("");
@@ -173,7 +179,7 @@ const SignUpComponent = (props) => {
             <Container>
                 <Paper className={classes.signUpPaper} component="form">
                     <Form>
-                        <center><h4>Welcome to medizintermin!</h4></center>
+                        <center><h4>Medical Professional Sign Up</h4></center>
                         <br/>
                         <Row>
                             <Col>
@@ -216,7 +222,7 @@ const SignUpComponent = (props) => {
                                 <Form.Label> Date of Birth </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
-                                        label="Date of Birth"
+                                        label="Date of Birth as MM-DD-YYYY"
                                         fullWidth
                                         value={birthDate}
                                         onChange={onChangeBirthDate}
@@ -285,6 +291,15 @@ const SignUpComponent = (props) => {
                                 </div>
                             </Col>
                         </Row>
+                        <Form.Label> Profile Picture </Form.Label>
+                        <div className={classes.signUpRow}>
+                            <TextField
+                                label="Picture URL"
+                                fullWidth
+                                value={pictureUrl}
+                                onChange={onChangePictureUrl}
+                            />
+                        </div>
                         <Form.Label> Password </Form.Label>
                         <div className={classes.signUpRow}>
                             <TextField

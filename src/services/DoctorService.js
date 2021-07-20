@@ -5,7 +5,7 @@ export default class DoctorService {
         return "http://localhost:4000/doctor";
     }
 
-    static register(username, password, firstName, lastName, birthDate, expertise, languageList, address, facilities) {
+    static register(username, password, firstName, lastName, birthDate, expertise, languageList, address, facilities, thumbnail) {
         return new Promise((resolve, reject) => {
             HttpService.post(`${DoctorService.baseURL()}/register`, {
                 username: username,
@@ -16,7 +16,8 @@ export default class DoctorService {
                 area_of_expertise: expertise,
                 languages: languageList,
                 address: address,
-                special_facilities: facilities
+                special_facilities: facilities,
+                thumbnail: thumbnail,
             }, function (data) {
                 resolve(data);
             }, function (textStatus) {
@@ -53,6 +54,7 @@ export default class DoctorService {
             id: JSON.parse(window.atob(base64))._id,
             username: JSON.parse(window.atob(base64)).username,
             role: JSON.parse(window.atob(base64)).role,
+            thumbnail: JSON.parse(window.atob(base64)).thumbnail,
             token
         };
     }

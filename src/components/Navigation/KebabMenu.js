@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
@@ -7,6 +7,10 @@ import { Menu, MenuItem, Avatar, Divider } from "@material-ui/core";
 import { connect, useSelector } from "react-redux";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
+import UserService from "../../services/UserService";
+import PatientService from "../../services/PatientService";
+import DoctorService from "../../services/DoctorService";
+import AppointmentService from "../../services/AppointmentService";
 
 const useStyles = makeStyles((theme) => ({
     menuitem: {
@@ -46,6 +50,7 @@ function KebabMenu(props) {
         props.history.push("/");
     };
 
+
     return (
         <Menu
             open={props.open}
@@ -55,8 +60,7 @@ function KebabMenu(props) {
             {userData.user
                 ? [
                     <MenuItem key="user" className={classes.menuitem}>
-                        <Avatar className={classes.avatar}>
-                            {userData.user.username ? userData.user.username[0] : ""}
+                        <Avatar src={userData.user.thumbnail}>
                         </Avatar>
                         {userData.user.username}
                     </MenuItem>,

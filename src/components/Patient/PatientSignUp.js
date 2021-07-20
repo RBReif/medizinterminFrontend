@@ -67,6 +67,7 @@ const PatientSignUp = (props) => {
     });
     const [healthInsurance, setHealthInsurance] = useState("");
     const [birthDate, setBirthDate] = React.useState("");
+    const [pictureUrl, setPictureUrl] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [password2, setPassword2] = React.useState("");
     const [registerError, setRegisterError] = React.useState("");
@@ -77,7 +78,7 @@ const PatientSignUp = (props) => {
 
     const onRegister = (e) => {
         e.preventDefault();
-        props.onRegister(username, password, firstName, lastName, birthDate, healthInsurance, address, gender);
+        props.onRegister(username, password, firstName, lastName, birthDate, healthInsurance, address, gender, pictureUrl);
     };
 
     const onChangeFirstName = (e) => {
@@ -117,6 +118,11 @@ const PatientSignUp = (props) => {
 
     const onChangeBirthDate = (e) => {
         setBirthDate(e.target.value);
+        setRegisterError("");
+    };
+
+    const onChangePictureUrl = (e) => {
+        setPictureUrl(e.target.value);
         setRegisterError("");
     };
 
@@ -187,7 +193,6 @@ const PatientSignUp = (props) => {
                                 </div>
                             </Col>
                         </Row>
-
                         <Row>
                             <Col>
                                 <Form.Label> E-Mail </Form.Label>
@@ -201,10 +206,15 @@ const PatientSignUp = (props) => {
                                 </div>
                             </Col>
                             <Col>
-                                <Form.Label> Address </Form.Label>
-                                <LocationAutoComplete
-                                    onSelect={onSelectAddress}
-                                />
+                                <Form.Label> Date of Birth </Form.Label>
+                                <div className={classes.signUpRow}>
+                                    <TextField
+                                        label="Date of Birth as MM-DD-YYYY"
+                                        fullWidth
+                                        value={birthDate}
+                                        onChange={onChangeBirthDate}
+                                    />
+                                </div>
                             </Col>
                         </Row>
                         <Row>
@@ -227,20 +237,24 @@ const PatientSignUp = (props) => {
                                 ></DynamicDropdown>
                             </Col>
                             <Col sm={6}>
-                                <Form.Label> Date of Birth </Form.Label>
-                                <div className={classes.signUpRow}>
-                                    <TextField
-                                        label="Date of Birth"
-                                        fullWidth
-                                        value={birthDate}
-                                        onChange={onChangeBirthDate}
-                                    />
-                                </div>
+
+                                <Form.Label> Address </Form.Label>
+                                <LocationAutoComplete
+                                    onSelect={onSelectAddress}
+                                />
+
+
                             </Col>
                         </Row>
-                        <Row>
-
-                        </Row>
+                        <Form.Label> Profile Picture </Form.Label>
+                        <div className={classes.signUpRow}>
+                            <TextField
+                                label="Picture URL"
+                                fullWidth
+                                value={pictureUrl}
+                                onChange={onChangePictureUrl}
+                            />
+                        </div>
                         <Form.Label> Password </Form.Label>
                         <div className={classes.signUpRow}>
                             <TextField
