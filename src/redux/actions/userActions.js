@@ -18,8 +18,6 @@ export function login(name, password) {
     };
 }
 
-
-
 export function setUser() {
     return async (dispatch) => {
         const user = await UserService.getCurrentUser()
@@ -37,7 +35,7 @@ export function loginReset() {
     return { type: "LOGIN_RESET" };
 }
 
-export function register(username, password, firstName, lastName, birthDate, healthInsurance, address, gender) {
+export function register(username, password, firstName, lastName, birthDate, healthInsurance, address, gender, pictureUrl) {
     function onSuccess(user) {
         return { type: "LOGIN_SUCCESS", user: user };
     }
@@ -47,7 +45,7 @@ export function register(username, password, firstName, lastName, birthDate, hea
 
     return async (dispatch) => {
         try {
-            const user = await UserService.register(username, password, firstName, lastName, birthDate, healthInsurance, address, gender);
+            const user = await UserService.register(username, password, firstName, lastName, birthDate, healthInsurance, address, gender, pictureUrl);
             dispatch(onSuccess(user));
         } catch (e) {
             dispatch(onFailure(e));
