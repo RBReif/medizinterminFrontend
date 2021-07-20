@@ -43,22 +43,44 @@ export default class AppointmentService{
         }).then()
     }
 
+    static createAppointment(doctor, startPoint, appointmentStatus, appointmentDetails, appointmentTitle){
+        return new Promise( async(resolve, reject) => {
+            await  HttpService.post(
+                this.baseURL(),
+                {
+                    doctor: doctor,
+                    startPoint: startPoint,
+                    appointmentStatus: appointmentStatus,
+                    appointmentDetails: appointmentDetails,
+                    appointmentTitle: appointmentTitle,
+                },
+                function (data){resolve(data)},
+                function (textStatus){
+                    reject(textStatus);
+                }
+
+            )
+        }).then()
+    }
+
+
     static filterAppointments(area, languages, facilities, startpoint, endpoint){
         return new Promise( async(resolve, reject) => {
             await  HttpService.post(
                 this.baseURL()+"/filter",
-                function (data){resolve(data)},
-                function (textStatus){
-                    reject(textStatus);
-
-                },
                 {
                     profession: area,
                     languages: languages,
                     facilities: facilities,
                     startpoint: startpoint,
                     endpoint: endpoint,
+                },
+                function (data){resolve(data)},
+                function (textStatus){
+                    reject(textStatus);
+
                 }
+
             )
         }).then()
     }

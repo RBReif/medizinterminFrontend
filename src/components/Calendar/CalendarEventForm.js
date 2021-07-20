@@ -12,10 +12,31 @@ import DynamicDropdown from "../Forms/DynamicDropdown";
 import DynamicCard from "../UI/DynamicCard";
 import { Box } from "@material-ui/core";
 import { Button } from "@material-ui/core";
+import AppointmentService from "../../services/AppointmentService";
+import DoctorService from "../../services/DoctorService";
+import moment from "moment";
+
+const getColor = (status) => {
+  switch (status) {
+    case "AVAILABLE":
+      return "#41b23d";
+    case "FAILED":
+      return "#b23d49";
+    case "SCHEDULED":
+      return "#ffc107";
+    case "SUCCESSFUL":
+      return "#185619";
+    default:
+      return "#473db2";
+  }
+};
 
 const appointmenttype = [
-  { id: "1", displayname: "Out of Office" },
-  { id: "2", displayname: "Occupied" },
+  { displayname: "SUCCESSFUL" },
+  { displayname: "SCHEDULED" },
+  //   REQUESTED: "REQUESTED",
+  { displayname: "FAILED" },
+  { displayname: "AVAILABLE" },
 ];
 
 //material-ui styles
@@ -37,15 +58,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * For register new users
+ * @param {props} props
+ */
+
 const CalendarEventForm = (props) => {
-  // This form will create a new calendar event with the following properties 
+  let doctorID = DoctorService.getCurrentUser().id;
+  // This form will create a new calendar event with the following properties
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const classes = useStyles();
   const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
   const [appointmentType, setAppointmentType] = React.useState("");
-
 
   //changeHandler
   const handleStartDateChange = (date) => {
@@ -55,10 +81,10 @@ const CalendarEventForm = (props) => {
   const handleEndDateChange = (date) => {
     setSelectedEndDate(date);
   };
- 
+
   const handleAppointmentChange = (event) => {
     setAppointmentType(event.target.value);
-  }
+  };
 
   const handleTitleChange = (string) => {
     setTitle(string.target.value);
@@ -68,21 +94,27 @@ const CalendarEventForm = (props) => {
     setDescription(string.target.value);
   };
 
-
   //submitHandler, will create a new event onSubmit
-  const submitHandler = (event) => {
-    event.preventDefault();
+  const submitHandler = async (event) => {
 
+    event.preventDefault(); 
+
+ let testDate = moment(new Date(selectedStartDate)).toDate();
+
+ console.log("TESTDATE: ", testDate); 
+    let newEvent = await AppointmentService.createAppointment(doctorID, selectedStartDate, appointmentType, description, title)
+
+    console.log("NEW EVENT", newEvent);
     const calendarEvent = {
       from: new Date(selectedStartDate),
       to: new Date(selectedEndDate),
       title: title,
       type: appointmentType,
-      color: appointmentType === "Out of Office" ? "#3694DF": "#ffc107",
-      // description: description
+      color: getColor(appointmentType),
+      
     };
 
-    // console.log(calendarEvent);
+    console.log(calendarEvent);
 
     props.onSaveTimeSlotData(calendarEvent);
     setSelectedStartDate("");
@@ -96,7 +128,11 @@ const CalendarEventForm = (props) => {
     event.preventDefault();
     console.log("Invalid input");
     alert(
-      "Invalid input. Please choose a end date and end time greater than start date and start time"
+      appointmentType === "AVAILABLE" || appointmentType === "SCHEDULED?"
+        ? "Invalid input. 'AVAILABLE' and 'SCHEDULED' timeslots can only occur in the future. If this is the case, please check if the end date/time is after the start date/time."
+        : appointmentType === "SUCCESSFUL" || appointmentType === "FAILED"
+        ? "Invalid input. 'SUCCESSFUL' and 'FAILED' timeslots can only occur in the past. If this is the case, please check if the end date/time is after the start date/time."
+        : "Invalid input. Please check your parameters again."
     );
   };
 
@@ -176,6 +212,7 @@ const CalendarEventForm = (props) => {
                         rows={7}
                         defaultValue={""}
                         variant="outlined"
+                        onChange={handleDescriptionChange}
                       />
                     </Box>
                   </Grid>
@@ -189,10 +226,22 @@ const CalendarEventForm = (props) => {
               <Col>
                 <form
                   onSubmit={
-                    selectedEndDate > selectedStartDate
-                      ? selectedStartDate > new Date()
-                        ? selectedEndDate > new Date()
-                          ? submitHandler
+                    appointmentType === "AVAILABLE" ||
+                    appointmentType === "SCHEDULED"
+                      ? selectedEndDate > selectedStartDate
+                        ? selectedStartDate > new Date()
+                          ? selectedEndDate > new Date()
+                            ? submitHandler
+                            : alertHandler
+                          : alertHandler
+                        : alertHandler
+                      : appointmentType === "FAILED" ||
+                        appointmentType === "SUCCESSFUL"
+                      ? selectedEndDate > selectedStartDate
+                        ? selectedStartDate < new Date()
+                          ? selectedEndDate < new Date()
+                            ? submitHandler
+                            : alertHandler
                           : alertHandler
                         : alertHandler
                       : alertHandler

@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import DynamicDropdown from "../components/Forms/DynamicDropdown";
 import DynamicSwitch from "../components/Forms/DynamicSwitch";
 import { Form, Container, Row, Col } from "react-bootstrap";
@@ -15,11 +15,14 @@ import { Button } from "@material-ui/core";
 import CardMedia from "@material-ui/core/CardMedia";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core";
-import image from "../images/professional.jpg"
+import image from "../images/professional.jpg";
 import MultiSelectDropdown from "../components/Forms/MultiSelectDropdown";
 import ConfigService from "../services/ConfigService";
-import {connect, useSelector} from "react-redux";
-
+import { connect, useSelector } from "react-redux";
+import { Grid } from "@material-ui/core";
+import Doctor from "../components/Doctor/Doctor";
+import AppointmentService from "../services/AppointmentService"
+import {forEach} from "react-bootstrap/ElementChildren";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,23 +39,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-
 const FindADoctorView = () => {
+
   const [timeslots, setTimeSlots] = useState("");
-//  const [togglesSelected, setTogglesSelecteed] = useState([]);
+  //  const [togglesSelected, setTogglesSelecteed] = useState([]);
   const classes = useStyles();
   const [doctor, setDoctor] = useState("");
-  const [healthInsurance, setHealthInsurance] = useState("");
+  let area =""
+  const [healthInsurances, setHealthInsurances] = useState("");
   const [latLng, setLatLng] = useState({
     lat: null,
     lng: null,
   });
+  const [address, setAddress] = useState("");
   const [radius, setRadius] = useState("");
   const [facilities, setFacilities] = useState([]);
-  const [insurances, setInsurances ] = useState([]);
-  const [languages, setLanguages ] = useState([]);
+  const [insurances, setInsurances] = useState([]);
+  const [insurance, setInsurance] = useState("");
+  const [languages, setLanguages] = useState([]);
+  const [languageList, setLanguageList] = useState([]);
   const [areas, setAreas] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [search, setSearch] = useState(false);
+  const [results, setResults] = useState([]);
+
+
 
   const addTimeSlotHandler = (timeslot) => {
     setTimeSlots((prevTimeSlots) => {
@@ -60,14 +71,14 @@ const FindADoctorView = () => {
     });
   };
 
-  const languagesChangeHandler = (event) => {
-    // console.log("stateChangeHandler: ", event.target.value);
-    return setLanguages(event.target.value);
+  const languagesChangeHandler = (value) => {
+    setLanguageList(value);
   };
 
   const healthInsuranceChangeHandler = (event) => {
-    // console.log("healthinsurancechangehandler: ", event.target.value);
-    return setHealthInsurance(event.target.value);
+    console.log("healthinsurancechangehandler: ", event.target.value);
+    //dispatch
+    return setInsurance(event.target.value);
   };
 
   const areaChangeHandler = (event) => {
@@ -75,8 +86,10 @@ const FindADoctorView = () => {
     return setDoctor(event.target.value);
   };
 
-  const locationHandler = (latLng) => {
+  const locationHandler = (latLng, value) => {
     // console.log("LOCATION ", latLng);
+    // console.log("value:::: ", value);
+    setAddress({ address_value: value, lat: latLng.lat, lng: latLng.lng });
     return setLatLng({
       lat: latLng.lat,
       lng: latLng.lng,
@@ -84,22 +97,43 @@ const FindADoctorView = () => {
   };
 
   const radiusHandler = (radius) => {
-    console.log("RADIUS: ", radius);
+    // console.log("RADIUS: ", radius);
     return setRadius(radius);
   };
 
   const toggleChangeHandler = (displayname, isActive) => {
-     console.log(displayname, isActive);
-    let objIndex = facilities.findIndex((obj => obj.displayname === displayname));
+    console.log(displayname, isActive);
+    let objIndex = facilities.findIndex(
+      (obj) => obj.displayname === displayname
+    );
     facilities[objIndex].isActive = !facilities[objIndex].isActive;
     console.log(facilities);
     return facilities;
   };
 
+  const submitHandler = async () => {
+ const facilitiesRightFormat = []
+    for (let i = 0; i< facilities.length; i++){
+      if (facilities[i].isActive){
+        facilitiesRightFormat.push(facilities[i].displayname)
+      }
+    }
+    console.log("CALLED SUBMITHANDLER")
+    for (let i = 0; i < timeslots.length; i++){
+      setIsLoading(true)
+      console.log("We will soon request answers")
+         let receivedResults = await AppointmentService.filterAppointments(doctor, languageList, facilitiesRightFormat,timeslots[i].startdate,timeslots[i].enddate, radius, address.lat, address.lng,insurance)
+         setResults([...results, receivedResults])
+      console.log("RECEIVED RESULT: ", receivedResults)
+  }
+  setIsLoading(false)
+  };
+
+
   const deleteTimeSlotHandler = (timeslot) => {
     // setTimeSlots(prevTimeSlots => {
     // var index = timeslot.indexOf(timeslot.id);
-    console.log(timeslot);
+    // console.log(timeslot);
     // const updatedTimeSlots = prevTimeSlots.filter(slot => slot.id !== timeslot.id);
     // console.log("updatedtimeslots: ", updatedTimeSlots);
     // console.log("prevtimeslots: ", prevTimeSlots);
@@ -108,25 +142,62 @@ const FindADoctorView = () => {
     // )}
   };
 
-
-  useEffect(  () => {
+  useEffect(() => {
     const getConfig = async () => {
-      const config = await ConfigService.getConfig()
-      console.log(config)
-      setInsurances(config.insurances.map((item) => {return {"displayname": item.valueOf()}}))
-      setLanguages(config.languages.map((item) => {return {"displayname": item.valueOf()}}))
-      setAreas(config.areas.map((item) => {return {"displayname": item.valueOf()}}))
-      setFacilities(config.facilities.map((item) => {return {"displayname": item.valueOf(),"isActive": false}}))
+      const config = await ConfigService.getConfig();
+      // console.log(config);
+      setInsurances(
+        config.insurances.map((item) => {
+          return { displayname: item.valueOf() };
+        })
+      );
+      setLanguages(
+        config.languages.map((item) => {
+          return { displayname: item.valueOf() };
+        })
+      );
+      setAreas(
+        config.areas.map((item) => {
+          return { displayname: item.valueOf() };
+        })
+      );
+      setFacilities(
+        config.facilities.map((item) => {
+          return { displayname: item.valueOf(), isActive: false };
+        })
+      );
 
-      console.log("HealthinsuranceList inside:2 ", insurances)
+      // console.log("HealthinsuranceList inside:2 ", insurances);
+    };
+    getConfig();
+    // console.log("Healthinsurancelist middle: ", insurances);
 
+    const paramsStr = window.location.search;
+    console.log ("params received: ", paramsStr)
+    if (paramsStr.includes("area")){
+      const params = new URLSearchParams(paramsStr)
+      const areaI = params.get('area')
+      setDoctor(areaI)
+      area = areaI.toUpperCase()
+      console.log("JUST SET AREA," , area)
     }
-    getConfig()
-    console.log("Healthinsurancelist middle: ", insurances)
-  }, [])
+
+  }, []);
+
+
+  const paramsStr = window.location.search;
+  console.log ("params received: ", paramsStr)
+  if (paramsStr.includes("area")){
+    const params = new URLSearchParams(paramsStr)
+    const areaI = params.get('area')
+   // setDoctor(areaI)
+    area = areaI.toUpperCase()
+    console.log("JUST SET AREA," , area)
+  }
+
 
   return (
-  <ThemeProvider theme={Theme}>
+    <ThemeProvider theme={Theme}>
       <Page>
         <Container fluid>
           <Row>
@@ -144,43 +215,83 @@ const FindADoctorView = () => {
                   variant="outlined"
                   content={
                     <div>
+                      <center>
                       <h4>Area of Expertise</h4>
                       <DynamicCard
                         variant="body2"
                         content={
                           <DynamicDropdown
-                            defaultValue=""
+                            defaultValue={area}
                             label="Please choose the type of doctor you need"
                             items={areas}
                             onChange={areaChangeHandler}
                           ></DynamicDropdown>
                         }
+                        
                       ></DynamicCard>
                       <DynamicCard
                         variant="outlined"
                         content={
                           <div>
                             <h4>Preferred Location</h4>
-                            <DynamicCard
-                              variant="body2"
-                              content={
-                                <div>
-                                  <Box p={2}>
-                                    <LocationAutoComplete
-                                      onSelect={locationHandler}
-                                    ></LocationAutoComplete>
-                                  </Box>
-                                  <Box p={2}>
-                                    <LocationSlider
-                                      onClick={radiusHandler}
-                                    ></LocationSlider>
-                                  </Box>
-                                </div>
-                              }
-                            ></DynamicCard>
+                            <div>
+                              <Box p={2}>
+                                <LocationAutoComplete
+                                  onSelect={locationHandler}
+                                ></LocationAutoComplete>
+                              </Box>
+                              <Box p={2}>
+                                <LocationSlider
+                                  onClick={radiusHandler}
+                                ></LocationSlider>
+                              </Box>
+                            </div>
                           </div>
                         }
                       ></DynamicCard>
+                      <DynamicCard
+                        variant="body2"
+                        content={
+                          <div>
+                            <h4>Language</h4>
+                            <MultiSelectDropdown
+                              label="Please choose your preferred language"
+                              items={languages}
+                              onChange={languagesChangeHandler}
+                            ></MultiSelectDropdown>
+                          </div>
+                        }
+                      ></DynamicCard>
+                      <DynamicCard
+                        variant="body2"
+                        content={
+                          <div>
+                          <h4>Insurance</h4>
+                          <DynamicDropdown
+                            label="Please choose your health insurance"
+                            items={insurances}
+                            onChange={healthInsuranceChangeHandler}
+                          ></DynamicDropdown>
+                          </div>
+                        }
+                      ></DynamicCard>
+                       <DynamicCard
+                        variant="body2"
+                        content={
+                      <div>
+                      <h4>Accessibility</h4>
+                        {facilities.map((toggle) => {
+                          return (
+                            <DynamicSwitch
+                              key={toggle.id}
+                              id={toggle.id}
+                              displayname={toggle.displayname}
+                              onChange={toggleChangeHandler}
+                            ></DynamicSwitch>
+                          );
+                        })}
+                      </div>}></DynamicCard>
+                      </center>
                     </div>
                   }
                 ></DynamicCard>
@@ -191,40 +302,16 @@ const FindADoctorView = () => {
                 variant="outlined"
                 content={
                   <div>
-                    <h4>Language, Location, and Disability Settings</h4>
-                    <DynamicCard
-                      variant="body2"
-                      content={
-                        <MultiSelectDropdown
-                          label="Please choose your preferred language"
-                          items={languages}
-                          onChange={languagesChangeHandler}
-                        ></MultiSelectDropdown>
-                      }
-                    ></DynamicCard>
-                    <DynamicCard
-                      variant="body2"
-                      content={
-                        <DynamicDropdown
-                          label="Please choose your health insurance"
-                          items={insurances}
-                          onChange={healthInsuranceChangeHandler}
-                        ></DynamicDropdown>
-                      }
-                    ></DynamicCard>
-                    <div>
-                      {facilities.map((toggle) => {
-                        return (
-                          <DynamicSwitch
-                            key={toggle.id}
-                            id={toggle.id}
-                            displayname={toggle.displayname}
-                            onChange={toggleChangeHandler}
-                          ></DynamicSwitch>
-                        );
-                      })}
-                    </div>
-                    {/* <LocationSetter/> */}
+                    <center>
+                    <h4>When are you usually free?</h4>
+                    <br />
+                    {/* <TimeSlots items={timeslots} /> */}
+                    <TimeSlotDateList
+                      items={timeslots}
+                      onDeleteTimeSlotHandler={deleteTimeSlotHandler}
+                    />
+                    <NewTimeSlot onAddTimeSlot={addTimeSlotHandler} />
+                    </center>
                   </div>
                 }
               ></DynamicCard>
@@ -234,31 +321,55 @@ const FindADoctorView = () => {
                 variant="outlined"
                 content={
                   <div>
-                    <h4>When are you usually free?</h4>
-                    <br />
-                    {/* <TimeSlots items={timeslots} /> */}
-                    <TimeSlotDateList
-                      items={timeslots}
-                      onDeleteTimeSlotHandler={deleteTimeSlotHandler}
-                    />
-                    <NewTimeSlot onAddTimeSlot={addTimeSlotHandler} />
+                    <center>
+                      <h4>Search for appointments!</h4>
+                      <p></p>
+                      <Button color="secondary" onClick={submitHandler}>
+                        Find an appointment
+                      </Button>
+                    </center>
                   </div>
                 }
               ></DynamicCard>
+              {search ? (
+                <div>
+                  <DynamicCard
+                    variant="outlined"
+                    content={
+                      <div>
+                        <center>
+                        <h4>We found the following results for you:</h4>
+                        </center>
+                        <div>
+                          {!isLoading &&
+                            results.length > 0 &&
+                            results.map((r) => (
+                              console.log(r)
+                            ))}
+                          {!isLoading && results.length === 0 && (
+                            <center>
+                              <p>Found no doctors.</p>
+                              <p>
+                                <Button href="/find-doctor">
+                                  Try new search
+                                </Button>
+                              </p>
+                            </center>
+                          )}
+                          {isLoading && <p>Loading...</p>}
+                        </div>
+                      </div>
+                    }
+                  ></DynamicCard>
+                </div>
+              ) : (
+                ""
+              )}
             </Col>
           </Row>
           <Row>
             <Col></Col>
-            <Col>
-              <br />
-              <br />
-              <center>
-                <Button color="secondary" href={`/results?radius=${radius}`}>
-                  Find an appointment
-                </Button>
-              </center>
-              {""}
-            </Col>
+            <Col></Col>
             <Col></Col>
           </Row>
         </Container>

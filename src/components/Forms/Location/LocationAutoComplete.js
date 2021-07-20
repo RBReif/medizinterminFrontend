@@ -6,6 +6,7 @@ import PlacesAutocomplete, {
 import { Input } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { Theme } from '../../UI/Theme';
+import { TextField } from "@material-ui/core";
 
 export default function LocationAutoComplete(props) {
   const [address, setAddress] = React.useState("");
@@ -19,7 +20,7 @@ export default function LocationAutoComplete(props) {
     const latLng = await getLatLng(results[0]);
     setAddress(value);
     setCoordinates(latLng);
-    props.onSelect(address, latLng);
+    props.onSelect(latLng, value);
   };
 
   return (
@@ -33,7 +34,7 @@ export default function LocationAutoComplete(props) {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
-            <Input
+            <TextField
               fullWidth="true"
               id="outlined"
               {...getInputProps({ placeholder: "Address" })}
@@ -44,7 +45,7 @@ export default function LocationAutoComplete(props) {
 
               {suggestions.map((suggestion) => {
                 const style = {
-                  backgroundColor: suggestion.active ? "#41b6e6" : "#fff",
+                  backgroundColor: suggestion.active ? "#88BDC0" : "#fff",
                 };
 
                 return (

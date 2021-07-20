@@ -14,11 +14,17 @@ import KebabMenu from "./KebabMenu";
 import MenuIcon from "@material-ui/icons/Menu";
 
 const routes = [
-    {path: "/", displayname: "Home"},
+    {path: "/find-doctor", displayname: "Home"},
 ];
 
 
 const NavigationBar = (props) => {
+
+    const userData = useSelector((state) => {
+        // return the currently logged in user from redux store
+        return state.user;
+    });
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const ref = useRef(null)
     const handleClose = () => {
@@ -38,11 +44,13 @@ const NavigationBar = (props) => {
     };
 
     const onClickAreYouADoctor = () => {
-        // trigger redux logout action
-        props.dispatch(logout());
-        //logout();
         // navigate to the healthcare professional login
         props.history.push("/login-professionals");
+    };
+
+    const onClickAreYouAPatient = () => {
+        // navigate to the patient login
+        props.history.push("/login-patients");
     };
 
     return (
@@ -51,19 +59,23 @@ const NavigationBar = (props) => {
 
                 <Navbar expand={"xl"} bg="light" variant="light">
 
-                    <Link to="/" className="navbar-brand">medizintermin</Link>
+                    <Link to="/find-doctor" className="navbar-brand">medizintermin</Link>
                     <Nav className="ml-auto">
                         <div>
-                            <Button style={{marginRight: 5}} color="secondary" onClick={onClickAreYouADoctor}>Are You a
-                                Doctor?</Button>
-                            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                                <MenuIcon/>
-                            </Button>
+                            {userData.user
+                                ? [<Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                                    <MenuIcon/>
+                                </Button>]
+                                : [<Button style={{marginRight: 5}} color="secondary"
+                                           onClick={onClickAreYouADoctor}>Are
+                                    You a Doctor?</Button>]
+                            }
                         </div>
                     </Nav>
 
                 </Navbar>
                 <KebabMenu
+                    color="secondary"
                     id="simple-menu"
                     anchorEl={anchorEl}
                     open={!!anchorEl}
