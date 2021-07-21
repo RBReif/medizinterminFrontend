@@ -104,10 +104,16 @@ const Doctor = (props) => {
   };
 
   const submit = async () => {
-    let res = await AppointmentService.updateAppointment(appointment._id, "SCHEDULED", appointment.appointmentDetails, appointment.appointmentTitle,UserService.getCurrentUser().id)
-   console.log("RESPONSE: ", res)
-   alert("Medizintermin booked your appointment on "+ res.startPoint+" ! Thank you for booking with us:)")
-    console.log("BOOK BOOK BOOK: ", appointment)
+    if (window.confirm('Are you sure you want to book this appointment?')) {
+      let res = await AppointmentService.updateAppointment(appointment._id, "SCHEDULED", appointment.appointmentDetails, appointment.appointmentTitle,UserService.getCurrentUser().id)
+      console.log("RESPONSE: ", res)
+      alert("Medizintermin booked your appointment on "+ res.startPoint+" ! Thank you for booking with us:)")
+      console.log("BOOK BOOK BOOK: ", appointment)
+      window.location.reload()
+    } else {
+
+    }
+
   };
 
   const handleNumberClick = () => {

@@ -39,8 +39,14 @@ const useStyles = makeStyles((theme) => ({
 const Appointment = (props) => {
     const classes = useStyles();      
     
-    const clickHandler = () => {
-        alert("hi")
+    const  clickHandler = async() => {
+        if (window.confirm('Are you sure you want to delete your appointment?')) {
+           let res =  await AppointmentService.updateAppointment(props.props._id,"AVAILABLE","","",null)
+alert("We deleted your appointment on "+res.startPoint)
+            window.location.reload()
+        } else {
+
+        }
 
     };
     return (
