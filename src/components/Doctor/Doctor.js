@@ -19,11 +19,12 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import DynamicDropdown from "../Forms/DynamicDropdown";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import moment from "moment";
-import calcDistance from "../Forms/Location/CalcDistance";
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import AppointmentService from "../../services/AppointmentService";
+import UserService from"../../services/UserService";
+import CalcDistance from "../Forms/Location/CalcDistance";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -92,7 +93,8 @@ const Doctor = (props) => {
   const [showNumber, setShowNumber] = React.useState(false);
   const [avgAudienceRating, setAvgAudienceRating] = React.useState("");
   const [value, setValue] = React.useState(0);
-  const [appointmentDate, setAppointmentDate] = React.useState("");
+  const [appointment, setAppointment] = React.useState("");
+ // const [appointmentID, setAppointmentID] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -102,16 +104,29 @@ const Doctor = (props) => {
     setExpanded(!expanded);
   };
 
+  const submit = async () => {
+    if (window.confirm('Are you sure you want to book this appointment?')) {
+      let res = await AppointmentService.updateAppointment(appointment._id, "SCHEDULED", appointment.appointmentDetails, appointment.appointmentTitle,UserService.getCurrentUser().id)
+      console.log("RESPONSE: ", res)
+      alert("Medizintermin booked your appointment on "+ res.startPoint+" ! Thank you for booking with us:)")
+      console.log("BOOK BOOK BOOK: ", appointment)
+      window.location.reload()
+    } else {
+
+    }
+
+  };
+
   const handleNumberClick = () => {
     setShowNumber(!showNumber);
   };
 
   const dateChangeHandler = (event) => {
-    console.log("stateChangeHandler: ", event.target.value);
-    return setAppointmentDate(event.target.value);
+
+    return setAppointment(event.target.value);
   };
 
-  let distance = Math.round(calcDistance(
+  let distance = Math.round(CalcDistance(
     props.patientAddress.lat,
     props.patientAddress.lng,
     props.doctor.address.lat,
@@ -159,21 +174,15 @@ const Doctor = (props) => {
                 <Select onClick={dateChangeHandler}>
                   {props.appointments.map((item) => {
                     return (
-                      <MenuItem key={item._id} value={item.startPoint}>
+                      <MenuItem key={item._id} value={item}>
                         {item.startPoint}
                       </MenuItem>
                     );
                   })}
                 </Select>
-              </FormControl>{" "}
-              <Button
-                style={{ marginLeft: 10 }}
-                onClick={handleExpandClick}
-                color="primary"
-                size="small"
-              >
-                Book Appointment
-              </Button>
+              </FormControl>  <Button style={{marginLeft: 10}} onClick={submit} color="primary" size="small">
+              Book Appointment
+            </Button>
             </TabPanel>
             <TabPanel value={value} index={1}>
               {props.doctor.area_of_expertise}
@@ -192,7 +201,6 @@ const Doctor = (props) => {
             </TabPanel>
           </div>
         </CardContent>
-
         <CardActions disableSpacing></CardActions>
       </Card>
     </ThemeProvider>

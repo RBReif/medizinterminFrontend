@@ -11,6 +11,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from "@material-ui/icons/Menu";
 import { MenuItem } from "@material-ui/core";
 import { Divider } from "@material-ui/core";
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import AppointmentService from "../../services/AppointmentService";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,22 +39,15 @@ const useStyles = makeStyles((theme) => ({
 const Appointment = (props) => {
     const classes = useStyles();      
     
-    const clickHandler = () => {
-      <Menu
-            open={true}
-            anchorEl={props.anchorEl}
-            onClose={props.onClose}
-        >
-                    <MenuItem key="ss" className={classes.menuitem}>
-                        ssss
-                    </MenuItem>,
-                    <Divider key="divider" />,
-                    <MenuItem>
-                    sffsfsf
-                    </MenuItem>
-                    <MenuItem>
-                    </MenuItem>
-        </Menu>
+    const  clickHandler = async() => {
+        if (window.confirm('Are you sure you want to delete your appointment?')) {
+           let res =  await AppointmentService.updateAppointment(props.props._id,"AVAILABLE","","",null)
+alert("We deleted your appointment on "+res.startPoint)
+            window.location.reload()
+        } else {
+
+        }
+
     };
     return (
         <ThemeProvider theme={Theme}>
@@ -63,13 +58,19 @@ const Appointment = (props) => {
                   <Avatar
                     aria-label="doctor"
                     className={classes.avatar}
-                    src="https://cdn.shopify.com/s/files/1/1390/2701/t/5/assets/doctor.jpg?v=12170138145179114637"
+                    src={props.props.doctor_thumbnail}
                   ></Avatar>
                 }
-                action={
-                  <IconButton aria-label="settings" onClick={clickHandler}>
-                    <MoreVertIcon />
-                  </IconButton>
+                action={ props.upcoming?
+                  <button aria-label="Close" onClick={clickHandler}>
+                      <DeleteForeverIcon />
+                  </button>
+
+:                    <Ratings
+                    value={props.props.audienceRatings}
+                    readOnly={true}
+
+                    />
                 }
                 title={<b>{props.props.doctor_name} {props.props.doctor_last_name}</b>} 
                 subheader={
@@ -79,11 +80,12 @@ const Appointment = (props) => {
                     {props.props.startPoint}
                     <br></br>
                     {props.props.doctor_address}
-                    <br></br>
-                    <Ratings 
-                    value={props.props.audienceRatings}
-                    readOnly={props.readOnly}
-                    />
+                      <br></br>
+                      {props.upcoming?
+                      <Ratings
+                          value={props.props.audienceRatings}
+                          readOnly={props.readOnly}
+                      />:""}
                     {/* <Rating
                       name="read-only"
                       value={props.doctor.avgAudienceRating}
