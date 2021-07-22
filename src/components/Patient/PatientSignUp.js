@@ -209,7 +209,8 @@ const PatientSignUp = (props) => {
                                 <Form.Label> Date of Birth </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
-                                        label="Date of Birth as MM-DD-YYYY"
+                                        label=""
+                                        type="date"
                                         fullWidth
                                         value={birthDate}
                                         onChange={onChangeBirthDate}
