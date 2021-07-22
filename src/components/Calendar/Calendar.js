@@ -1,81 +1,78 @@
-// import React from 'react';
-// import Calendar from "react-awesome-calendar";
-
-// //What this component is about: This component is the calendar view which is used in the doctors dashboard
-// //It visualizes a calendar and takes a json from the respective doctor as an input
-// //Please check out NewCalendarEvent and CalendarEventForm for more information
-// //The calendar is used in the Doctors Dashboard view
-
-// export default class Component extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.calendar = React.createRef();
-//     }
-
-//     componentDidMount() {
-//         const details = this.calendar.current.getDetails();
-//         console.log(details);
-
-//         /* result
-//             {
-//                 mode: 'monthlyMode',
-//                 year: 2019,
-//                 month: 0,
-//                 day: 1
-//             }
-//         */
-//         // call endpoint to retrieve events
-//     }
-
-//     render() {
-//       //  console.log("sgisghiehg" , this.props.events)
-//         return (
-//             <Calendar
-//                 ref={this.calendar}
-//                 events={this.props.events}
-//                 //onClick={this.props.onClick(this.props.events)}
-//             />
-//         );
-//     }
-// }
-
-import React from "react";
-
-import Scheduler, {Resource} from "devextreme-react/scheduler";
+import * as React from "react";
+import Paper from "@material-ui/core/Paper";
+import { ViewState } from "@devexpress/dx-react-scheduler";
+import {
+  Scheduler,
+  DayView,
+  WeekView,
+  MonthView,
+  Appointments,
+  AppointmentTooltip,
+  Toolbar,
+  Resources,
+  ViewSwitcher,
+  DateNavigator,
+} from "@devexpress/dx-react-scheduler-material-ui";
 import { ThemeProvider } from "@material-ui/styles";
 import { Theme } from "../UI/Theme";
 
-const currentDate = new Date();
-const views = ["day", "week", "month"];
+const Calendar = (props) => {
 
-export default class Component extends React.Component {
-  constructor(props) {
-    super(props);
-    this.calendar = React.createRef();
+  const clickHandler = (event) => {
+    console.log("Test");
   }
 
-  render() {
-    console.log("Wir sind im Kalender", this.props.events);
-    return (
-      <ThemeProvider theme={Theme}>
+  const Appointment = ({ children, data, style, ...restProps }) => (
+    <Appointments.Appointment
+      {...restProps}
+      style={{
+        ...style,
+        borderRadius: "8px",
+        backgroundColor: data.color,
+        data: data,
+      }}
+    >
+      {children}
+    </Appointments.Appointment>
+  );
+
+  console.log("Props events", props.events);
+  return (
+    <ThemeProvider theme={Theme}>
+      <Paper>
         <Scheduler
           timeZone="Europe/Berlin"
-          dataSource={this.props.events}
-          views={views}
+          data={props.events}
+          // views={views}
           defaultCurrentView="day"
-          defaultCurrentDate={currentDate}
-          height={600}
-          startDayHour={9}
-          editing={false}
-          textExpr={"title"}
-          startDateExpr={"from"}
-          endDateExpr={"to"}
-          descriptionExpr={"description"}
-        />
-          <Resource
-          dataSource={this.props.events}
-          useColorAsDefault={false}></Resource>
-      </ThemeProvider>
-    );
-  }
-}
+          // defaultCurrentDate={currentDate}
+          // height={600}
+          // startDayHour={9}
+          // editing={false}
+          // textExpr={"title"}
+          // startDateExpr={"from"}
+          // endDateExpr={"to"}
+          // descriptionExpr={"description"}
+        >
+          <ViewState
+            defaultCurrentDate={new Date()}
+            defaultCurrentViewName="Week"
+          />
+
+          <DayView startDayHour={9} endDayHour={18} intervalCount={60} />
+          <WeekView startDayHour={7} endDayHour={19} />
+
+          <MonthView></MonthView>
+
+          <Toolbar />
+          <ViewSwitcher />
+          <DateNavigator color="secondary"/>
+          <Appointments appointmentComponent={Appointment} onClick={clickHandler}/>
+          <AppointmentTooltip/>
+        </Scheduler>
+      </Paper>
+    </ThemeProvider>
+  );
+};
+
+export default Calendar;
