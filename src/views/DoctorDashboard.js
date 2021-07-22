@@ -14,6 +14,7 @@ import PatientService from "../services/PatientService";
 import DoctorService from "../services/DoctorService";
 import UserService from "../services/UserService";
 import CEV from "../components/Calendar/CalendarEventForm";
+import Demo from "../components/Calendar/NewCalendar";
 
 const getColor = (status) => {
   switch (status) {
@@ -29,6 +30,22 @@ const getColor = (status) => {
       return "#473db2";
   }
 };
+
+const getId = (status) => {
+  switch (status) {
+    case "AVAILABLE":
+      return 1;
+    case "FAILED":
+      return 2;
+    case "SCHEDULED":
+      return 3;
+    case "SUCCESSFUL":
+      return 4;
+    default:
+      return 5;
+  }
+};
+
 const DoctorDashboard = () => {
   let doctorID = DoctorService.getCurrentUser().id; //"60e70bc72c79d33ed899b25f"
   const [doctor, setDoctor] = useState({});
@@ -101,6 +118,7 @@ const DoctorDashboard = () => {
           startDate: new Date(item.startPoint),
           endDate: moment(new Date(item.startPoint)).add(30, "m").toDate(),
           title: item.appointmentTitle,
+          colorId: getId(item.appointmentStatus),
           //   description: item.hasOwnProperty("patient")
           //     ? "Your appointment is with " + getNamePatient(item.patient)
           //     : "",
@@ -184,6 +202,7 @@ const DoctorDashboard = () => {
                       </Box>
                     </Row>
                     <MyCalendar events={calendarEvents} />
+                    {/* <Demo events={calendarEvents}></Demo> */}
                   </div>
                 }
               ></DynamicCard>

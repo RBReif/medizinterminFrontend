@@ -59,8 +59,8 @@ const Calendar = (props) => {
             defaultCurrentViewName="Week"
           />
 
-          <DayView startDayHour={9} endDayHour={18} intervalCount={60} />
-          <WeekView startDayHour={7} endDayHour={19} />
+          <DayView startDayHour={0} endDayHour={24} intervalCount={60} />
+          <WeekView startDayHour={0} endDayHour={24} />
 
           <MonthView></MonthView>
 
