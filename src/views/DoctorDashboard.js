@@ -91,11 +91,11 @@ const DoctorDashboard = () => {
   useEffect(() => {
     setCalendarEvents(
       appointments.map((item) => {
-        console.log("PATIENTS STORED: ", patients);
-        console.log(
-          "HAS PATIENT:",
-          item.hasOwnProperty("patient") ? item.patient : ""
-        );
+        // console.log("PATIENTS STORED: ", patients);
+        // console.log(
+        //   "HAS PATIENT:",
+        //   item.hasOwnProperty("patient") ? item.patient : ""
+        // );
         return {
           color: getColor(item.appointmentStatus),
           from: new Date(item.startPoint),
