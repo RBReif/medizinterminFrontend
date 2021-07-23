@@ -8,7 +8,10 @@ import { Theme } from "../components/UI/Theme";
 import DynamicCard from "../components/UI/DynamicCard";
 import {Button, makeStyles} from "@material-ui/core";
 import DailyPlanCard from "../components/UI/DailyPlanCard";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import AppointmentService from "../services/AppointmentService";
+import PatientService from "../services/PatientService";
+import DoctorService from "../services/DoctorService";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,8 +33,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const DoctorDailyPlanView = () => {
-    const classes = useStyles();
+const getCurrentDateString = () => {
+
+    let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    let months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     const getOrdinalDate = (number) => {
         let selector;
 
@@ -45,25 +50,69 @@ const DoctorDailyPlanView = () => {
 
         return number + ['th', 'st', 'nd', 'rd', ''][selector];
     };
-    const appointment_details_list = [
-        { id: 0, date: "Thursday, July 15th 2021", comments: "/", medical_records: "-", purpose: "Full Body checkup", start_time: "11:00", end_time: "11:30", patient_name: "Jacob Hoffmann", patient_email: "jacob.hoffmann@tum.de", patient_phone: "+4917820304055", patient_insurance: "PUBLIC"},
-        { id: 1, date: "Thursday, July 15th 2021", comments: "/", medical_records: "Acute Diabetes", purpose: "Heart checkup", start_time: "11:30", end_time: "12:30", patient_name: "Helen McGrath", patient_email: "helen.mcgrath@tum.de", patient_phone: "4917820304066", patient_insurance: "PRIVATE"},
-        { id: 2, date: "Thursday, July 15th 2021", comments: "/", medical_records: "Hypertension", purpose: "Hand surgery", start_time: "13:00", end_time: "14:00", patient_name: "Ram Kapoor", patient_email: "ram.kapoor@tum.de", patient_phone: "4917820304077", patient_insurance: "PUBLIC"}
-    ]
+    const date = new Date();
+    return days[date.getDay()]+", "+months[date.getMonth()]+" "+getOrdinalDate(date.getDate())+" "+date.getFullYear();
+}
 
-    const [appointmentDetails, setAppointmentDetails] = useState(appointment_details_list[0]);
+const DoctorDailyPlanView = () => {
+    const classes = useStyles();
+    const currentDateString = getCurrentDateString();
+
+    // const appointmentDetailsList = [
+    //     { id: 0, date: currentDateString, comments: "/", medical_records: "-", purpose: "Full Body checkup", start_time: "11:00", end_time: "11:30", patient_name: "Jacob Hoffmann", patient_email: "jacob.hoffmann@tum.de", patient_phone: "+4917820304055", patient_insurance: "PUBLIC"},
+    //     { id: 1, date: currentDateString, comments: "/", medical_records: "Acute Diabetes", purpose: "Heart checkup", start_time: "11:30", end_time: "12:30", patient_name: "Helen McGrath", patient_email: "helen.mcgrath@tum.de", patient_phone: "4917820304066", patient_insurance: "PRIVATE"},
+    //     { id: 2, date: currentDateString, comments: "/", medical_records: "Hypertension", purpose: "Hand surgery", start_time: "13:00", end_time: "14:00", patient_name: "Ram Kapoor", patient_email: "ram.kapoor@tum.de", patient_phone: "4917820304077", patient_insurance: "PUBLIC"}
+    // ]
+    const [appointmentDetailsList, appendAppointmentDetailsList] = useState([]);
+    let doctorID = DoctorService.getCurrentUser().id;
+    const [appointments, setAppointments] = useState([]);
+    const [patients, setPatients] = useState([]);
+
+    useEffect(async () => {
+    const getAppointments = async () => {
+        const appointments = await AppointmentService.getAppointmentsDoctor(
+            doctorID
+        );
+        console.log("APPOINTMENTS RECEIVED: ", appointments);
+        setAppointments(appointments.map((item) => item));
+        let patientIDs = [];
+
+        let iterator = 0;
+        appointments.forEach((appointment) => {
+            const appointmentDetails = {
+                id: iterator,
+                date: currentDateString,
+                comments: appointment.appointmentDetails,
+                purpose: appointment.appointmentTitle,
+            };
+            if (appointment.hasOwnProperty("patient")) {
+
+                // if (!patientIDs.some((e) => e === a.patient)) {
+                //     patientIDs = [...patientIDs, a.patient];
+                // }
+            }
+        });
+
+        console.log("PATIENT IDS EXTRACTED: ", patientIDs);
+        for (const a1 of patientIDs) {
+            const patient = await PatientService.getPatient(a1);
+            console.log("RECEIVED PATIENT", patient);
+            setPatients([...patients, patient]);
+        }
+    };
+    const a = getAppointments();
+    }, [])
+
+    const [appointmentDetails, setAppointmentDetails] = useState(appointmentDetailsList[0]);
     const [cardSelected, changeCardSelected] = useState(0);
     //const [cardSelected, ]
 
     const clickHandler = (id) => (
         //console.log(id)
-        setAppointmentDetails(appointment_details_list[id]),
+        setAppointmentDetails(appointmentDetailsList[id]),
         changeCardSelected(id)
     );
-    let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    let months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    const date = new Date();
-    const currentDateString = days[date.getDay()]+", "+months[date.getMonth()]+" "+getOrdinalDate(date.getDate())+" "+date.getFullYear();
+
     return (
         <ThemeProvider theme={Theme}>
             <Page>
@@ -76,7 +125,7 @@ const DoctorDailyPlanView = () => {
                                 content={
                                     <div>
                                         <h5>{currentDateString}</h5>
-                                        {appointment_details_list.map((item => (
+                                        {appointmentDetailsList.map((item => (
                                                 <div>
                                                     <p>
                                                     <DailyPlanCard item={item} onClick={clickHandler} color={cardSelected === item.id? "#D7C49EFF": "#FFFFFF"}></DailyPlanCard>
@@ -97,7 +146,7 @@ const DoctorDailyPlanView = () => {
                                             <Col xl="8">
                                                 <h6>
                                                     Date: {currentDateString}<br/>
-                                                    Time: {appointmentDetails.start_time} - {appointment_details_list[0].end_time}
+                                                    Time: {appointmentDetails.start_time} - {appointmentDetailsList[0].end_time}
                                                     <br/>
                                                     <br/>
                                                     Comments: {appointmentDetails.comments}<br/><br/>
