@@ -80,7 +80,7 @@ function KebabMenu(props) {
             {userData?.user?.role == 'DOCTOR'
                 ? [
                     <MenuItem key="user" className={classes.menuitem}>
-                        <Avatar src={userData.user.thumbnail}>
+                        <Avatar src={userData.user.thumbnail} style={{marginRight: 2}}>
                         </Avatar>
                         {userData.user.username}
                     </MenuItem>,

@@ -17,8 +17,9 @@ import PropTypes from "prop-types";
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import AppointmentService from "../../services/AppointmentService"
+import AppointmentService from "../../services/AppointmentService";
 import UserService from"../../services/UserService";
+import CalcDistance from "../Forms/Location/CalcDistance";
 import DoctorService from "../../services/DoctorService";
 
 function TabPanel(props) {
@@ -134,6 +135,12 @@ const Doctor = (props) => {
     return setAppointment(event.target.value);
   };
 
+  let distance = Math.round(CalcDistance(
+    props.patientAddress.lat,
+    props.patientAddress.lng,
+    props.doctor.address.lat,
+    props.doctor.address.lng
+  ) * 100)/100;
   return (
     <ThemeProvider theme={Theme}>
       <Card id={props.id} className={classes.root}>
@@ -153,11 +160,8 @@ const Doctor = (props) => {
               {props.doctor.firstname} {props.doctor.lastname}
             </b>
           } //query doctor name + profession
-          subheader={
-            <div>
-              {props.doctor.area_of_expertise}       
-            </div>
-          }
+          subheader={<div>{props.doctor.area_of_expertise} <br></br>
+          {distance} km away</div>}
         />
         <CardContent>
           <div>
@@ -176,9 +180,7 @@ const Doctor = (props) => {
             <TabPanel value={value} index={0}>
               {/* <b>Appointment at</b> {props.appointment.startPoint} */}
               <FormControl className={classes.formControl}>
-                <Select
-                  onClick={dateChangeHandler}
-                >
+                <Select onClick={dateChangeHandler}>
                   {props.appointments.map((item) => {
                     return (
                       <MenuItem key={item._id} value={item}>
@@ -208,7 +210,6 @@ const Doctor = (props) => {
             </TabPanel>
           </div>
         </CardContent>
-
         <CardActions disableSpacing></CardActions>
       </Card>
     </ThemeProvider>
