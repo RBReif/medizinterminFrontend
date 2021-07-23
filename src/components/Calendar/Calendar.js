@@ -3,77 +3,90 @@ import Paper from "@material-ui/core/Paper";
 import { ViewState } from "@devexpress/dx-react-scheduler";
 import {
   Scheduler,
-  DayView,
+  Resources,
   WeekView,
   MonthView,
+  DayView,
   Appointments,
   AppointmentTooltip,
   Toolbar,
-  Resources,
   ViewSwitcher,
   DateNavigator,
 } from "@devexpress/dx-react-scheduler-material-ui";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import { withStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { Theme } from "../UI/Theme";
 
-const Calendar = (props) => {
+const styles = (theme) => ({
+  container: {
+    display: "flex",
+    marginBottom: theme.spacing(2),
+    justifyContent: "flex-end",
+  },
+  text: {
+    ...theme.typography.h6,
+    marginRight: theme.spacing(2),
+  },
+});
 
-  const clickHandler = (event) => {
-    console.log("Test");
+export default class MyCalendar extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: this.props.events,
+      mainResourceName: "appointmentStatus",
+      resources: [
+        {
+          fieldName: "appointmentStatus",
+          title: "Appointment Status",
+          instances: [
+            { id: "SCHEDULED", text: "Scheduled", color: "#D7C49EFF" },
+            { id: "AVAILABLE", text: "Available", color: "#A8D7B6" },
+            { id: "SUCCESSFUL", text: "Successful", color: "#88BDC0" },
+            { id: "FAILED", text: "Failed", color: "#D7A8B6" },
+          ],
+        },
+      ],
+    };
+
+    this.changeMainResource = this.changeMainResource.bind(this);
   }
 
-  const Appointment = ({ children, style, ...restProps }) => (
-    <Appointments.Appointment
-      {...restProps}
-      style={{
-        ...style,
-        borderRadius: "8px",
-        // backgroundColor: data.color,
-      }}
-    >
-      {children}
-    </Appointments.Appointment>
-  );
+  changeMainResource(mainResourceName) {
+    this.setState({ mainResourceName });
+  }
 
-  console.log("Props events", props.events);
-  return (
-    <ThemeProvider theme={Theme}>
-      <Paper>
-        <Scheduler
-          locale="en-DE"
-          timeZone="Europe/Berlin"
-          data={props.events}
-          height={500}
-          // views={views}
-          defaultCurrentView="day"
-          // defaultCurrentDate={currentDate}
-          // height={600}
-          // startDayHour={9}
-          // editing={false}
-          // textExpr={"title"}
-          // startDateExpr={"from"}
-          // endDateExpr={"to"}
-          // descriptionExpr={"description"}
-        >
-          <ViewState
-            defaultCurrentDate={new Date()}
-            defaultCurrentViewName="Week"
-          />
+  render() {
+    const { data, resources, mainResourceName } = this.state;
 
-          <DayView startDayHour={7} endDayHour={19} intervalCount={60} />
-          <WeekView startDayHour={7} endDayHour={19} />
+    return (
+      <React.Fragment>
+        <ThemeProvider theme={Theme}>
+        <Paper>
+          <Scheduler
+            locale="en-DE"
+            timeZone="Europe/Berlin"
+            data={this.props.events}
+            height={500}
+          >
+            <ViewState defaultCurrentDate={new Date()} />
+            <DayView startDayHour={0} endDayHour={24} intervalCount={7} />
+            <WeekView startDayHour={0} endDayHour={24} />
 
-          <MonthView></MonthView>
+            <MonthView></MonthView>
 
-          <Toolbar />
-          <ViewSwitcher />
-          <DateNavigator color="secondary"/>
-          <Appointments appointmentComponent={Appointment} onClick={clickHandler}/>
-          <AppointmentTooltip/>
-        </Scheduler>
-      </Paper>
-    </ThemeProvider>
-  );
-};
-
-export default Calendar;
+            <Toolbar />
+            <DateNavigator/>
+            <ViewSwitcher/>
+            <Appointments />
+            <AppointmentTooltip />
+            <Resources data={resources} mainResourceName={mainResourceName} />
+          </Scheduler>
+        </Paper>
+        </ThemeProvider>
+      </React.Fragment>
+    );
+  }
+}

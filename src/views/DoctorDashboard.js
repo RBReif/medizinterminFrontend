@@ -14,7 +14,6 @@ import PatientService from "../services/PatientService";
 import DoctorService from "../services/DoctorService";
 import UserService from "../services/UserService";
 import CEV from "../components/Calendar/CalendarEventForm";
-import Demo from "../components/Calendar/NewCalendar";
 
 const getColor = (status) => {
   switch (status) {
@@ -118,7 +117,7 @@ const DoctorDashboard = () => {
           startDate: new Date(item.startPoint),
           endDate: moment(new Date(item.startPoint)).add(30, "m").toDate(),
           title: item.appointmentTitle,
-          colorId: getId(item.appointmentStatus),
+          appointmentStatus: item.appointmentStatus,
           //   description: item.hasOwnProperty("patient")
           //     ? "Your appointment is with " + getNamePatient(item.patient)
           //     : "",
