@@ -56,6 +56,11 @@ export const Theme = createTheme ({
         },
         MuiLink: {
             color: "#FFFFFF",     
+        },
+        MuiTab: {
+            root: {
+            backgroundColor: "red",
+            }
         }
     }
 

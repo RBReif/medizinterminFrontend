@@ -12,12 +12,17 @@ import { Link
     return <h5>Found no timeslots.</h5>;
   }
 
-  console.log("Timeslots: ", timeslotitems);
+  const deleteHandler = (item) => {
+    props.onDeleteTimeSlotHandler(item)
+  }
+
+  // console.log("Timeslots: ", timeslotitems);
 
   return (
     <center>
       {timeslotitems.map((item) => (
         <DynamicCard
+        key={item.id}
         id={item.id}
         variant="body2"
         content={
@@ -27,8 +32,8 @@ import { Link
             id={item.id}
             startdate={item.startdate}
             enddate={item.enddate}
+            onClick={deleteHandler}
           />
-          <Link id={item.id} onClick={props.onDeleteTimeSlotHandler}>Remove</Link>
           </div>
         }/>
       ))}    

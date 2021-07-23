@@ -12,8 +12,6 @@ import ConfigService from "../../services/ConfigService";
 import LocationAutoComplete from "../Forms/Location/LocationAutoComplete";
 import {useSelector} from "react-redux";
 import {useHistory} from 'react-router-dom'
-import MultiSelectDropdown from "../Forms/MultiSelectDropdown";
-import DynamicSwitch from "../Forms/DynamicSwitch";
 
 const useStyles = makeStyles((theme) => ({
     usersignUpRoot: {
@@ -47,41 +45,40 @@ const useStyles = makeStyles((theme) => ({
  * For register new users
  * @param {props} props
  */
-const SignUpComponent = (props) => {
+const PatientSignUp = (props) => {
     const history = useHistory()
     const userData = useSelector((state) => state.user);
 
     useEffect(() => {
         if (userData?.user?.username) {
-            history.push("/doctor-dashboard");
+            history.push("/find-doctor");
         }
     }, [userData, history]);
+
 
     const classes = useStyles();
 
     const [firstName, setFirstName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
     const [username, setUsername] = React.useState("");
-    const [expertises, setExpertises] = useState([]);
-    const [languages, setLanguages] = useState([]);
-    const [languageList, setLanguageList] = useState([]);
-    const [facilities, setFacilities] = useState([]);
     const [address, setAddress] = useState({
         lat: null,
         lng: null,
     });
-    const [expertise, setExpertise] = useState("");
+    const [healthInsurance, setHealthInsurance] = useState("");
     const [birthDate, setBirthDate] = React.useState("");
     const [pictureUrl, setPictureUrl] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [password2, setPassword2] = React.useState("");
     const [registerError, setRegisterError] = React.useState("");
+    const [gender, setGender] = React.useState("");
+    const [genders, setGenders] = React.useState([])
 
+    const [insurances, setInsurances] = useState([]);
 
     const onRegister = (e) => {
         e.preventDefault();
-        let docFacilities = facilities.filter(x => x.isActive).map(x => x.displayname)
-        props.onRegister(username, password, firstName, lastName, birthDate, expertise, languageList, address, docFacilities, pictureUrl);
+        props.onRegister(username, password, firstName, lastName, birthDate, healthInsurance, address, gender, pictureUrl);
     };
 
     const onChangeFirstName = (e) => {
@@ -106,30 +103,22 @@ const SignUpComponent = (props) => {
             lng,
         });
         setRegisterError("");
-        console.log(address);
     };
 
-    const onChangeExpertise = (e) => {
+    const onChangeHealthInsurance = (e) => {
+        // console.log("healthinsurancechangehandler: ", event.target.value);
         setRegisterError("");
-        setExpertise(e.target.value);
+        setHealthInsurance(e.target.value);
 
+    };
+    const onChangeGender = (e) => {
+        setRegisterError("");
+        setGender(e.target.value);
     };
 
     const onChangeBirthDate = (e) => {
         setBirthDate(e.target.value);
         setRegisterError("");
-    };
-
-    const onChangeLanguages = (value) => {
-        setLanguageList(value);
-    };
-
-    const onChangeToggle = (displayname, isActive) => {
-        let objIndex = facilities.findIndex(
-            (obj) => obj.displayname === displayname
-        );
-        facilities[objIndex].isActive = !facilities[objIndex].isActive;
-        return facilities;
     };
 
     const onChangePictureUrl = (e) => {
@@ -160,19 +149,17 @@ const SignUpComponent = (props) => {
     useEffect(() => {
         const getConfig = async () => {
             const config = await ConfigService.getConfig()
-            setExpertises(config.areas.map((item) => {
+            console.log(config)
+            setInsurances(config.insurances.map((item) => {
                 return {"displayname": item.valueOf()}
-            }));
-            setLanguages(config.languages.map((item) => {
+            }))
+            console.log("HealthinsuranceList inside:2 ", insurances)
+            setGenders(config.genders.map((item) => {
                 return {"displayname": item.valueOf()}
-            }));
-            setFacilities(
-                config.facilities.map((item) => {
-                    return {"displayname": item.valueOf(), isActive: false};
-                })
-            );
+            }))
         }
         getConfig()
+        console.log("Healthinsurancelist middle: ", insurances)
     }, [])
 
     return (
@@ -180,7 +167,7 @@ const SignUpComponent = (props) => {
             <Container>
                 <Paper className={classes.signUpPaper} component="form">
                     <Form>
-                        <center><h4>Medical Professional Sign Up</h4></center>
+                        <center><h4>Patient Sign Up</h4></center>
                         <br/>
                         <Row>
                             <Col>
@@ -206,7 +193,6 @@ const SignUpComponent = (props) => {
                                 </div>
                             </Col>
                         </Row>
-
                         <Row>
                             <Col>
                                 <Form.Label> E-Mail </Form.Label>
@@ -223,7 +209,8 @@ const SignUpComponent = (props) => {
                                 <Form.Label> Date of Birth </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
-                                        label="Date of Birth as MM-DD-YYYY"
+                                        label=""
+                                        type="date"
                                         fullWidth
                                         value={birthDate}
                                         onChange={onChangeBirthDate}
@@ -234,62 +221,30 @@ const SignUpComponent = (props) => {
                         <Row>
                             <Col sm={3}>
                                 <DynamicDropdown
-                                    key={expertises.id}
+                                    key={genders.id}
                                     defaultValue=""
-                                    label="Area of Expertise"
-                                    items={expertises}
-                                    onChange={onChangeExpertise}
+                                    label="Gender"
+                                    items={genders}
+                                    onChange={onChangeGender}
                                 ></DynamicDropdown>
                             </Col>
                             <Col sm={3}>
-                                <MultiSelectDropdown
-                                    label="Languages"
-                                    items={languages}
-                                    onChange={onChangeLanguages}
-                                ></MultiSelectDropdown>
+                                <DynamicDropdown
+                                    key={insurances.id}
+                                    defaultValue=""
+                                    label="Health Insurance"
+                                    items={insurances}
+                                    onChange={onChangeHealthInsurance}
+                                ></DynamicDropdown>
                             </Col>
                             <Col sm={6}>
+
                                 <Form.Label> Address </Form.Label>
                                 <LocationAutoComplete
                                     onSelect={onSelectAddress}
                                 />
-                            </Col>
-                        </Row>
-                        <Row><Col>
-                            <div>
-                                <br/>
-                                <h5>Accessibility</h5>
-                            </div>
-                        </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <div>
-                                    {facilities.slice(0, 2).map((toggle) => {
-                                        return (
-                                            <DynamicSwitch
-                                                key={toggle.id}
-                                                id={toggle.id}
-                                                displayname={toggle.displayname}
-                                                onChange={onChangeToggle}
-                                            ></DynamicSwitch>
-                                        );
-                                    })}
-                                </div>
-                            </Col>
-                            <Col>
-                                <div>
-                                    {facilities.slice(2, 4).map((toggle) => {
-                                        return (
-                                            <DynamicSwitch
-                                                key={toggle.id}
-                                                id={toggle.id}
-                                                displayname={toggle.displayname}
-                                                onChange={onChangeToggle}
-                                            ></DynamicSwitch>
-                                        );
-                                    })}
-                                </div>
+
+
                             </Col>
                         </Row>
                         <Form.Label> Profile Picture </Form.Label>
@@ -352,9 +307,10 @@ const SignUpComponent = (props) => {
                                     firstName === "" ||
                                     lastName === "" ||
                                     birthDate === "" ||
-                                    expertise === "" ||
-                                    address.lat === "" ||
-                                    address.lng === "" ||
+                                    healthInsurance === "" ||
+                                    gender === "" ||
+                                    //address === "" ||
+
                                     registerError !== "" ||
                                     password !== password2
                                 }
@@ -366,7 +322,8 @@ const SignUpComponent = (props) => {
                     </Form>
                 </Paper>
             </Container>
+
         </div>
     );
 }
-export default SignUpComponent;
+export default PatientSignUp;

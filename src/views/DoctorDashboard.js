@@ -29,6 +29,22 @@ const getColor = (status) => {
       return "#473db2";
   }
 };
+
+const getId = (status) => {
+  switch (status) {
+    case "AVAILABLE":
+      return 1;
+    case "FAILED":
+      return 2;
+    case "SCHEDULED":
+      return 3;
+    case "SUCCESSFUL":
+      return 4;
+    default:
+      return 5;
+  }
+};
+
 const DoctorDashboard = () => {
   let doctorID = DoctorService.getCurrentUser().id; //"60e70bc72c79d33ed899b25f"
   const [doctor, setDoctor] = useState({});
@@ -87,19 +103,21 @@ const DoctorDashboard = () => {
     const patient = patients.find((e) => e._id === id);
     return patient.name;
   };
+
   useEffect(() => {
     setCalendarEvents(
       appointments.map((item) => {
-        console.log("PATIENTS STORED: ", patients);
-        console.log(
-          "HAS PATIENT:",
-          item.hasOwnProperty("patient") ? item.patient : ""
-        );
+        // console.log("PATIENTS STORED: ", patients);
+        // console.log(
+        //   "HAS PATIENT:",
+        //   item.hasOwnProperty("patient") ? item.patient : ""
+        // );
         return {
           color: getColor(item.appointmentStatus),
-          from: new Date(item.startPoint),
-          to: moment(new Date(item.startPoint)).add(30, "m").toDate(),
+          startDate: new Date(item.startPoint),
+          endDate: moment(new Date(item.startPoint)).add(30, "m").toDate(),
           title: item.appointmentTitle,
+          appointmentStatus: item.appointmentStatus,
           //   description: item.hasOwnProperty("patient")
           //     ? "Your appointment is with " + getNamePatient(item.patient)
           //     : "",
@@ -107,7 +125,9 @@ const DoctorDashboard = () => {
         };
       })
     );
-  }, [patients]);
+    console.log("in useEffect KalenderEvents: ", calendarEvents);
+
+  }, [patients, appointments]);
 
   /*
   useEffect( (id) => {
@@ -181,6 +201,7 @@ const DoctorDashboard = () => {
                       </Box>
                     </Row>
                     <MyCalendar events={calendarEvents} />
+                    {/* <Demo events={calendarEvents}></Demo> */}
                   </div>
                 }
               ></DynamicCard>

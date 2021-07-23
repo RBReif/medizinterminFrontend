@@ -46,6 +46,7 @@ const NavigationBar = (props) => {
     const onClickAreYouADoctor = () => {
         // navigate to the healthcare professional login
         props.history.push("/login-professionals");
+        console.log(window.location.href)
     };
 
     const onClickAreYouAPatient = () => {
@@ -66,9 +67,13 @@ const NavigationBar = (props) => {
                                 ? [<Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                     <MenuIcon/>
                                 </Button>]
-                                : [<Button style={{marginRight: 5}} color="secondary"
-                                           onClick={onClickAreYouADoctor}>Are
-                                    You a Doctor?</Button>]
+                                : window.location.href == 'http://localhost:3000/login-professionals' || window.location.href == 'http://localhost:3000/register-professionals' ?
+                                    [<Button style={{marginRight: 5}} color="secondary"
+                                             onClick={onClickAreYouAPatient}>Are
+                                        You a Patient?</Button>]
+                                    : [<Button style={{marginRight: 5}} color="secondary"
+                                               onClick={onClickAreYouADoctor}>Are
+                                        You a Doctor?</Button>]
                             }
                         </div>
                     </Nav>

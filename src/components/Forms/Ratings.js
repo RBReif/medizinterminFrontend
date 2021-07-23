@@ -21,12 +21,13 @@ const StyledRating = withStyles({
  * @param {props} props
  */
 function Ratings(props) {
+    // console.log("in ratings" , props.avgAudienceRating)
     return (
         <Table>
             <TableBody>
                 <TableRow>
                         <StyledRating
-                            value={props.value}
+                            value={props.avgAudienceRating}
                             onChange={(e, value) =>
                                 props.onChangeOwnRating(value)
                             }
@@ -41,10 +42,8 @@ function Ratings(props) {
 
 // attributes of props and their type
 Ratings.propTypes = {
-    criticsRating: PropTypes.number,
-    avgAudienceRating: PropTypes.number,
-    editMode: PropTypes.bool,
-    onChangeCriticsRating: PropTypes.func,
+    // avgAudienceRating: PropTypes.number,
+    // editMode: PropTypes.bool,
     onChangeOwnRating: PropTypes.func,
 };
 

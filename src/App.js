@@ -1,3 +1,5 @@
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
 import React, {useEffect, useState} from "react";
 import {Switch, Route, Redirect} from "react-router-dom";
 import {Provider, useDispatch, useSelector} from "react-redux";
@@ -22,12 +24,11 @@ import DoctorDashboard from "./views/DoctorDashboard";
 import DoctorDailyPlanView from "./views/DoctorDailyPlanView"
 
 
-const AuthenticatedRoute = (props) => {
+const DoctorAuthenticatedRoute = (props) => {
     const [isLoggedIn, setIsLoggedIn] = useState(undefined)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(setUser())
         dispatch(setDoctor())
     }, [])
 
@@ -41,6 +42,36 @@ const AuthenticatedRoute = (props) => {
 
     if (isLoggedIn !== undefined && !isLoggedIn) {
         return <Redirect to={"/"}/>
+    }
+
+    if (userData?.user?.role == 'PATIENT') {
+        return <Redirect to={"/find-doctor"}/>
+    }
+
+    return <Route {...props}/>
+}
+const PatientAuthenticatedRoute = (props) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(undefined)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setUser())
+    }, [])
+
+    const userData = useSelector(state => state.user)
+    useEffect(() => {
+        if (!!userData) {
+            setIsLoggedIn(!!userData?.user?.username)
+        }
+
+    }, [userData])
+
+    if (isLoggedIn !== undefined && !isLoggedIn) {
+        return <Redirect to={"/"}/>
+    }
+
+    if (userData?.user?.role == 'DOCTOR') {
+        return <Redirect to={"/doctor-dashboard"}/>
     }
 
     return <Route {...props}/>
@@ -61,42 +92,42 @@ function App(props) {
                 <div>
                     {/* <NavigationBar/> */}
                     <Switch>
-                        <AuthenticatedRoute path="/find-doctor" exact>
+                        <PatientAuthenticatedRoute path="/find-doctor" exact>
                             <FindADoctorView/>
-                        </AuthenticatedRoute>
-                        <Route path="/login-professionals">
+                        </PatientAuthenticatedRoute>
+                        <NotAuthenticatedRoute path="/login-professionals">
                             <LogInProfessionalsView/>
-                        </Route>
-                        <Route path="/register-patients">
+                        </NotAuthenticatedRoute>
+                        <NotAuthenticatedRoute path="/register-patients">
                             <RegisterPatientsView/>
-                        </Route>
-                        <Route path="/register-professionals">
+                        </NotAuthenticatedRoute>
+                        <NotAuthenticatedRoute path="/register-professionals">
                             <RegisterProfessionalsView/>
-                        </Route>
-                        <Route path="/login-patients">
+                        </NotAuthenticatedRoute>
+                        <NotAuthenticatedRoute path="/login-patients">
                             <LoginPatientsView/>
-                        </Route>
-                        <Route path={"/terms"}>
+                        </NotAuthenticatedRoute>
+                        <NotAuthenticatedRoute path={"/terms"}>
                             <TermsView/>
-                        </Route>
-                        <Route path={"/impressum"}>
+                        </NotAuthenticatedRoute>
+                        <NotAuthenticatedRoute path={"/impressum"}>
                             <ImpressumView/>
-                        </Route>
-                        <Route path="/emergency">
+                        </NotAuthenticatedRoute>
+                        <NotAuthenticatedRoute path="/emergency">
                             <EmergencyView/>
-                        </Route>
-                        <AuthenticatedRoute path="/dashboard">
+                        </NotAuthenticatedRoute>
+                        <PatientAuthenticatedRoute path="/dashboard">
                             <PatientDashboard/>
-                        </AuthenticatedRoute>
-                        <AuthenticatedRoute path="/doctor-dashboard">
+                        </PatientAuthenticatedRoute>
+                        <DoctorAuthenticatedRoute path="/doctor-dashboard">
                             <DoctorDashboard/>
-                        </AuthenticatedRoute>
-                        <Route path="/doctor-daily-plan">
+                        </DoctorAuthenticatedRoute>
+                        <DoctorAuthenticatedRoute path="/doctor-daily-plan">
                             <DoctorDailyPlanView/>
-                        </Route>
-                        <Route path="/">
+                        </DoctorAuthenticatedRoute>
+                        <NotAuthenticatedRoute path="/">
                             <Landing/>
-                        </Route>
+                        </NotAuthenticatedRoute>
                     </Switch>
                 </div>
             </Provider>

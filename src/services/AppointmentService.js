@@ -43,13 +43,14 @@ export default class AppointmentService{
         }).then()
     }
 
-    static createAppointment(doctor, startPoint, appointmentStatus, appointmentDetails, appointmentTitle){
+    static createAppointment(doctor, startPoint, endPoint, appointmentStatus, appointmentDetails, appointmentTitle){
         return new Promise( async(resolve, reject) => {
             await  HttpService.post(
                 this.baseURL(),
                 {
                     doctor: doctor,
                     startPoint: startPoint,
+                    endPoint: endPoint,
                     appointmentStatus: appointmentStatus,
                     appointmentDetails: appointmentDetails,
                     appointmentTitle: appointmentTitle,
@@ -64,7 +65,7 @@ export default class AppointmentService{
     }
 
 
-    static filterAppointments(area, languages, facilities, startpoint, endpoint){
+    static filterAppointments(area, languages, facilities, startpoint, endpoint, radius, address, lat, lng, insurance){
         return new Promise( async(resolve, reject) => {
             await  HttpService.post(
                 this.baseURL()+"/filter",
@@ -74,6 +75,10 @@ export default class AppointmentService{
                     facilities: facilities,
                     startpoint: startpoint,
                     endpoint: endpoint,
+                    address: address,
+                    lng: lng,
+                    lat: lat,
+                    maxDistance: radius,
                 },
                 function (data){resolve(data)},
                 function (textStatus){
@@ -84,6 +89,28 @@ export default class AppointmentService{
             )
         }).then()
     }
+
+
+    static updateAppointment(id, appointmentStatus, appointmentDetails, appointmentTitle, patient){
+        return new Promise( async(resolve, reject) => {
+            await  HttpService.put(
+                `${this.baseURL()}/${id}`,
+                {
+                    appointmentStatus: appointmentStatus,
+                    appointmentDetails: appointmentDetails,
+                    appointmentTitle: appointmentTitle,
+                    patient: patient,
+                },
+                function (data){resolve(data)},
+                function (textStatus){
+                    reject(textStatus);
+
+                }
+
+            )
+        }).then()
+    }
+
 
     static deleteAppointment(id){
         return new Promise( async(resolve, reject) => {

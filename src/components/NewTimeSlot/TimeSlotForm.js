@@ -44,7 +44,6 @@ const TimeSlotForm = (props) => {
     );
   };
 
-  console.log("Form : ", selectedStartDate);
   return (
     <Container>
       <Row>

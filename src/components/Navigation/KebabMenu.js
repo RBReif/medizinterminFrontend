@@ -1,12 +1,14 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, {useEffect, useState} from "react";
+import {makeStyles} from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import { logout } from "../../redux/actions";
-import { Menu, MenuItem, Avatar, Divider } from "@material-ui/core";
-import { connect, useSelector } from "react-redux";
+import {withRouter} from "react-router-dom";
+import {logout} from "../../redux/actions";
+import {Menu, MenuItem, Avatar, Divider} from "@material-ui/core";
+import {connect, useSelector} from "react-redux";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
+import {Dashboard, Today} from "@material-ui/icons";
+import TodayIcon from '@material-ui/icons/Today';
 
 const useStyles = makeStyles((theme) => ({
     menuitem: {
@@ -17,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(1),
     },
 }));
+
 /**
  * Menu for user managment
  * @param {props} props
@@ -36,6 +39,27 @@ function KebabMenu(props) {
         props.history.push("/login-patients");
     };
 
+    const onClickDoctorDashboard = () => {
+        // close this menu
+        props.onClose();
+        // navigate to the doctor dashboard
+        props.history.push("/doctor-dashboard");
+    };
+
+    const onClickPatientDashboard = () => {
+        // close this menu
+        props.onClose();
+        // navigate to the doctor dashboard
+        props.history.push("/dashboard");
+    };
+
+    const onClickCalendar = () => {
+        // close this menu
+        props.onClose();
+        // navigate to the doctor calendar
+        props.history.push("/doctor-daily-plan");
+    };
+
     const onClickLogout = () => {
         // trigger redux logout action
         props.dispatch(logout());
@@ -46,39 +70,82 @@ function KebabMenu(props) {
         props.history.push("/");
     };
 
+
     return (
         <Menu
             open={props.open}
             anchorEl={props.anchorEl}
             onClose={props.onClose}
         >
-            {userData.user
+            {userData?.user?.role == 'DOCTOR'
                 ? [
                     <MenuItem key="user" className={classes.menuitem}>
-                        <Avatar className={classes.avatar}>
-                            {userData.user.username ? userData.user.username[0] : ""}
+                        <Avatar src={userData.user.thumbnail} style={{marginRight: 2}}>
                         </Avatar>
                         {userData.user.username}
                     </MenuItem>,
-                    <Divider key="divider" />,
+                    <Divider key="divider"/>,
+                    <MenuItem
+                        key="dashboard"
+                        onClick={onClickDoctorDashboard}
+                        className={classes.menuitem}
+                    >
+                        <Dashboard className={classes.avatar}/>
+                        Dashboard
+                    </MenuItem>,
+                    <Divider key="divider"/>,
+                    <MenuItem
+                        key="calendar"
+                        onClick={onClickCalendar}
+                        className={classes.menuitem}
+                    >
+                        <TodayIcon className={classes.avatar}/>
+                        Calendar
+                    </MenuItem>,
+                    <Divider key="divider"/>,
                     <MenuItem
                         key="logout"
                         onClick={onClickLogout}
                         className={classes.menuitem}
                     >
-                        <ExitToAppIcon className={classes.avatar} />
+                        <ExitToAppIcon className={classes.avatar}/>
                         Logout
                     </MenuItem>
                 ]
-                : [
-                    <MenuItem
-                        key="login"
-                        onClick={onClickLogin}
-                        className={classes.menuitem}
-                    >
-                        <VerifiedUserIcon className={classes.avatar} />
-                        Login
-                    </MenuItem>
+                : userData?.user?.role == 'PATIENT'
+                    ? [<MenuItem key="user" className={classes.menuitem}>
+                        <Avatar src={userData.user.thumbnail}>
+                        </Avatar>
+                        {userData.user.username}
+                    </MenuItem>,
+                        <Divider key="divider"/>,
+                        <MenuItem
+                            key="dashboard"
+                            onClick={onClickPatientDashboard}
+                            className={classes.menuitem}
+                        >
+                            <Dashboard className={classes.avatar}/>
+                            Dashboard
+                        </MenuItem>,
+                        <Divider key="divider"/>,
+                        <MenuItem
+                            key="logout"
+                            onClick={onClickLogout}
+                            className={classes.menuitem}
+                        >
+                            <ExitToAppIcon className={classes.avatar}/>
+                            Logout
+                        </MenuItem>
+                    ]
+                    : [
+                        <MenuItem
+                            key="login"
+                            onClick={onClickLogin}
+                            className={classes.menuitem}
+                        >
+                            <VerifiedUserIcon className={classes.avatar}/>
+                            Login
+                        </MenuItem>
                     ]}
         </Menu>
     );

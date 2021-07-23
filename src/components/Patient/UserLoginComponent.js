@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Paper, Button, TextField, Typography } from "@material-ui/core";
+import React, {useEffect} from "react";
+import {makeStyles} from "@material-ui/core/styles";
+import {Paper, Button, TextField, Typography} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     userLoginRoot: {
@@ -42,6 +42,8 @@ function LoginComponent(props) {
 
     const [loginError, setLoginError] = React.useState("");
 
+    let loginUrl = window.location.href == 'http://localhost:3000/login-professionals' ? 'Doctor' : 'Patient';
+
     useEffect(() => {
         if (props.userData?.error) {
             setLoginError(props.userData?.error);
@@ -70,7 +72,9 @@ function LoginComponent(props) {
             <Paper className={classes.loginPaper} component="form">
                 <br/>
                 <center><h4>Welcome to medizintermin!</h4></center>
-                <center><h7>Pleas login with your credentials</h7></center>
+                <center>
+                    <h7>Pleas login as a <b>{loginUrl}</b></h7>
+                </center>
                 <br/>
                 <div className={classes.loginRow}>
                     <TextField
