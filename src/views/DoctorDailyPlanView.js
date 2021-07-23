@@ -54,6 +54,19 @@ const getCurrentDateString = () => {
     return days[date.getDay()]+", "+months[date.getMonth()]+" "+getOrdinalDate(date.getDate())+" "+date.getFullYear();
 }
 
+const getTimeString = (date) => {
+
+    // add leading zeros in the hours and minutes
+    const addLeadingZerosToTimeComponent = (timeComponent) => {
+        if (timeComponent < 10) {
+            timeComponent = "0" + timeComponent;
+        }
+        return timeComponent;
+    }
+
+    return addLeadingZerosToTimeComponent(date.getHours)+":"+addLeadingZerosToTimeComponent(date.getMinutes);
+}
+
 const DoctorDailyPlanView = () => {
     const classes = useStyles();
     const currentDateString = getCurrentDateString();
@@ -79,17 +92,24 @@ const DoctorDailyPlanView = () => {
 
         let iterator = 0;
         appointments.forEach((appointment) => {
-            const appointmentDetails = {
-                id: iterator,
-                date: currentDateString,
-                comments: appointment.appointmentDetails,
-                purpose: appointment.appointmentTitle,
-            };
             if (appointment.hasOwnProperty("patient")) {
+                const appointmentDetails = {
+                    id: iterator,
+                    date: currentDateString,
+                    comments: appointment.appointmentDetails,
+                    purpose: appointment.appointmentTitle,
+                    start_time: getTimeString(appointment.startPoint),
+                    end_time: getTimeString(new Date(appointment.startPoint.getTime()+ 30*60000))
+                }
+            } else {
+                const appointmentDetails = {
+                    id: iterator,
+                    date: currentDateString,
+                    comments: appointment.appointmentDetails,
+                    purpose: appointment.appointmentTitle,
+                    start_time: appointment.startPoint,
 
-                // if (!patientIDs.some((e) => e === a.patient)) {
-                //     patientIDs = [...patientIDs, a.patient];
-                // }
+                };
             }
         });
 
