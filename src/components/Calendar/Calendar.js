@@ -9,6 +9,7 @@ import {
   DayView,
   Appointments,
   AppointmentTooltip,
+  AppointmentForm,
   Toolbar,
   ViewSwitcher,
   DateNavigator,
@@ -57,7 +58,11 @@ export default class MyCalendar extends React.PureComponent {
             <DateNavigator/>
             <ViewSwitcher/>
             <Appointments />
-            <AppointmentTooltip />
+            <AppointmentTooltip
+            showOpenButton
+            showCloseButton
+          />
+          <AppointmentForm />
             <Resources data={resources} mainResourceName={mainResourceName} />
           </Scheduler>
         </Paper>
