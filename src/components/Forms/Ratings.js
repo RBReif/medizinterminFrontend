@@ -21,7 +21,7 @@ const StyledRating = withStyles({
  * @param {props} props
  */
 function Ratings(props) {
-    console.log("in ratings" , props.avgAudienceRating)
+    // console.log("in ratings" , props.avgAudienceRating)
     return (
         <Table>
             <TableBody>

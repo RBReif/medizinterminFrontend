@@ -6,14 +6,11 @@ import DynamicCard from "../UI/DynamicCard";
 const DoctorList = (props) => {
   const [doctor, setDoctor] = useState("");
 
-  console.log("props.result ", props.result[0]);
-  console.log("props ", props);
-
   useEffect(async () => {
     const getDoctor = async () => {
       const doctor = await DoctorService.getDoctor(props.result[0]);
       // console.log("RECEIVED DOCTOR", doctor);
-      console.log("RECEIVED DOCTOR", doctor);
+      // console.log("RECEIVED DOCTOR", doctor);
       setDoctor(doctor);
     };
     getDoctor();

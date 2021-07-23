@@ -122,7 +122,7 @@ const FindADoctorView = () => {
         facilitiesRightFormat.push(facilities[i].displayname);
       }
     }
-    console.log("CALLED SUBMITHANDLER", address.address_value);
+    // console.log("CALLED SUBMITHANDLER", address.address_value);
     for (let i = 0; i < timeslots.length; i++) {
       let receivedResults = await AppointmentService.filterAppointments(
         doctor,
@@ -140,7 +140,7 @@ const FindADoctorView = () => {
       setResults((prevResults) => ({
         ...receivedResults,
       }));
-      console.log("RECEIVED RESULT: ", receivedResults);
+      // console.log("RECEIVED RESULT: ", receivedResults);
     }
   }
 
@@ -154,7 +154,7 @@ const FindADoctorView = () => {
     })
   };
 
-  console.log("TIMESLOTS: ", timeslots);
+  // console.log("TIMESLOTS: ", timeslots);
 
   useEffect(() => {
     const getConfig = async () => {
