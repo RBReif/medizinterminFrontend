@@ -13,23 +13,8 @@ import {
   ViewSwitcher,
   DateNavigator,
 } from "@devexpress/dx-react-scheduler-material-ui";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import { withStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { Theme } from "../UI/Theme";
-
-const styles = (theme) => ({
-  container: {
-    display: "flex",
-    marginBottom: theme.spacing(2),
-    justifyContent: "flex-end",
-  },
-  text: {
-    ...theme.typography.h6,
-    marginRight: theme.spacing(2),
-  },
-});
 
 export default class MyCalendar extends React.PureComponent {
   constructor(props) {
@@ -50,17 +35,10 @@ export default class MyCalendar extends React.PureComponent {
         },
       ],
     };
-
-    this.changeMainResource = this.changeMainResource.bind(this);
-  }
-
-  changeMainResource(mainResourceName) {
-    this.setState({ mainResourceName });
   }
 
   render() {
-    const { data, resources, mainResourceName } = this.state;
-
+    const { resources, mainResourceName } = this.state;
     return (
       <React.Fragment>
         <ThemeProvider theme={Theme}>
@@ -74,9 +52,7 @@ export default class MyCalendar extends React.PureComponent {
             <ViewState defaultCurrentDate={new Date()} />
             <DayView startDayHour={0} endDayHour={24} intervalCount={7} />
             <WeekView startDayHour={0} endDayHour={24} />
-
             <MonthView></MonthView>
-
             <Toolbar />
             <DateNavigator/>
             <ViewSwitcher/>
