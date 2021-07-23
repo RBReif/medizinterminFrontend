@@ -61,17 +61,19 @@ const PatientEditProfile = (props) => {
     const history = useHistory()
     const userData = useSelector((state) => state.user);
 
+    const userDetails = []
+
     const [patient, setPatient] = useState({});
-    const [firstName, setFirstName] = React.useState(patient.firstname);
-    const [lastName, setLastName] = React.useState(patient.lastname);
-    const [username, setUserName] = React.useState(patient.username);
+    const [firstName, setFirstName] = React.useState("");
+    const [lastName, setLastName] = React.useState("");
+    const [username, setUserName] = React.useState("");
     const [address, setAddress] = useState({
         lat: null,
         lng: null,
     });
-    const [healthInsurance, setHealthInsurance] = useState(patient.insurance);
-    const [pictureUrl, setPictureUrl] = React.useState(patient.thumbnail);
-    const [gender, setGender] = React.useState(patient.gender);
+    const [healthInsurance, setHealthInsurance] = useState("");
+    const [pictureUrl, setPictureUrl] = React.useState("");
+    const [gender, setGender] = React.useState("");
 
     const [genders, setGenders] = React.useState([]);
     const [insurances, setInsurances] = useState([]);
@@ -85,6 +87,14 @@ const PatientEditProfile = (props) => {
             const patient1 = await PatientService.getPatient(patientId);
             // console.log(patient);
             setPatient(patient1);
+            setFirstName(patient1.firstname);
+            setLastName(patient1.lastname);
+            setUserName(patient1.username);
+            setPictureUrl(patient1.thumbnail);
+            setGender(patient1.gender);
+            setHealthInsurance(patient1.insurance);
+            setAddress(patient1.address);
+
         };
         await getPatient();
 
@@ -110,16 +120,19 @@ const PatientEditProfile = (props) => {
 
     const onChangeFirstName = (e) => {
         setFirstName(e.target.value);
+        //userDetails.push(e.target.value);
         setRegisterError("");
     };
 
     const onChangeLastName = (e) => {
         setLastName(e.target.value);
+        userDetails.push(e.target.value);
         setRegisterError("");
     };
 
     const onChangeUsername = (e) => {
         setUserName(e.target.value);
+        //userDetails.push(e.target.value);
         setRegisterError("");
     };
 
@@ -155,13 +168,13 @@ const PatientEditProfile = (props) => {
                     <Form>
                         <Row>
                             <Col sm={9}>
-                                <h2>{patient.firstname + " " + patient.lastname}</h2>
-                                <p>{"Date of Birth: " + patient.date_of_birth}</p>
+                                <h2>{patient?.firstname + " " + patient?.lastname}</h2>
+                                <p>{"Date of Birth: " + patient?.date_of_birth}</p>
                                 <p>You can edit your profile details below</p>
 
                             </Col>
                             <Col sm={3}>
-                            <Avatar src={userData.user.thumbnail} className={classes.avatar}>
+                            <Avatar src={userData?.user?.thumbnail} className={classes.avatar}>
                             </Avatar>
                             </Col>
                             <br/>
@@ -171,7 +184,7 @@ const PatientEditProfile = (props) => {
                                 <Form.Label> First Name </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
-                                        placeholder={patient.firstname}
+                                        placeholder={patient?.firstname}
                                         fullWidth
                                         onChange={onChangeFirstName}
                                     />
@@ -181,7 +194,7 @@ const PatientEditProfile = (props) => {
                                 <Form.Label> Last Name </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
-                                        placeholder={patient.lastname}
+                                        placeholder={patient?.lastname}
                                         fullWidth
                                         onChange={onChangeLastName}
                                     />
@@ -193,7 +206,7 @@ const PatientEditProfile = (props) => {
                                 <Form.Label> E-Mail </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
-                                        placeholder={patient.username}
+                                        placeholder={patient?.username}
                                         fullWidth
                                         //value={patient.username}
                                         onChange={onChangeUsername}
@@ -204,7 +217,7 @@ const PatientEditProfile = (props) => {
                                 <Form.Label> Profile Picture </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
-                                        placeholder={patient.thumbnail}
+                                        placeholder={patient?.thumbnail}
                                         fullWidth
 
                                         onChange={onChangePictureUrl}
@@ -219,8 +232,8 @@ const PatientEditProfile = (props) => {
                                     // defaultValue={patient.gender} --> this does not work
                                     label="Gender"
                                     items={genders}
-                                    value={patient.gender}
-                                    helper={"Currently: " + patient.gender}
+                                    value={patient?.gender}
+                                    helper={"Currently: " + patient?.gender}
                                     onChange={onChangeGender}
                                 ></DynamicDropdown>
                             </Col>
@@ -230,8 +243,8 @@ const PatientEditProfile = (props) => {
                                     // defaultValue={patient.insurance} --> this does not work
                                     label="Health Insurance"
                                     items={insurances}
-                                    value={patient.insurance}
-                                    helper={"Currently: " + patient.insurance}
+                                    value={patient?.insurance}
+                                    helper={"Currently: " + patient?.insurance}
                                     onChange={onChangeHealthInsurance}
                                 ></DynamicDropdown>
                             </Col>
@@ -241,7 +254,7 @@ const PatientEditProfile = (props) => {
                                     //value={patient.address.address_value}
                                     onSelect={onSelectAddress}
                                 />
-                                <FormHelperText>{"Currently: " }</FormHelperText>
+                                <FormHelperText>{"Currently: " + patient?.address?.address_value}</FormHelperText>
                             </Col>
                         </Row>
 
