@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
 import classNames from 'clsx';
 import {
-  Scheduler,
+//   Scheduler,
   MonthView,
   Appointments,
   Toolbar,
@@ -14,18 +14,11 @@ import {
   AppointmentTooltip,
   AppointmentForm,
   EditRecurrenceMenu,
-  Resources,
   DragDropProvider,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import ColorLens from '@material-ui/icons/ColorLens';
 import { withStyles } from '@material-ui/core/styles';
-import {colors} from "./AppointmentColors"
-
-const resources = [{
-    fieldName: 'colorId',
-    title: 'colors',
-    instances: colors,
-  }];
+import { Scheduler, Resource } from 'devextreme-react/scheduler';
 
 const getBorder = (theme) => (`1px solid ${
   theme.palette.type === 'light'
@@ -36,6 +29,29 @@ const getBorder = (theme) => (`1px solid ${
 const DayScaleCell = props => (
   <MonthView.DayScaleCell {...props} style={{ textAlign: 'center', fontWeight: 'bold' }} />
 );
+
+ const colors = [
+    {
+        text: "Available",
+        id: 1,
+        color:  "#41b23d",
+    },
+    {
+        text: "Failed",
+        id: 2,
+        color: "#b23d49",
+    },
+    {
+        text: "Scheduled",
+        id: 3,
+        color: "#ffc107"
+    },
+    {
+        text: "Successful",
+        id: 4,
+        color: "#185619"
+    }       
+  ]
 
 const styles = (theme) => ({
   cell: {
@@ -243,9 +259,10 @@ export default class Demo extends React.PureComponent {
             appointmentComponent={Appointment}
             appointmentContentComponent={AppointmentContent}
           />
-          {/* <Resources
-            data={colors}
-          /> */}
+          <Resource
+            fieldExpr="colorId"
+            dataSource={colors}
+          />
 
           <Toolbar
             flexibleSpaceComponent={FlexibleSpace}

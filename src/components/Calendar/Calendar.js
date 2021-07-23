@@ -22,14 +22,13 @@ const Calendar = (props) => {
     console.log("Test");
   }
 
-  const Appointment = ({ children, data, style, ...restProps }) => (
+  const Appointment = ({ children, style, ...restProps }) => (
     <Appointments.Appointment
       {...restProps}
       style={{
         ...style,
         borderRadius: "8px",
-        backgroundColor: data.color,
-        data: data,
+        // backgroundColor: data.color,
       }}
     >
       {children}
@@ -41,8 +40,10 @@ const Calendar = (props) => {
     <ThemeProvider theme={Theme}>
       <Paper>
         <Scheduler
+          locale="en-DE"
           timeZone="Europe/Berlin"
           data={props.events}
+          height={500}
           // views={views}
           defaultCurrentView="day"
           // defaultCurrentDate={currentDate}
@@ -59,8 +60,8 @@ const Calendar = (props) => {
             defaultCurrentViewName="Week"
           />
 
-          <DayView startDayHour={0} endDayHour={24} intervalCount={60} />
-          <WeekView startDayHour={0} endDayHour={24} />
+          <DayView startDayHour={7} endDayHour={19} intervalCount={60} />
+          <WeekView startDayHour={7} endDayHour={19} />
 
           <MonthView></MonthView>
 
