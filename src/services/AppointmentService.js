@@ -3,8 +3,6 @@
 import HttpService from './HttpService'
 
 export default class AppointmentService{
-    constructor() {
-    }
 
     static baseURL() {return 'http://localhost:4000/appointment';}
 

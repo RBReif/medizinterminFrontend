@@ -7,7 +7,7 @@ import {Menu, MenuItem, Avatar, Divider} from "@material-ui/core";
 import {connect, useSelector} from "react-redux";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
-import {Dashboard, Today} from "@material-ui/icons";
+import {Dashboard} from "@material-ui/icons";
 import TodayIcon from '@material-ui/icons/Today';
 
 const useStyles = makeStyles((theme) => ({
@@ -77,7 +77,7 @@ function KebabMenu(props) {
             anchorEl={props.anchorEl}
             onClose={props.onClose}
         >
-            {userData?.user?.role == 'DOCTOR'
+            {userData?.user?.role === 'DOCTOR'
                 ? [
                     <MenuItem key="user" className={classes.menuitem}>
                         <Avatar src={userData.user.thumbnail}>
@@ -112,7 +112,7 @@ function KebabMenu(props) {
                         Logout
                     </MenuItem>
                 ]
-                : userData?.user?.role == 'PATIENT'
+                : userData?.user?.role === 'PATIENT'
                     ? [<MenuItem key="user" className={classes.menuitem}>
                         <Avatar src={userData.user.thumbnail}>
                         </Avatar>

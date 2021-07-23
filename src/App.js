@@ -42,7 +42,7 @@ const DoctorAuthenticatedRoute = (props) => {
         return <Redirect to={"/"}/>
     }
 
-    if (userData?.user?.role == 'PATIENT') {
+    if (userData?.user?.role === 'PATIENT') {
         return <Redirect to={"/find-doctor"}/>
     }
 
@@ -68,7 +68,7 @@ const PatientAuthenticatedRoute = (props) => {
         return <Redirect to={"/"}/>
     }
 
-    if (userData?.user?.role == 'DOCTOR') {
+    if (userData?.user?.role === 'DOCTOR') {
         return <Redirect to={"/doctor-dashboard"}/>
     }
 
