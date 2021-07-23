@@ -20,6 +20,8 @@ import EmergencyView from "./views/Emergency";
 import Landing from "./views/Landing";
 import DoctorDashboard from "./views/DoctorDashboard";
 import DoctorDailyPlanView from "./views/DoctorDailyPlanView"
+//import PatientEditProfile from "./components/Patient/PatientEditProfile";
+import EditProfilePatientsView from "./views/EditProfilePatientsView";
 
 
 const DoctorAuthenticatedRoute = (props) => {
@@ -116,6 +118,9 @@ function App(props) {
                         </NotAuthenticatedRoute>
                         <PatientAuthenticatedRoute path="/dashboard">
                             <PatientDashboard/>
+                        </PatientAuthenticatedRoute>
+                        <PatientAuthenticatedRoute path="/edit-profile">
+                            <EditProfilePatientsView/>
                         </PatientAuthenticatedRoute>
                         <DoctorAuthenticatedRoute path="/doctor-dashboard">
                             <DoctorDashboard/>

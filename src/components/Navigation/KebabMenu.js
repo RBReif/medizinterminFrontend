@@ -39,6 +39,13 @@ function KebabMenu(props) {
         props.history.push("/login-patients");
     };
 
+    const onClickProfile = () => {
+        // close this menu
+        props.onClose();
+        // navigate to the doctor dashboard
+        props.history.push("/edit-profile");
+    };
+
     const onClickDoctorDashboard = () => {
         // close this menu
         props.onClose();
@@ -69,7 +76,8 @@ function KebabMenu(props) {
         // navigate to the home page
         props.history.push("/");
     };
-
+    useEffect(() => {
+    }, [userData]);
 
     return (
         <Menu
@@ -79,7 +87,10 @@ function KebabMenu(props) {
         >
             {userData?.user?.role === 'DOCTOR'
                 ? [
-                    <MenuItem key="user" className={classes.menuitem}>
+                    <MenuItem
+                        key="user"
+                        onClick={onClickProfile}
+                        className={classes.menuitem}>
                         <Avatar src={userData.user.thumbnail}>
                         </Avatar>
                         {userData.user.username}
@@ -113,7 +124,10 @@ function KebabMenu(props) {
                     </MenuItem>
                 ]
                 : userData?.user?.role === 'PATIENT'
-                    ? [<MenuItem key="user" className={classes.menuitem}>
+                    ? [<MenuItem
+                        key="user"
+                        onClick={onClickProfile}
+                        className={classes.menuitem}>
                         <Avatar src={userData.user.thumbnail}>
                         </Avatar>
                         {userData.user.username}

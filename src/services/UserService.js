@@ -28,6 +28,24 @@ export default class UserService {
         });
     }
 
+    static update(id, firstName, lastName, username, pictureUrl, gender, healthInsurance, address) {
+        return new Promise((resolve, reject) => {
+            HttpService.put(`${UserService.baseURL()}/${id}`, {
+                firstname: firstName,
+                lastname: lastName,
+                username: username,
+                thumbnail: pictureUrl,
+                gender: gender,
+                insurance: healthInsurance,
+                address: address
+            }, function (data) {
+                resolve(data);
+            }, function (textStatus) {
+                reject(textStatus);
+            });
+        });
+    }
+
     static login(user, pass) {
         return new Promise((resolve, reject) => {
             HttpService.post(`${UserService.baseURL()}/login`, {

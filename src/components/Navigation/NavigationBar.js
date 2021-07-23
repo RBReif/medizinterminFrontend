@@ -25,7 +25,7 @@ const NavigationBar = (props) => {
     });
 
     const [anchorEl, setAnchorEl] = React.useState(null);
-    //const ref = useRef(null)
+    //const ref = useRef()
     const handleClose = () => {
         setAnchorEl(null);
     }
