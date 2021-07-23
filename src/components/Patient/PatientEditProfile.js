@@ -61,8 +61,6 @@ const PatientEditProfile = (props) => {
     const history = useHistory()
     const userData = useSelector((state) => state.user);
 
-    const [patientBirthDate, setPatientBirthDate] = useState();
-    const [patientAddress, setPatientAddress] = useState();
     const [patient, setPatient] = useState({});
     const [firstName, setFirstName] = React.useState(patient.firstname);
     const [lastName, setLastName] = React.useState(patient.lastname);
@@ -84,11 +82,9 @@ const PatientEditProfile = (props) => {
 
     useEffect(async () => {
         const getPatient = async () => {
-            const patient = await PatientService.getPatient(patientId);
+            const patient1 = await PatientService.getPatient(patientId);
             // console.log(patient);
-            setPatient(patient);
-            setFirstName(patient.firstname);
-            setPatientBirthDate(patient.date_of_birth.substring(0, 10));
+            setPatient(patient1);
         };
         await getPatient();
 
@@ -159,8 +155,8 @@ const PatientEditProfile = (props) => {
                     <Form>
                         <Row>
                             <Col sm={9}>
-                                <h2>{firstName + " " + patient.lastname}</h2>
-                                <p>{"Date of Birth: " + patientBirthDate}</p>
+                                <h2>{patient.firstname + " " + patient.lastname}</h2>
+                                <p>{"Date of Birth: " + patient.date_of_birth}</p>
                                 <p>You can edit your profile details below</p>
 
                             </Col>
@@ -245,7 +241,7 @@ const PatientEditProfile = (props) => {
                                     //value={patient.address.address_value}
                                     onSelect={onSelectAddress}
                                 />
-                                <FormHelperText>{"Currently: " + patientAddress}</FormHelperText>
+                                <FormHelperText>{"Currently: " }</FormHelperText>
                             </Col>
                         </Row>
 
