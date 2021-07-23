@@ -58,6 +58,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function roundTimeHalfHour(time) {
+  var timeToReturn = new Date(time);
+
+  timeToReturn.setMilliseconds(Math.round(timeToReturn.getMilliseconds() / 1000) * 1000);
+  timeToReturn.setSeconds(Math.round(timeToReturn.getSeconds() / 60) * 60);
+  timeToReturn.setMinutes(Math.round(timeToReturn.getMinutes() / 30) * 30);
+  return timeToReturn;
+}
+
 /**
  * For register new users
  * @param {props} props
@@ -69,19 +78,9 @@ const CalendarEventForm = (props) => {
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const classes = useStyles();
-  const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
-  const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
+  const [selectedStartDate, setSelectedStartDate] = React.useState(roundTimeHalfHour(new Date()));
+  const [selectedEndDate, setSelectedEndDate] = React.useState(roundTimeHalfHour(new Date()));
   const [appointmentType, setAppointmentType] = React.useState("");
-
-
-  function roundTimeHalfHour(time) {
-    var timeToReturn = new Date(time);
-
-    timeToReturn.setMilliseconds(Math.round(timeToReturn.getMilliseconds() / 1000) * 1000);
-    timeToReturn.setSeconds(Math.round(timeToReturn.getSeconds() / 60) * 60);
-    timeToReturn.setMinutes(Math.round(timeToReturn.getMinutes() / 30) * 30);
-    return timeToReturn;
-}
 
 
   //changeHandler

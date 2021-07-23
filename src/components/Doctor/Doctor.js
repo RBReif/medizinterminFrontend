@@ -1,15 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import { Button } from "@material-ui/core";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import CallIcon from "@material-ui/icons/Call";
-import NavigationIcon from "@material-ui/icons/Navigation";
 import { Theme } from "../UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
 import { Box } from "@material-ui/core";
@@ -18,12 +14,12 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
-import DynamicDropdown from "../Forms/DynamicDropdown";
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import AppointmentService from "../../services/AppointmentService"
-import UserService from"../../services/UserService"
+import UserService from"../../services/UserService";
+import DoctorService from "../../services/DoctorService";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -99,10 +95,6 @@ const Doctor = (props) => {
     setValue(newValue);
   };
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
   const submit = async () => {
     if (window.confirm('Are you sure you want to book this appointment?')) {
       let res = await AppointmentService.updateAppointment(appointment._id, "SCHEDULED", appointment.appointmentDetails, appointment.appointmentTitle,UserService.getCurrentUser().id)
@@ -116,6 +108,23 @@ const Doctor = (props) => {
 
   };
 
+  const extractRating = () => {
+    if (!props.doctor) {
+      return;
+    }
+    const getInitialRating = async () => {
+      const audienceRating = await DoctorService.getRating(props.doctor._id);
+      setAvgAudienceRating(audienceRating.rating);
+    };
+    getInitialRating();
+  };
+
+  useEffect(() => {
+    if (!props.new) {
+      extractRating();
+    }
+  }, [props.doctor, props.new]);
+
   const handleNumberClick = () => {
     setShowNumber(!showNumber);
   };
@@ -125,7 +134,6 @@ const Doctor = (props) => {
     return setAppointment(event.target.value);
   };
 
-  console.log("props.appointments", props.appointments);
   return (
     <ThemeProvider theme={Theme}>
       <Card id={props.id} className={classes.root}>
@@ -137,7 +145,8 @@ const Doctor = (props) => {
               src={props.doctor.thumbnail}
             ></Avatar>
           }
-          action={ <Ratings value={props.doctor.audience_ratings} readOnly={true} />
+          action={ 
+          <Ratings avgAudienceRating={avgAudienceRating} readOnly={true} />
           }
           title={
             <b>

@@ -1,3 +1,5 @@
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
 import React, {useEffect, useState} from "react";
 import {Switch, Route, Redirect} from "react-router-dom";
 import {Provider, useDispatch, useSelector} from "react-redux";
