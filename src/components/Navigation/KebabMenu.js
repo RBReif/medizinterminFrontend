@@ -86,8 +86,7 @@ function KebabMenu(props) {
             onClose={props.onClose}
         >
             {userData?.user?.role === 'DOCTOR'
-                ? [
-                    <MenuItem
+                ? [<MenuItem
                         key="user"
                         onClick={onClickProfile}
                         className={classes.menuitem}>

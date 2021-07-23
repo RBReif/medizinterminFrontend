@@ -75,4 +75,33 @@ export default class DoctorService {
         }).then();
     }
 
+    static getRating(id) {
+        return new Promise((resolve, reject) => {
+            HttpService.get(
+                `${DoctorService.baseURL()}/rate/${id}`,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
+
+    static rateDoctor(id, rating) {
+        return new Promise((resolve, reject) => {
+            HttpService.put(
+                `${DoctorService.baseURL()}/rate/${id}`,
+                { rating: rating },
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
 }
