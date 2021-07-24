@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {withRouter} from "react-router-dom";
-import {connect, useDispatch, useSelector} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {update} from "../redux/actions/userActions";
 import Page from "../components/Page";
 import PatientEditProfile from "../components/Patient/PatientEditProfile";
@@ -30,7 +30,6 @@ function EditProfilePatientsView(props) {
     const onCancel = () => {
         props.history.push("/");
     };
-
 
     return (
         <ThemeProvider theme={Theme}>

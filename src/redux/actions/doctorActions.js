@@ -1,6 +1,4 @@
 import DoctorService from "../../services/DoctorService";
-import AppointmentService from "../../services/AppointmentService";
-import UserService from "../../services/UserService";
 
 export function login(name, password) {
     function onSuccess(user) {

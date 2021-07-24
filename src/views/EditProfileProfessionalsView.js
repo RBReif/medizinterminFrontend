@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {withRouter} from "react-router-dom";
-import {connect, useDispatch, useSelector} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {update} from "../redux/actions/doctorActions";
 import Page from "../components/Page";
 import {Theme} from "../components/UI/Theme";
@@ -17,7 +17,6 @@ import DoctorEditProfile from "../components/Doctor/DoctorEditProfile";
 function EditProfileProfessionalsView(props) {
     const user = useSelector((state) => state.user);
 
-
     const onSubmit = (id, firstName, lastName, username, phone, pictureUrl, expertise, languages, address, facilities) => {
         props.dispatch(update(id, firstName, lastName, username, phone, pictureUrl, expertise, languages, address, facilities));
         alert(
@@ -30,7 +29,6 @@ function EditProfileProfessionalsView(props) {
     const onCancel = () => {
         props.history.push("/");
     };
-
 
     return (
         <ThemeProvider theme={Theme}>
