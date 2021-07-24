@@ -52,7 +52,7 @@ const PatientDashboard = (props) => {
   const classes = useStyles();
 
   let patientId = UserService.getCurrentUser().id;
-  // console.log(patientId);
+
   const [patient, setPatient] = useState({});
   const [appointments, setAppointments] = useState([]);
   const [doctors, setDoctors] = useState([]);
@@ -197,7 +197,7 @@ const PatientDashboard = (props) => {
         recomResults.push(
           makeRecomm(
             "DENTIST",
-            "Regular teeth check-up for children",
+            "Regular Teeth Check-Up for Children",
             "You should visit your Dentist every 6th month. All health-insured patients under the age of 18 have the right to this checkup."
           )
         );
@@ -206,7 +206,7 @@ const PatientDashboard = (props) => {
         recomResults.push(
           makeRecomm(
             "GENERAL_PHYSICIAN",
-            "Regular check-up for children",
+            "Regular Check-up for Children",
             "You should visit your general physician at least once per year. All health-insured patients under the age of 18 have the right to this checkup."
           )
         );
@@ -216,7 +216,7 @@ const PatientDashboard = (props) => {
         recomResults.push(
           makeRecomm(
             "DENTIST",
-            "Regular teeth check-up",
+            "Regular Teeth Check-Up",
             "You should visit your Dentist every year. All health-insured adult patients have the right to this checkup."
           )
         );
@@ -225,7 +225,7 @@ const PatientDashboard = (props) => {
         recomResults.push(
           makeRecomm(
             "GENERAL_PHYSICIAN",
-            "Regular check-up",
+            "Regular Check-Up",
             "You should visit your general physician at least every 3rd year. All health-insured adult patients have the right to this checkup."
           )
         );
@@ -234,7 +234,7 @@ const PatientDashboard = (props) => {
         recomResults.push(
           makeRecomm(
             "DERMATOLOGIST",
-            "Skin cancer screening",
+            "Skin Cancer Screening",
             "You should visit your dermatologist at least every 10th year for a skin cancer screening. All health-insured adult patients have the right to this checkup."
           )
         );
@@ -248,7 +248,7 @@ const PatientDashboard = (props) => {
           recomResults.push(
             makeRecomm(
               "ONCOLOGIST",
-              "Breast cancer screening",
+              "Breast Cancer Screening",
               "You should visit your oncologist at least every 3rd year for a breast cancer screening. All health-insured female patients over the age of 35 have the right to this checkup."
             )
           );
@@ -257,7 +257,7 @@ const PatientDashboard = (props) => {
           recomResults.push(
             makeRecomm(
               "GYNAECOLOGIST",
-              "Cervical cancer screening",
+              "Cervical Cancer Screening",
               "You should visit your gynaecologist at least every 3rd year for a cervical cancer screening. All health-insured adult female patients have the right to this checkup."
             )
           );
@@ -267,7 +267,7 @@ const PatientDashboard = (props) => {
           recomResults.push(
             makeRecomm(
               "ONCOLOGIST",
-              "Breast cancer screening (non-female)",
+              "Breast Cancer Screening (Non-Female)",
               "You should visit your oncologist at least every 10th year for a breast cancer screening. All health-insured not-female patients over the age of 35 have the right to this checkup."
             )
           );
@@ -279,7 +279,7 @@ const PatientDashboard = (props) => {
         recomResults.push(
           makeRecomm(
             "CARDIOLOGIST",
-            "Regular heart check-up",
+            "Regular Heart Check-Up",
             "You should visit your Cardiologist every year. All privately health-insured patients have the right to this checkup."
           )
         );
@@ -288,7 +288,7 @@ const PatientDashboard = (props) => {
         recomResults.push(
           makeRecomm(
             "SPORTS_DOCTOR",
-            "Fitness check-up",
+            "Fitness Check-Up",
             "You should visit your sports doctor every 3rd year for a check-up of your mobility. All privately health-insured patients have the right to this checkup."
           )
         );
