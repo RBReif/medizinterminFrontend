@@ -6,7 +6,7 @@ import {Provider, useDispatch, useSelector} from "react-redux";
 import {createStore, applyMiddleware} from "redux";
 import reducers from "./redux/reducers";
 import thunkMiddleware from "redux-thunk";
-import {setUser} from "./redux/actions";
+//import {setUser} from "./redux/actions";
 import {setDoctor} from "./redux/actions";
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -25,7 +25,6 @@ import DoctorDailyPlanView from "./views/DoctorDailyPlanView";
 import EditProfilePatientsView from "./views/EditProfilePatientsView";
 import EditProfileProfessionalsView from "./views/EditProfileProfessionalsView";
 
-
 const DoctorAuthenticatedRoute = (props) => {
     const [isLoggedIn, setIsLoggedIn] = useState(undefined)
     const dispatch = useDispatch()
@@ -39,7 +38,6 @@ const DoctorAuthenticatedRoute = (props) => {
         if (!!userData) {
             setIsLoggedIn(!!userData?.user?.username)
         }
-
     }, [userData])
 
     if (isLoggedIn !== undefined && !isLoggedIn) {
@@ -57,7 +55,7 @@ const PatientAuthenticatedRoute = (props) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(setUser())
+        //dispatch(setUser())
     }, [])
 
     const userData = useSelector(state => state.user)
@@ -65,7 +63,6 @@ const PatientAuthenticatedRoute = (props) => {
         if (!!userData) {
             setIsLoggedIn(!!userData?.user?.username)
         }
-
     }, [userData])
 
     if (isLoggedIn !== undefined && !isLoggedIn) {
@@ -80,6 +77,27 @@ const PatientAuthenticatedRoute = (props) => {
 }
 
 const NotAuthenticatedRoute = (props) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(undefined)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        //dispatch(setUser())
+    }, [])
+
+    const userData = useSelector(state => state.user)
+    useEffect(() => {
+        if (!!userData) {
+            setIsLoggedIn(!!userData?.user?.username)
+        }
+    }, [userData])
+
+    if (isLoggedIn && userData?.user?.role === 'PATIENT') {
+        return <Redirect to={"/dashboard"}/>
+    }
+    if (isLoggedIn && userData?.user?.role === 'DOCTOR') {
+        return <Redirect to={"/doctor-dashboard"}/>
+    }
+
     return <Route {...props}/>
 }
 
