@@ -55,7 +55,7 @@ function KebabMenu(props) {
         // close this menu
         props.onClose();
         // navigate to the doctor dashboard
-        props.history.push("/edit-profile");
+        props.history.push("/patient-edit-profile");
     };
 
     const onClickDoctorProfile = () => {
