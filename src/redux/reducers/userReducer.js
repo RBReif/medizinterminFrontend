@@ -26,6 +26,10 @@ const getUser = () => {
 
 export default function user(state = getUser(), action) {
     switch (action.type) {
+        case "EDIT_SUCCESS":
+            return { user: action.user };
+        case "EDIT_FAILURE":
+            return { error: "Could not edit your profile." };
         case "SET_USER":
             return { user: action.user }
         case "LOGIN_SUCCESS":

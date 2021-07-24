@@ -21,7 +21,9 @@ import PatientDashboard from "./views/PatientDashboard";
 import EmergencyView from "./views/Emergency";
 import Landing from "./views/Landing";
 import DoctorDashboard from "./views/DoctorDashboard";
-import DoctorDailyPlanView from "./views/DoctorDailyPlanView"
+import DoctorDailyPlanView from "./views/DoctorDailyPlanView";
+import EditProfilePatientsView from "./views/EditProfilePatientsView";
+import EditProfileProfessionalsView from "./views/EditProfileProfessionalsView";
 
 
 const DoctorAuthenticatedRoute = (props) => {
@@ -44,7 +46,7 @@ const DoctorAuthenticatedRoute = (props) => {
         return <Redirect to={"/"}/>
     }
 
-    if (userData?.user?.role == 'PATIENT') {
+    if (userData?.user?.role === 'PATIENT') {
         return <Redirect to={"/find-doctor"}/>
     }
 
@@ -70,7 +72,7 @@ const PatientAuthenticatedRoute = (props) => {
         return <Redirect to={"/"}/>
     }
 
-    if (userData?.user?.role == 'DOCTOR') {
+    if (userData?.user?.role === 'DOCTOR') {
         return <Redirect to={"/doctor-dashboard"}/>
     }
 
@@ -119,6 +121,12 @@ function App(props) {
                         <PatientAuthenticatedRoute path="/dashboard">
                             <PatientDashboard/>
                         </PatientAuthenticatedRoute>
+                        <PatientAuthenticatedRoute path="/patient-edit-profile">
+                            <EditProfilePatientsView/>
+                        </PatientAuthenticatedRoute>
+                        <DoctorAuthenticatedRoute path="/doctor-edit-profile">
+                            <EditProfileProfessionalsView/>
+                        </DoctorAuthenticatedRoute>
                         <DoctorAuthenticatedRoute path="/doctor-dashboard">
                             <DoctorDashboard/>
                         </DoctorAuthenticatedRoute>

@@ -23,6 +23,9 @@ function RegisterPatientsView(props) {
     props.history.push("/");
   };
 
+  useEffect(() => {
+   }, [user]);
+
   return (
     <ThemeProvider theme={Theme}>
       <div className="Landing">

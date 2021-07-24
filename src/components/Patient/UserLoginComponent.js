@@ -42,7 +42,7 @@ function LoginComponent(props) {
 
     const [loginError, setLoginError] = React.useState("");
 
-    let loginUrl = window.location.href == 'http://localhost:3000/login-professionals' ? 'Doctor' : 'Patient';
+    let loginUrl = window.location.href === 'http://localhost:3000/login-professionals' ? 'Doctor' : 'Patient';
 
     useEffect(() => {
         if (props.userData?.error) {

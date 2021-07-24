@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +33,7 @@ const DynamicDropdown = (props) => {
       <p>{props.label}</p>
        <Select
         key={props.items.id}
-        defaultValue={props.defaultValue}
+        defaultValue={props}
         labelId="demo-simple-select-label"
         id={props.items.id}
         value={val}
@@ -42,6 +43,7 @@ const DynamicDropdown = (props) => {
             return <MenuItem key={item.id} value={item.displayname}>{item.displayname}</MenuItem>;
           })}
         </Select>
+        <FormHelperText>{props.helper}</FormHelperText>
     </FormControl>
   );
 };

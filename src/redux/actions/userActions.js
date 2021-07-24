@@ -1,5 +1,23 @@
 import UserService from "../../services/UserService";
 
+export function update(id, firstName, lastName, username, pictureUrl, gender, healthInsurance, address) {
+    function onSuccess(user) {
+        return { type: "EDIT_SUCCESS", user: user };
+    }
+    function onFailure(error) {
+        return { type: "EDIT_FAILURE", error: error };
+    }
+
+    return async (dispatch) => {
+        try {
+            const user = await UserService.update(id, firstName, lastName, username, pictureUrl, gender, healthInsurance, address);
+            dispatch(onSuccess(user));
+        } catch (e) {
+            dispatch(onFailure(e));
+        }
+    };
+}
+
 export function login(name, password) {
     function onSuccess(user) {
         return { type: "LOGIN_SUCCESS", user };
