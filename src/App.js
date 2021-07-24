@@ -25,7 +25,6 @@ import DoctorDailyPlanView from "./views/DoctorDailyPlanView";
 import EditProfilePatientsView from "./views/EditProfilePatientsView";
 import EditProfileProfessionalsView from "./views/EditProfileProfessionalsView";
 
-
 const DoctorAuthenticatedRoute = (props) => {
     const [isLoggedIn, setIsLoggedIn] = useState(undefined)
     const dispatch = useDispatch()
@@ -38,9 +37,7 @@ const DoctorAuthenticatedRoute = (props) => {
     useEffect(() => {
         if (!!userData) {
             setIsLoggedIn(!!userData?.user?.username)
-        }
-
-    }, [userData])
+        }}, [userData])
 
     if (isLoggedIn !== undefined && !isLoggedIn) {
         return <Redirect to={"/"}/>
@@ -64,9 +61,7 @@ const PatientAuthenticatedRoute = (props) => {
     useEffect(() => {
         if (!!userData) {
             setIsLoggedIn(!!userData?.user?.username)
-        }
-
-    }, [userData])
+        }}, [userData])
 
     if (isLoggedIn !== undefined && !isLoggedIn) {
         return <Redirect to={"/"}/>
@@ -80,6 +75,26 @@ const PatientAuthenticatedRoute = (props) => {
 }
 
 const NotAuthenticatedRoute = (props) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(undefined)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setUser())
+    }, [])
+
+    const userData = useSelector(state => state.user)
+    useEffect(() => {
+        if (!!userData) {
+            setIsLoggedIn(!!userData?.user?.username)
+        }}, [userData])
+
+    if (userData?.user?.role === 'PATIENT') {
+        return <Redirect to={"/dashboard"}/>
+    }
+    if (userData?.user?.role === 'DOCTOR') {
+        return <Redirect to={"/doctor-dashboard"}/>
+    }
+
     return <Route {...props}/>
 }
 

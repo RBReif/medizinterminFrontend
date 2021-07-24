@@ -115,13 +115,11 @@ const DoctorEditProfile = (props) => {
             );
         }
         await getConfig();
-        initializeToggle(facilities);
     }, [userData]);
 
 
     const onSubmit = (e) => {
         e.preventDefault();
-        //let docFacilities = facilities.filter(x => x.isActive).map(x => x.displayname)
         props.onSubmit(userData.user.id, firstName, lastName, username, phone, pictureUrl, expertise, languageList, address, facilityList);
     };
 
@@ -177,10 +175,6 @@ const DoctorEditProfile = (props) => {
     const checkToggle = (displayname) => {
         let facIndex = doctor.special_facilities.indexOf(displayname)
         return facIndex != -1 ? true : false;
-    };
-
-    const initializeToggle = () => {
-
     };
 
     return (
