@@ -68,22 +68,6 @@ function a11yProps(index) {
   };
 }
 
-
-const getId = (status) => {
-  switch (status) {
-    case "AVAILABLE":
-      return 1;
-    case "FAILED":
-      return 2;
-    case "SCHEDULED":
-      return 3;
-    case "SUCCESSFUL":
-      return 4;
-    default:
-      return 5;
-  }
-};
-
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 500,
@@ -121,14 +105,11 @@ const DoctorDashboard = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  let doctorID = DoctorService.getCurrentUser().id; //"60e70bc72c79d33ed899b25f"
+  let doctorID = DoctorService.getCurrentUser().id;
   const [doctor, setDoctor] = useState({});
   const [appointments, setAppointments] = useState([]);
-  const [name, setName] = useState("");
 
-  //here we declare 'patients' with useState
   const [patients, setPatients] = useState([]);
-
   const [calendarEvents, setCalendarEvents] = useState([]);
 
   useEffect(async () => {
@@ -144,9 +125,9 @@ const DoctorDashboard = () => {
         doctorID
       );
       console.log("APPOINTMENTS RECEIVED: ", appointments);
-      setAppointments(appointments.map((item) => item));
+      setAppointments(appointments?.map((item) => item));
       let patientIDs = [];
-      appointments.forEach((a) => {
+      appointments?.forEach((a) => {
         if (a.hasOwnProperty("patient")) {
           if (!patientIDs.some((e) => e === a.patient)) {
             patientIDs = [...patientIDs, a.patient];
@@ -164,14 +145,15 @@ const DoctorDashboard = () => {
     const a = getAppointments();
   }, []);
 
-  const getNamePatient = (id) => {
+  const getPatient = (id) => {
     const patient = patients.find((e) => e._id === id);
-    return patient.name;
+    return patient;
   };
 
-  useEffect(() => {
+
+  useEffect(async () => {
     setCalendarEvents(
-      appointments.map((item) => {
+      appointments?.map((item) => {
         // console.log("PATIENTS STORED: ", patients);
         // console.log(
         //   "HAS PATIENT:",
@@ -183,18 +165,14 @@ const DoctorDashboard = () => {
           endDate: moment(new Date(item.startPoint)).add(30, "m").toDate(),
           title: item.appointmentTitle,
           appointmentStatus: item.appointmentStatus,
-          //   description: item.hasOwnProperty("patient")
-          //     ? "Your appointment is with " + getNamePatient(item.patient)
-          //     : "",
-          description: item.appointmentDetails,
+          notes: item.appointmentDetails,
+          patient: getPatient(item.patient),
+          
         };
       })
     );
-    console.log("in useEffect KalenderEvents: ", calendarEvents);
 
   }, [patients, appointments]);
-
-  console.log("KalenderEvents: ", calendarEvents);
 
   const addCalendarEventHandler = async (calendarevent) => {
     setCalendarEvents((prevCalendarEvents) => {
@@ -263,8 +241,9 @@ const DoctorDashboard = () => {
                         </h5>
                       </Box>
                     </Row>
+                    <div>
                     <MyCalendar events={calendarEvents} />
-                    {/* <Demo events={calendarEvents}></Demo> */}
+                    </div>
                   </div>
                 }
               ></DynamicCard>

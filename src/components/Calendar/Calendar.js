@@ -16,6 +16,60 @@ import {
 } from "@devexpress/dx-react-scheduler-material-ui";
 import { ThemeProvider } from "@material-ui/styles";
 import { Theme } from "../UI/Theme";
+import { Link } from "react-router-dom";
+
+const BasicLayout = ({ appointmentData, ...restProps }) => {
+  const [firstname, setFirstName] = React.useState(appointmentData.patient ? appointmentData.patient.firstname : "");
+  const [lastname, setLastName] = React.useState(appointmentData.patient ? appointmentData.patient.lastname : "");
+  const [gender, setGender] = React.useState(appointmentData.patient ? appointmentData.patient.gender : "");
+  const [insurance, setInsurance] = React.useState(appointmentData.patient ? appointmentData.patient.insurance : "");
+  const [dob, setDob] = React.useState(appointmentData.patient ? appointmentData.patient.date_of_birth : "");
+
+  console.log("when are you here?", appointmentData)
+  return (
+    <AppointmentForm.BasicLayout
+      appointmentData={appointmentData}
+      {...restProps}
+    >
+      {appointmentData.patient ? <div>
+      <AppointmentForm.Label
+        text="Patient First Name"
+        type="text"
+      />
+      <AppointmentForm.TextEditor
+        value={firstname}
+      />
+          <AppointmentForm.Label
+        text="Patient Last Name"
+        type="text"
+      />
+      <AppointmentForm.TextEditor
+        value={lastname}
+      />
+                <AppointmentForm.Label
+        text="Patient Date of Birth"
+        type="text"
+      />
+      <AppointmentForm.TextEditor
+        value={dob}
+      />
+                <AppointmentForm.Label
+        text="Patient Insurance"
+        type="text"
+      />
+      <AppointmentForm.TextEditor
+        value={insurance}
+      />
+                <AppointmentForm.Label
+        text="Patient Gender"
+        type="text"
+      />
+      <AppointmentForm.TextEditor
+        value={gender}
+      /> </div> : ""}
+    </AppointmentForm.BasicLayout>
+  );
+};
 
 export default class MyCalendar extends React.PureComponent {
   constructor(props) {
@@ -47,7 +101,7 @@ export default class MyCalendar extends React.PureComponent {
           <Scheduler
             locale="en-DE"
             timeZone="Europe/Berlin"
-            data={this.props.events}
+            data={this?.props?.events}
             height={500}
           >
             <ViewState defaultCurrentDate={new Date()} />
@@ -62,7 +116,7 @@ export default class MyCalendar extends React.PureComponent {
             showOpenButton
             showCloseButton
           />
-          <AppointmentForm />
+          <AppointmentForm weeklyRecurrenceSelectorComponent={false} basicLayoutComponent={BasicLayout}/>
             <Resources data={resources} mainResourceName={mainResourceName} />
           </Scheduler>
         </Paper>
