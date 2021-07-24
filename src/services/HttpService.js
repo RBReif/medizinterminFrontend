@@ -1,7 +1,4 @@
 // "use strict";
-import AlertDialog from "../components/Modals/Dialog";
-import UserLoginComponent from "../components/Patient/UserLoginComponent";
-
 export default class HttpService {
     // constructor() {
     // }

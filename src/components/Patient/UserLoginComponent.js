@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Paper, Button, TextField, Typography} from "@material-ui/core";
-import AlertDialog from "../Modals/Dialog";
+import AlertDialog from "../Modal/Dialog";
 import {useSelector} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
