@@ -28,7 +28,7 @@ export function logout() {
     return {type: "LOGOUT"};
 }
 
-export function register(username, password, firstName, lastName, birthDate, expertise, languageList, address, facilities, pictureUrl) {
+export function register(username, password, firstName, lastName, phone, expertise, languageList, address, facilities, pictureUrl) {
     function onSuccess(user) {
         return {type: "LOGIN_SUCCESS", user: user};
     }
@@ -39,7 +39,7 @@ export function register(username, password, firstName, lastName, birthDate, exp
 
     return async (dispatch) => {
         try {
-            const user = await DoctorService.register(username, password, firstName, lastName, birthDate, expertise, languageList, address, facilities, pictureUrl);
+            const user = await DoctorService.register(username, password, firstName, lastName, phone, expertise, languageList, address, facilities, pictureUrl);
             dispatch(onSuccess(user));
         } catch (e) {
             dispatch(onFailure(e));

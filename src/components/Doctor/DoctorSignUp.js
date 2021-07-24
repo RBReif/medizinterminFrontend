@@ -71,7 +71,7 @@ const SignUpComponent = (props) => {
         lng: null,
     });
     const [expertise, setExpertise] = useState("");
-    const [birthDate, setBirthDate] = React.useState("");
+    const [phone, setPhone] = React.useState("");
     const [pictureUrl, setPictureUrl] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [password2, setPassword2] = React.useState("");
@@ -81,7 +81,7 @@ const SignUpComponent = (props) => {
     const onRegister = (e) => {
         e.preventDefault();
         let docFacilities = facilities.filter(x => x.isActive).map(x => x.displayname)
-        props.onRegister(username, password, firstName, lastName, birthDate, expertise, languageList, address, docFacilities, pictureUrl);
+        props.onRegister(username, password, firstName, lastName, phone, expertise, languageList, address, docFacilities, pictureUrl);
     };
 
     const onChangeFirstName = (e) => {
@@ -115,8 +115,8 @@ const SignUpComponent = (props) => {
 
     };
 
-    const onChangeBirthDate = (e) => {
-        setBirthDate(e.target.value);
+    const onChangePhone = (e) => {
+        setPhone(e.target.value);
         setRegisterError("");
     };
 
@@ -220,13 +220,13 @@ const SignUpComponent = (props) => {
                                 </div>
                             </Col>
                             <Col>
-                                <Form.Label> Date of Birth </Form.Label>
+                                <Form.Label> Phone Number </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
-                                        label="Date of Birth as MM-DD-YYYY"
+                                        label="Phone Number"
                                         fullWidth
-                                        value={birthDate}
-                                        onChange={onChangeBirthDate}
+                                        value={phone}
+                                        onChange={onChangePhone}
                                     />
                                 </div>
                             </Col>
@@ -351,7 +351,7 @@ const SignUpComponent = (props) => {
                                     password2 === "" ||
                                     firstName === "" ||
                                     lastName === "" ||
-                                    birthDate === "" ||
+                                    //phone === "" ||
                                     expertise === "" ||
                                     address.lat === "" ||
                                     address.lng === "" ||
