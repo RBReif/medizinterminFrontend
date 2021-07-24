@@ -129,22 +129,6 @@ const DoctorDashboard = () => {
 
   }, [patients, appointments]);
 
-  /*
-  useEffect( (id) => {
-    const getProfsAppointments = async () => {
-      const appointments = await AppointmentService.getAppointmentsDoctor("60f02f5677b8151174bbd388")
-      console.log("Received appointments: ", appointments)
-      setCalendarEvents(appointments.map((item) => {return {
-        "color": "#fd3153",
-        "from": new Date(item.startpoint),
-        "to": moment(new Date(item.startpoint)).add(30, 'm').toDate(),
-        "title":item.appointmentStatus,
-      }}))
-    }
-    getProfsAppointments()
-
- */
-
   console.log("KalenderEvents: ", calendarEvents);
 
   const addCalendarEventHandler = async (calendarevent) => {
