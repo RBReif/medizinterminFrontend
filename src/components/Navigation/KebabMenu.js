@@ -11,6 +11,7 @@ import {Dashboard} from "@material-ui/icons";
 import TodayIcon from '@material-ui/icons/Today';
 import PatientService from "../../services/PatientService";
 import UserService from "../../services/UserService";
+import DoctorService from "../../services/DoctorService";
 
 const useStyles = makeStyles((theme) => ({
     menuitem: {
@@ -30,8 +31,13 @@ function KebabMenu(props) {
     const classes = useStyles();
 
     let patientId = UserService.getCurrentUser().id;
+    let doctorId = DoctorService.getCurrentUser().id;
+
     const [patientName, setPatientName] = React.useState("");
     const [patientPicture, setPatientPicture] = React.useState("");
+
+    const [doctorName, setDoctorName] = React.useState("");
+    const [doctorPicture, setDoctorPicture] = React.useState("");
 
     const userData = useSelector((state) => {
         // return the currently logged in user from redux store
@@ -50,6 +56,13 @@ function KebabMenu(props) {
         props.onClose();
         // navigate to the doctor dashboard
         props.history.push("/edit-profile");
+    };
+
+    const onClickDoctorProfile = () => {
+        // close this menu
+        props.onClose();
+        // navigate to the doctor dashboard
+        props.history.push("/doctor-edit-profile");
     };
 
     const onClickDoctorDashboard = () => {
@@ -76,7 +89,6 @@ function KebabMenu(props) {
     const onClickLogout = () => {
         // trigger redux logout action
         props.dispatch(logout());
-        //logout();
         // close this menu
         props.onClose();
         // navigate to the home page
@@ -85,16 +97,22 @@ function KebabMenu(props) {
 
     const getPatient = async () => {
         const patient = await PatientService.getPatient(patientId);
-        // console.log(patient);
         setPatientName(patient.firstname);
         setPatientPicture(patient.thumbnail);
 
     };
 
-    useEffect(async () => {
-            userData?.user?.role === 'PATIENT' ? getPatient() : console.log("Nothing")
+    const getDoctor = async () => {
+        const doctor = await DoctorService.getDoctor(doctorId);
+        setDoctorName(doctor.firstname);
+        setDoctorPicture(doctor.thumbnail);
 
-        },[userData]);
+    };
+
+    useEffect(async () => {
+        userData?.user?.role === 'PATIENT' ? getPatient() : userData?.user?.role === 'DOCTOR' ? getDoctor() : console.log("Nothing")
+
+    }, [userData]);
 
     return (
         <Menu
@@ -105,11 +123,11 @@ function KebabMenu(props) {
             {userData?.user?.role === 'DOCTOR'
                 ? [<MenuItem
                     key="user"
-                    onClick={onClickProfile}
+                    onClick={onClickDoctorProfile}
                     className={classes.menuitem}>
-                    <Avatar src={userData.user.thumbnail}>
+                    <Avatar src={doctorPicture}>
                     </Avatar>
-                    {userData.user.username}
+                    {doctorName}
                 </MenuItem>,
                     <Divider key="divider"/>,
                     <MenuItem

@@ -15,6 +15,8 @@ import LocationAutoComplete from "../Forms/Location/LocationAutoComplete";
 import {useSelector} from "react-redux";
 import {useHistory} from 'react-router-dom'
 import DoctorService from "../../services/DoctorService";
+import MultiSelectDropdown from "../Forms/MultiSelectDropdown";
+import DynamicSwitch from "../Forms/DynamicSwitch";
 
 const useStyles = makeStyles((theme) => ({
     usersignUpRoot: {
@@ -64,14 +66,19 @@ const DoctorEditProfile = (props) => {
     const [firstName, setFirstName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
     const [username, setUserName] = React.useState("");
+    const [phone, setPhone] = React.useState("");
     const [address, setAddress] = useState({
         lat: null,
         lng: null,
     });
     const [pictureUrl, setPictureUrl] = React.useState("");
+    const [expertise, setExpertise] = useState("");
+    const [languageList, setLanguageList] = useState([]);
+    const [facilityList, setFacilityList] = useState([]);
 
-    const [genders, setGenders] = React.useState([]);
-    const [insurances, setInsurances] = useState([]);
+    const [expertises, setExpertises] = React.useState([]);
+    const [languages, setLanguages] = useState([]);
+    const [facilities, setFacilities] = useState([]);
 
     const [registerError, setRegisterError] = React.useState("");
 
@@ -84,29 +91,38 @@ const DoctorEditProfile = (props) => {
             setFirstName(doctor1.firstname);
             setLastName(doctor1.lastname);
             setUserName(doctor1.username);
+            setPhone(doctor1.phone);
             setPictureUrl(doctor1.thumbnail);
+            setExpertise(doctor1.area_of_expertise);
+            setLanguageList(doctor1.languages);
             setAddress(doctor1.address);
-
+            setFacilityList(doctor1.special_facilities);
         };
         await getDoctor();
 
         const getConfig = async () => {
             const config = await ConfigService.getConfig()
-            setInsurances(config.insurances.map((item) => {
+            setExpertises(config.areas.map((item) => {
                 return {"displayname": item.valueOf()}
-            }))
-            //console.log("HealthinsuranceList inside:2 ", insurances)
-            setGenders(config.genders.map((item) => {
+            }));
+            setLanguages(config.languages.map((item) => {
                 return {"displayname": item.valueOf()}
-            }))
+            }));
+            setFacilities(
+                config.facilities.map((item) => {
+                    return {"displayname": item.valueOf(), isActive: false};
+                })
+            );
         }
         await getConfig();
+        initializeToggle(facilities);
     }, [userData]);
 
 
     const onSubmit = (e) => {
         e.preventDefault();
-        props.onSubmit(userData.user.id, firstName, lastName, username, pictureUrl, gender, healthInsurance, address);
+        //let docFacilities = facilities.filter(x => x.isActive).map(x => x.displayname)
+        props.onSubmit(userData.user.id, firstName, lastName, username, phone, pictureUrl, expertise, languageList, address, facilityList);
     };
 
     const onChangeFirstName = (e) => {
@@ -124,6 +140,11 @@ const DoctorEditProfile = (props) => {
         setRegisterError("");
     };
 
+    const onChangePhoneNumber = (e) => {
+        setPhone(e.target.value);
+        setRegisterError("");
+    };
+
     const onSelectAddress = ({lat, lng}, address_value) => {
         setAddress({
             address_value,
@@ -133,19 +154,33 @@ const DoctorEditProfile = (props) => {
         setRegisterError("");
     };
 
-    const onChangeHealthInsurance = (e) => {
+    const onChangeExpertise = (e) => {
         setRegisterError("");
-        setHealthInsurance(e.target.value);
+        setExpertise(e.target.value);
 
     };
-    const onChangeGender = (e) => {
-        setRegisterError("");
-        setGender(e.target.value);
+    const onChangeLanguages = (value) => {
+        setLanguageList(value);
     };
 
     const onChangePictureUrl = (e) => {
         setPictureUrl(e.target.value);
         setRegisterError("");
+    };
+
+    const onChangeToggle = (displayname) => {
+        let facIndex = doctor.special_facilities.indexOf(displayname)
+        facIndex == -1 ? facilityList.push(displayname) : facilityList.splice(facIndex,1);
+        return facilityList;
+    };
+
+    const checkToggle = (displayname) => {
+        let facIndex = doctor.special_facilities.indexOf(displayname)
+        return facIndex != -1 ? true : false;
+    };
+
+    const initializeToggle = () => {
+
     };
 
     return (
@@ -156,13 +191,13 @@ const DoctorEditProfile = (props) => {
                         <Row>
                             <Col sm={9}>
                                 <h2>{doctor?.firstname + " " + doctor?.lastname}</h2>
-                                <p>{"Date of Birth: " + birthDate.substr(0,10)}</p>
+                                <p>{"Current Rating: tbc. "}</p>
                                 <p>You can edit your profile details below</p>
 
                             </Col>
                             <Col sm={3}>
-                            <Avatar src={doctor?.thumbnail} className={classes.avatar}>
-                            </Avatar>
+                                <Avatar src={doctor?.thumbnail} className={classes.avatar}>
+                                </Avatar>
                             </Col>
                             <br/>
                         </Row>
@@ -195,18 +230,28 @@ const DoctorEditProfile = (props) => {
                                     <TextField
                                         placeholder={doctor?.username}
                                         fullWidth
-                                        //value={patient.username}
                                         onChange={onChangeUsername}
                                     />
                                 </div>
                             </Col>
+                            <Col>
+                                <Form.Label> Phone </Form.Label>
+                                <div className={classes.signUpRow}>
+                                    <TextField
+                                        placeholder={doctor?.phone_number}
+                                        fullWidth
+                                        onChange={onChangePhoneNumber}
+                                    />
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row>
                             <Col>
                                 <Form.Label> Profile Picture </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
                                         placeholder={doctor?.thumbnail}
                                         fullWidth
-
                                         onChange={onChangePictureUrl}
                                     />
                                 </div>
@@ -214,10 +259,22 @@ const DoctorEditProfile = (props) => {
                         </Row>
                         <Row>
                             <Col sm={3}>
-
+                                <DynamicDropdown
+                                    key={expertises.id}
+                                    defaultValue={doctor?.area_of_expertise}
+                                    label="Area of Expertise"
+                                    items={expertises}
+                                    onChange={onChangeExpertise}
+                                ></DynamicDropdown>
+                                <FormHelperText>{"Currently: " + doctor?.area_of_expertise}</FormHelperText>
                             </Col>
                             <Col sm={3}>
-
+                                <MultiSelectDropdown
+                                    label="Languages"
+                                    items={languages}
+                                    onChange={onChangeLanguages}
+                                ></MultiSelectDropdown>
+                                <FormHelperText>{"Currently: " + doctor?.languages}</FormHelperText>
                             </Col>
                             <Col sm={6}>
                                 <Form.Label> Address </Form.Label>
@@ -226,6 +283,45 @@ const DoctorEditProfile = (props) => {
                                     onSelect={onSelectAddress}
                                 />
                                 <FormHelperText>{"Currently: " + doctor?.address?.address_value}</FormHelperText>
+                            </Col>
+                        </Row>
+                        <Row><Col>
+                            <div>
+                                <br/>
+                                <h5>Accessibility</h5>
+                            </div>
+                        </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <div>
+                                    {facilities.slice(0, 2).map((toggle) => {
+                                        return (
+                                            <DynamicSwitch
+                                                key={toggle.id}
+                                                id={toggle.id}
+                                                checked={checkToggle(toggle.displayname)}
+                                                displayname={toggle.displayname}
+                                                onChange={onChangeToggle}
+                                            ></DynamicSwitch>
+                                        );
+                                    })}
+                                </div>
+                            </Col>
+                            <Col>
+                                <div>
+                                    {facilities.slice(2, 4).map((toggle) => {
+                                        return (
+                                            <DynamicSwitch
+                                                key={toggle.id}
+                                                id={toggle.id}
+                                                checked={checkToggle(toggle.displayname)}
+                                                displayname={toggle.displayname}
+                                                onChange={onChangeToggle}
+                                            ></DynamicSwitch>
+                                        );
+                                    })}
+                                </div>
                             </Col>
                         </Row>
 
@@ -248,7 +344,7 @@ const DoctorEditProfile = (props) => {
                                 variant="contained"
                                 color="primary"
                                 onClick={onSubmit}
-                                disabled={firstName ==""}
+                                disabled={firstName == "" || lastName == "" || username == "" || expertise == "" || languages == []}
                                 type="submit"
                             >
                                 Save

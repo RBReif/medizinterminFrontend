@@ -104,4 +104,24 @@ export default class DoctorService {
             );
         });
     }
+
+    static update(id, firstName, lastName, username, phone, pictureUrl, expertise, languages, address, facilities) {
+        return new Promise((resolve, reject) => {
+            HttpService.put(`${DoctorService.baseURL()}/${id}`, {
+                firstname: firstName,
+                lastname: lastName,
+                username: username,
+                phone: phone,
+                thumbnail: pictureUrl,
+                area_of_expertise: expertise,
+                languages: languages,
+                address: address,
+                special_facilities: facilities,
+            }, function (data) {
+                resolve(data);
+            }, function (textStatus) {
+                reject(textStatus);
+            });
+        });
+    }
 }

@@ -121,7 +121,7 @@ function App(props) {
                         <PatientAuthenticatedRoute path="/dashboard">
                             <PatientDashboard/>
                         </PatientAuthenticatedRoute>
-                        <PatientAuthenticatedRoute path="/edit-profile">
+                        <PatientAuthenticatedRoute path="/patient-edit-profile">
                             <EditProfilePatientsView/>
                         </PatientAuthenticatedRoute>
                         <DoctorAuthenticatedRoute path="/doctor-edit-profile">

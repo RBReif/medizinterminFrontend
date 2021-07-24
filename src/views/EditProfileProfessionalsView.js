@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {withRouter} from "react-router-dom";
 import {connect, useDispatch, useSelector} from "react-redux";
-import {update} from "../redux/actions/userActions";
+import {update} from "../redux/actions/doctorActions";
 import Page from "../components/Page";
 import {Theme} from "../components/UI/Theme";
 import {ThemeProvider} from "@material-ui/styles";
@@ -18,12 +18,12 @@ function EditProfileProfessionalsView(props) {
     const user = useSelector((state) => state.user);
 
 
-    const onSubmit = (id, firstName, lastName, username, pictureUrl, gender, healthInsurance, address) => {
-        props.dispatch(update(id, firstName, lastName, username, pictureUrl, gender, healthInsurance, address));
+    const onSubmit = (id, firstName, lastName, username, phone, pictureUrl, expertise, languages, address, facilities) => {
+        props.dispatch(update(id, firstName, lastName, username, phone, pictureUrl, expertise, languages, address, facilities));
         alert(
             "Your profile changes have been successfully submitted.You will now be redirected to your dashboard."
         );
-        props.history.push("/dashboard");
+        props.history.push("/doctor-dashboard");
         // window.location.reload(); // this is super ugly --> we need to fix this
     };
 
