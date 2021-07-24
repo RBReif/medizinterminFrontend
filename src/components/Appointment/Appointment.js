@@ -6,7 +6,7 @@ import Avatar from "@material-ui/core/Avatar";
 import { Theme } from "../UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
 import Ratings from "../Forms/Ratings";
-import { Card } from "@material-ui/core";
+import { Card, CardContent } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import AppointmentService from "../../services/AppointmentService";
@@ -15,7 +15,8 @@ import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
+    minWidth:300,
+    maxWidth:400,
   },
   media: {
     height: 0,
@@ -36,12 +37,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Appointment = (props) => {
   const [avgAudienceRating, setAvgAudienceRating] = React.useState("");
+  const [value, setValue] = React.useState("");
   const classes = useStyles();
 
   const clickHandler = async () => {
     if (window.confirm("Are you sure you want to delete your appointment?")) {
       let res = await AppointmentService.updateAppointment(
-        props.props._id,
+        props.appointment._id,
         "AVAILABLE",
         "",
         "",
@@ -53,14 +55,16 @@ const Appointment = (props) => {
     }
   };
 
+
   const extractRating = () => {
-    if (!props.props.doctor) {
+    if (!props.appointment.doctor) {
       return;
     }
     const getInitialRating = async () => {
-      const audienceRating = await DoctorService.getRating(props.props.doctor);
-      setAvgAudienceRating(audienceRating.rating);
-      console.log("Average initial", audienceRating.rating);
+      const audienceRating = await DoctorService.getRating(props.appointment.doctor);
+      setAvgAudienceRating(audienceRating?.rating);
+      setValue(audienceRating?.rating)
+      console.log("Average initial",props.appointment.title, audienceRating?.rating);
     };
     getInitialRating();
   };
@@ -69,17 +73,18 @@ const Appointment = (props) => {
     if (!props.new) {
       extractRating();
     }
-  }, [props.props.doctor, props.new]);
+  }, [props.appointment.doctor, props.new]);
 
   const onChangeOwnRating = async (value) => {
-    // console.log("Props in onChangeOwnRating: ", props);
+    setValue(value);
+    console.log("Props in onChangeOwnRating: ", props?.id);
     // console.log("Props.doctor in onChangeOwnRating: ", props.props.doctor);
-    await DoctorService.rateDoctor(props.props.doctor, value);
+    await DoctorService.rateDoctor(props?.appointment?.doctor, value);
     let newAvgAudienceRating = await DoctorService.getRating(
-      props.props.doctor
+      props.appointment.doctor
     );
-    setAvgAudienceRating(newAvgAudienceRating.rating);
-    console.log("OnChange Rating", newAvgAudienceRating.rating);
+    setAvgAudienceRating(newAvgAudienceRating?.rating);
+    // console.log("OnChange Rating", newAvgAudienceRating.rating);
   };
 
   return (
@@ -90,7 +95,7 @@ const Appointment = (props) => {
             <Avatar
               aria-label="doctor"
               className={classes.avatar}
-              src={props.props.doctor_thumbnail}
+              src={props.appointment.doctor_thumbnail}
             ></Avatar>
           }
           action={
@@ -100,7 +105,9 @@ const Appointment = (props) => {
               </IconButton>
             ) : (
               <Ratings
-                avgAudienceRating={avgAudienceRating}
+                id={props.id}
+                key={props.id}
+                value={value}
                 onChangeOwnRating={(value) => onChangeOwnRating(value)}
                 readOnly={false}
               />
@@ -108,28 +115,34 @@ const Appointment = (props) => {
           }
           title={
             <b>
-              {props.props.doctor_name} {props.props.doctor_last_name}
+              {props.appointment.doctor_name} {props.appointment.doctor_last_name}
             </b>
           }
           subheader={
             <div>
-              {props.props.doctor_area_of_expertise}
+              {props.appointment.doctor_area_of_expertise}
               <br></br>
-              {props.props.startPoint}
+              {props.appointment.startPoint}
               <br></br>
-              {props.props.doctor_address}
-              <br></br>
-              {props.upcoming ? (
-                <Ratings
-                  avgAudienceRating={avgAudienceRating}
-                  readOnly={props.readOnly}
-                />
-              ) : (
-                ""
-              )}
+             
             </div>
           }
         />
+        <CardContent>
+        <div> {props.appointment?.doctor_address}
+              <br></br>
+                <div>
+                <Ratings
+                  id={props.id}
+                  key={props.id}
+                  value={value}
+                  avgAudienceRating={avgAudienceRating ? avgAudienceRating:""}
+                  readOnly={true}
+                />
+                </div>
+             </div>
+
+        </CardContent>
       </Card>
     </ThemeProvider>
   );
