@@ -6,7 +6,7 @@ import {Provider, useDispatch, useSelector} from "react-redux";
 import {createStore, applyMiddleware} from "redux";
 import reducers from "./redux/reducers";
 import thunkMiddleware from "redux-thunk";
-import {setUser} from "./redux/actions";
+//import {setUser} from "./redux/actions";
 import {setDoctor} from "./redux/actions";
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -55,7 +55,7 @@ const PatientAuthenticatedRoute = (props) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(setUser())
+        //dispatch(setUser())
     }, [])
 
     const userData = useSelector(state => state.user)
@@ -81,7 +81,7 @@ const NotAuthenticatedRoute = (props) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(setUser())
+        //dispatch(setUser())
     }, [])
 
     const userData = useSelector(state => state.user)

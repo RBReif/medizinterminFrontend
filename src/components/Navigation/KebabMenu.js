@@ -110,7 +110,13 @@ function KebabMenu(props) {
     };
 
     useEffect(async () => {
-        userData?.user?.role === 'PATIENT' ? getPatient() : userData?.user?.role === 'DOCTOR' ? getDoctor() : console.log("Nothing")
+        switch (userData?.user?.role) {
+            case 'PATIENT':
+                getPatient();
+            case'DOCTOR':
+                getDoctor();
+            default:
+        }
 
     }, [userData]);
 

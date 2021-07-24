@@ -1,4 +1,5 @@
 import DoctorService from "../../services/DoctorService";
+import UserLoginComponent from "../../components/Patient/UserLoginComponent";
 
 export function login(name, password) {
     function onSuccess(user) {
@@ -9,12 +10,20 @@ export function login(name, password) {
         return {type: "LOGIN_FAILURE", error};
     }
 
+    function onUserNotFound(error) {
+        return {type: "LOGIN_USER_NOT_FOUND", error};
+    }
+
     return async (dispatch) => {
         try {
             const resp = await DoctorService.login(name, password);
             dispatch(onSuccess(resp));
         } catch (e) {
-            dispatch(onFailure(e));
+            if (e == 401) {
+                dispatch(onFailure(e))
+            } else {
+                dispatch(onUserNotFound(e))
+            }
         }
     };
 }
