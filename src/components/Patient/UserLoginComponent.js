@@ -78,7 +78,7 @@ function LoginComponent(props) {
                 <br/>
                 <div className={classes.loginRow}>
                     <TextField
-                        label="Name"
+                        label="E-Mail"
                         fullWidth
                         value={username}
                         onChange={onChangeUsername}

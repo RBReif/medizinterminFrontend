@@ -37,7 +37,8 @@ const DoctorAuthenticatedRoute = (props) => {
     useEffect(() => {
         if (!!userData) {
             setIsLoggedIn(!!userData?.user?.username)
-        }}, [userData])
+        }
+    }, [userData])
 
     if (isLoggedIn !== undefined && !isLoggedIn) {
         return <Redirect to={"/"}/>
@@ -61,7 +62,8 @@ const PatientAuthenticatedRoute = (props) => {
     useEffect(() => {
         if (!!userData) {
             setIsLoggedIn(!!userData?.user?.username)
-        }}, [userData])
+        }
+    }, [userData])
 
     if (isLoggedIn !== undefined && !isLoggedIn) {
         return <Redirect to={"/"}/>
@@ -86,12 +88,13 @@ const NotAuthenticatedRoute = (props) => {
     useEffect(() => {
         if (!!userData) {
             setIsLoggedIn(!!userData?.user?.username)
-        }}, [userData])
+        }
+    }, [userData])
 
-    if (userData?.user?.role === 'PATIENT') {
+    if (isLoggedIn && userData?.user?.role === 'PATIENT') {
         return <Redirect to={"/dashboard"}/>
     }
-    if (userData?.user?.role === 'DOCTOR') {
+    if (isLoggedIn && userData?.user?.role === 'DOCTOR') {
         return <Redirect to={"/doctor-dashboard"}/>
     }
 
