@@ -1,4 +1,5 @@
 import DoctorService from "../../services/DoctorService";
+import UserLoginComponent from "../../components/Patient/UserLoginComponent";
 
 export function login(name, password) {
     function onSuccess(user) {
@@ -9,12 +10,20 @@ export function login(name, password) {
         return {type: "LOGIN_FAILURE", error};
     }
 
+    function onUserNotFound(error) {
+        return {type: "LOGIN_USER_NOT_FOUND", error};
+    }
+
     return async (dispatch) => {
         try {
             const resp = await DoctorService.login(name, password);
             dispatch(onSuccess(resp));
         } catch (e) {
-            dispatch(onFailure(e));
+            if (e == 401) {
+                dispatch(onFailure(e))
+            } else {
+                dispatch(onUserNotFound(e))
+            }
         }
     };
 }
@@ -28,7 +37,7 @@ export function logout() {
     return {type: "LOGOUT"};
 }
 
-export function register(username, password, firstName, lastName, birthDate, expertise, languageList, address, facilities, pictureUrl) {
+export function register(username, password, firstName, lastName, phone, expertise, languageList, address, facilities, pictureUrl) {
     function onSuccess(user) {
         return {type: "LOGIN_SUCCESS", user: user};
     }
@@ -39,7 +48,7 @@ export function register(username, password, firstName, lastName, birthDate, exp
 
     return async (dispatch) => {
         try {
-            const user = await DoctorService.register(username, password, firstName, lastName, birthDate, expertise, languageList, address, facilities, pictureUrl);
+            const user = await DoctorService.register(username, password, firstName, lastName, phone, expertise, languageList, address, facilities, pictureUrl);
             dispatch(onSuccess(user));
         } catch (e) {
             dispatch(onFailure(e));

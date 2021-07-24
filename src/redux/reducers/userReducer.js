@@ -29,13 +29,15 @@ export default function user(state = getUser(), action) {
         case "EDIT_SUCCESS":
             return { user: action.user };
         case "EDIT_FAILURE":
-            return { error: "Could not edit your profile." };
+            return { error: "Could not edit your profile" };
         case "SET_USER":
             return { user: action.user }
         case "LOGIN_SUCCESS":
             return { user: action.user };
         case "LOGIN_FAILURE":
-            return { error: "Password or username incorrect." };
+            return { error: "E-Mail or Password incorrect" };
+        case "LOGIN_USER_NOT_FOUND":
+            return { error: "User not found" };
         case "LOGIN_RESET":
             return {};
         case "SET_RESULTS":

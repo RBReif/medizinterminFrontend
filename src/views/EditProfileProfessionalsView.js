@@ -27,7 +27,7 @@ function EditProfileProfessionalsView(props) {
     };
 
     const onCancel = () => {
-        props.history.push("/");
+        props.history.push("/doctor-dashboard");
     };
 
     return (

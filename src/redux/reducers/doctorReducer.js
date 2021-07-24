@@ -35,7 +35,9 @@ export default function user(state = getDoctor(), action) {
         case "LOGIN_SUCCESS":
             return { user: action.user };
         case "LOGIN_FAILURE":
-            return { error: "Password or username incorrect." };
+            return { error: "E-Mail or Password incorrect" };
+        case "LOGIN_USER_NOT_FOUND":
+            return { error: "User not found" };
         case "LOGIN_RESET":
             return {};
         case "SET_RESULTS":

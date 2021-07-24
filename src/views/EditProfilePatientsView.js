@@ -28,7 +28,7 @@ function EditProfilePatientsView(props) {
     };
 
     const onCancel = () => {
-        props.history.push("/");
+        props.history.push("/dashboard");
     };
 
     return (
