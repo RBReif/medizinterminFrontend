@@ -87,6 +87,13 @@ const Appointment = (props) => {
     // console.log("OnChange Rating", newAvgAudienceRating.rating);
   };
 
+  let convertedDate = new Date(props.appointment.startPoint);
+  let convertedDay = convertedDate.getDate();
+  let convertedMonth = convertedDate.getMonth()+1;
+  let convertedYear = convertedDate.getFullYear();
+  let convertedHour = convertedDate.getHours();
+  let convertedMinutes = (convertedDate.getMinutes()<10?'0':'') + convertedDate.getMinutes();
+
   return (
     <ThemeProvider theme={Theme}>
       <Card className={classes.root}>
@@ -122,7 +129,7 @@ const Appointment = (props) => {
             <div>
               {props.appointment.doctor_area_of_expertise}
               <br></br>
-              {props.appointment.startPoint}
+              {convertedDay}.{convertedMonth}.{convertedYear} at {convertedHour}:{convertedMinutes}
               <br></br>
              
             </div>
