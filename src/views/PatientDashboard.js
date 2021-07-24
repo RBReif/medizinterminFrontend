@@ -158,6 +158,20 @@ const PatientDashboard = (props) => {
     return mostRecent;
   };
 
+  const findMostRecentAppointment = () => {
+
+    let mostRecent = oldestDATE;
+    let mostRecentApp = null;
+    for (let i = 0; i < prevAppointments.length; i++) {
+      if (new Date(prevAppointments[i].startPoint) > mostRecent) {
+        mostRecent = new Date(prevAppointments[i].startPoint);
+        mostRecentApp = prevAppointments[i]
+      } else {
+      }
+    }
+    return mostRecentApp;
+  };
+
   const makeRecomm = (area, title, description) => {
     const rec = {
       area: area,
@@ -326,7 +340,7 @@ const PatientDashboard = (props) => {
               <h3>News Center</h3>
             </Paper>
             <p></p>
-            <NewsList></NewsList>
+            <NewsList outstanding={upcomingAppointments.length} mostRecent={findMostRecentAppointment()}></NewsList>
             <p></p>
             <p></p>
             <Paper className={classes.paper}>
