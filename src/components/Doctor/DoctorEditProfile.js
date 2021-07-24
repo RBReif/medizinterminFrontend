@@ -300,7 +300,7 @@ const DoctorEditProfile = (props) => {
                                             <DynamicSwitch
                                                 key={toggle.id}
                                                 id={toggle.id}
-                                                checked={checkToggle(toggle.displayname)}
+                                                done={checkToggle(toggle.displayname)}
                                                 displayname={toggle.displayname}
                                                 onChange={onChangeToggle}
                                             ></DynamicSwitch>
@@ -315,7 +315,7 @@ const DoctorEditProfile = (props) => {
                                             <DynamicSwitch
                                                 key={toggle.id}
                                                 id={toggle.id}
-                                                checked={checkToggle(toggle.displayname)}
+                                                done={checkToggle(toggle.displayname)}
                                                 displayname={toggle.displayname}
                                                 onChange={onChangeToggle}
                                             ></DynamicSwitch>
