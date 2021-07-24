@@ -3,10 +3,10 @@ import {withRouter} from "react-router-dom";
 import {connect, useDispatch, useSelector} from "react-redux";
 import {update} from "../redux/actions/userActions";
 import Page from "../components/Page";
-import PatientEditProfile from "../components/Patient/PatientEditProfile";
 import {Theme} from "../components/UI/Theme";
 import {ThemeProvider} from "@material-ui/styles";
 import {Col} from "react-bootstrap";
+import DoctorEditProfile from "../components/Doctor/DoctorEditProfile";
 
 
 
@@ -14,7 +14,7 @@ import {Col} from "react-bootstrap";
  * For register new users
  * @param {props} props
  */
-function EditProfilePatientsView(props) {
+function EditProfileProfessionalsView(props) {
     const user = useSelector((state) => state.user);
 
 
@@ -38,7 +38,7 @@ function EditProfilePatientsView(props) {
             <Page>
                 <br/>
                 <Col>
-                    <PatientEditProfile
+                    <DoctorEditProfile
                         user={user}
                         onSubmit={onSubmit}
                         onCancel={onCancel}
@@ -51,4 +51,4 @@ function EditProfilePatientsView(props) {
     );
 }
 
-export default connect()(withRouter(EditProfilePatientsView));
+export default connect()(withRouter(EditProfileProfessionalsView));

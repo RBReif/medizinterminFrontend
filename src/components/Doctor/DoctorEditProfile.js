@@ -14,8 +14,7 @@ import ConfigService from "../../services/ConfigService";
 import LocationAutoComplete from "../Forms/Location/LocationAutoComplete";
 import {useSelector} from "react-redux";
 import {useHistory} from 'react-router-dom'
-import UserService from "../../services/UserService";
-import PatientService from "../../services/PatientService";
+import DoctorService from "../../services/DoctorService";
 
 const useStyles = makeStyles((theme) => ({
     usersignUpRoot: {
@@ -55,13 +54,13 @@ const useStyles = makeStyles((theme) => ({
  * For register new users
  * @param {props} props
  */
-const PatientEditProfile = (props) => {
-    let patientId = UserService.getCurrentUser().id;
+const DoctorEditProfile = (props) => {
+    let doctorId = DoctorService.getCurrentUser().id;
 
     const history = useHistory()
     const userData = useSelector((state) => state.user);
 
-    const [patient, setPatient] = useState({});
+    const [doctor, setDoctor] = useState({});
     const [firstName, setFirstName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
     const [username, setUserName] = React.useState("");
@@ -69,10 +68,7 @@ const PatientEditProfile = (props) => {
         lat: null,
         lng: null,
     });
-    const [healthInsurance, setHealthInsurance] = useState("");
     const [pictureUrl, setPictureUrl] = React.useState("");
-    const [gender, setGender] = React.useState("");
-    const [birthDate, setBirthDate] = React.useState("");
 
     const [genders, setGenders] = React.useState([]);
     const [insurances, setInsurances] = useState([]);
@@ -82,25 +78,20 @@ const PatientEditProfile = (props) => {
     const classes = useStyles();
 
     useEffect(async () => {
-        const getPatient = async () => {
-            const patient1 = await PatientService.getPatient(patientId);
-            // console.log(patient);
-            setPatient(patient1);
-            setFirstName(patient1.firstname);
-            setLastName(patient1.lastname);
-            setUserName(patient1.username);
-            setPictureUrl(patient1.thumbnail);
-            setGender(patient1.gender);
-            setHealthInsurance(patient1.insurance);
-            setAddress(patient1.address);
-            setBirthDate(patient1.date_of_birth);
+        const getDoctor = async () => {
+            const doctor1 = await DoctorService.getDoctor(doctorId);
+            setDoctor(doctor1);
+            setFirstName(doctor1.firstname);
+            setLastName(doctor1.lastname);
+            setUserName(doctor1.username);
+            setPictureUrl(doctor1.thumbnail);
+            setAddress(doctor1.address);
 
         };
-        await getPatient();
+        await getDoctor();
 
         const getConfig = async () => {
             const config = await ConfigService.getConfig()
-            //console.log(config)
             setInsurances(config.insurances.map((item) => {
                 return {"displayname": item.valueOf()}
             }))
@@ -120,7 +111,6 @@ const PatientEditProfile = (props) => {
 
     const onChangeFirstName = (e) => {
         setFirstName(e.target.value);
-        //userDetails.push(e.target.value);
         setRegisterError("");
     };
 
@@ -165,13 +155,13 @@ const PatientEditProfile = (props) => {
                     <Form>
                         <Row>
                             <Col sm={9}>
-                                <h2>{patient?.firstname + " " + patient?.lastname}</h2>
+                                <h2>{doctor?.firstname + " " + doctor?.lastname}</h2>
                                 <p>{"Date of Birth: " + birthDate.substr(0,10)}</p>
                                 <p>You can edit your profile details below</p>
 
                             </Col>
                             <Col sm={3}>
-                            <Avatar src={patient?.thumbnail} className={classes.avatar}>
+                            <Avatar src={doctor?.thumbnail} className={classes.avatar}>
                             </Avatar>
                             </Col>
                             <br/>
@@ -181,7 +171,7 @@ const PatientEditProfile = (props) => {
                                 <Form.Label> First Name </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
-                                        placeholder={patient?.firstname}
+                                        placeholder={doctor?.firstname}
                                         fullWidth
                                         onChange={onChangeFirstName}
                                     />
@@ -191,7 +181,7 @@ const PatientEditProfile = (props) => {
                                 <Form.Label> Last Name </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
-                                        placeholder={patient?.lastname}
+                                        placeholder={doctor?.lastname}
                                         fullWidth
                                         onChange={onChangeLastName}
                                     />
@@ -203,7 +193,7 @@ const PatientEditProfile = (props) => {
                                 <Form.Label> E-Mail </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
-                                        placeholder={patient?.username}
+                                        placeholder={doctor?.username}
                                         fullWidth
                                         //value={patient.username}
                                         onChange={onChangeUsername}
@@ -214,7 +204,7 @@ const PatientEditProfile = (props) => {
                                 <Form.Label> Profile Picture </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
-                                        placeholder={patient?.thumbnail}
+                                        placeholder={doctor?.thumbnail}
                                         fullWidth
 
                                         onChange={onChangePictureUrl}
@@ -224,26 +214,10 @@ const PatientEditProfile = (props) => {
                         </Row>
                         <Row>
                             <Col sm={3}>
-                                <DynamicDropdown
-                                    key={genders.id}
-                                    // defaultValue={patient.gender} --> this does not work
-                                    label="Gender"
-                                    items={genders}
-                                    value={patient?.gender}
-                                    helper={"Currently: " + patient?.gender}
-                                    onChange={onChangeGender}
-                                ></DynamicDropdown>
+
                             </Col>
                             <Col sm={3}>
-                                <DynamicDropdown
-                                    key={insurances.id}
-                                    // defaultValue={patient.insurance} --> this does not work
-                                    label="Health Insurance"
-                                    items={insurances}
-                                    value={patient?.insurance}
-                                    helper={"Currently: " + patient?.insurance}
-                                    onChange={onChangeHealthInsurance}
-                                ></DynamicDropdown>
+
                             </Col>
                             <Col sm={6}>
                                 <Form.Label> Address </Form.Label>
@@ -251,7 +225,7 @@ const PatientEditProfile = (props) => {
                                     //value={patient.address.address_value}
                                     onSelect={onSelectAddress}
                                 />
-                                <FormHelperText>{"Currently: " + patient?.address?.address_value}</FormHelperText>
+                                <FormHelperText>{"Currently: " + doctor?.address?.address_value}</FormHelperText>
                             </Col>
                         </Row>
 
@@ -274,7 +248,7 @@ const PatientEditProfile = (props) => {
                                 variant="contained"
                                 color="primary"
                                 onClick={onSubmit}
-                                disabled={firstName =="a"}
+                                disabled={firstName ==""}
                                 type="submit"
                             >
                                 Save
@@ -287,4 +261,4 @@ const PatientEditProfile = (props) => {
         </div>
     );
 }
-export default PatientEditProfile;
+export default DoctorEditProfile;

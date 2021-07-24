@@ -21,9 +21,9 @@ import PatientDashboard from "./views/PatientDashboard";
 import EmergencyView from "./views/Emergency";
 import Landing from "./views/Landing";
 import DoctorDashboard from "./views/DoctorDashboard";
-import DoctorDailyPlanView from "./views/DoctorDailyPlanView"
-//import PatientEditProfile from "./components/Patient/PatientEditProfile";
+import DoctorDailyPlanView from "./views/DoctorDailyPlanView";
 import EditProfilePatientsView from "./views/EditProfilePatientsView";
+import EditProfileProfessionalsView from "./views/EditProfileProfessionalsView";
 
 
 const DoctorAuthenticatedRoute = (props) => {
@@ -124,6 +124,9 @@ function App(props) {
                         <PatientAuthenticatedRoute path="/edit-profile">
                             <EditProfilePatientsView/>
                         </PatientAuthenticatedRoute>
+                        <DoctorAuthenticatedRoute path="/doctor-edit-profile">
+                            <EditProfileProfessionalsView/>
+                        </DoctorAuthenticatedRoute>
                         <DoctorAuthenticatedRoute path="/doctor-dashboard">
                             <DoctorDashboard/>
                         </DoctorAuthenticatedRoute>

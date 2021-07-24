@@ -9,6 +9,8 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 import {Dashboard} from "@material-ui/icons";
 import TodayIcon from '@material-ui/icons/Today';
+import PatientService from "../../services/PatientService";
+import UserService from "../../services/UserService";
 
 const useStyles = makeStyles((theme) => ({
     menuitem: {
@@ -26,6 +28,10 @@ const useStyles = makeStyles((theme) => ({
  */
 function KebabMenu(props) {
     const classes = useStyles();
+
+    let patientId = UserService.getCurrentUser().id;
+    const [patientName, setPatientName] = React.useState("");
+    const [patientPicture, setPatientPicture] = React.useState("");
 
     const userData = useSelector((state) => {
         // return the currently logged in user from redux store
@@ -76,8 +82,19 @@ function KebabMenu(props) {
         // navigate to the home page
         props.history.push("/");
     };
-    useEffect(() => {
-    }, [userData]);
+
+    const getPatient = async () => {
+        const patient = await PatientService.getPatient(patientId);
+        // console.log(patient);
+        setPatientName(patient.firstname);
+        setPatientPicture(patient.thumbnail);
+
+    };
+
+    useEffect(async () => {
+            userData?.user?.role === 'PATIENT' ? getPatient() : console.log("Nothing")
+
+        },[userData]);
 
     return (
         <Menu
@@ -87,13 +104,13 @@ function KebabMenu(props) {
         >
             {userData?.user?.role === 'DOCTOR'
                 ? [<MenuItem
-                        key="user"
-                        onClick={onClickProfile}
-                        className={classes.menuitem}>
-                        <Avatar src={userData.user.thumbnail}>
-                        </Avatar>
-                        {userData.user.username}
-                    </MenuItem>,
+                    key="user"
+                    onClick={onClickProfile}
+                    className={classes.menuitem}>
+                    <Avatar src={userData.user.thumbnail}>
+                    </Avatar>
+                    {userData.user.username}
+                </MenuItem>,
                     <Divider key="divider"/>,
                     <MenuItem
                         key="dashboard"
@@ -127,9 +144,9 @@ function KebabMenu(props) {
                         key="user"
                         onClick={onClickProfile}
                         className={classes.menuitem}>
-                        <Avatar src={userData.user.thumbnail}>
+                        <Avatar src={patientPicture}>
                         </Avatar>
-                        {userData.user.username}
+                        {patientName}
                     </MenuItem>,
                         <Divider key="divider"/>,
                         <MenuItem
