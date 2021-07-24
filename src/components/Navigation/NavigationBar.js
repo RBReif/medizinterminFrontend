@@ -54,7 +54,7 @@ const NavigationBar = (props) => {
                     <Link to="/find-doctor" className="navbar-brand">medizintermin</Link>
                     <Nav className="ml-auto">
                         <div>
-                            {userData.user
+                            {userData?.user?.username
                                 ? [<Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                     <MenuIcon/>
                                 </Button>]
