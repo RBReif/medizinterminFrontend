@@ -4,9 +4,11 @@ Book your medical appointment with medizintermin.
 
 ## Prerequisites
 
-Please also clone the backend project. 
+Please also clone the backend project from the repository. 
 
-In the project directory, you can run:
+Both for the frontend and the backend:
+
+-   nodejs [official website](https://nodejs.org/en/) - nodejs includes [npm](https://www.npmjs.com/) (node package manager)
 
 ### `npm start`
 
