@@ -309,8 +309,7 @@ const PatientSignUp = (props) => {
                                     birthDate === "" ||
                                     healthInsurance === "" ||
                                     gender === "" ||
-                                    //address === "" ||
-
+                                    address.address_value == null ||
                                     registerError !== "" ||
                                     password !== password2
                                 }

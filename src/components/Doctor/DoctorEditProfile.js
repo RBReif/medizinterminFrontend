@@ -120,7 +120,7 @@ const DoctorEditProfile = (props) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        props.onSubmit(userData.user.id, firstName, lastName, username, phone, pictureUrl, expertise, languageList, address, facilityList);
+        props.onSubmit(doctorId, firstName, lastName, username, phone, pictureUrl, expertise, languageList, address, facilityList);
     };
 
     const onChangeFirstName = (e) => {
@@ -338,7 +338,12 @@ const DoctorEditProfile = (props) => {
                                 variant="contained"
                                 color="primary"
                                 onClick={onSubmit}
-                                disabled={firstName == "" || lastName == "" || username == "" || expertise == "" || languages == []}
+                                disabled={firstName == ""
+                                || lastName == ""
+                                || username == ""
+                                || expertise == ""
+                                || address == {}
+                                || languages == []}
                                 type="submit"
                             >
                                 Save
