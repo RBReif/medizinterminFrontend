@@ -5,6 +5,7 @@
 - [Introduction](#introduction)
 - [Backend](#backend)
 - [Prerequisites](#prerequisites)
+- [Run the project](#run)
 - [Credit](#credit)
 
 ## Introduction
@@ -27,6 +28,8 @@ Both for the frontend and the backend:
 
 ### `npm install`
 Install the necessary dependencies and libraries both on the frontend and the backend.
+
+## Run the project 
 
 ### `npm start`
 
