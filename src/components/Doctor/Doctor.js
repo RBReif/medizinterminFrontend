@@ -217,7 +217,6 @@ const Doctor = (props) => {
                             {props.doctor.area_of_expertise} <br></br>
                             {distance} km away
                             <br></br>
-                            <CallIcon/>
                             {props.doctor.phone_number}
                         </div>
                     }

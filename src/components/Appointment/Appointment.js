@@ -240,7 +240,6 @@ const Appointment = (props) => {
             <div>
               {props.appointment.doctor_area_of_expertise}
               <br></br>
-              <CallIcon/>
               {props.appointment.doctor_phone_number}
               <br></br>
               {convertedDay}.{convertedMonth}.{convertedYear} at {convertedHour}
