@@ -100,6 +100,7 @@ const Doctor = (props) => {
   // const [appointmentID, setAppointmentID] = React.useState(0);
 
   const handleChange = (event, newValue) => {
+    setAppointment("");
     setValue(newValue);
   };
 
@@ -247,6 +248,7 @@ const Doctor = (props) => {
                 onClick={handleSubmit}
                 color="primary"
                 size="small"
+                disabled={appointment? false: true}
               >
                 Book Appointment
               </Button>

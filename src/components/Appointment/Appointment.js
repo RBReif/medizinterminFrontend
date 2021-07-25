@@ -63,7 +63,23 @@ const Appointment = (props) => {
         "",
         null
       );
-      alert("We deleted your appointment on " + res.startPoint);
+      let convertedDate = new Date(res.startPoint);
+      let convertedDay = convertedDate.getDate();
+      let convertedMonth = convertedDate.getMonth() + 1;
+      let convertedYear = convertedDate.getFullYear();
+      let convertedHour = convertedDate.getHours();
+      let convertedMinutes =
+        (convertedDate.getMinutes() < 10 ? "0" : "") +
+        convertedDate.getMinutes();
+      alert("We deleted your appointment on " +  convertedDay +
+      "." +
+      convertedMonth +
+      "." +
+      convertedYear +
+      " at " +
+      convertedHour +
+      ":" +
+      convertedMinutes+".");
       window.location.reload();
     } else {
     }
