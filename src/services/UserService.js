@@ -4,9 +4,6 @@ import HttpService from './HttpService';
 
 export default class UserService {
 
-    constructor() {
-    }
-
     static baseURL() {
         return 'http://localhost:4000/patient';
     }
@@ -66,5 +63,23 @@ export default class UserService {
 
     static isAuthenticated() {
         return !!window.localStorage['jwtToken'];
+    }
+
+    static update(id, firstName, lastName, username, pictureUrl, gender, healthInsurance, address) {
+        return new Promise((resolve, reject) => {
+            HttpService.put(`${UserService.baseURL()}/${id}`, {
+                firstname: firstName,
+                lastname: lastName,
+                username: username,
+                thumbnail: pictureUrl,
+                gender: gender,
+                insurance: healthInsurance,
+                address: address
+            }, function (data) {
+                resolve(data);
+            }, function (textStatus) {
+                reject(textStatus);
+            });
+        });
     }
 }

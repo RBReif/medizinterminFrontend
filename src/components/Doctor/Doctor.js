@@ -141,6 +141,8 @@ const Doctor = (props) => {
     props.doctor.address.lat,
     props.doctor.address.lng
   ) * 100)/100;
+
+  console.log(props.appointments)
   return (
     <ThemeProvider theme={Theme}>
       <Card id={props.id} className={classes.root}>
@@ -182,9 +184,15 @@ const Doctor = (props) => {
               <FormControl className={classes.formControl}>
                 <Select onClick={dateChangeHandler}>
                   {props.appointments.map((item) => {
+                    let convertedDate = new Date(item.startPoint);
+                    let convertedDay = convertedDate.getDate();
+                    let convertedMonth = convertedDate.getMonth()+1;
+                    let convertedYear = convertedDate.getFullYear();
+                    let convertedHour = convertedDate.getHours();
+                    let convertedMinutes = (convertedDate.getMinutes()<10?'0':'') + convertedDate.getMinutes();
                     return (
                       <MenuItem key={item._id} value={item}>
-                        {item.startPoint}
+                        {convertedDay}.{convertedMonth}.{convertedYear} at {convertedHour}:{convertedMinutes}
                       </MenuItem>
                     );
                   })}

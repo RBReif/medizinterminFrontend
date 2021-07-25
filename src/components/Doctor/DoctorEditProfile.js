@@ -5,13 +5,16 @@ import {
     Button,
     TextField,
     Typography,
+    Avatar,
 } from "@material-ui/core";
+import FormHelperText from '@material-ui/core/FormHelperText';
 import {Col, Container, Form, Row} from "react-bootstrap";
 import DynamicDropdown from "../Forms/DynamicDropdown";
 import ConfigService from "../../services/ConfigService";
 import LocationAutoComplete from "../Forms/Location/LocationAutoComplete";
 import {useSelector} from "react-redux";
 import {useHistory} from 'react-router-dom'
+import DoctorService from "../../services/DoctorService";
 import MultiSelectDropdown from "../Forms/MultiSelectDropdown";
 import DynamicSwitch from "../Forms/DynamicSwitch";
 
@@ -41,123 +44,62 @@ const useStyles = makeStyles((theme) => ({
     signUpButton: {
         marginLeft: theme.spacing(1),
     },
+    avatar: {
+        float: "right",
+        marginRight: theme.spacing(2),
+        width: theme.spacing(20),
+        height: theme.spacing(20)
+    },
 }));
 
 /**
  * For register new users
  * @param {props} props
  */
-const SignUpComponent = (props) => {
+const DoctorEditProfile = (props) => {
+    let doctorId = DoctorService.getCurrentUser().id;
+
     const history = useHistory()
     const userData = useSelector((state) => state.user);
 
-    useEffect(() => {
-        if (userData?.user?.username) {
-            history.push("/doctor-dashboard");
-        }
-    }, [userData, history]);
-
-    const classes = useStyles();
-
+    const [doctor, setDoctor] = useState({});
     const [firstName, setFirstName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
-    const [username, setUsername] = React.useState("");
-    const [expertises, setExpertises] = useState([]);
-    const [languages, setLanguages] = useState([]);
-    const [languageList, setLanguageList] = useState([]);
-    const [facilities, setFacilities] = useState([]);
+    const [username, setUserName] = React.useState("");
+    const [phone, setPhone] = React.useState("");
     const [address, setAddress] = useState({
         lat: null,
         lng: null,
     });
-    const [expertise, setExpertise] = useState("");
-    const [phone, setPhone] = React.useState("");
     const [pictureUrl, setPictureUrl] = React.useState("");
-    const [password, setPassword] = React.useState("");
-    const [password2, setPassword2] = React.useState("");
+    const [expertise, setExpertise] = useState("");
+    const [languageList, setLanguageList] = useState([]);
+    const [facilityList, setFacilityList] = useState([]);
+
+    const [expertises, setExpertises] = React.useState([]);
+    const [languages, setLanguages] = useState([]);
+    const [facilities, setFacilities] = useState([]);
+
     const [registerError, setRegisterError] = React.useState("");
 
+    const classes = useStyles();
 
-    const onRegister = (e) => {
-        e.preventDefault();
-        let docFacilities = facilities.filter(x => x.isActive).map(x => x.displayname)
-        props.onRegister(username, password, firstName, lastName, phone, expertise, languageList, address, docFacilities, pictureUrl);
-    };
+    useEffect(async () => {
+        const getDoctor = async () => {
+            const doctor1 = await DoctorService.getDoctor(doctorId);
+            setDoctor(doctor1);
+            setFirstName(doctor1.firstname);
+            setLastName(doctor1.lastname);
+            setUserName(doctor1.username);
+            setPhone(doctor1.phone);
+            setPictureUrl(doctor1.thumbnail);
+            setExpertise(doctor1.area_of_expertise);
+            setLanguageList(doctor1.languages);
+            setAddress(doctor1.address);
+            setFacilityList(doctor1.special_facilities);
+        };
+        await getDoctor();
 
-    const onChangeFirstName = (e) => {
-        setFirstName(e.target.value);
-        setRegisterError("");
-    };
-
-    const onChangeLastName = (e) => {
-        setLastName(e.target.value);
-        setRegisterError("");
-    };
-
-    const onChangeUsername = (e) => {
-        setUsername(e.target.value);
-        setRegisterError("");
-    };
-
-    const onSelectAddress = ({lat, lng}, address_value) => {
-        setAddress({
-            address_value,
-            lat,
-            lng,
-        });
-        setRegisterError("");
-        console.log(address);
-    };
-
-    const onChangeExpertise = (e) => {
-        setRegisterError("");
-        setExpertise(e.target.value);
-
-    };
-
-    const onChangePhone = (e) => {
-        setPhone(e.target.value);
-        setRegisterError("");
-    };
-
-    const onChangeLanguages = (value) => {
-        setLanguageList(value);
-    };
-
-    const onChangeToggle = (displayname, isActive) => {
-        let objIndex = facilities.findIndex(
-            (obj) => obj.displayname === displayname
-        );
-        facilities[objIndex].isActive = !facilities[objIndex].isActive;
-        return facilities;
-    };
-
-    const onChangePictureUrl = (e) => {
-        setPictureUrl(e.target.value);
-        setRegisterError("");
-    };
-
-    const onChangePassword = (e) => {
-        setPassword(e.target.value);
-        setRegisterError("");
-    };
-
-    const onChangePassword2 = (e) => {
-        setPassword2(e.target.value);
-        setRegisterError("");
-    };
-
-    const onBlurPassword = (e) => {
-        if (password !== "" && password2 !== "") {
-            if (password !== password2) {
-                setRegisterError("Passwords do not match.");
-            } else {
-                setRegisterError("");
-            }
-        }
-    };
-
-    useEffect(() => {
         const getConfig = async () => {
             const config = await ConfigService.getConfig()
             setExpertises(config.areas.map((item) => {
@@ -172,24 +114,94 @@ const SignUpComponent = (props) => {
                 })
             );
         }
-        getConfig()
-    }, [])
+        await getConfig();
+    }, [userData]);
+
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        props.onSubmit(userData.user.id, firstName, lastName, username, phone, pictureUrl, expertise, languageList, address, facilityList);
+    };
+
+    const onChangeFirstName = (e) => {
+        setFirstName(e.target.value);
+        setRegisterError("");
+    };
+
+    const onChangeLastName = (e) => {
+        setLastName(e.target.value);
+        setRegisterError("");
+    };
+
+    const onChangeUsername = (e) => {
+        setUserName(e.target.value);
+        setRegisterError("");
+    };
+
+    const onChangePhoneNumber = (e) => {
+        setPhone(e.target.value);
+        setRegisterError("");
+    };
+
+    const onSelectAddress = ({lat, lng}, address_value) => {
+        setAddress({
+            address_value,
+            lat,
+            lng,
+        });
+        setRegisterError("");
+    };
+
+    const onChangeExpertise = (e) => {
+        setRegisterError("");
+        setExpertise(e.target.value);
+
+    };
+    const onChangeLanguages = (value) => {
+        setLanguageList(value);
+    };
+
+    const onChangePictureUrl = (e) => {
+        setPictureUrl(e.target.value);
+        setRegisterError("");
+    };
+
+    const onChangeToggle = (displayname) => {
+        let facIndex = doctor.special_facilities.indexOf(displayname)
+        facIndex == -1 ? facilityList.push(displayname) : facilityList.splice(facIndex,1);
+        return facilityList;
+    };
+
+    const checkToggle = (displayname) => {
+        let facIndex = doctor.special_facilities.indexOf(displayname)
+        return facIndex != -1 ? true : false;
+    };
 
     return (
-        <div className={classes.usersignUpRoot}>
+        <div>
             <Container>
                 <Paper className={classes.signUpPaper} component="form">
                     <Form>
-                        <center><h4>Medical Professional Sign Up</h4></center>
-                        <br/>
+                        <Row>
+                            <Col sm={9}>
+                                <h2>{doctor?.firstname + " " + doctor?.lastname}</h2>
+                                <p>{"Current Rating: tbc. "}</p>
+                                <p>You can edit your profile details below</p>
+
+                            </Col>
+                            <Col sm={3}>
+                                <Avatar src={doctor?.thumbnail} className={classes.avatar}>
+                                </Avatar>
+                            </Col>
+                            <br/>
+                        </Row>
                         <Row>
                             <Col>
                                 <Form.Label> First Name </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
-                                        label="First Name"
+                                        placeholder={doctor?.firstname}
                                         fullWidth
-                                        value={firstName}
                                         onChange={onChangeFirstName}
                                     />
                                 </div>
@@ -198,35 +210,43 @@ const SignUpComponent = (props) => {
                                 <Form.Label> Last Name </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
-                                        label="Last Name"
+                                        placeholder={doctor?.lastname}
                                         fullWidth
-                                        value={lastName}
                                         onChange={onChangeLastName}
                                     />
                                 </div>
                             </Col>
                         </Row>
-
                         <Row>
                             <Col>
                                 <Form.Label> E-Mail </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
-                                        label="E-Mail"
+                                        placeholder={doctor?.username}
                                         fullWidth
-                                        value={username}
                                         onChange={onChangeUsername}
                                     />
                                 </div>
                             </Col>
                             <Col>
-                                <Form.Label> Phone Number </Form.Label>
+                                <Form.Label> Phone </Form.Label>
                                 <div className={classes.signUpRow}>
                                     <TextField
-                                        label="Phone Number"
+                                        placeholder={doctor?.phone_number}
                                         fullWidth
-                                        value={phone}
-                                        onChange={onChangePhone}
+                                        onChange={onChangePhoneNumber}
+                                    />
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Label> Profile Picture </Form.Label>
+                                <div className={classes.signUpRow}>
+                                    <TextField
+                                        placeholder={doctor?.thumbnail}
+                                        fullWidth
+                                        onChange={onChangePictureUrl}
                                     />
                                 </div>
                             </Col>
@@ -235,11 +255,12 @@ const SignUpComponent = (props) => {
                             <Col sm={3}>
                                 <DynamicDropdown
                                     key={expertises.id}
-                                    defaultValue=""
+                                    defaultValue={doctor?.area_of_expertise}
                                     label="Area of Expertise"
                                     items={expertises}
                                     onChange={onChangeExpertise}
                                 ></DynamicDropdown>
+                                <FormHelperText>{"Currently: " + doctor?.area_of_expertise}</FormHelperText>
                             </Col>
                             <Col sm={3}>
                                 <MultiSelectDropdown
@@ -247,12 +268,15 @@ const SignUpComponent = (props) => {
                                     items={languages}
                                     onChange={onChangeLanguages}
                                 ></MultiSelectDropdown>
+                                <FormHelperText>{"Currently: " + doctor?.languages}</FormHelperText>
                             </Col>
                             <Col sm={6}>
                                 <Form.Label> Address </Form.Label>
                                 <LocationAutoComplete
+                                    //value={patient.address.address_value}
                                     onSelect={onSelectAddress}
                                 />
+                                <FormHelperText>{"Currently: " + doctor?.address?.address_value}</FormHelperText>
                             </Col>
                         </Row>
                         <Row><Col>
@@ -270,6 +294,7 @@ const SignUpComponent = (props) => {
                                             <DynamicSwitch
                                                 key={toggle.id}
                                                 id={toggle.id}
+                                                done={checkToggle(toggle.displayname)}
                                                 displayname={toggle.displayname}
                                                 onChange={onChangeToggle}
                                             ></DynamicSwitch>
@@ -284,6 +309,7 @@ const SignUpComponent = (props) => {
                                             <DynamicSwitch
                                                 key={toggle.id}
                                                 id={toggle.id}
+                                                done={checkToggle(toggle.displayname)}
                                                 displayname={toggle.displayname}
                                                 onChange={onChangeToggle}
                                             ></DynamicSwitch>
@@ -292,39 +318,6 @@ const SignUpComponent = (props) => {
                                 </div>
                             </Col>
                         </Row>
-                        <Form.Label> Profile Picture </Form.Label>
-                        <div className={classes.signUpRow}>
-                            <TextField
-                                label="Picture URL"
-                                fullWidth
-                                value={pictureUrl}
-                                onChange={onChangePictureUrl}
-                            />
-                        </div>
-                        <Form.Label> Password </Form.Label>
-                        <div className={classes.signUpRow}>
-                            <TextField
-                                label="Password"
-                                fullWidth
-                                value={password}
-                                onChange={onChangePassword}
-                                error={registerError !== ""}
-                                onBlur={onBlurPassword}
-                                type="password"
-                            />
-                        </div>
-                        <Form.Label> Repeat Password </Form.Label>
-                        <div className={classes.signUpRow}>
-                            <TextField
-                                label="Password"
-                                fullWidth
-                                value={password2}
-                                onChange={onChangePassword2}
-                                error={registerError !== ""}
-                                onBlur={onBlurPassword}
-                                type="password"
-                            />
-                        </div>
 
                         {registerError !== "" ? (
                             <div className={classes.signUpRow}>
@@ -344,29 +337,18 @@ const SignUpComponent = (props) => {
                                 className={classes.signUpButton}
                                 variant="contained"
                                 color="primary"
-                                onClick={onRegister}
-                                disabled={
-                                    username === "" ||
-                                    password === "" ||
-                                    password2 === "" ||
-                                    firstName === "" ||
-                                    lastName === "" ||
-                                    //phone === "" ||
-                                    expertise === "" ||
-                                    address.lat === "" ||
-                                    address.lng === "" ||
-                                    registerError !== "" ||
-                                    password !== password2
-                                }
+                                onClick={onSubmit}
+                                disabled={firstName == "" || lastName == "" || username == "" || expertise == "" || languages == []}
                                 type="submit"
                             >
-                                Register
+                                Save
                             </Button>
                         </div>
                     </Form>
                 </Paper>
             </Container>
+
         </div>
     );
 }
-export default SignUpComponent;
+export default DoctorEditProfile;

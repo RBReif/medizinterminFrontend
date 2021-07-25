@@ -1,8 +1,6 @@
 // "use strict";
-
 export default class HttpService {
-    // constructor() {
-    // }
+
     static apiURL() {
         return 'http://localhost:3000/?language=GERMAN';
     }
@@ -119,8 +117,7 @@ export default class HttpService {
             });
 
             if (this.checkIfUnauthorized(resp)) {
-                window.location = '/login';
-                return;
+                return onError(resp.status);
             } else {
                 resp = await resp.json();
             }

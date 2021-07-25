@@ -1,6 +1,8 @@
 import React, {useEffect} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Paper, Button, TextField, Typography} from "@material-ui/core";
+import AlertDialog from "../Modal/Dialog";
+import {useSelector} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     userLoginRoot: {
@@ -37,20 +39,23 @@ const useStyles = makeStyles((theme) => ({
 function LoginComponent(props) {
     const classes = useStyles();
 
+    const user = useSelector((state) => state.user);
+
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [openDialog, setOpenDialog] = React.useState(false);
 
     const [loginError, setLoginError] = React.useState("");
 
-    let loginUrl = window.location.href == 'http://localhost:3000/login-professionals' ? 'Doctor' : 'Patient';
+    let loginUrl = window.location.href === 'http://localhost:3000/login-professionals' ? 'Doctor' : 'Patient';
 
     useEffect(() => {
-        if (props.userData?.error) {
-            setLoginError(props.userData?.error);
+        if (user?.error) {
+            setOpenDialog(true)
         } else {
-            setLoginError("");
+
         }
-    }, [props.user]);
+    }, [user]);
 
     const onLogin = (e) => {
         e.preventDefault();
@@ -69,16 +74,17 @@ function LoginComponent(props) {
 
     return (
         <div className={classes.userLoginRoot}>
+
             <Paper className={classes.loginPaper} component="form">
                 <br/>
                 <center><h4>Welcome to medizintermin!</h4></center>
                 <center>
-                    <h7>Pleas login as a <b>{loginUrl}</b></h7>
+                    <h7>Please login as a <b>{loginUrl}</b></h7>
                 </center>
                 <br/>
                 <div className={classes.loginRow}>
                     <TextField
-                        label="Name"
+                        label="E-Mail"
                         fullWidth
                         value={username}
                         onChange={onChangeUsername}
@@ -124,6 +130,13 @@ function LoginComponent(props) {
                     </div>
                 </div>
             </Paper>
+            <AlertDialog
+                open={openDialog}
+                onClose={() => setOpenDialog(false)}
+                secondButton={false}
+                title="Authentication failed"
+                text={user?.error}
+            />
         </div>
     );
 }

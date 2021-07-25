@@ -7,8 +7,11 @@ import {Menu, MenuItem, Avatar, Divider} from "@material-ui/core";
 import {connect, useSelector} from "react-redux";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
-import {Dashboard, Today} from "@material-ui/icons";
+import {Dashboard} from "@material-ui/icons";
 import TodayIcon from '@material-ui/icons/Today';
+import PatientService from "../../services/PatientService";
+import UserService from "../../services/UserService";
+import DoctorService from "../../services/DoctorService";
 
 const useStyles = makeStyles((theme) => ({
     menuitem: {
@@ -27,6 +30,15 @@ const useStyles = makeStyles((theme) => ({
 function KebabMenu(props) {
     const classes = useStyles();
 
+    let patientId = UserService.getCurrentUser().id;
+    let doctorId = DoctorService.getCurrentUser().id;
+
+    const [patientName, setPatientName] = React.useState("");
+    const [patientPicture, setPatientPicture] = React.useState("");
+
+    const [doctorName, setDoctorName] = React.useState("");
+    const [doctorPicture, setDoctorPicture] = React.useState("");
+
     const userData = useSelector((state) => {
         // return the currently logged in user from redux store
         return state.user;
@@ -37,6 +49,20 @@ function KebabMenu(props) {
         props.onClose();
         // navigate to the login page
         props.history.push("/login-patients");
+    };
+
+    const onClickProfile = () => {
+        // close this menu
+        props.onClose();
+        // navigate to the doctor dashboard
+        props.history.push("/patient-edit-profile");
+    };
+
+    const onClickDoctorProfile = () => {
+        // close this menu
+        props.onClose();
+        // navigate to the doctor dashboard
+        props.history.push("/doctor-edit-profile");
     };
 
     const onClickDoctorDashboard = () => {
@@ -63,13 +89,36 @@ function KebabMenu(props) {
     const onClickLogout = () => {
         // trigger redux logout action
         props.dispatch(logout());
-        //logout();
         // close this menu
         props.onClose();
         // navigate to the home page
         props.history.push("/");
     };
 
+    const getPatient = async () => {
+        const patient = await PatientService.getPatient(patientId);
+        setPatientName(patient.firstname);
+        setPatientPicture(patient.thumbnail);
+
+    };
+
+    const getDoctor = async () => {
+        const doctor = await DoctorService.getDoctor(doctorId);
+        setDoctorName(doctor.firstname);
+        setDoctorPicture(doctor.thumbnail);
+
+    };
+
+    useEffect(async () => {
+        switch (userData?.user?.role) {
+            case 'PATIENT':
+                getPatient();
+            case'DOCTOR':
+                getDoctor();
+            default:
+        }
+
+    }, [userData]);
 
     return (
         <Menu
@@ -77,13 +126,15 @@ function KebabMenu(props) {
             anchorEl={props.anchorEl}
             onClose={props.onClose}
         >
-            {userData?.user?.role == 'DOCTOR'
-                ? [
-                    <MenuItem key="user" className={classes.menuitem}>
-                        <Avatar src={userData.user.thumbnail} style={{marginRight: 2}}>
-                        </Avatar>
-                        {userData.user.username}
-                    </MenuItem>,
+            {userData?.user?.role === 'DOCTOR'
+                ? [<MenuItem
+                    key="user"
+                    onClick={onClickDoctorProfile}
+                    className={classes.menuitem}>
+                    <Avatar src={doctorPicture}>
+                    </Avatar>
+                    {doctorName}
+                </MenuItem>,
                     <Divider key="divider"/>,
                     <MenuItem
                         key="dashboard"
@@ -112,11 +163,14 @@ function KebabMenu(props) {
                         Logout
                     </MenuItem>
                 ]
-                : userData?.user?.role == 'PATIENT'
-                    ? [<MenuItem key="user" className={classes.menuitem}>
-                        <Avatar src={userData.user.thumbnail}>
+                : userData?.user?.role === 'PATIENT'
+                    ? [<MenuItem
+                        key="user"
+                        onClick={onClickProfile}
+                        className={classes.menuitem}>
+                        <Avatar src={patientPicture}>
                         </Avatar>
-                        {userData.user.username}
+                        {patientName}
                     </MenuItem>,
                         <Divider key="divider"/>,
                         <MenuItem

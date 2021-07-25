@@ -2,11 +2,10 @@ import {
     Navbar,
     Nav,
 } from "react-bootstrap";
-import React, {useRef, useState} from "react";
+import React from "react";
 import {withRouter, Link} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {connect, useSelector} from "react-redux";
-import {logout} from "../../redux/actions";
+import {useSelector} from "react-redux";
 import {Theme} from "../UI/Theme";
 import {ThemeProvider} from "@material-ui/styles";
 import {Button} from "@material-ui/core";
@@ -26,7 +25,7 @@ const NavigationBar = (props) => {
     });
 
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const ref = useRef(null)
+    //const ref = useRef()
     const handleClose = () => {
         setAnchorEl(null);
     }
@@ -34,14 +33,6 @@ const NavigationBar = (props) => {
     const handleClick = (e) => {
         setAnchorEl(e.currentTarget);
     }
-
-    const onClickLogout = () => {
-        // trigger redux logout action
-        props.dispatch(logout());
-        //logout();
-        // navigate to the home page
-        props.history.push("/");
-    };
 
     const onClickAreYouADoctor = () => {
         // navigate to the healthcare professional login
@@ -63,7 +54,7 @@ const NavigationBar = (props) => {
                     <Link to="/find-doctor" className="navbar-brand">medizintermin</Link>
                     <Nav className="ml-auto">
                         <div>
-                            {userData.user
+                            {userData?.user?.username
                                 ? [<Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                     <MenuIcon/>
                                 </Button>]
