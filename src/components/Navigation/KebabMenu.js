@@ -6,9 +6,10 @@ import {logout} from "../../redux/actions";
 import {Menu, MenuItem, Avatar, Divider} from "@material-ui/core";
 import {connect, useSelector} from "react-redux";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
+import SearchIcon from '@material-ui/icons/Search';
 import {Dashboard} from "@material-ui/icons";
 import TodayIcon from '@material-ui/icons/Today';
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import PatientService from "../../services/PatientService";
 import UserService from "../../services/UserService";
 import DoctorService from "../../services/DoctorService";
@@ -72,6 +73,20 @@ function KebabMenu(props) {
         props.history.push("/doctor-dashboard");
     };
 
+    const onClickCalendar = () => {
+        // close this menu
+        props.onClose();
+        // navigate to the doctor calendar
+        props.history.push("/doctor-daily-plan");
+    };
+
+    const onClickFindDoctor = () => {
+        // close this menu
+        props.onClose();
+        // navigate to the find a doctor view
+        props.history.push("/find-doctor");
+    };
+
     const onClickPatientDashboard = () => {
         // close this menu
         props.onClose();
@@ -79,12 +94,6 @@ function KebabMenu(props) {
         props.history.push("/dashboard");
     };
 
-    const onClickCalendar = () => {
-        // close this menu
-        props.onClose();
-        // navigate to the doctor calendar
-        props.history.push("/doctor-daily-plan");
-    };
 
     const onClickLogout = () => {
         // trigger redux logout action
@@ -172,6 +181,14 @@ function KebabMenu(props) {
                         </Avatar>
                         {patientName}
                     </MenuItem>,
+                        <Divider key="divider"/>,
+                        <MenuItem
+                            key="findDoctor"
+                            onClick={onClickFindDoctor}
+                            className={classes.menuitem}
+                        >
+                            <SearchIcon className={classes.avatar}/>
+                            Find a Doctor</MenuItem>,
                         <Divider key="divider"/>,
                         <MenuItem
                             key="dashboard"
