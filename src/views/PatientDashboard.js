@@ -14,6 +14,7 @@ import DoctorService from "../services/DoctorService";
 import Recommendation from "../components/Recommendations/Recommendation";
 import Appointment from "../components/Appointment/Appointment";
 import { Col, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -297,6 +298,7 @@ const PatientDashboard = (props) => {
     <ThemeProvider theme={Theme}>
       <div className={classes.root}>
       <Page>
+        <Container fluid>
         <Row>
           <Col>
             <h2>
@@ -307,7 +309,7 @@ const PatientDashboard = (props) => {
           </Col>
           </Row>
           <Row>
-            <Col sm={4}>
+            <Col sm={4} fluid>
             <Paper className={classes.paper}>
               <h3>News Center</h3>
             </Paper>
@@ -345,7 +347,7 @@ const PatientDashboard = (props) => {
             </p>
             </Col>
           {/* </Grid> */}
-          <Col sm={4}>
+          <Col sm={4} fluid>
           {/* <Grid item spacing={3} xs={12} xm={3} xl={3}> */}
             <Paper className={classes.paper}>
               <h3>Upcoming Appointments</h3>
@@ -375,7 +377,7 @@ const PatientDashboard = (props) => {
                 <Paper className={classes.paper}>Loading...</Paper>
               )}
           </Col>
-          <Col sm={4}>
+          <Col sm={4} fluid>
             <Paper className={classes.paper}>
               <h3>Previous Appointments</h3>
             </Paper>
@@ -405,6 +407,7 @@ const PatientDashboard = (props) => {
               )}
               </Col>
         </Row>
+        </Container>
       </Page>
       </div>
     </ThemeProvider>
