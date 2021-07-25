@@ -21,6 +21,8 @@ import AppointmentService from "../../services/AppointmentService";
 import UserService from"../../services/UserService";
 import CalcDistance from "../Forms/Location/CalcDistance";
 import DoctorService from "../../services/DoctorService";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -83,6 +85,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * For user login
+ * @param {props} props
+ */
+
 const Doctor = (props) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -95,14 +102,15 @@ const Doctor = (props) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  
   const submit = async () => {
     if (window.confirm('Are you sure you want to book this appointment?')) {
       let res = await AppointmentService.updateAppointment(appointment._id, "SCHEDULED", appointment.appointmentDetails, appointment.appointmentTitle,UserService.getCurrentUser().id)
       console.log("RESPONSE: ", res)
       alert("Medizintermin booked your appointment on "+ res.startPoint+" ! Thank you for booking with us:)")
-      console.log("BOOK BOOK BOOK: ", appointment)
-      window.location.reload()
+      // console.log("BOOK BOOK BOOK: ", appointment);
+      // window.location.reload()
+      props.history.push("/dashboard")
     } else {
 
     }
@@ -224,4 +232,4 @@ const Doctor = (props) => {
   );
 };
 
-export default Doctor;
+export default connect()(withRouter(Doctor));

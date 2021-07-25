@@ -16,6 +16,7 @@ import DynamicCard from "../components/UI/DynamicCard";
 import { Button } from "@material-ui/core";
 import Recommendation from "../components/Recommendations/Recommendation";
 import Appointment from "../components/Appointment/Appointment";
+import { Col, Row } from "react-bootstrap";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -309,33 +310,25 @@ const PatientDashboard = (props) => {
       }
     }
 
-    // console.log("{Recomm] Results: ", recomResults);
-    //setRecommendations(recomResults)
   };
   findRecommendations();
 
-  // console.log("Recommondations set: ",recommendations)
 
   return (
     <ThemeProvider theme={Theme}>
       <div className={classes.root}>
       <Page>
-        {/*************** GRID 1, 3 COLUMNS *****************/}
-        <Grid
-          container
-          spacing={3}
-          direction="row"
-          justify="center"
-          // style={{ minHeight: "100vh" }}
-        >
-          <Grid item xs={12} direction="column">
+        <Row>
+          <Col>
             <h2>
               <center>
               Hello {patient.firstname} {patient.lastname}
               </center>
             </h2>
-          </Grid>
-          <Grid item spacing={3} xs={12} xm={4} xl={4} direction="column">
+          </Col>
+          </Row>
+          <Row>
+            <Col>
             <Paper className={classes.paper}>
               <h3>News Center</h3>
             </Paper>
@@ -371,8 +364,10 @@ const PatientDashboard = (props) => {
                 </Paper>
               )}
             </p>
-          </Grid>
-          <Grid item spacing={3} xs={12} xm={3} xl={3}>
+            </Col>
+          {/* </Grid> */}
+          <Col>
+          {/* <Grid item spacing={3} xs={12} xm={3} xl={3}> */}
             <Paper className={classes.paper}>
               <h3>Upcoming Appointments</h3>
             </Paper>
@@ -400,8 +395,8 @@ const PatientDashboard = (props) => {
               ) : (
                 <Paper className={classes.paper}>Loading...</Paper>
               )}
-          </Grid>
-          <Grid item xs={12} xm={3} xl={3} alignItems="center">
+          </Col>
+          <Col>
             <Paper className={classes.paper}>
               <h3>Previous Appointments</h3>
             </Paper>
@@ -429,8 +424,8 @@ const PatientDashboard = (props) => {
               ) : (
                 <Paper className={classes.paper}>Loading...</Paper>
               )}
-          </Grid>
-        </Grid>
+              </Col>
+        </Row>
       </Page>
       </div>
     </ThemeProvider>
