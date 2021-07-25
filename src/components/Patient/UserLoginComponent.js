@@ -79,7 +79,7 @@ function LoginComponent(props) {
                 <br/>
                 <center><h4>Welcome to medizintermin!</h4></center>
                 <center>
-                    <h7>Pleas login as a <b>{loginUrl}</b></h7>
+                    <h7>Please login as a <b>{loginUrl}</b></h7>
                 </center>
                 <br/>
                 <div className={classes.loginRow}>
@@ -133,6 +133,7 @@ function LoginComponent(props) {
             <AlertDialog
                 open={openDialog}
                 onClose={() => setOpenDialog(false)}
+                secondButton={false}
                 title="Authentication failed"
                 text={user?.error}
             />
