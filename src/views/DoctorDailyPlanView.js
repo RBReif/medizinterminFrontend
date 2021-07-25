@@ -201,8 +201,8 @@ const DoctorDailyPlanView = () => {
                         <Col lg={60}>
                             &nbsp;
                             &nbsp;
-                            <Button onClick={navigateBeforeHandler}><NavigateBefore ></NavigateBefore></Button>
-                            <Button onClick={navigateNextHandler}><NavigateNext ></NavigateNext></Button>
+                            <Button size={'small'} onClick={navigateBeforeHandler}><NavigateBefore ></NavigateBefore></Button>
+                            <Button size={'small'} onClick={navigateNextHandler}><NavigateNext ></NavigateNext></Button>
                             <DynamicCard
                                 variant="body2"
                                 content={
