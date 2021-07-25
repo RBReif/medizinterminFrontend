@@ -3,16 +3,7 @@ import {Container, Col, Row} from "react-bootstrap";
 import React from "react";
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import StarIcon from '@material-ui/icons/Star';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import FlightTakeoffIcon from '@material-ui/icons/FlightTakeoff';
-
-// const UnorderedList = (props) => {
-//     return(['You have one upcoming task this week', 'How was the appointment with Dr. Schulz?', 'Another task in here'].map((breakpoint, idx) => (
-//         <ListGroup horizontal={breakpoint} className="my-2" key={idx}>
-//             <ListGroup.Item>{breakpoint}</ListGroup.Item>
-//         </ListGroup>
-//     )));
-// };
 
 const onClickTravel = () => {
     window.open("https://www.who.int/travel-advice/vaccines", "_blank");
