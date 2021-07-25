@@ -39,6 +39,6 @@ You will also see any lint errors in the console.
 
 The application (frontend-side) will run on localhost and on port 3000.
 
-### Credit
+## Credit
 
 This application was developed by Team 52 of the SEBA Master Course at TUM in Summer 2021, namely Christoph Kipfer, Maximilian Pfleger, Roland Reif, Mehul Sethi. 
