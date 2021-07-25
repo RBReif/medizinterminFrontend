@@ -18,7 +18,7 @@ Health care professionals can offer available time slots to patients, can keep t
 
 ## Backend
 
-Please also clone the backend project from the repository. This project uses MongoDB for the backend. 
+Please also clone the backend project from the repository. This project uses MongoDB for the backend. The project was realized using the MERN stack.
 
 ## Prerequisites
  
