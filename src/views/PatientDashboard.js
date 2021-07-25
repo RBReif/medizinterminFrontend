@@ -65,7 +65,6 @@ const PatientDashboard = (props) => {
   useEffect(async () => {
     const getPatient = async () => {
       const patient = await PatientService.getPatient(patientId);
-      // console.log(patient);
       setPatient(patient);
     };
     getPatient();
@@ -75,10 +74,8 @@ const PatientDashboard = (props) => {
       const appointments = await AppointmentService.getAppointmentsPatient(
         patientId
       );
-      // console.log(appointments);
       setAppointments(appointments.map((item) => item));
-      // console.log("finished with getAppointments ", appointments);
-      // console.log("length: ", appointments.length);
+
       let doctorIDs = [];
       appointments.forEach((a) => {
         if (!doctorIDs.some((e) => e === a.doctor)) {
@@ -145,16 +142,14 @@ const PatientDashboard = (props) => {
       (e) => e.doctor_area_of_expertise === area
     );
     let mostRecent = oldestDATE;
-    // console.log("[FINDNEWEST fitting appointments:", fittingAppointments);
+
     for (let i = 0; i < fittingAppointments.length; i++) {
       if (new Date(fittingAppointments[i].startPoint) > mostRecent) {
         mostRecent = new Date(fittingAppointments[i].startPoint);
-        // console.log("[FINDNEWEST newer found")
+
       } else {
-        // console.log("[FINDNEWEST newer NOT found")
       }
     }
-    // console.log("[FINDNEWEST]", area, mostRecent);
     return mostRecent;
   };
 
