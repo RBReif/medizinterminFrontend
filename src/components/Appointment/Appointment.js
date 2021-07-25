@@ -9,8 +9,12 @@ import { Card, CardContent } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import AppointmentService from "../../services/AppointmentService";
+import PatientService from "../../services/PatientService";
+import UserService from "../../services/UserService";
 import DoctorService from "../../services/DoctorService";
+import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
 const Appointment = (props) => {
   const [avgAudienceRating, setAvgAudienceRating] = React.useState("");
   const [value, setValue] = React.useState("");
+  const [doctor, setDoctor] = React.useState("");
+  const [patient, setPatient] = React.useState("");
   const classes = useStyles();
 
   const clickHandler = async () => {
@@ -53,6 +59,26 @@ const Appointment = (props) => {
   };
 
 
+  const extractInformation = () => {
+    if (!props.appointment.doctor) {
+      return;
+    }
+  const getDoctor = async () => {
+    const newDoctor = await DoctorService.getDoctor(props?.appointment?.doctor);
+    setDoctor(newDoctor);
+  }
+  
+  const getPatient = async () => {
+    let newPatient = await PatientService.getPatient(
+      UserService.getCurrentUser().id
+    );
+    setPatient(newPatient);
+  }
+  getDoctor();
+  getPatient();
+}
+
+
   const extractRating = () => {
     if (!props.appointment.doctor) {
       return;
@@ -61,7 +87,7 @@ const Appointment = (props) => {
       const audienceRating = await DoctorService.getRating(props.appointment.doctor);
       setAvgAudienceRating(audienceRating?.rating);
       setValue(audienceRating?.rating)
-      console.log("Average initial",props.appointment.title, audienceRating?.rating);
+      // console.log("Average initial",props.appointment.title, audienceRating?.rating);
     };
     getInitialRating();
   };
@@ -69,12 +95,14 @@ const Appointment = (props) => {
   useEffect(() => {
     if (!props.new) {
       extractRating();
+      extractInformation();
     }
   }, [props.appointment.doctor, props.new]);
 
+
   const onChangeOwnRating = async (value) => {
     setValue(value);
-    console.log("Props in onChangeOwnRating: ", props?.id);
+    // console.log("Props in onChangeOwnRating: ", props?.id);
     // console.log("Props.doctor in onChangeOwnRating: ", props.props.doctor);
     await DoctorService.rateDoctor(props?.appointment?.doctor, value);
     let newAvgAudienceRating = await DoctorService.getRating(
@@ -83,6 +111,21 @@ const Appointment = (props) => {
     setAvgAudienceRating(newAvgAudienceRating?.rating);
     // console.log("OnChange Rating", newAvgAudienceRating.rating);
   };
+
+  const onClickDirections = () => {
+    const getDoctor = async () => {
+      const newDoctor = await DoctorService.getDoctor(props?.appointment?.doctor);
+      setDoctor(newDoctor);
+    }
+    
+    const getPatient = async () => {
+      let newPatient = await PatientService.getPatient(
+        UserService.getCurrentUser().id
+      );
+      setPatient(newPatient);
+    }
+    window.open('https://www.google.com/maps/dir/?api=1&origin='+patient?.address?.address_value+"&destination="+doctor?.address?.address_value+"&travelmode=public", "_blank");
+};
 
   let convertedDate = new Date(props.appointment.startPoint);
   let convertedDay = convertedDate.getDate();
@@ -133,7 +176,7 @@ const Appointment = (props) => {
           }
         />
         <CardContent>
-        <div> {props.appointment?.doctor_address}
+        <div> {props.appointment?.doctor_address} 
               <br></br>
                 <div>
                 <Ratings
@@ -143,7 +186,10 @@ const Appointment = (props) => {
                   avgAudienceRating={avgAudienceRating ? avgAudienceRating:""}
                   readOnly={true}
                 />
-                </div>
+                <br></br>
+                {props.upcoming ? 
+                <Button style={{marginLeft: 3}} size="small" color="primary" onClick={onClickDirections}>get directions</Button>
+                : ""}</div>
              </div>
 
         </CardContent>
