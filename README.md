@@ -1,14 +1,35 @@
 # medizintermin-frontend application
 
-Book your medical appointment with medizintermin. 
+## Table of content
+
+- [Introduction](#introduction)
+- [Backend](#backend)
+- [Prerequisites](#prerequisites)
+- [Run](#run)
+- [Credit](#credit)
+
+## Introduction
+
+Medizintermin is an intermediary service to help patients and health care professionals to connect and to easily facilitate the otherwise tedious managment of appointments with automated matching and scheduling.
+
+Patients can easily book their medical appointments with medizintermin. We consider a wide range of needs to find the perfect appointment. Patients receive individually calculated recommendations for e.g. checkups. Patients can edit, cancel and see details of their appointments and the respective health care professionals. They can calculate routes to the respective lcoation.
+
+Health care professionals can offer available time slots to patients, can keep track of previous appointments and can easily manage their schedule and their daily appointments. E.g., they can take notes that get stored and they see important information about their patients.
+
+## Backend
+
+Please also clone the backend project from the repository. This project uses MongoDB for the backend. The project was realized using the MERN stack.
 
 ## Prerequisites
-
-Please also clone the backend project from the repository. 
-
+ 
 Both for the frontend and the backend:
 
 -   nodejs [official website](https://nodejs.org/en/) - nodejs includes [npm](https://www.npmjs.com/) (node package manager)
+
+### `npm install`
+Install the necessary dependencies and libraries both on the frontend and the backend.
+
+## Run
 
 ### `npm start`
 
@@ -18,28 +39,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The application (frontend-side) will run on localhost and on port 3000.
 
-### `npm run build`
+## Credit
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
+This application was developed by Team 52 of the SEBA Master Course at TUM in Summer 2021, namely Christoph Kipfer, Maximilian Pfleger, Roland Reif, Mehul Sethi. 
