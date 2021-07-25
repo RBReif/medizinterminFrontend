@@ -122,6 +122,7 @@ const SignUpComponent = (props) => {
 
     const onChangeLanguages = (value) => {
         setLanguageList(value);
+        setRegisterError("");
     };
 
     const onChangeToggle = (displayname, isActive) => {
@@ -351,10 +352,9 @@ const SignUpComponent = (props) => {
                                     password2 === "" ||
                                     firstName === "" ||
                                     lastName === "" ||
-                                    //phone === "" ||
                                     expertise === "" ||
-                                    address.lat === "" ||
-                                    address.lng === "" ||
+                                    languageList.length == 0 ||
+                                    address.address_value == null ||
                                     registerError !== "" ||
                                     password !== password2
                                 }

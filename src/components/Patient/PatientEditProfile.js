@@ -115,7 +115,7 @@ const PatientEditProfile = (props) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        props.onSubmit(userData.user.id, firstName, lastName, username, pictureUrl, gender, healthInsurance, address);
+        props.onSubmit(patientId, firstName, lastName, username, pictureUrl, gender, healthInsurance, address);
     };
 
     const onChangeFirstName = (e) => {
@@ -166,13 +166,13 @@ const PatientEditProfile = (props) => {
                         <Row>
                             <Col sm={9}>
                                 <h2>{patient?.firstname + " " + patient?.lastname}</h2>
-                                <p>{"Date of Birth: " + birthDate.substr(0,10)}</p>
+                                <p>{"Date of Birth: " + birthDate.substr(0, 10)}</p>
                                 <p>You can edit your profile details below</p>
 
                             </Col>
                             <Col sm={3}>
-                            <Avatar src={patient?.thumbnail} className={classes.avatar}>
-                            </Avatar>
+                                <Avatar src={patient?.thumbnail} className={classes.avatar}>
+                                </Avatar>
                             </Col>
                             <br/>
                         </Row>
@@ -274,7 +274,11 @@ const PatientEditProfile = (props) => {
                                 variant="contained"
                                 color="primary"
                                 onClick={onSubmit}
-                                disabled={firstName =="a"}
+                                disabled={firstName == ""
+                                || lastName == ""
+                                || username == ""
+                                || gender == ""
+                                || healthInsurance == ""}
                                 type="submit"
                             >
                                 Save

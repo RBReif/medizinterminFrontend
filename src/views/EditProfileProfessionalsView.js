@@ -23,7 +23,7 @@ function EditProfileProfessionalsView(props) {
             "Your profile changes have been successfully submitted.You will now be redirected to your dashboard."
         );
         props.history.push("/doctor-dashboard");
-        // window.location.reload(); // this is super ugly --> we need to fix this
+        window.location.reload(); // this is super ugly
     };
 
     const onCancel = () => {
