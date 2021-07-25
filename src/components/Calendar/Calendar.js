@@ -26,6 +26,7 @@ const BasicLayout = ({ appointmentData, ...restProps }) => {
   const [dob, setDob] = React.useState(appointmentData.patient ? appointmentData.patient.date_of_birth : "");
 
   console.log("when are you here?", appointmentData)
+  console.log("props Neu ", restProps.patients)
   return (
     <AppointmentForm.BasicLayout
       appointmentData={appointmentData}
@@ -74,6 +75,7 @@ const BasicLayout = ({ appointmentData, ...restProps }) => {
 export default class MyCalendar extends React.PureComponent {
   constructor(props) {
     super(props);
+    console.log("props2", props)
     this.state = {
       data: this.props.events,
       mainResourceName: "appointmentStatus",

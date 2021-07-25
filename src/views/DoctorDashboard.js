@@ -137,9 +137,12 @@ const DoctorDashboard = () => {
 
       console.log("PATIENT IDS EXTRACTED: ", patientIDs);
       for (const a1 of patientIDs) {
-        const patient = await PatientService.getPatient(a1);
-        console.log("RECEIVED PATIENT", patient);
-        setPatients([...patients, patient]);
+        console.log("a1 ", a1)
+        if (a1 !=null) {
+          const patient = await PatientService.getPatient(a1);
+          console.log("RECEIVED PATIENT", patient);
+          setPatients([...patients, patient]);
+        }
       }
     };
     const a = getAppointments();
@@ -242,7 +245,7 @@ const DoctorDashboard = () => {
                       </Box>
                     </Row>
                     <div>
-                    <MyCalendar events={calendarEvents} />
+                    <MyCalendar events={calendarEvents} patients={patients} />
                     </div>
                   </div>
                 }
