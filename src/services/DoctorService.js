@@ -111,7 +111,7 @@ export default class DoctorService {
                 firstname: firstName,
                 lastname: lastName,
                 username: username,
-                phone: phone,
+                phone_number: phone,
                 thumbnail: pictureUrl,
                 area_of_expertise: expertise,
                 languages: languages,
