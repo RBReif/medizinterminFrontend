@@ -13,6 +13,7 @@ import Ratings from "../Forms/Ratings";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
+
 import PropTypes from "prop-types";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -25,6 +26,7 @@ import DoctorService from "../../services/DoctorService";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import AlertDialog from "../Modal/Dialog";
+import CallIcon from "@material-ui/icons/Call";
 
 
 function TabPanel(props) {
@@ -214,6 +216,9 @@ const Doctor = (props) => {
                         <div>
                             {props.doctor.area_of_expertise} <br></br>
                             {distance} km away
+                            <br></br>
+                            <CallIcon/>
+                            {props.doctor.phone_number}
                         </div>
                     }
                 />

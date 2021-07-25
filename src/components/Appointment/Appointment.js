@@ -12,6 +12,7 @@ import AppointmentService from "../../services/AppointmentService";
 import PatientService from "../../services/PatientService";
 import UserService from "../../services/UserService";
 import DoctorService from "../../services/DoctorService";
+import CallIcon from '@material-ui/icons/Call';
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { Button } from "@material-ui/core";
@@ -238,6 +239,9 @@ const Appointment = (props) => {
           subheader={
             <div>
               {props.appointment.doctor_area_of_expertise}
+              <br></br>
+              <CallIcon/>
+              {props.appointment.doctor_phone_number}
               <br></br>
               {convertedDay}.{convertedMonth}.{convertedYear} at {convertedHour}
               :{convertedMinutes}

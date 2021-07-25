@@ -96,6 +96,7 @@ const PatientDashboard = (props) => {
               item["doctor_address"] = doctor.address.address_value;
               item["doctor_area_of_expertise"] = doctor.area_of_expertise;
               item["doctor_thumbnail"] = doctor.thumbnail;
+              item["doctor_phone_number"] =doctor.phone_number;
               return item;
             } else {
               return item;
