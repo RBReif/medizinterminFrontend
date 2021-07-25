@@ -26,7 +26,7 @@ const DynamicDropdown = (props) => {
       <p>{props.label}</p>
        <Select
         key={props.items.id}
-        defaultValue={props}
+        defaultValue={props.defaultValue}
         labelId="demo-simple-select-label"
         id={props.items.id}
         value={val}
