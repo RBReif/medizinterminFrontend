@@ -22,7 +22,8 @@ import UserService from "../../services/UserService";
 import PatientService from "../../services/PatientService";
 import CalcDistance from "../Forms/Location/CalcDistance";
 import DoctorService from "../../services/DoctorService";
-import Dialog from "../Modal/Dialog";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -85,6 +86,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * For user login
+ * @param {props} props
+ */
+
 const Doctor = (props) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -132,8 +138,9 @@ const Doctor = (props) => {
           convertedMinutes +
           " ! Thank you for booking with us:)"
       );
-      console.log("BOOK BOOK BOOK: ", appointment);
-      window.location.reload();
+      props.history.push("/dashboard")
+      // console.log("BOOK BOOK BOOK: ", appointment);
+      // window.location.reload();  
     } else {
     }
   };
@@ -270,4 +277,4 @@ const Doctor = (props) => {
   );
 };
 
-export default Doctor;
+export default connect()(withRouter(Doctor));
