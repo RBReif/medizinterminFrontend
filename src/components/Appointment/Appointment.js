@@ -15,6 +15,8 @@ import DoctorService from "../../services/DoctorService";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { Button } from "@material-ui/core";
+import calcDistance from "../Forms/Location/CalcDistance";
+import { Tooltip } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +44,15 @@ const Appointment = (props) => {
   const [doctor, setDoctor] = React.useState("");
   const [patient, setPatient] = React.useState("");
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   const clickHandler = async () => {
     if (window.confirm("Are you sure you want to delete your appointment?")) {
@@ -127,6 +138,18 @@ const Appointment = (props) => {
     window.open('https://www.google.com/maps/dir/?api=1&origin='+patient?.address?.address_value+"&destination="+doctor?.address?.address_value+"&travelmode=public", "_blank");
 };
 
+
+let distance =
+Math.round(
+  calcDistance(
+    patient?.address?.lat,
+    patient?.address?.lng,
+    doctor?.address?.lat,
+    doctor?.address?.lng
+  ) * 10
+) / 10;
+
+
   let convertedDate = new Date(props.appointment.startPoint);
   let convertedDay = convertedDate.getDate();
   let convertedMonth = convertedDate.getMonth()+1;
@@ -147,9 +170,11 @@ const Appointment = (props) => {
           }
           action={
             props.upcoming ? (
+              <Tooltip open={open} onClose={handleClose} onOpen={handleOpen} title="Cancel appointment">
               <IconButton aria-label="Close" onClick={clickHandler}>
                 <DeleteForeverIcon />
               </IconButton>
+              </Tooltip>
             ) : (
               <Ratings
                 id={props.id}
@@ -176,9 +201,7 @@ const Appointment = (props) => {
           }
         />
         <CardContent>
-        <div> {props.appointment?.doctor_address} 
-              <br></br>
-                <div>
+        <div>
                 <Ratings
                   id={props.id}
                   key={props.id}
@@ -186,7 +209,8 @@ const Appointment = (props) => {
                   avgAudienceRating={avgAudienceRating ? avgAudienceRating:""}
                   readOnly={true}
                 />
-                <br></br>
+        <div> {props.appointment?.doctor_address} ({distance}km away from you)
+              <br></br>
                 {props.upcoming ? 
                 <Button style={{marginLeft: 3}} size="small" color="primary" onClick={onClickDirections}>get directions</Button>
                 : ""}</div>
