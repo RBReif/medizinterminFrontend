@@ -335,7 +335,7 @@ const PatientDashboard = (props) => {
               </center>
             </h2>
           </Grid>
-          <Grid item spacing={3} xs={12} xm={4} xl={4} direction="column">
+          <Grid item spacing={3} s={12} xs={12} sm={4} m={4} xl={4} direction="column">
             <Paper className={classes.paper}>
               <h3>News Center</h3>
             </Paper>
@@ -372,7 +372,7 @@ const PatientDashboard = (props) => {
               )}
             </p>
           </Grid>
-          <Grid item spacing={3} xs={12} xm={3} xl={3}>
+          <Grid item spacing={3} xs={12} s={12} sm={4} m={4} xl={4}>
             <Paper className={classes.paper}>
               <h3>Upcoming Appointments</h3>
             </Paper>
@@ -401,7 +401,7 @@ const PatientDashboard = (props) => {
                 <Paper className={classes.paper}>Loading...</Paper>
               )}
           </Grid>
-          <Grid item xs={12} xm={3} xl={3} alignItems="center">
+          <Grid item spacing={3} s={12} xs={12} sm={4} m={4} xl={4}>
             <Paper className={classes.paper}>
               <h3>Previous Appointments</h3>
             </Paper>

@@ -19,8 +19,10 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import AppointmentService from "../../services/AppointmentService";
 import UserService from"../../services/UserService";
+import PatientService from "../../services/PatientService";
 import CalcDistance from "../Forms/Location/CalcDistance";
 import DoctorService from "../../services/DoctorService";
+import Dialog from "../Modal/Dialog"
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -96,9 +98,10 @@ const Doctor = (props) => {
     setValue(newValue);
   };
 
-  const submit = async () => {
+  const handleSubmit = async (event) => {
     if (window.confirm('Are you sure you want to book this appointment?')) {
-      let res = await AppointmentService.updateAppointment(appointment._id, "SCHEDULED", appointment.appointmentDetails, appointment.appointmentTitle,UserService.getCurrentUser().id)
+      let patient = await PatientService.getPatient(UserService.getCurrentUser().id)
+      let res = await AppointmentService.updateAppointment(appointment._id, "SCHEDULED", appointment.appointmentDetails, "Appointment with " + patient.firstname + " " + patient.lastname,UserService.getCurrentUser().id)
       console.log("RESPONSE: ", res)
       alert("Medizintermin booked your appointment on "+ res.startPoint+" ! Thank you for booking with us:)")
       console.log("BOOK BOOK BOOK: ", appointment)
@@ -108,6 +111,8 @@ const Doctor = (props) => {
     }
 
   };
+
+  console.log("CURRENT USER" , UserService.getCurrentUser())
 
   const extractRating = () => {
     if (!props.doctor) {
@@ -197,7 +202,7 @@ const Doctor = (props) => {
                     );
                   })}
                 </Select>
-              </FormControl>  <Button style={{marginLeft: 10}} onClick={submit} color="primary" size="small">
+              </FormControl>  <Button style={{marginLeft: 10}} onClick={handleSubmit} color="primary" size="small">
               Book Appointment
             </Button>
             </TabPanel>
