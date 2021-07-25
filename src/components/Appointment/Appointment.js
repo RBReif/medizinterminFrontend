@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
 import { Theme } from "../UI/Theme";
@@ -15,8 +14,6 @@ import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth:300,
-    maxWidth:400,
   },
   media: {
     height: 0,

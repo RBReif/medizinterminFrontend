@@ -11,7 +11,6 @@ import DynamicTimePicker from "../Forms/DynamicTimePicker";
 import { Button } from "@material-ui/core";
 
 const TimeSlotForm = (props) => {
-  // The first commit of Material-UI
   const [selectedStartDate, setselectedStartDate] = React.useState(new Date());
   const [selectedEndDate, setselectedEndDate] = React.useState(new Date());
 
@@ -37,8 +36,6 @@ const TimeSlotForm = (props) => {
   };
 
   const alertHandler = (event) => {
-    event.preventDefault();
-    console.log("Invalid input");
     alert(
       "Invalid input. Please choose a end date and end time greater than start date and start time"
     );

@@ -16,7 +16,6 @@ import {
 } from "@devexpress/dx-react-scheduler-material-ui";
 import { ThemeProvider } from "@material-ui/styles";
 import { Theme } from "../UI/Theme";
-import { Link } from "react-router-dom";
 
 const BasicLayout = ({ appointmentData, ...restProps }) => {
   const [firstname, setFirstName] = React.useState(appointmentData.patient ? appointmentData.patient.firstname : "");
@@ -75,7 +74,6 @@ const BasicLayout = ({ appointmentData, ...restProps }) => {
 export default class MyCalendar extends React.PureComponent {
   constructor(props) {
     super(props);
-    console.log("props2", props)
     this.state = {
       data: this.props.events,
       mainResourceName: "appointmentStatus",

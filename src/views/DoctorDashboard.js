@@ -9,16 +9,8 @@ import { Theme } from "../components/UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
 import AppointmentService from "../services/AppointmentService";
 import moment from "moment";
-import { Link } from "react-router-dom";
 import PatientService from "../services/PatientService";
 import DoctorService from "../services/DoctorService";
-import UserService from "../services/UserService";
-import CEV from "../components/Calendar/CalendarEventForm";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core";
 
 const getColor = (status) => {
   switch (status) {
@@ -35,72 +27,9 @@ const getColor = (status) => {
   }
 };
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    "aria-controls": `vertical-tabpanel-${index}`,
-  };
-}
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 500,
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  avatar: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 200,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}));
-
 
 const DoctorDashboard = () => {
-  const classes = useStyles();
   const [value, setValue] = React.useState(0);
- // const [appointmentID, setAppointmentID] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -115,7 +44,7 @@ const DoctorDashboard = () => {
   useEffect(async () => {
     const getDoctor = async () => {
       const doctor = await DoctorService.getDoctor(doctorID);
-      console.log("DOCTOR RECEIVED: ", doctor);
+      // console.log("---DOCTOR RECEIVED---: ", doctor);
       setDoctor(doctor);
     };
     getDoctor();
@@ -124,7 +53,7 @@ const DoctorDashboard = () => {
       const appointments = await AppointmentService.getAppointmentsDoctor(
         doctorID
       );
-      console.log("APPOINTMENTS RECEIVED: ", appointments);
+      // console.log("---APPOINTMENTS RECEIVED---: ", appointments);
       setAppointments(appointments?.map((item) => item));
       let patientIDs = [];
       appointments?.forEach((a) => {
@@ -135,12 +64,10 @@ const DoctorDashboard = () => {
         }
       });
 
-      console.log("PATIENT IDS EXTRACTED: ", patientIDs);
       for (const a1 of patientIDs) {
-        console.log("a1 ", a1)
         if (a1 !=null) {
           const patient = await PatientService.getPatient(a1);
-          console.log("RECEIVED PATIENT", patient);
+          // console.log("---PATIENT RECEIVED---: ", patient);
           setPatients([...patients, patient]);
         }
       }
@@ -157,11 +84,6 @@ const DoctorDashboard = () => {
   useEffect(async () => {
     setCalendarEvents(
       appointments?.map((item) => {
-        // console.log("PATIENTS STORED: ", patients);
-        // console.log(
-        //   "HAS PATIENT:",
-        //   item.hasOwnProperty("patient") ? item.patient : ""
-        // );
         return {
           color: getColor(item.appointmentStatus),
           startDate: new Date(item.startPoint),
@@ -185,20 +107,6 @@ const DoctorDashboard = () => {
   return (
     <ThemeProvider theme={Theme}>
       <Page>
-      <Tabs
-              orientation="horizontal"
-              variant="scrollable"
-              value={value}
-              indicatorColor="primary"
-              onChange={handleChange}
-              aria-label="Vertical tabs example"
-              className={classes.tabs}
-              centered
-            >
-              <Tab label="Calendar" {...a11yProps(0)} />
-              <Tab label="Daily Plan" {...a11yProps(1)} />
-            </Tabs>
-            <TabPanel value={value} index={0}>
         <Container fluid>
           <Row>
             <Col>
@@ -251,9 +159,6 @@ const DoctorDashboard = () => {
             </Col>
           </Row>
         </Container>
-        </TabPanel>
-        <TabPanel value={value} index={0}>
-          </TabPanel>
       </Page>
     </ThemeProvider>
 

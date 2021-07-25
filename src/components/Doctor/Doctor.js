@@ -93,7 +93,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Doctor = (props) => {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
   const [showNumber, setShowNumber] = React.useState(false);
   const [avgAudienceRating, setAvgAudienceRating] = React.useState("");
   const [value, setValue] = React.useState(0);
@@ -138,9 +137,8 @@ const Doctor = (props) => {
           convertedMinutes +
           " ! Thank you for booking with us:)"
       );
-      props.history.push("/dashboard")
-      // console.log("BOOK BOOK BOOK: ", appointment);
-      // window.location.reload();  
+      props.history.push("/dashboard");
+      // window.location.reload();
     } else {
     }
   };
@@ -182,7 +180,6 @@ const Doctor = (props) => {
       ) * 100
     ) / 100;
 
-  console.log(props.appointments);
   return (
     <ThemeProvider theme={Theme}>
       <Card id={props.id} className={classes.root}>

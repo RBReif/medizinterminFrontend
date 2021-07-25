@@ -1,11 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
 import CardHeader from "@material-ui/core/CardHeader";
-import Avatar from "@material-ui/core/Avatar";
 import { Theme } from "../UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
-import Ratings from "../Forms/Ratings";
 import { Button, Card } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -42,13 +39,6 @@ const Recommendation = (props) => {
             <div>
               {props.props.description}
               <br></br>
-
-              {/* <Rating
-                      name="read-only"
-                      value={props.doctor.avgAudienceRating}
-                      readOnly
-                    /> */}
-              {/* {showNumber ? props.doctor.phone : ""} */}
             </div>
           }
         />

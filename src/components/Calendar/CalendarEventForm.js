@@ -111,7 +111,6 @@ const CalendarEventForm = (props) => {
 
  let testDate = moment(new Date(selectedStartDate)).toDate();
 
- console.log("TESTDATE: ", testDate); 
     let newEvent = await AppointmentService.createAppointment(doctorID, selectedStartDate, selectedEndDate, appointmentType, description, title)
 
     const calendarEvent = {
@@ -134,7 +133,6 @@ const CalendarEventForm = (props) => {
   //alertHandler. Will set an alert if input is invalid. STARTDATE has to be before ENDDATE. BOTH DATES have to be in the future
   const alertHandler = (event) => {
     event.preventDefault();
-    console.log("Invalid input");
     alert(
       appointmentType === "AVAILABLE" || appointmentType === "SCHEDULED?"
         ? "Invalid input. 'AVAILABLE' and 'SCHEDULED' timeslots can only occur in the future. If this is the case, please check if the end date/time is after the start date/time."
