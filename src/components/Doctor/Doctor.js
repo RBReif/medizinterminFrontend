@@ -215,9 +215,7 @@ const Doctor = (props) => {
                     subheader={
                         <div>
                             {props.doctor.area_of_expertise} <br></br>
-                            {distance} km away
-                            <br></br>
-                            {props.doctor.phone_number}
+                            {distance} km away                      
                         </div>
                     }
                 />
@@ -271,6 +269,8 @@ const Doctor = (props) => {
                             {props.doctor.area_of_expertise}
                             <br></br>
                             <b>Address: </b> {props.doctor.address.address_value}
+                            <br></br>
+                            <b>Phone Number: </b>{props.doctor.phone_number}
                             <br></br>
                             <b>Languages:</b>{" "}
                             {props.doctor.languages.map((language) => {
