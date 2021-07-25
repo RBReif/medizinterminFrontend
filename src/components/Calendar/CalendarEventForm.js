@@ -112,19 +112,17 @@ const CalendarEventForm = (props) => {
  let testDate = moment(new Date(selectedStartDate)).toDate();
 
  console.log("TESTDATE: ", testDate); 
-    let newEvent = await AppointmentService.createAppointment(doctorID, selectedStartDate, selectedEndDate,appointmentType, description, title)
+    let newEvent = await AppointmentService.createAppointment(doctorID, selectedStartDate, selectedEndDate, appointmentType, description, title)
 
-    console.log("NEW EVENT", newEvent);
     const calendarEvent = {
-      from: new Date(selectedStartDate),
-      to: new Date(selectedEndDate),
+      startDate: new Date(selectedStartDate),
+      endDate: new Date(selectedEndDate),
       title: title,
-      type: appointmentType,
+      appointmentStatus: appointmentType,
+      description: description,
       color: getColor(appointmentType),
       
     };
-
-    console.log(calendarEvent);
 
     props.onSaveTimeSlotData(calendarEvent);
     setSelectedStartDate("");
