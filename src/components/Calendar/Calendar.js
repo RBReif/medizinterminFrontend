@@ -104,7 +104,7 @@ export default class MyCalendar extends React.PureComponent {
             locale="en-DE"
             timeZone="Europe/Berlin"
             data={this?.props?.events}
-            height={500}
+            height={650}
           >
             <ViewState defaultCurrentDate={new Date()} />
             <DayView startDayHour={0} endDayHour={24} intervalCount={7} />

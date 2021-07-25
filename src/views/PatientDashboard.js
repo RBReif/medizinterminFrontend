@@ -16,6 +16,7 @@ import DynamicCard from "../components/UI/DynamicCard";
 import { Button } from "@material-ui/core";
 import Recommendation from "../components/Recommendations/Recommendation";
 import Appointment from "../components/Appointment/Appointment";
+import { Col, Row } from "react-bootstrap";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +53,7 @@ const PatientDashboard = (props) => {
   const classes = useStyles();
 
   let patientId = UserService.getCurrentUser().id;
-  // console.log(patientId);
+
   const [patient, setPatient] = useState({});
   const [appointments, setAppointments] = useState([]);
   const [doctors, setDoctors] = useState([]);
@@ -65,7 +66,6 @@ const PatientDashboard = (props) => {
   useEffect(async () => {
     const getPatient = async () => {
       const patient = await PatientService.getPatient(patientId);
-      // console.log(patient);
       setPatient(patient);
     };
     getPatient();
@@ -75,10 +75,8 @@ const PatientDashboard = (props) => {
       const appointments = await AppointmentService.getAppointmentsPatient(
         patientId
       );
-      // console.log(appointments);
       setAppointments(appointments.map((item) => item));
-      // console.log("finished with getAppointments ", appointments);
-      // console.log("length: ", appointments.length);
+
       let doctorIDs = [];
       appointments.forEach((a) => {
         if (!doctorIDs.some((e) => e === a.doctor)) {
@@ -145,16 +143,14 @@ const PatientDashboard = (props) => {
       (e) => e.doctor_area_of_expertise === area
     );
     let mostRecent = oldestDATE;
-    // console.log("[FINDNEWEST fitting appointments:", fittingAppointments);
+
     for (let i = 0; i < fittingAppointments.length; i++) {
       if (new Date(fittingAppointments[i].startPoint) > mostRecent) {
         mostRecent = new Date(fittingAppointments[i].startPoint);
-        // console.log("[FINDNEWEST newer found")
+
       } else {
-        // console.log("[FINDNEWEST newer NOT found")
       }
     }
-    // console.log("[FINDNEWEST]", area, mostRecent);
     return mostRecent;
   };
 
@@ -211,7 +207,7 @@ const PatientDashboard = (props) => {
         recomResults.push(
           makeRecomm(
             "DENTIST",
-            "Regular teeth check-up for children",
+            "Regular Teeth Check-Up for Children",
             "You should visit your Dentist every 6th month. All health-insured patients under the age of 18 have the right to this checkup."
           )
         );
@@ -220,7 +216,7 @@ const PatientDashboard = (props) => {
         recomResults.push(
           makeRecomm(
             "GENERAL_PHYSICIAN",
-            "Regular check-up for children",
+            "Regular Check-up for Children",
             "You should visit your general physician at least once per year. All health-insured patients under the age of 18 have the right to this checkup."
           )
         );
@@ -230,7 +226,7 @@ const PatientDashboard = (props) => {
         recomResults.push(
           makeRecomm(
             "DENTIST",
-            "Regular teeth check-up",
+            "Regular Teeth Check-Up",
             "You should visit your Dentist every year. All health-insured adult patients have the right to this checkup."
           )
         );
@@ -239,7 +235,7 @@ const PatientDashboard = (props) => {
         recomResults.push(
           makeRecomm(
             "GENERAL_PHYSICIAN",
-            "Regular check-up",
+            "Regular Check-Up",
             "You should visit your general physician at least every 3rd year. All health-insured adult patients have the right to this checkup."
           )
         );
@@ -248,7 +244,7 @@ const PatientDashboard = (props) => {
         recomResults.push(
           makeRecomm(
             "DERMATOLOGIST",
-            "Skin cancer screening",
+            "Skin Cancer Screening",
             "You should visit your dermatologist at least every 10th year for a skin cancer screening. All health-insured adult patients have the right to this checkup."
           )
         );
@@ -262,7 +258,7 @@ const PatientDashboard = (props) => {
           recomResults.push(
             makeRecomm(
               "ONCOLOGIST",
-              "Breast cancer screening",
+              "Breast Cancer Screening",
               "You should visit your oncologist at least every 3rd year for a breast cancer screening. All health-insured female patients over the age of 35 have the right to this checkup."
             )
           );
@@ -271,7 +267,7 @@ const PatientDashboard = (props) => {
           recomResults.push(
             makeRecomm(
               "GYNAECOLOGIST",
-              "Cervical cancer screening",
+              "Cervical Cancer Screening",
               "You should visit your gynaecologist at least every 3rd year for a cervical cancer screening. All health-insured adult female patients have the right to this checkup."
             )
           );
@@ -281,7 +277,7 @@ const PatientDashboard = (props) => {
           recomResults.push(
             makeRecomm(
               "ONCOLOGIST",
-              "Breast cancer screening (non-female)",
+              "Breast Cancer Screening (Non-Female)",
               "You should visit your oncologist at least every 10th year for a breast cancer screening. All health-insured not-female patients over the age of 35 have the right to this checkup."
             )
           );
@@ -293,7 +289,7 @@ const PatientDashboard = (props) => {
         recomResults.push(
           makeRecomm(
             "CARDIOLOGIST",
-            "Regular heart check-up",
+            "Regular Heart Check-Up",
             "You should visit your Cardiologist every year. All privately health-insured patients have the right to this checkup."
           )
         );
@@ -302,40 +298,32 @@ const PatientDashboard = (props) => {
         recomResults.push(
           makeRecomm(
             "SPORTS_DOCTOR",
-            "Fitness check-up",
+            "Fitness Check-Up",
             "You should visit your sports doctor every 3rd year for a check-up of your mobility. All privately health-insured patients have the right to this checkup."
           )
         );
       }
     }
 
-    // console.log("{Recomm] Results: ", recomResults);
-    //setRecommendations(recomResults)
   };
   findRecommendations();
 
-  // console.log("Recommondations set: ",recommendations)
 
   return (
     <ThemeProvider theme={Theme}>
       <div className={classes.root}>
       <Page>
-        {/*************** GRID 1, 3 COLUMNS *****************/}
-        <Grid
-          container
-          spacing={3}
-          direction="row"
-          justify="center"
-          // style={{ minHeight: "100vh" }}
-        >
-          <Grid item xs={12} direction="column">
+        <Row>
+          <Col>
             <h2>
               <center>
               Hello {patient.firstname} {patient.lastname}
               </center>
             </h2>
-          </Grid>
-          <Grid item spacing={3} xs={12} xm={4} xl={4} direction="column">
+          </Col>
+          </Row>
+          <Row>
+            <Col>
             <Paper className={classes.paper}>
               <h3>News Center</h3>
             </Paper>
@@ -371,8 +359,10 @@ const PatientDashboard = (props) => {
                 </Paper>
               )}
             </p>
-          </Grid>
-          <Grid item spacing={3} xs={12} xm={3} xl={3}>
+            </Col>
+          {/* </Grid> */}
+          <Col>
+          {/* <Grid item spacing={3} xs={12} xm={3} xl={3}> */}
             <Paper className={classes.paper}>
               <h3>Upcoming Appointments</h3>
             </Paper>
@@ -400,8 +390,8 @@ const PatientDashboard = (props) => {
               ) : (
                 <Paper className={classes.paper}>Loading...</Paper>
               )}
-          </Grid>
-          <Grid item xs={12} xm={3} xl={3} alignItems="center">
+          </Col>
+          <Col>
             <Paper className={classes.paper}>
               <h3>Previous Appointments</h3>
             </Paper>
@@ -429,8 +419,8 @@ const PatientDashboard = (props) => {
               ) : (
                 <Paper className={classes.paper}>Loading...</Paper>
               )}
-          </Grid>
-        </Grid>
+              </Col>
+        </Row>
       </Page>
       </div>
     </ThemeProvider>

@@ -169,8 +169,7 @@ const DoctorDashboard = () => {
           title: item.appointmentTitle,
           appointmentStatus: item.appointmentStatus,
           notes: item.appointmentDetails,
-          patient: getPatient(item.patient),
-          
+          patient: getPatient(item.patient),     
         };
       })
     );
@@ -180,7 +179,6 @@ const DoctorDashboard = () => {
   const addCalendarEventHandler = async (calendarevent) => {
     setCalendarEvents((prevCalendarEvents) => {
           return [calendarevent, ...prevCalendarEvents];
-    //   let receivedResults = await AppointmentService.createAppointment(doctorID,st)
     });
   };
 
