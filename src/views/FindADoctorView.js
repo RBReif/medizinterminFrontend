@@ -16,10 +16,7 @@ import Card from "@material-ui/core/Card";
 import image from "../images/professional.jpg";
 import MultiSelectDropdown from "../components/Forms/MultiSelectDropdown";
 import ConfigService from "../services/ConfigService";
-import { connect, useSelector } from "react-redux";
-import Doctor from "../components/Doctor/Doctor";
 import AppointmentService from "../services/AppointmentService";
-import { forEach } from "react-bootstrap/ElementChildren";
 import DoctorList from "../components/Doctor/DoctorList";
 import _ from "lodash";
 
@@ -39,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 
 const FindADoctorView = () => {
   const [timeslots, setTimeSlots] = useState("");
-  //  const [togglesSelected, setTogglesSelecteed] = useState([]);
   const classes = useStyles();
   const [doctor, setDoctor] = useState("");
   let area = "";
@@ -71,19 +67,16 @@ const FindADoctorView = () => {
   };
 
   const healthInsuranceChangeHandler = (event) => {
-    // console.log("healthinsurancechangehandler: ", event.target.value);
     //dispatch
     return setInsurance(event.target.value);
   };
 
   const areaChangeHandler = (event) => {
-    // console.log("stateChangeHandler: ", event.target.value);
     return setDoctor(event.target.value);
   };
 
   const locationHandler = (latLng, value) => {
     // console.log("LOCATION ", latLng);
-    // console.log("value:::: ", value);
     setAddress({ address_value: value, lat: latLng.lat, lng: latLng.lng });
     return setLatLng({
       lat: latLng.lat,
@@ -122,7 +115,6 @@ const FindADoctorView = () => {
         facilitiesRightFormat.push(facilities[i].displayname);
       }
     }
-    // console.log("CALLED SUBMITHANDLER", address.address_value);
     for (let i = 0; i < timeslots.length; i++) {
       let receivedResults = await AppointmentService.filterAppointments(
         doctor,
@@ -140,26 +132,20 @@ const FindADoctorView = () => {
       setResults((prevResults) => ({
         ...receivedResults,
       }));
-      // console.log("RECEIVED RESULT: ", receivedResults);
     }
   }
 
   const deleteTimeSlotHandler = (timeslot) => {
-    // console.log("Timeslot to be deleted" , timeslot);
     setTimeSlots(prevTimeSlots => {
-    // var index = timeslot.indexOf(timeslot.id);
-    // console.log(timeslot);
     const updatedTimeSlots = prevTimeSlots.filter(slot => slot.id !== timeslot.id);
     return updatedTimeSlots;
     })
   };
 
-  // console.log("TIMESLOTS: ", timeslots);
 
   useEffect(() => {
     const getConfig = async () => {
       const config = await ConfigService.getConfig();
-      // console.log(config);
       setInsurances(
         config.insurances.map((item) => {
           return { displayname: item.valueOf() };
@@ -181,28 +167,22 @@ const FindADoctorView = () => {
         })
       );
 
-      // console.log("HealthinsuranceList inside:2 ", insurances);
     };
     getConfig();
-    // console.log("Healthinsurancelist middle: ", insurances);
 
     const paramsStr = window.location.search;
-    // console.log ("params received: ", paramsStr)
     if (paramsStr.includes("area")) {
       const params = new URLSearchParams(paramsStr);
       const areaI = params.get("area");
       setDoctor(areaI);
       area = areaI.toUpperCase();
-      // console.log("JUST SET AREA," , area)
     }
   }, []);
 
   const paramsStr = window.location.search;
-  // console.log ("params received: ", paramsStr)
   if (paramsStr.includes("area")) {
     const params = new URLSearchParams(paramsStr);
     const areaI = params.get("area");
-    // setDoctor(areaI)
     area = areaI.toUpperCase();
   }
   
@@ -210,8 +190,6 @@ const FindADoctorView = () => {
   const grouped = _.groupBy(Object.values(results), function (result) {
     return result.doctor;
   });
-  // console.log("GROUPED: ", grouped);
-  // console.log("TEST", Object.entries(grouped)[1])
 
   return (
     <ThemeProvider theme={Theme}>
@@ -362,7 +340,6 @@ const FindADoctorView = () => {
                           {!isLoading && Object.keys(grouped).length > 0 && (
                             <div>
                               {Object.entries(grouped).map((item) => {
-                                // console.log("ID ID: ", item);
                                 return <DoctorList patientAddress={address} result={item}></DoctorList>;
                               })}
                             </div>

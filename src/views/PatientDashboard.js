@@ -16,6 +16,7 @@ import DynamicCard from "../components/UI/DynamicCard";
 import { Button } from "@material-ui/core";
 import Recommendation from "../components/Recommendations/Recommendation";
 import Appointment from "../components/Appointment/Appointment";
+import { Col, Row } from "react-bootstrap";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,7 +83,6 @@ const PatientDashboard = (props) => {
           doctorIDs = [...doctorIDs, a.doctor];
         }
       });
-      // console.log(doctorIDs);
 
       doctorIDs.forEach(async (a) => {
         const doctor = await DoctorService.getDoctor(a);
@@ -98,7 +98,6 @@ const PatientDashboard = (props) => {
               item["doctor_address"] = doctor.address.address_value;
               item["doctor_area_of_expertise"] = doctor.area_of_expertise;
               item["doctor_thumbnail"] = doctor.thumbnail;
-              item["doctor_rating"] = DoctorService.getRating(doctor._id);
               return item;
             } else {
               return item;
@@ -107,17 +106,11 @@ const PatientDashboard = (props) => {
         );
       });
       setIsLoading(false);
-      // console.log("DOCTOR", doctorList)
     };
     const a = getAppointments();
-    // a.then(console.log("finally", appointments));
   }, []);
 
   const moment = require("moment");
-
-  console.log("patient ", patient);
-  console.log("appointment ", appointments);
-  console.log("doctors ", doctors);
 
   //arrays for previous and upcoming appointments
   const prevAppointments = [];
@@ -130,10 +123,6 @@ const PatientDashboard = (props) => {
       ? prevAppointments.push(appointment)
       : upcomingAppointments.push(appointment)
   );
-
-  console.log("prevAppointments: ", prevAppointments);
-  console.log("upcomingAppointments: ", upcomingAppointments);
-  console.log("totalAppo :", totalAppointments);
 
   const oldestDATE = new Date(-8640000000000000);
 
@@ -199,7 +188,6 @@ const PatientDashboard = (props) => {
     let priv = patient.insurance === "PRIVATE";
     let fem = patient.gender === "FEMALE";
     let age = calculateAge(new Date(patient.date_of_birth));
-    // console.log("[RECOMm] age: ", age);
 
     if (age < 18) {
       if (!(findNewestAppointment("DENTIST") > halfAYearAgo)) {
@@ -304,33 +292,25 @@ const PatientDashboard = (props) => {
       }
     }
 
-    // console.log("{Recomm] Results: ", recomResults);
-    //setRecommendations(recomResults)
   };
   findRecommendations();
 
-  // console.log("Recommondations set: ",recommendations)
 
   return (
     <ThemeProvider theme={Theme}>
       <div className={classes.root}>
       <Page>
-        {/*************** GRID 1, 3 COLUMNS *****************/}
-        <Grid
-          container
-          spacing={3}
-          direction="row"
-          justify="center"
-          // style={{ minHeight: "100vh" }}
-        >
-          <Grid item xs={12} direction="column">
+        <Row>
+          <Col>
             <h2>
               <center>
               Hello {patient.firstname} {patient.lastname}
               </center>
             </h2>
-          </Grid>
-          <Grid item spacing={3} xs={12} xm={4} xl={4} direction="column">
+          </Col>
+          </Row>
+          <Row>
+            <Col sm={4}>
             <Paper className={classes.paper}>
               <h3>News Center</h3>
             </Paper>
@@ -366,8 +346,10 @@ const PatientDashboard = (props) => {
                 </Paper>
               )}
             </p>
-          </Grid>
-          <Grid item spacing={3} xs={12} xm={3} xl={3}>
+            </Col>
+          {/* </Grid> */}
+          <Col sm={4}>
+          {/* <Grid item spacing={3} xs={12} xm={3} xl={3}> */}
             <Paper className={classes.paper}>
               <h3>Upcoming Appointments</h3>
             </Paper>
@@ -395,8 +377,8 @@ const PatientDashboard = (props) => {
               ) : (
                 <Paper className={classes.paper}>Loading...</Paper>
               )}
-          </Grid>
-          <Grid item xs={12} xm={3} xl={3} alignItems="center">
+          </Col>
+          <Col sm={4}>
             <Paper className={classes.paper}>
               <h3>Previous Appointments</h3>
             </Paper>
@@ -424,8 +406,8 @@ const PatientDashboard = (props) => {
               ) : (
                 <Paper className={classes.paper}>Loading...</Paper>
               )}
-          </Grid>
-        </Grid>
+              </Col>
+        </Row>
       </Page>
       </div>
     </ThemeProvider>

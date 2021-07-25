@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import { Button } from "@material-ui/core";
@@ -14,13 +14,16 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 import AppointmentService from "../../services/AppointmentService";
-import UserService from"../../services/UserService";
+import UserService from "../../services/UserService";
+import PatientService from "../../services/PatientService";
 import CalcDistance from "../Forms/Location/CalcDistance";
 import DoctorService from "../../services/DoctorService";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -83,31 +86,64 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * For user login
+ * @param {props} props
+ */
+
 const Doctor = (props) => {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
   const [showNumber, setShowNumber] = React.useState(false);
   const [avgAudienceRating, setAvgAudienceRating] = React.useState("");
   const [value, setValue] = React.useState(0);
   const [appointment, setAppointment] = React.useState("");
- // const [appointmentID, setAppointmentID] = React.useState(0);
+  // const [appointmentID, setAppointmentID] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const submit = async () => {
-    if (window.confirm('Are you sure you want to book this appointment?')) {
-      let res = await AppointmentService.updateAppointment(appointment._id, "SCHEDULED", appointment.appointmentDetails, appointment.appointmentTitle,UserService.getCurrentUser().id)
-      console.log("RESPONSE: ", res)
-      alert("Medizintermin booked your appointment on "+ res.startPoint+" ! Thank you for booking with us:)")
-      console.log("BOOK BOOK BOOK: ", appointment)
-      window.location.reload()
+  const handleSubmit = async (event) => {
+    if (window.confirm("Are you sure you want to book this appointment?")) {
+      let patient = await PatientService.getPatient(
+        UserService.getCurrentUser().id
+      );
+      let res = await AppointmentService.updateAppointment(
+        appointment._id,
+        "SCHEDULED",
+        appointment.appointmentDetails,
+        "Appointment with " + patient.firstname + " " + patient.lastname,
+        UserService.getCurrentUser().id
+      );
+      console.log("RESPONSE: ", res);
+      let convertedDate = new Date(res.startPoint);
+      let convertedDay = convertedDate.getDate();
+      let convertedMonth = convertedDate.getMonth() + 1;
+      let convertedYear = convertedDate.getFullYear();
+      let convertedHour = convertedDate.getHours();
+      let convertedMinutes =
+        (convertedDate.getMinutes() < 10 ? "0" : "") +
+        convertedDate.getMinutes();
+      alert(
+        "Medizintermin booked your appointment on " +
+          convertedDay +
+          "." +
+          convertedMonth +
+          "." +
+          convertedYear +
+          " at " +
+          convertedHour +
+          ":" +
+          convertedMinutes +
+          " ! Thank you for booking with us:)"
+      );
+      props.history.push("/dashboard");
+      // window.location.reload();
     } else {
-
     }
-
   };
+
+  console.log("CURRENT USER", UserService.getCurrentUser());
 
   const extractRating = () => {
     if (!props.doctor) {
@@ -131,18 +167,19 @@ const Doctor = (props) => {
   };
 
   const dateChangeHandler = (event) => {
-
     return setAppointment(event.target.value);
   };
 
-  let distance = Math.round(CalcDistance(
-    props.patientAddress.lat,
-    props.patientAddress.lng,
-    props.doctor.address.lat,
-    props.doctor.address.lng
-  ) * 100)/100;
+  let distance =
+    Math.round(
+      CalcDistance(
+        props.patientAddress.lat,
+        props.patientAddress.lng,
+        props.doctor.address.lat,
+        props.doctor.address.lng
+      ) * 100
+    ) / 100;
 
-  console.log(props.appointments)
   return (
     <ThemeProvider theme={Theme}>
       <Card id={props.id} className={classes.root}>
@@ -154,16 +191,20 @@ const Doctor = (props) => {
               src={props.doctor.thumbnail}
             ></Avatar>
           }
-          action={ 
-          <Ratings avgAudienceRating={avgAudienceRating} readOnly={true} />
+          action={
+            <Ratings avgAudienceRating={avgAudienceRating} readOnly={true} />
           }
           title={
             <b>
               {props.doctor.firstname} {props.doctor.lastname}
             </b>
           } //query doctor name + profession
-          subheader={<div>{props.doctor.area_of_expertise} <br></br>
-          {distance} km away</div>}
+          subheader={
+            <div>
+              {props.doctor.area_of_expertise} <br></br>
+              {distance} km away
+            </div>
+          }
         />
         <CardContent>
           <div>
@@ -186,20 +227,29 @@ const Doctor = (props) => {
                   {props.appointments.map((item) => {
                     let convertedDate = new Date(item.startPoint);
                     let convertedDay = convertedDate.getDate();
-                    let convertedMonth = convertedDate.getMonth()+1;
+                    let convertedMonth = convertedDate.getMonth() + 1;
                     let convertedYear = convertedDate.getFullYear();
                     let convertedHour = convertedDate.getHours();
-                    let convertedMinutes = (convertedDate.getMinutes()<10?'0':'') + convertedDate.getMinutes();
+                    let convertedMinutes =
+                      (convertedDate.getMinutes() < 10 ? "0" : "") +
+                      convertedDate.getMinutes();
                     return (
                       <MenuItem key={item._id} value={item}>
-                        {convertedDay}.{convertedMonth}.{convertedYear} at {convertedHour}:{convertedMinutes}
+                        {convertedDay}.{convertedMonth}.{convertedYear} at{" "}
+                        {convertedHour}:{convertedMinutes}
                       </MenuItem>
                     );
                   })}
                 </Select>
-              </FormControl>  <Button style={{marginLeft: 10}} onClick={submit} color="primary" size="small">
-              Book Appointment
-            </Button>
+              </FormControl>{" "}
+              <Button
+                style={{ marginLeft: 10 }}
+                onClick={handleSubmit}
+                color="primary"
+                size="small"
+              >
+                Book Appointment
+              </Button>
             </TabPanel>
             <TabPanel value={value} index={1}>
               {props.doctor.area_of_expertise}
@@ -224,4 +274,4 @@ const Doctor = (props) => {
   );
 };
 
-export default Doctor;
+export default connect()(withRouter(Doctor));

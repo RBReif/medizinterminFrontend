@@ -21,13 +21,6 @@ const DynamicDropdown = (props) => {
   const classes = useStyles();
   const [val, setVal] = React.useState(props.displayname);
 
-  // const handleChange = (event) => {
-  //   console.log("handleChange DynamicDropdown :" , event.target.value);
-  //   setVal(event.target.value);
-  //   // props.onClick(event.target.value);
-  // };
-
-
   return (
     <FormControl className={classes.formControl}>
       <p>{props.label}</p>

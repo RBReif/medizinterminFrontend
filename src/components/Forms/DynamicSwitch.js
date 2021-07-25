@@ -23,7 +23,6 @@ const DynamicSwitch = (props) => {
         content={
           <Form>
             <p></p>
-            {/* <FormLabel component="legend"></FormLabel> */}
             <FormControlLabel
               control={
                 <div>

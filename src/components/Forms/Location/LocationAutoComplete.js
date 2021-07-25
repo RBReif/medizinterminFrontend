@@ -3,7 +3,6 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
-import { Input } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { Theme } from '../../UI/Theme';
 import { TextField } from "@material-ui/core";

@@ -9,11 +9,8 @@ import { Theme } from "../components/UI/Theme";
 import { ThemeProvider } from "@material-ui/styles";
 import AppointmentService from "../services/AppointmentService";
 import moment from "moment";
-import { Link } from "react-router-dom";
 import PatientService from "../services/PatientService";
 import DoctorService from "../services/DoctorService";
-import UserService from "../services/UserService";
-import CEV from "../components/Calendar/CalendarEventForm";
 
 const getColor = (status) => {
   switch (status) {
@@ -30,36 +27,24 @@ const getColor = (status) => {
   }
 };
 
-const getId = (status) => {
-  switch (status) {
-    case "AVAILABLE":
-      return 1;
-    case "FAILED":
-      return 2;
-    case "SCHEDULED":
-      return 3;
-    case "SUCCESSFUL":
-      return 4;
-    default:
-      return 5;
-  }
-};
 
 const DoctorDashboard = () => {
-  let doctorID = DoctorService.getCurrentUser().id; //"60e70bc72c79d33ed899b25f"
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  let doctorID = DoctorService.getCurrentUser().id;
   const [doctor, setDoctor] = useState({});
   const [appointments, setAppointments] = useState([]);
-  const [name, setName] = useState("");
 
-  //here we declare 'patients' with useState
   const [patients, setPatients] = useState([]);
-
   const [calendarEvents, setCalendarEvents] = useState([]);
 
   useEffect(async () => {
     const getDoctor = async () => {
       const doctor = await DoctorService.getDoctor(doctorID);
-      console.log("DOCTOR RECEIVED: ", doctor);
+      // console.log("---DOCTOR RECEIVED---: ", doctor);
       setDoctor(doctor);
     };
     getDoctor();
@@ -68,10 +53,10 @@ const DoctorDashboard = () => {
       const appointments = await AppointmentService.getAppointmentsDoctor(
         doctorID
       );
-      console.log("APPOINTMENTS RECEIVED: ", appointments);
-      setAppointments(appointments.map((item) => item));
+      // console.log("---APPOINTMENTS RECEIVED---: ", appointments);
+      setAppointments(appointments?.map((item) => item));
       let patientIDs = [];
-      appointments.forEach((a) => {
+      appointments?.forEach((a) => {
         if (a.hasOwnProperty("patient")) {
           if (!patientIDs.some((e) => e === a.patient)) {
             patientIDs = [...patientIDs, a.patient];
@@ -79,62 +64,43 @@ const DoctorDashboard = () => {
         }
       });
 
-      console.log("PATIENT IDS EXTRACTED: ", patientIDs);
       for (const a1 of patientIDs) {
-        const patient = await PatientService.getPatient(a1);
-        console.log("RECEIVED PATIENT", patient);
-        setPatients([...patients, patient]);
+        if (a1 !=null) {
+          const patient = await PatientService.getPatient(a1);
+          // console.log("---PATIENT RECEIVED---: ", patient);
+          setPatients([...patients, patient]);
+        }
       }
     };
     const a = getAppointments();
-
-    /*
-        console.log("KalenderEvents: ", calendarEvents);
-
-      const addCalendarEventHandler = (calendarevent) => {
-        setCalendarEvents((prevCalendarEvents) => {
-          return [calendarevent, ...prevCalendarEvents];
-        });
-
-     */
   }, []);
 
-  const getNamePatient = (id) => {
+  const getPatient = (id) => {
     const patient = patients.find((e) => e._id === id);
-    return patient.name;
+    return patient;
   };
 
-  useEffect(() => {
+
+  useEffect(async () => {
     setCalendarEvents(
-      appointments.map((item) => {
-        // console.log("PATIENTS STORED: ", patients);
-        // console.log(
-        //   "HAS PATIENT:",
-        //   item.hasOwnProperty("patient") ? item.patient : ""
-        // );
+      appointments?.map((item) => {
         return {
           color: getColor(item.appointmentStatus),
           startDate: new Date(item.startPoint),
           endDate: moment(new Date(item.startPoint)).add(30, "m").toDate(),
           title: item.appointmentTitle,
           appointmentStatus: item.appointmentStatus,
-          //   description: item.hasOwnProperty("patient")
-          //     ? "Your appointment is with " + getNamePatient(item.patient)
-          //     : "",
-          description: item.appointmentDetails,
+          notes: item.appointmentDetails,
+          patient: getPatient(item.patient),     
         };
       })
     );
-    console.log("in useEffect KalenderEvents: ", calendarEvents);
 
   }, [patients, appointments]);
-
-  console.log("KalenderEvents: ", calendarEvents);
 
   const addCalendarEventHandler = async (calendarevent) => {
     setCalendarEvents((prevCalendarEvents) => {
           return [calendarevent, ...prevCalendarEvents];
-    //   let receivedResults = await AppointmentService.createAppointment(doctorID,st)
     });
   };
 
@@ -184,8 +150,9 @@ const DoctorDashboard = () => {
                         </h5>
                       </Box>
                     </Row>
-                    <MyCalendar events={calendarEvents} />
-                    {/* <Demo events={calendarEvents}></Demo> */}
+                    <div>
+                    <MyCalendar events={calendarEvents} patients={patients} />
+                    </div>
                   </div>
                 }
               ></DynamicCard>
@@ -194,6 +161,7 @@ const DoctorDashboard = () => {
         </Container>
       </Page>
     </ThemeProvider>
+
   );
 };
 export default DoctorDashboard;
