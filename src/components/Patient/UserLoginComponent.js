@@ -133,6 +133,7 @@ function LoginComponent(props) {
             <AlertDialog
                 open={openDialog}
                 onClose={() => setOpenDialog(false)}
+                secondButton={true}
                 title="Authentication failed"
                 text={user?.error}
             />
