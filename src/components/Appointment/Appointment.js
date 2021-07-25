@@ -209,7 +209,7 @@ Math.round(
                   avgAudienceRating={avgAudienceRating ? avgAudienceRating:""}
                   readOnly={true}
                 />
-        <div> {props.appointment?.doctor_address} ({distance}km away from you)
+        <div> {props.appointment?.doctor_address} {props.upcoming ? "("+ distance + " km away from you)" :""}
               <br></br>
                 {props.upcoming ? 
                 <Button style={{marginLeft: 3}} size="small" color="primary" onClick={onClickDirections}>get directions</Button>
