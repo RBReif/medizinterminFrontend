@@ -26,6 +26,7 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import AlertDialog from "../Modal/Dialog";
 
+
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
 
@@ -103,10 +104,10 @@ const Doctor = (props) => {
     const [confirmMessage, setConfirmMessage] = React.useState(false);
     // const [appointmentID, setAppointmentID] = React.useState(0);
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
+  const handleChange = (event, newValue) => {
+    setAppointment("");
+    setValue(newValue);
+  };
     const onClickBooking = () => {
         setOpenDialog(true);
     };
@@ -257,6 +258,7 @@ const Doctor = (props) => {
                                 onClick={onClickBooking}
                                 color="primary"
                                 size="small"
+                                disabled={appointment ? false : true}
                             >
                                 Book Appointment
                             </Button>
