@@ -185,9 +185,7 @@ const DoctorEditProfile = (props) => {
                         <Row>
                             <Col sm={9}>
                                 <h2>{doctor?.firstname + " " + doctor?.lastname}</h2>
-                                <p>{"Current Rating: tbc. "}</p>
                                 <p>You can edit your profile details below</p>
-
                             </Col>
                             <Col sm={3}>
                                 <Avatar src={doctor?.thumbnail} className={classes.avatar}>
