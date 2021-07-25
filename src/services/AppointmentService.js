@@ -29,6 +29,18 @@ export default class AppointmentService{
         }).then()
     }
 
+    static getAppointmentsDoctorForGivenDateAndStatus(id, date, status){
+        return new Promise( async(resolve, reject) => {
+            await  HttpService.get(
+                `${this.baseURL()}/doctor/${id}/?date=${date}&status=${status}`,
+                function (data){resolve(data)},
+                function (textStatus){
+                    reject(textStatus);
+                },
+            )
+        }).then()
+    }
+
     static getAppointment(id){
         return new Promise( async(resolve, reject) => {
             await  HttpService.get(
