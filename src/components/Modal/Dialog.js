@@ -24,7 +24,7 @@ export default function AlertDialog(props) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    {props.secondButton ? [<Button onClick={props.onClose}>
+                    {props.secondButton ? [<Button onClick={props.onCancel}>
                             Cancel
                         </Button>, <Button onClick={props.onClose} color="primary">
                             Ok
