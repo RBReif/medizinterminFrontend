@@ -131,10 +131,7 @@ const DoctorDailyPlanView = () => {
 
     useEffect(async () => {
         let appointments = await AppointmentService.getAppointmentsDoctorForGivenDateAndStatus(doctorID, currentDate.getTime(), "SCHEDULED");
-        console.log("Hi")
-        console.log(appointments);
         setAppointments(appointments.map((item) => item));
-        console.log(appointments);
 
         const fetchAppointments = async () => {
             let iterator = 0;
@@ -187,7 +184,6 @@ const DoctorDailyPlanView = () => {
     }, [currentDateString, currentDate]);
 
     const clickHandler = (id) => (
-        //console.log(id)
         setAppointmentDetails(appointmentDetailsList[id]),
         changeCardSelected(id)
     );
