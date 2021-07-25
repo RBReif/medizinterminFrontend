@@ -1,7 +1,6 @@
 import {Form, Container, Row, Col} from "react-bootstrap";
 import NewsList from "../components/NewsList";
 import CheckupList from "../components/CheckupList";
-//import AppointmentCard from "../components/";
 import Page from "../components/Page";
 import { ThemeProvider } from "@material-ui/styles";
 import { Theme } from "../components/UI/Theme";
@@ -130,7 +129,8 @@ const DoctorDailyPlanView = () => {
     }
 
     useEffect(async () => {
-        let appointments = await AppointmentService.getAppointmentsDoctorForGivenDateAndStatus(doctorID, currentDate.getTime(), "SCHEDULED");
+        let appointments = await AppointmentService.getAppointmentsDoctorForGivenDateAndStatus(doctorID, currentDate.getTime(),
+            ["SCHEDULED", "SUCCESSFUL", "FAILED"]);
         setAppointments(appointments.map((item) => item));
 
         const fetchAppointments = async () => {
