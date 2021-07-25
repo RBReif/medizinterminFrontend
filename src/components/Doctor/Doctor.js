@@ -26,6 +26,7 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import AlertDialog from "../Modal/Dialog";
 
+
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
 
@@ -257,6 +258,7 @@ const Doctor = (props) => {
                                 onClick={onClickBooking}
                                 color="primary"
                                 size="small"
+                                disabled={appointment ? false : true}
                             >
                                 Book Appointment
                             </Button>
