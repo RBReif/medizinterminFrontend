@@ -118,10 +118,7 @@ const DoctorDashboard = () => {
           endDate: moment(new Date(item.startPoint)).add(30, "m").toDate(),
           title: item.appointmentTitle,
           appointmentStatus: item.appointmentStatus,
-          //   description: item.hasOwnProperty("patient")
-          //     ? "Your appointment is with " + getNamePatient(item.patient)
-          //     : "",
-          description: item.appointmentDetails,
+          details: item.appointmentDetails,
         };
       })
     );
@@ -134,7 +131,6 @@ const DoctorDashboard = () => {
   const addCalendarEventHandler = async (calendarevent) => {
     setCalendarEvents((prevCalendarEvents) => {
           return [calendarevent, ...prevCalendarEvents];
-    //   let receivedResults = await AppointmentService.createAppointment(doctorID,st)
     });
   };
 
