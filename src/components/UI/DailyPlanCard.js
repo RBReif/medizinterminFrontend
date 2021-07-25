@@ -31,7 +31,7 @@ export default function DailyPlanCard(props) {
     )
     return (
     <Card onClick={clickHandler} >
-        <CardActionArea className={classes.root} style={{backgroundColor: props.color}}>
+        <CardActionArea key={props.id} className={classes.root} style={{backgroundColor: props.color}}>
             <Typography variant="body2" component="p">
             <div>
                 <Row>
